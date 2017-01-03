@@ -1,10 +1,11 @@
-// Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
-if (window.location.hash.substr(1) == "logginn") {
-    $("#loggInnModal").modal();
-}
-
-// Popover for avatar click in nav-menu
 $(function () {
+  
+  // Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
+  if (window.location.hash.substr(1) == "logginn") {
+      $("#loggInnModal").modal();
+  }
+
+  // Popover for avatar click in nav-menu
   function getRight() {
     return ($(window).width() - ($('[data-toggle="popover"]').offset().left + $('[data-toggle="popover"]').outerWidth()))
   }

@@ -17,6 +17,12 @@ body {
 }
 
 /* redigerBruker */
+.imgBtn {
+  background: #fff;
+  padding: 0 5px 0 5px;
+  border: 1px solid black;
+}
+
 .media-heading small, .media-heading h4 {
   margin-top: 0;
 }

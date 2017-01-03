@@ -6,19 +6,25 @@
     <div class="row">
       <div class="col-md-3">
         <div class="panel panel-default panel-profile m-b-md">
-          <div class="panel-heading" style="background-image: url(assets/img/iceland.jpg);"></div>
+          <div id="nyttForsidebilde" class="pos-a m-a cursor">
+            <span class="fa fa-camera fa-lg"></span>
+            <small style="display: none">Endre forsidebilde</small>
+          </div>
+          <div id="forsidebildeContainer" class="panel-heading" style="background-image: url(assets/img/iceland.jpg);"></div>
           <div class="panel-body text-center">
             <a href="profile/index.html">
-              <img
-                class="panel-profile-img"
-                src="/uploads/img/{{ $brukerinfo->profilbilde }}">
+              <div id="nyttProfilbilde" class="pos-a m-a cursor">
+                <span class="fa fa-camera fa-lg"></span>
+                <small style="display: none">Endre forsidebilde</small>
+              </div>
+              <img class="panel-profile-img" src="/uploads/img/{{ $brukerinfo->profilbilde }}">
             </a>
 
             <h5 class="panel-title">
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</a>
             </h5>
 
-            <p class="m-b-md">I wish i was a little bit taller, wish i was a baller, wish i had a girl… also.</p>
+            <p class="m-b-md">{{ $brukerinfo->bio }} [ ... bio ... ]</p>
 
             <ul class="panel-menu">
               <li class="panel-menu-item">
@@ -225,7 +231,7 @@
         </ul>
       </div>
       <div class="col-md-3">
-        <div class="alert alert-warning alert-dismissible hidden-xs" role="alert">
+        <div class="alert alert-info alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <a class="alert-link">Din profil er i god stand!</a>
           <div class="m-b"></div>
@@ -300,14 +306,5 @@
   </div>
 @stop
 @section('script')
-  <script>
-    $('.input-group.date').datepicker({
-      endDate: "today",
-      startView: 3,
-      maxViewMode: 3,
-      format: "dd/mm/yyyy",
-      language: "no",
-      autoclose: true
-    });
-  </script>
+  <script src="/js/redigerBruker.js"></script>
 @stop
