@@ -2,11 +2,12 @@
 @include('includes.studier')
 
 @section('content')
+
   <div class="container p-t-md">
     <div class="row">
       <div class="col-md-3">
         <div class="panel panel-default panel-profile m-b-md">
-          <div id="nyttForsidebilde" class="pos-a m-a cursor">
+          <div id="nyttForsidebilde" class="pos-a m-a cursor" data-toggle="modal" data-target="#nyttProfilbildeModal">
             <span class="fa fa-camera fa-lg"></span>
             <small style="display: none">Endre forsidebilde</small>
           </div>
@@ -300,6 +301,31 @@
             <a href="#">Jobs</a>
             <a href="#">Advertise</a>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div id="nyttProfilbildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="#" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <input id="forsidebilde-input" type="file" multiple data-min-file-count="1">
+            <br>
+            <button type="submit" class="btn btn-primary">Last opp</button>
+            <button type="reset" class="btn btn-default">Nullstill</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>

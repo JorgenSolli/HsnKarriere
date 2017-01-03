@@ -79,4 +79,13 @@ $(function () {
       language: "no",
       autoclose: true
     });
+
+    /* Uploads */
+    $('#forsidebilde-input').fileinput({
+        language: 'no',
+        uploadUrl: '#',
+        maxFileSize: 2000,
+        allowedFileExtensions : ['jpg', 'png','gif'],
+    });
+
 });

@@ -10,6 +10,7 @@
 
         <!-- styles -->
         <link rel="stylesheet" href="/css/dist/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/dist/fileinput.min.css">
         <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
         <link rel="stylesheet" href="/css/dist/toolkit.min.css">
         <link rel="stylesheet" href="/css/dist/bootstrap-datepicker.min.css">
@@ -170,6 +171,8 @@
         <script src="/js/dist/bootstrap-datepicker.min.js"></script>
         <script src="/js/dist/toolkit.min.js"></script>
         <script src="/js/dist/jquery.smooth-scroll.js"></script>
+        <script src="/js/dist/fileinput.min.js"></script>
+        <script src="/js/dist/locales/no.js"></script>
         <script src="/js/app.js"></script>
         @yield('script')
     </body>
