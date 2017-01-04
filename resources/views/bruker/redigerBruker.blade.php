@@ -11,7 +11,7 @@
             <span class="fa fa-camera fa-lg"></span>
             <small style="display: none">Endre forsidebilde</small>
           </div>
-          <div id="forsidebildeContainer" class="panel-heading" style="background-image: url(assets/img/iceland.jpg);"></div>
+          <div id="forsidebildeContainer" class="panel-heading" style="background-image: url($brukerinfo->forsidebilde);"></div>
           <div class="panel-body text-center">
             <a href="profile/index.html">
               <div id="nyttProfilbilde" class="pos-a m-a cursor">
@@ -30,15 +30,15 @@
             <ul class="panel-menu">
               <li class="panel-menu-item">
                 <a href="#userModal" class="text-inherit" data-toggle="modal">
-                  Friends
-                  <h5 class="m-y-0">12M</h5>
+                  Noe
+                  <h5 class="m-y-0">120</h5>
                 </a>
               </li>
 
               <li class="panel-menu-item">
                 <a href="#userModal" class="text-inherit" data-toggle="modal">
-                  Enemies
-                  <h5 class="m-y-0">1</h5>
+                  Annet
+                  <h5 class="m-y-0">5</h5>
                 </a>
               </li>
             </ul>
@@ -47,143 +47,114 @@
 
         <div class="panel panel-default visible-md-block visible-lg-block">
           <div class="panel-body">
-            <h5 class="m-t-0">About <small>· <a href="#">Edit</a></small></h5>
-            <ul class="list-unstyled list-spaced">
-              <li><span class="text-muted icon icon-calendar m-r"></span>Went to <a href="#">Oh, Canada</a>
-              <li><span class="text-muted icon icon-users m-r"></span>Became friends with <a href="#">Obama</a>
-              <li><span class="text-muted icon icon-github m-r"></span>Worked at <a href="#">Github</a>
-              <li><span class="text-muted icon icon-home m-r"></span>Lives in <a href="#">San Francisco, CA</a>
-              <li><span class="text-muted icon icon-location-pin m-r"></span>From <a href="#">Seattle, WA</a>
-            </ul>
+            <h5 class="m-t-0">CV</h5>
+            <p>Last opp CV</p>
           </div>
         </div>
 
          <div class="panel panel-default visible-md-block visible-lg-block">
           <div class="panel-body">
-            <h5 class="m-t-0">Photos <small>· <a href="#">Edit</a></small></h5>
-            <div data-grid="images" data-target-height="150">
-              <div>
-                <img data-width="640" data-height="640" data-action="zoom" src="assets/img/instagram_5.jpg">
-              </div>
-
-              <div>
-                <img data-width="640" data-height="640" data-action="zoom" src="assets/img/instagram_6.jpg">
-              </div>
-
-              <div>
-                <img data-width="640" data-height="640" data-action="zoom" src="assets/img/instagram_7.jpg">
-              </div>
-
-              <div>
-                <img data-width="640" data-height="640" data-action="zoom" src="assets/img/instagram_8.jpg">
-              </div>
-
-              <div>
-                <img data-width="640" data-height="640" data-action="zoom" src="assets/img/instagram_9.jpg">
-              </div>
-
-              <div>
-                <img data-width="640" data-height="640" data-action="zoom" src="assets/img/instagram_10.jpg">
-              </div>
-            </div>
+            <h5 class="m-t-0">Attester</h5>
+            <p>Last opp attester</p>
           </div>
         </div>
       </div>
 
       <div class="col-md-6">
         <ul class="list-group media-list media-list-stream">
-          <li class="media list-group-item p-a">
-            <div class="media-left">
-              <span class="media-object fa fa-align-left"></span>
-            </div>
-            <div class="media-body">
-              <div class="media-heading">
-                <small class="pull-right text-muted">Kort om deg</small>
-                <h4>Biografi</h4>
+          <form action="oppdater" method="POST">
+            {{ csrf_field() }}
+            <li class="media list-group-item p-a">
+              <div class="media-left">
+                <span class="media-object fa fa-align-left"></span>
               </div>
-              <textarea class="form-control" placeholder="Kort om deg"></textarea>
-            </div>
-          </li>
-
-          <li class="media list-group-item p-a">
-            <div class="media-left">
-              <span class="media-object fa fa-info"></span>
-            </div>
-            <div class="media-body">
-              <div class="media-body-text">
+              <div class="media-body">
                 <div class="media-heading">
-                  <small class="pull-right text-muted">Bare litt...</small>
-                  <h4>Litt om deg</h4>
+                  <small class="pull-right text-muted">Kort om deg</small>
+                  <h4>Biografi</h4>
                 </div>
-                <form>
-                  <div class="form-group">
-                    <label for="fornavn">Navn</label>
-                    <div class="row">
-                      <div class="col-xs-6 p-r-0">
-                        <input type="text" class="form-control" id="fornavn" placeholder="Fornavn">
-                      </div>
-                      <div class="col-xs-6">
-                        <input type="text" class="form-control" id="etternavn" placeholder="Etternavn">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="adresse">Bosted</label>
-                    <div class="row">
-                      <div class="col-xs-5 p-r-0">
-                        <input type="text" class="form-control" id="adresse" placeholder="Adresse">
-                      </div>
-                      <div class="col-xs-2 p-r-0">
-                        <input type="text" class="form-control" id="postnr" placeholder="PostNr">
-                      </div>
-                      <div class="col-xs-5">
-                        <input type="text" class="form-control" id="poststed" placeholder="Poststed">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="epost">Epost</label>
-                    <input type="email" class="form-control" id="epost" placeholder="Epost">
-                  </div>
-                  <div class="form-group">
-                    <label for="dob">Fødselsdato</label>
-                    <div class="input-group date">
-                      <input type="text" class="form-control" placeholder="Fødselsdato"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="facebook">Sosiale medier</label>
-                    <div class="row">
-                      <div class="col-xs-6 p-r-0">
-                        <div class="form-group has-feedback">
-                          <input type="text" class="form-control" id="facebook" placeholder="Facebook">
-                          <i class="fa fa-facebook form-control-feedback"></i>
-                        </div>
-                      </div>
-                      <div class="col-xs-6">
-                        <div class="form-group has-feedback">
-                          <input type="text" id="linkedin" class="form-control" placeholder="LinkedIn">
-                          <i class="fa fa-linkedin form-control-feedback"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <textarea name="bio" class="form-control" placeholder="Kort om deg"></textarea>
               </div>
-            </div>
-          </li>
+            </li>
 
-          <li class="media list-group-item p-a">
-            <div class="media-left">
-              <span class="media-object fa fa-graduation-cap"></span>
-            </div>
-            <div class="media-body">
-              <div class="media-heading">
-                <small class="pull-right text-muted">Studier og tider</small>
-                <h4>Dine studier</h4>
+            <li class="media list-group-item p-a">
+              <div class="media-left">
+                <span class="media-object fa fa-info"></span>
               </div>
+              <div class="media-body">
+                <div class="media-body-text">
+                  <div class="media-heading">
+                    <small class="pull-right text-muted">Bare litt...</small>
+                    <h4>Litt om deg</h4>
+                  </div>
+                    <div class="form-group">
+                      <label for="fornavn">Navn</label>
+                      <div class="row">
+                        <div class="col-xs-6 p-r-0">
+                          <input name="fornavn" type="text" class="form-control" id="fornavn" placeholder="Fornavn">
+                        </div>
+                        <div class="col-xs-6">
+                          <input name="etternavn" type="text" class="form-control" id="etternavn" placeholder="Etternavn">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="adresse">Bosted</label>
+                      <div class="row">
+                        <div class="col-xs-5 p-r-0">
+                          <input name="adresse" type="text" class="form-control" id="adresse" placeholder="Adresse">
+                        </div>
+                        <div class="col-xs-2 p-r-0">
+                          <input name="postNr" type="text" class="form-control" id="postnr" placeholder="PostNr">
+                        </div>
+                        <div class="col-xs-5">
+                          <input name="poststed" type="text" class="form-control" id="poststed" placeholder="Poststed">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="epost">Epost</label>
+                      <input name="email" type="email" class="form-control" id="epost" placeholder="Epost">
+                    </div>
+                    <div class="form-group">
+                      <label for="dob">Fødselsdato</label>
+                      <div class="input-group date">
+                        <input name="dob" type="text" class="form-control" placeholder="Fødselsdato"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="facebook">Sosiale medier</label>
+                      <div class="row">
+                        <div class="col-xs-6 p-r-0">
+                          <div class="form-group has-feedback">
+                            <input name="facebook" type="text" class="form-control" id="facebook" placeholder="Facebook">
+                            <i class="fa fa-facebook form-control-feedback"></i>
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group has-feedback">
+                            <input name="linkedin" type="text" id="linkedin" class="form-control" placeholder="LinkedIn">
+                            <i class="fa fa-linkedin form-control-feedback"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="media list-group-item p-a">
+              <div class="media-left">
+                <span class="media-object fa fa-graduation-cap"></span>
+              </div>
+              <div class="media-body">
+                <div class="media-heading">
+                  <small class="pull-right text-muted">Studier og tider</small>
+                  <h4>Dine studier</h4>
+                </div>
                 <div class="form-group">
                   <label for="studiested">Studiested</label>
-                  <select id="studiested" class="form-control">
+                  <select name="studiested" id="studiested" class="form-control">
                     <option value="bø">Bø</option>
                     <option value="notodden">Notodden</option>
                   </select>
@@ -192,43 +163,21 @@
                   <label for="studieretning">Studieretning</label>
                   @yield('selectStudieretning')
                 </div>
-                <div id="studieretningValg">
-                  <hr>
-                  <div class="form-group">
-                    <input class="form-control" name="studretning[]" value="studretning">
-                  </div> 
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-xs-5 form-group p-r-0">
-                        <select class="form-control" name="campus[]">
-                            <option selected disabled>Campus</option>
-                            <option value="Campus Bø">Bø</option>
-                            <option value="Campus Porsgrunn">Porsgrunn</option>
-                        </select>
-                      </div>
-                      <div class="col-xs-3 form-group p-r-0">
-                        <select class="form-control" name="datoFra[]" class="datoFra">
-                            <option selected disabled>Fra</option>
-                            <option value=""></option>
-                        </select>
-                      </div>
-                      <div class="col-xs-3 form-group">
-                        <select class="form-control" name="datoTil[]" class="datoTil">
-                            <option selected disabled>Til</option>
-                            <option value=""></option>
-                        </select>
-                      </div>
-                      <div class="col-xs-1">
-                        <span onclick="return slettRad(this)" class="icon slettRad scaryRed-color">
-                            <span class="fa fa-close fa-lg pointer"></span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                <div id="studieretningValg"></div>
+              </div>
+            </li>
+            <li class="media list-group-item p-a">
+              <div class="media-left">
+                <span class="media-object fa fa-disk"></span>
+              </div> <!-- end media-left -->
+              <div class="media-body">
+                <div class="form-group">
+                  <a href="/bruker" class="btn btn-danger pull-right">Avbryt</a>
+                  <button type="submit" class="btn btn-success pull-right m-r">Lagre</button>
                 </div>
-              </form>
-            </div>
-          </li>
+              </div> <!-- end media-body -->
+            </li>
+          </form>
         </ul>
       </div>
       <div class="col-md-3">

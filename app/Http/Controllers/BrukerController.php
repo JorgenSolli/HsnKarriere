@@ -34,12 +34,4 @@ class BrukerController extends Controller
                 'brukerinfo' => $brukerinfo
             ]);
     }
-
-    public function redigerBruker() {
-        $brukerinfo = Auth::user();
-        return view('bruker.redigerBruker',
-            [
-                'brukerinfo' => $brukerinfo
-            ]);
-    }
 }

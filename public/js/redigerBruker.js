@@ -1,53 +1,20 @@
 $(function () {
     // Legger til nye rader per studieretning
     $("#studieretning").on('change', function () {
+        // Finner studieretningen
         var val = $("#studieretning").val();
 
-        $("#studieretningValg").append('<div class="studieretningValg control flex-form">' +
-            '<p class="control is-expanded">' +
-            '<input class="input is-disabled" type="text" value="' + val + '">' +
-            '<input type="hidden" name="studretning[]" value="' + val + '">' +
-            '</p>' +
-            '<span class="select control">' +
-            '<select name="campus[]">' +
-            '<option disabled selected>Campus</option>' +
-            '<option value="Campus Bø">Bø</option>' +
-            '<option value="Campus Porsgrunn">Porsgrunn</option>' +
-            '</select>' +
-            '</span>' +
-            '<span class="control select">' +
-            '<select name="datoFra[]" class="datoFra">' +
-            '<option disabled selected>Fra</option>' +
-            '</select>' +
-            '</span>' +
-            '<span class="select control">' +
-            '<select name="datoTil[]" class="datoTil">' +
-            '<option disabled selected>Til</option>' +
-            '</select>' +
-            '</span>' +
-            '<span onclick="return slettRad(this)" class="icon slettRad scaryRed-color">' +
-            '<i class="fa fa-close pointer"></i>' +
-            '</span>' +
-            '</div>'
-        );
+        // Legger til nye inputfields
+        studvalgInput(val);
 
         var myDate = new Date();
         var year = myDate.getFullYear();
-
-        for(var i = 2000; i <= year+1; i++){
-            $("#studieretningValg .datoFra").append("<option value=" + i + ">" + i + "</option>");
-        }
-
-        for(var i = year+5; i >= 2000; i--){
-            $("#studieretningValg .datoTil").append("<option value=" + i + ">" + i + "</option>");
-        }
-        $(".studieretningValg:last-child").fadeIn(150).fadeOut(150).fadeIn(150).fadeOut(150).fadeIn(150).fadeOut(150).fadeIn(150);
     });
 
-    function slettRad(value) {
-        $(value).parent().empty(); // Slette value
-        $(value).parent().hide(); // Skjuler raden
-    }
+    $(document).on('click', '.slettRad', function () {
+        // Slette value og fjerner feltet
+        $(this).closest('.studieretningValg').empty().hide(); 
+    });
 
     /* Nytt/endre forsidebilde */
     function forsidebildeBtn() {
@@ -89,3 +56,54 @@ $(function () {
     });
 
 });
+
+function studvalgInput (studretning) {
+    var myDate = new Date();
+    var year = myDate.getFullYear();
+    var datoFra = [];
+    var datoTil = [];
+
+    for(var i = 2000; i <= year+1; i++){
+        datoFra.push("<option value=" + i + ">" + i + "</option>");
+    }
+
+    for(var i = year+5; i >= 2000; i--){
+        datoTil.push("<option value=" + i + ">" + i + "</option>");
+    }
+
+    var input = '<div class="studieretningValg">' +
+       '<hr>' + 
+       '<div class="form-group">' +
+         '<input class="form-control" name="studretning" value="' + studretning + '">' +
+       '</div>' +
+       '<div class="form-group">' +
+            '<div class="row">' +
+                '<div class="col-xs-5 form-group p-r-0">' +
+                    '<select class="form-control" name="campus">' +
+                        '<option selected disabled>Campus</option>' +
+                        '<option value="Campus Bø">Bø</option>' +
+                        '<option value="Campus Porsgrunn">Porsgrunn</option>' +
+                    '</select>' +
+                '</div>' +
+                '<div class="col-xs-3 form-group p-r-0">' +
+                    '<select class="form-control" name="datoFra" class="datoFra">' +
+                        '<option selected disabled>Fra</option>' +
+                        datoFra + 
+                    '</select>' +
+                '</div>' +
+                '<div class="col-xs-3 form-group">' +
+                    '<select class="form-control" name="datoTil" class="datoTil">' +
+                        '<option selected disabled>Til</option>' +
+                        datoTil + 
+                    '</select>' +
+                '</div>' +
+                '<div class="col-xs-1">' +
+                    '<span class="slettRad scaryRed-color">' +
+                    '<span class="fa fa-close fa-lg cursor"></span>' +
+                    '</span>' +
+                '</div>' +
+           '</div>' +
+        '</div>' +
+    '</div';
+    $("#studieretningValg").append(input);
+}
