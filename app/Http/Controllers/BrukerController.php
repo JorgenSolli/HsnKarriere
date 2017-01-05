@@ -11,26 +11,26 @@ class BrukerController extends Controller
 {
     public function bruker(QuerryService $querry_service) {
         $brukerinfo = Auth::user();
-        $bedrifter  = $querry_service->finnBedrifter($brukerinfo->fagType)['bedrifter'];
+        $bedrifter  = $querry_service->finnBedrifter($brukerinfo->student_studerer)['bedrifter'];
         $kontakter  = "";
-        $fagtyper   = $querry_service->finnBedrifter($brukerinfo->fagType)['fagtyper'];
+        $student_studerer = $querry_service->finnBedrifter($brukerinfo->student_studerer)['student_studerer'];
 
         return view('bruker.bruker', 
         	[
 		    	'bedrifter' => $bedrifter, 
 		    	'kontakter' => $kontakter,
-		    	'fagtyper' => $fagtyper,
+		    	'student_studerer' => $student_studerer,
 		    	'brukerinfo' => $brukerinfo
         	]);
 	}
 
     public function seBruker(QuerryService $querry_service, $id) {
         $brukerinfo = DB::table('users')->where('id', $id)->first();
-        $fagtyper = $fagtyper = array_chunk(preg_split('/(:|;)/', $brukerinfo->fagType), 4);
+        $student_studerer = $student_studerer = array_chunk(preg_split('/(:|;)/', $brukerinfo->student_studerer), 4);
 
         return view('bruker.seBruker',
             [
-                'fagtyper' => $fagtyper,
+                'student_studerer' => $student_studerer,
                 'brukerinfo' => $brukerinfo
             ]);
     }

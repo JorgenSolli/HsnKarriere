@@ -15,14 +15,14 @@ class CreateStillingerTable extends Migration
     {
         Schema::create('stillinger', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bedrift_id');
-            $table->string('sted');
-            $table->string('varighet');
-            $table->string('type');
-            $table->string('frist');
-            $table->string('stilling_tittel');
-            $table->string('bransje');
-            $table->text('info');
+            $table->integer('bedrift_id')->nullable();
+            $table->string('sted')->nullable();
+            $table->string('varighet')->nullable();
+            $table->string('type')->nullable();
+            $table->string('frist')->nullable();
+            $table->string('stilling_tittel')->nullable();
+            $table->string('bransje')->nullable();
+            $table->text('info')->nullable();
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ Route::get('bruker/rediger', 'UserController@index')->middleware('auth');
 
 Route::get('bruker/{bruker}', 'BrukerController@seBruker')->middleware('auth');
 
-Route::post('bruker/rediger/{id}', 'UserController@update');
+// Update a user
+Route::patch('bruker/{user}', 'UserController@update');
 
 Auth::routes();

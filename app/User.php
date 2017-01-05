@@ -15,8 +15,33 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
-    ];
+        'email',
+        'password',
+        'bruker_type',
+        'bruker_aktivert',
+        'fornavn',
+        'etternavn',
+        'telefon',
+        'adresse',
+        'postnr',
+        'poststed',
+        'bio',
+        'dob',
+        'profilbilde',
+        'student_nr',
+        'student_campus',
+        'student_cv',
+        'student_attester',
+        'student_studerer',
+        'bedrift_navn',
+        'bedrift_avdeling',
+        'bedrift_fagfelt',
+        'foreleser_rom_nr',
+        'nettside',
+        'facebook',
+        'linkedin',
+        'sist_aktiv'
+];
 
     /**
      * The attributes that should be hidden for arrays.

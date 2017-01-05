@@ -15,11 +15,11 @@ class CreateOppgaverTable extends Migration
     {
         Schema::create('oppgaver', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fil');
-            $table->integer('bedrift_id');
-            $table->string('type');
-            $table->string('tittel');
-            $table->string('info');
+            $table->string('fil')->nullable();
+            $table->integer('bedrift_id')->nullable();
+            $table->string('type')->nullable();
+            $table->string('tittel')->nullable();
+            $table->string('info')->nullable();
             $table->timestamps();
         });
     }

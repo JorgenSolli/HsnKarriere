@@ -14,10 +14,10 @@ class CreateBekreftTable extends Migration
     public function up()
     {
         Schema::create('bekreft', function (Blueprint $table) {
-            $table->string('hash');
-            $table->string('email');
-            $table->integer('bruker_id');
-            $table->string('bruker_type');
+            $table->string('hash')->nullable();
+            $table->string('email')->nullable();
+            $table->integer('bruker_id')->nullable();
+            $table->string('bruker_type')->nullable();
             $table->timestamps();
         });
     }

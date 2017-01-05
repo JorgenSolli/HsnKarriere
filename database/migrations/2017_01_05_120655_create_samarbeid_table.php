@@ -15,19 +15,19 @@ class CreateSamarbeidTable extends Migration
     {
         Schema::create('samarbeid', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type_samarbeid');
-            $table->integer('bedrift_id');
-            $table->integer('student_id');
-            $table->integer('foreleser_id');
-            $table->integer('godkjent_av_foreleser');
-            $table->integer('godkjent_av_student');
-            $table->integer('godkjent_av_bedrift');
-            $table->integer('signert_av_student');
-            $table->integer('signert_av_bedrift');
-            $table->integer('kontrakt_godkjent_av_foreleser');
-            $table->string('kontrakt');
-            $table->string('arbeidsbesk');
-            $table->date('startdato');
+            $table->string('type_samarbeid')->nullable();
+            $table->integer('bedrift_id')->nullable();
+            $table->integer('student_id')->nullable();
+            $table->integer('foreleser_id')->nullable();
+            $table->integer('godkjent_av_foreleser')->nullable();
+            $table->integer('godkjent_av_student')->nullable();
+            $table->integer('godkjent_av_bedrift')->nullable();
+            $table->integer('signert_av_student')->nullable();
+            $table->integer('signert_av_bedrift')->nullable();
+            $table->integer('kontrakt_godkjent_av_foreleser')->nullable();
+            $table->string('kontrakt')->nullable();
+            $table->string('arbeidsbesk')->nullable();
+            $table->string('startdato')->nullable();
             $table->timestamps();
         });
     }

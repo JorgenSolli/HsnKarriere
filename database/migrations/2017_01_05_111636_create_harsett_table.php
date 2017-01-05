@@ -14,7 +14,7 @@ class CreateHarsettTable extends Migration
     public function up()
     {
         Schema::create('harsett', function (Blueprint $table) {
-            $table->string('samarbeid');
+            $table->string('samarbeid')->nullable();
             $table->timestamps();
         });
     }

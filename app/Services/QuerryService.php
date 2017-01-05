@@ -8,13 +8,13 @@ class QuerryService {
 
     public function finnBedrifter($fagType) {
         $bedrifter = "";
-        $fagtyper = "";
+        $student_studerer = "";
 
         if ($fagType != "") {
-            $fagtyper = array_chunk(preg_split('/(:|;)/', $fagType), 4);
+            $student_studerer = array_chunk(preg_split('/(:|;)/', $fagType), 4);
 
             $fagtypeNavnArray = array();
-            foreach ($fagtyper as $item) {
+            foreach ($student_studerer as $item) {
                 $fagtypeNavnArray[] = $item[0];
             }
 
@@ -34,7 +34,7 @@ class QuerryService {
 
         return [
             'bedrifter' => $bedrifter,
-            'fagtyper' => $fagtyper
+            'student_studerer' => $student_studerer
         ];       
     }
 

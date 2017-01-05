@@ -25,7 +25,7 @@
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</a>
             </h5>
 
-            <p class="m-b-md">{{ $brukerinfo->bio }} [ ... bio ... ]</p>
+            <p class="m-b-md">{{ $brukerinfo->bio }}</p>
 
             <ul class="panel-menu">
               <li class="panel-menu-item">
@@ -62,7 +62,9 @@
 
       <div class="col-md-6">
         <ul class="list-group media-list media-list-stream">
-          <form action="rediger/{{ $brukerinfo->id }}" method="POST">
+          <form method="POST" action="/bruker/{{ $brukerinfo->id }}" enctype="multipart/form-data">
+            {{ method_field('PATCH') }}
+            {{ csrf_field() }}
             <li class="media list-group-item p-a">
               <div class="media-left">
                 <span class="media-object fa fa-align-left"></span>
@@ -72,7 +74,7 @@
                   <small class="pull-right text-muted">Kort om deg</small>
                   <h4>Biografi</h4>
                 </div>
-                <textarea name="bio" class="form-control" placeholder="Kort om deg"></textarea>
+                <textarea name="bio" class="form-control" placeholder="Kort om deg">{{ $brukerinfo->bio }}</textarea>
               </div>
             </li>
 
@@ -90,10 +92,12 @@
                       <label for="fornavn">Navn</label>
                       <div class="row">
                         <div class="col-xs-6 p-r-0">
-                          <input name="fornavn" type="text" class="form-control" id="fornavn" placeholder="Fornavn">
+                          <input name="fornavn" type="text" class="form-control" id="fornavn" placeholder="Fornavn" 
+                          value="{{$brukerinfo->fornavn}}">
                         </div>
                         <div class="col-xs-6">
-                          <input name="etternavn" type="text" class="form-control" id="etternavn" placeholder="Etternavn">
+                          <input name="etternavn" type="text" class="form-control" id="etternavn" placeholder="Etternavn" 
+                          value="{{ $brukerinfo->etternavn }}">
                         </div>
                       </div>
                     </div>
@@ -101,24 +105,27 @@
                       <label for="adresse">Bosted</label>
                       <div class="row">
                         <div class="col-xs-5 p-r-0">
-                          <input name="adresse" type="text" class="form-control" id="adresse" placeholder="Adresse">
+                          <input name="adresse" type="text" class="form-control" id="adresse" placeholder="Adresse" 
+                          value="{{ $brukerinfo->adresse }}">
                         </div>
                         <div class="col-xs-2 p-r-0">
-                          <input name="postNr" type="text" class="form-control" id="postnr" placeholder="PostNr">
+                          <input name="postnr" type="text" class="form-control" id="postnr" placeholder="Postnr" 
+                          value="{{ $brukerinfo->postnr }}">
                         </div>
                         <div class="col-xs-5">
-                          <input name="poststed" type="text" class="form-control" id="poststed" placeholder="Poststed">
+                          <input name="poststed" type="text" class="form-control" id="poststed" placeholder="Poststed" 
+                          value="{{ $brukerinfo->poststed }}">
                         </div>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="epost">Epost</label>
-                      <input name="email" type="email" class="form-control" id="epost" placeholder="Epost">
+                      <input name="email" type="email" class="form-control" id="epost" placeholder="Epost" value="{{ $brukerinfo->email }}">
                     </div>
                     <div class="form-group">
                       <label for="dob">Fødselsdato</label>
                       <div class="input-group date">
-                        <input name="dob" type="text" class="form-control" placeholder="Fødselsdato"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        <input name="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                       </div>
                     </div>
                     <div class="form-group">
@@ -126,13 +133,15 @@
                       <div class="row">
                         <div class="col-xs-6 p-r-0">
                           <div class="form-group has-feedback">
-                            <input name="facebook" type="text" class="form-control" id="facebook" placeholder="Facebook">
+                            <input name="facebook" type="text" class="form-control" id="facebook" placeholder="Facebook" 
+                            value="{{ $brukerinfo->facebook }}">
                             <i class="fa fa-facebook form-control-feedback"></i>
                           </div>
                         </div>
                         <div class="col-xs-6">
                           <div class="form-group has-feedback">
-                            <input name="linkedin" type="text" id="linkedin" class="form-control" placeholder="LinkedIn">
+                            <input name="linkedin" type="text" id="linkedin" class="form-control" placeholder="LinkedIn" 
+                            value="{{ $brukerinfo->linkedin }}">
                             <i class="fa fa-linkedin form-control-feedback"></i>
                           </div>
                         </div>
@@ -154,8 +163,13 @@
                 <div class="form-group">
                   <label for="studiested">Studiested</label>
                   <select name="student_campus" id="studiested" class="form-control">
-                    <option value="bø">Bø</option>
-                    <option value="notodden">Notodden</option>
+                    @if ($brukerinfo->student_campus == "bø")
+                      <option value="bø" selected>Bø</option>
+                      <option value="notodden">Notodden</option>
+                    @else
+                      <option value="notodden" selected>Notodden</option>
+                      <option value="bø">Bø</option>
+                    @endif
                   </select>
                 </div>
                 <div class="form-group">
@@ -176,8 +190,6 @@
                 </div>
               </div> <!-- end media-body -->
             </li>
-            {{ csrf_field() }}
-            <!-- <input type="hidden" name="_method" value="put"> -->
           </form>
         </ul>
       </div>
@@ -265,7 +277,8 @@
           <h4 class="modal-title" id="myModalLabel"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
         </div>
         <div class="modal-body">
-          <form method="POST" action="#" enctype="multipart/form-data">
+          <form method="POST" action="/bruker/{{ $brukerinfo->id }}" enctype="multipart/form-data">
+            {{ method_field('PATCH') }}
             {{ csrf_field() }}
             <input id="forsidebilde-input" type="file" multiple data-min-file-count="1">
             <br>

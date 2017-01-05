@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
@@ -72,31 +73,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::find($id);
-        
-        $user->bio = $request->bio;
-        $user->fornavn = $request->fornavn;
-        $user->etternavn = $request->etternavn;
-        $user->adresse = $request->adresse;
-        $user->postnr = $request->postNr;
-        $user->poststed = $request->poststed;
-        $user->email = $request->email;
-        $user->dob = $request->dob;
-        $user->facebook = $request->facebook;
-        $user->linkedin = $request->linkedin;
-        $user->student_campus = $request->student_campus;
-        
-        // concatinate this
-        $user->student_studerer = $request->student_studerer;
-        $user->datoFra = $request->datoFra;
-        $user->datoTil = $request->datoTil;
+        // Gets all data from form
+        //$user = New User($request->all());
+        //$user->id = Auth::id();
+        //$user->fornavn = $request->fornavn;
+        //$user->save();
 
-        $user->save();
+        //$user = $request->fornavn;
+        $user->update($request->all());
 
-        //updateUser::update(Request::all(), Auth::id());
-        return "success";
+        //Redirect to prev page
+        return back();
     }
 
     /**

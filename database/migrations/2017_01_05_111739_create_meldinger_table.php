@@ -15,11 +15,11 @@ class CreateMeldingerTable extends Migration
     {
         Schema::create('meldinger', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fra_bruker_id');
-            $table->integer('til_bruker_id');
-            $table->string('tittel');
-            $table->string('innhold');
-            $table->string('sett_av');
+            $table->integer('fra_bruker_id')->nullable();
+            $table->integer('til_bruker_id')->nullable();
+            $table->string('tittel')->nullable();
+            $table->string('innhold')->nullable();
+            $table->string('sett_av')->nullable();
             $table->timestamps();
         });
     }

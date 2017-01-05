@@ -15,10 +15,10 @@ class CreateMeldingerSvarTable extends Migration
     {
         Schema::create('meldinger_svar', function (Blueprint $table) {
             $table->increments('svar_id');
-            $table->integer('melding_id');
-            $table->string('forfatter');
-            $table->string('innhold');
-            $table->string('sett_av');
+            $table->integer('melding_id')->nullable();
+            $table->string('forfatter')->nullable();
+            $table->string('innhold')->nullable();
+            $table->string('sett_av')->nullable();
             $table->timestamps();
         });
     }

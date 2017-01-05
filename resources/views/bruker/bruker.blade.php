@@ -7,11 +7,7 @@
             <img class="img-circle media-object" src="uploads/img/{{ $brukerinfo->profilbilde }}">
             <h3 class="profile-header-user">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</h3>
             <p class="profile-header-bio">Studerer 
-            @unless ($fagtyper == "")
-              @foreach ($fagtyper as $fagtype) 
-                  {{ $fagtype[0] }} ved {{ $fagtype[1] }}, {{ $fagtype[2] }} til {{ $fagtype[3] }}
-              @endforeach
-            @endunless
+
              </p>
         </div>
     </div>
