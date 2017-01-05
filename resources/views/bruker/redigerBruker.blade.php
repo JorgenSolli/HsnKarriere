@@ -62,8 +62,7 @@
 
       <div class="col-md-6">
         <ul class="list-group media-list media-list-stream">
-          <form action="oppdater" method="POST">
-            {{ csrf_field() }}
+          <form action="rediger/{{ $brukerinfo->id }}" method="POST">
             <li class="media list-group-item p-a">
               <div class="media-left">
                 <span class="media-object fa fa-align-left"></span>
@@ -154,7 +153,7 @@
                 </div>
                 <div class="form-group">
                   <label for="studiested">Studiested</label>
-                  <select name="studiested" id="studiested" class="form-control">
+                  <select name="student_campus" id="studiested" class="form-control">
                     <option value="bø">Bø</option>
                     <option value="notodden">Notodden</option>
                   </select>
@@ -177,6 +176,8 @@
                 </div>
               </div> <!-- end media-body -->
             </li>
+            {{ csrf_field() }}
+            <!-- <input type="hidden" name="_method" value="put"> -->
           </form>
         </ul>
       </div>

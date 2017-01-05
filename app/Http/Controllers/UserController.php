@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\User;
 
-use App\updateUser;
-
-class updateUserController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +29,7 @@ class updateUserController extends Controller
      */
     public function create()
     {
-        //
+        return "create asd!";
     }
 
     /**
@@ -76,21 +74,22 @@ class updateUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = Post::findOrFail($id);
+        $user = User::find($id);
         
         $user->bio = $request->bio;
         $user->fornavn = $request->fornavn;
         $user->etternavn = $request->etternavn;
         $user->adresse = $request->adresse;
-        $user->postNr = $request->postNr;
+        $user->postnr = $request->postNr;
         $user->poststed = $request->poststed;
         $user->email = $request->email;
         $user->dob = $request->dob;
         $user->facebook = $request->facebook;
         $user->linkedin = $request->linkedin;
-        $user->studiested = $request->studiested;
-        $user->studretning = $request->studretning;
-        $user->campus = $request->campus;
+        $user->student_campus = $request->student_campus;
+        
+        // concatinate this
+        $user->student_studerer = $request->student_studerer;
         $user->datoFra = $request->datoFra;
         $user->datoTil = $request->datoTil;
 

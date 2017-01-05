@@ -74,7 +74,7 @@ function studvalgInput (studretning) {
     var input = '<div class="studieretningValg">' +
        '<hr>' + 
        '<div class="form-group">' +
-         '<input class="form-control" name="studretning" value="' + studretning + '">' +
+         '<input class="form-control" name="student_studerer" value="' + studretning + '">' +
        '</div>' +
        '<div class="form-group">' +
             '<div class="row">' +

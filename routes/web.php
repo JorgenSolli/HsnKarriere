@@ -12,16 +12,13 @@
 */
 
 Route::get('/', 'PageController@hjem');
+
 Route::get('bruker', 'BrukerController@bruker')->middleware('auth');
 
-Route::group(['middleware' => ['web']], function() {
-	Route::resource('web', 'updateUserController');
-});
+Route::get('bruker/rediger', 'UserController@index')->middleware('auth');
 
-//Route::get('bruker/rediger', 'updateUserController@index')->middleware('auth');
+Route::get('bruker/{bruker}', 'BrukerController@seBruker')->middleware('auth');
 
-// Route::get('bruker/{bruker}', 'BrukerController@seBruker')->middleware('auth');
-
-//Route::post('bruker/oppdater', 'updateUserController@update');
+Route::post('bruker/rediger/{id}', 'UserController@update');
 
 Auth::routes();
