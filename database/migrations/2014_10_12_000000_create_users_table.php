@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->text('bio')->nullable();
             $table->string('dob')->nullable();
             $table->string('profilbilde')->nullable();
+            $table->string('forsidebilde')->nullable();
             $table->integer('student_nr')->nullable();
             $table->string('student_campus')->nullable();
             $table->string('student_cv')->nullable();

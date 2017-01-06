@@ -19,13 +19,13 @@ class QuerryService {
             }
 
             $sqlFirst = "SELECT * FROM users WHERE ";
-            $sqlParams = "`brukerType` = 'bedrift' AND `fagType` LIKE ";
+            $sqlParams = "`bruker_type` = 'bedrift' AND `bedrift_fagfelt` LIKE ";
             $sqlCounter = count($fagtypeNavnArray);
             for ($i = 0; $i <= $sqlCounter; $i++) {
                 if (--$sqlCounter <= 0) {
                     $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%'";
                 } else {
-                    $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%' OR `brukerType` = 'bedrift' AND `fagType` LIKE ";
+                    $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%' OR `bruker_type` = 'bedrift' AND `bedrift_fagfelt` LIKE ";
                 }
             }
             $sql = $sqlFirst . $sqlParams;

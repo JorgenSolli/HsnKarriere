@@ -36,8 +36,29 @@ body {
 }
 
 /* Helpers */
+.p-a-s {padding: 10px !important}
+.p-t-s {padding-top: 10px !important}
+.p-r-s {padding-right: 10px !important}
+.p-b-s {padding-bottom: 10px !important}
+.p-l-s {padding-left: 10px !important}
+
+.p-a-xs {padding: 5px !important}
+.p-t-xs {padding-top: 5px !important}
+.p-r-xs {padding-right: 5px !important}
+.p-b-xs {padding-bottom: 5px !important}
+.p-l-xs {padding-left: 5px !important}
+
 .cursor {
   cursor: pointer;
+}
+
+.panel-hover {
+    transition: .3s;
+}
+
+.panel-hover:hover {
+    transition: .5s;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);
 }
 
 .mar-bot {
@@ -50,6 +71,17 @@ body {
 } 
 
 /* redigerBruker */
+#nyttProfilbilde {
+    width: 100%;
+    right: 0;
+    bottom: 35px;
+    cursor: default;
+}
+#nyttProfilbilde {
+    color: $black;
+    cursor: pointer;
+}
+
 .imgBtn {
     background: $white;
     padding: 0 5px 0 5px;

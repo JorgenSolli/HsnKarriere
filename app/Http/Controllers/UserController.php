@@ -67,22 +67,38 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updates the usertable.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $user (id)
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function updateUser(Request $request, User $user)
     {
-        // Gets all data from form
-        //$user = New User($request->all());
-        //$user->id = Auth::id();
-        //$user->fornavn = $request->fornavn;
-        //$user->save();
+        // Gets all data from form and pushes to DB
+        $data = $request->all();
 
-        //$user = $request->fornavn;
-        $user->update($request->all());
+        // Formats the data for the student_studerer field. Concats studretning, campus, datoFra og datoTil
+        $student_studerer = NULL;
+        /* Går gjennom valg (student_studerer, campus, år-fra->til) for studentretning */
+        if (isset($data['datoTil']) && isset($data['datoFra']) && isset($data['campus']) && isset($data['student_studerer'])) {
+            // -1 because the index starts at 0
+            $len = count($data['datoTil']) -1;
+            for ($i = 0; $i <= $len; $i++) {
+                /* Dropper skilletegn på siste input i array */
+                if ($i === $len) {
+                    $student_studerer .= $data['student_studerer'][$i] . ":" . $data['campus'][$i] . ":" . $data['datoFra'][$i] . ":" . $data['datoTil'][$i];
+                } else {
+                    $student_studerer .= $data['student_studerer'][$i] . ":" . $data['campus'][$i] . ":" . $data['datoFra'][$i] . ":" . $data['datoTil'][$i] . ";";
+                }
+            }
+        }
+
+        // Adds contacenated data to Request data array
+        $data['student_studerer'] = $student_studerer;
+
+        // Updates the DB with new data
+        $user->update($data);
 
         //Redirect to prev page
         return back();

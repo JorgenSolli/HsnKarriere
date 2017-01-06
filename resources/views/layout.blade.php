@@ -66,13 +66,13 @@
                     @else
                         <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
                             <li>
-                                <a class="app-notifications" href="">
+                                <a class="app-notifications" href="/innboks">
                                     <span class="icon icon-bell"></span>
                                 </a>
                             </li>
                             <li>
                                 <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
-                                    <img class="img-circle" src="/uploads/img/{{ $avatar }}">
+                                    <img class="img-circle" src="/uploads/{{ $avatar }}">
                                 </button>
                             </li>
                         </ul>

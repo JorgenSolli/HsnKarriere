@@ -37,6 +37,21 @@ $(function () {
     }
     forsidebildeBtn();
 
+    /* Nytt/endre profilbilde */
+    /* Todo: Fix the lenghty clickable space the the image produces! */
+    function profilbildeBtn() {
+        var btn = "#nyttProfilbilde";
+        /* Viser */
+        $(document).on('mouseover', '#profilbildeContainer, #nyttProfilbilde', function() {
+            $(btn).stop().fadeIn(100);
+        });
+        /* Skjuler */
+        $(document).on('mouseout', '#_profilbildeContainer > *', function() {
+            $(btn).stop().fadeOut(150);
+        });
+    }
+    profilbildeBtn();
+
     /* Datepicker for DOB */
     $('.input-group.date').datepicker({
       endDate: "today",
@@ -48,7 +63,8 @@ $(function () {
     });
 
     /* Uploads */
-    $('#forsidebilde-input').fileinput({
+    /* Todo: make sure images (specifically the avatar) is SQARE! Can probably fix this with CSS */
+    $('#forsidebilde-input, #profilbilde-input').fileinput({
         language: 'no',
         uploadUrl: '#',
         maxFileSize: 2000,
@@ -62,6 +78,8 @@ function studvalgInput (studretning) {
     var year = myDate.getFullYear();
     var datoFra = [];
     var datoTil = [];
+    // For later use;
+    var currStudSted = $('#studiested').val();
 
     for(var i = 2000; i <= year+1; i++){
         datoFra.push("<option value=" + i + ">" + i + "</option>");
@@ -74,25 +92,25 @@ function studvalgInput (studretning) {
     var input = '<div class="studieretningValg">' +
        '<hr>' + 
        '<div class="form-group">' +
-         '<input class="form-control" name="student_studerer" value="' + studretning + '">' +
+         '<input class="form-control" name="student_studerer[]" value="' + studretning + '">' +
        '</div>' +
        '<div class="form-group">' +
             '<div class="row">' +
                 '<div class="col-xs-5 form-group p-r-0">' +
-                    '<select class="form-control" name="campus">' +
+                    '<select class="form-control" name="campus[]">' +
                         '<option selected disabled>Campus</option>' +
                         '<option value="Campus Bø">Bø</option>' +
                         '<option value="Campus Porsgrunn">Porsgrunn</option>' +
                     '</select>' +
                 '</div>' +
                 '<div class="col-xs-3 form-group p-r-0">' +
-                    '<select class="form-control" name="datoFra" class="datoFra">' +
+                    '<select class="form-control" name="datoFra[]" class="datoFra">' +
                         '<option selected disabled>Fra</option>' +
                         datoFra + 
                     '</select>' +
                 '</div>' +
                 '<div class="col-xs-3 form-group">' +
-                    '<select class="form-control" name="datoTil" class="datoTil">' +
+                    '<select class="form-control" name="datoTil[]" class="datoTil">' +
                         '<option selected disabled>Til</option>' +
                         datoTil + 
                     '</select>' +

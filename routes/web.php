@@ -19,7 +19,13 @@ Route::get('bruker/rediger', 'UserController@index')->middleware('auth');
 
 Route::get('bruker/{bruker}', 'BrukerController@seBruker')->middleware('auth');
 
+Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
+
 // Update a user
-Route::patch('bruker/{user}', 'UserController@update');
+Route::patch('bruker/{user}', 'UserController@updateUser');
+
+// Upload something
+Route::post('bruker/uploads/forsidebilde', 'UploadController@uploadForsidebilde');
+Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
 
 Auth::routes();

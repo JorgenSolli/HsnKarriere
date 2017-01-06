@@ -7,20 +7,20 @@
     <div class="row">
       <div class="col-md-3">
         <div class="panel panel-default panel-profile m-b-md">
-          <div id="nyttForsidebilde" class="pos-a m-a cursor" data-toggle="modal" data-target="#nyttProfilbildeModal">
+          <div id="nyttForsidebilde" class="pos-a m-a cursor" data-toggle="modal" data-target="#nyttForsidebildeModal">
             <span class="fa fa-camera fa-lg"></span>
             <small style="display: none">Endre forsidebilde</small>
           </div>
-          <div id="forsidebildeContainer" class="panel-heading" style="background-image: url($brukerinfo->forsidebilde);"></div>
+          <div id="forsidebildeContainer" class="panel-heading" style="background-image: url(/uploads/{{ $brukerinfo->forsidebilde }});"></div>
           <div class="panel-body text-center">
-            <a href="profile/index.html">
-              <div id="nyttProfilbilde" class="pos-a m-a cursor">
-                <span class="fa fa-camera fa-lg"></span>
-                <small style="display: none">Endre forsidebilde</small>
-              </div>
-              <img class="panel-profile-img" src="/uploads/img/{{ $brukerinfo->profilbilde }}">
-            </a>
-
+            <div class="profilbildeRelative pos-r">
+              <a id="_profilbildeContainer">
+                <img id="profilbildeContainer" class="cursor panel-profile-img" src="/uploads/{{ $brukerinfo->profilbilde }}"
+                data-toggle="modal" data-target="#nyttProfilbildeModal">
+                <span id="nyttProfilbilde" class="pos-a fa fa-camera fa-2x" style="display: none"
+                data-toggle="modal" data-target="#nyttProfilbildeModal"></span>
+              </a>
+            </div>
             <h5 class="panel-title">
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</a>
             </h5>
@@ -123,10 +123,18 @@
                       <input name="email" type="email" class="form-control" id="epost" placeholder="Epost" value="{{ $brukerinfo->email }}">
                     </div>
                     <div class="form-group">
+                      <label for="telefon">Telefon</label>
+                      <input name="telefon" type="number" class="form-control" id="telefon" placeholder="Telefonnummer" value="{{ $brukerinfo->telefon }}">
+                    </div>
+                    <div class="form-group">
                       <label for="dob">Fødselsdato</label>
                       <div class="input-group date">
                         <input name="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                       </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="nettside">Nettside</label>
+                      <input name="nettside" type="text" class="form-control" id="nettside" placeholder="Din nettside" value="{{ $brukerinfo->nettside }}">
                     </div>
                     <div class="form-group">
                       <label for="facebook">Sosiale medier</label>
@@ -213,7 +221,7 @@
               <a class="media-left" href="#">
                 <img
                   class="media-object img-circle"
-                  src="/uploads/img/{{ $brukerinfo->profilbilde }}">
+                  src="/uploads/{{ $brukerinfo->profilbilde }}">
               </a>
               <div class="media-body">
                 <strong>Step Media</strong> · Bø
@@ -227,7 +235,7 @@
               <a class="media-left" href="#">
                 <img
                   class="media-object img-circle"
-                  src="/uploads/img/{{ $brukerinfo->profilbilde }}">
+                  src="/uploads/{{ $brukerinfo->profilbilde }}">
               </a>
               <div class="media-body">
                 <strong>Drangedal kommune</strong> · Drangedal
@@ -269,27 +277,46 @@
   </div>
 
   <!-- MODALS -->
-  <div id="nyttProfilbildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
         </div>
-        <div class="modal-body">
-          <form method="POST" action="/bruker/{{ $brukerinfo->id }}" enctype="multipart/form-data">
-            {{ method_field('PATCH') }}
+        <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
+          <div class="modal-body">
             {{ csrf_field() }}
-            <input id="forsidebilde-input" type="file" multiple data-min-file-count="1">
+            <input id="forsidebilde-input" name="forsidebilde" type="file" multiple data-min-file-count="1">
             <br>
+          </div>
+          <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Last opp</button>
             <button type="reset" class="btn btn-default">Nullstill</button>
-          </form>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="nyttProfilbildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Nytt profilbilde</h4>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+        <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
+          <div class="modal-body">
+            {{ csrf_field() }}
+            <input id="profilbilde-input" name="profilbilde" type="file" multiple data-min-file-count="1">
+            <br>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Last opp</button>
+            <button type="reset" class="btn btn-default">Nullstill</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

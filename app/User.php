@@ -28,6 +28,7 @@ class User extends Authenticatable
         'bio',
         'dob',
         'profilbilde',
+        'forsidebilde',
         'student_nr',
         'student_campus',
         'student_cv',
