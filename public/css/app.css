@@ -43,6 +43,46 @@ body {
   padding-left: 5px !important;
 }
 
+.m-a-s {
+  margin: 10px !important;
+}
+
+.m-t-s {
+  margin-top: 10px !important;
+}
+
+.m-r-s {
+  margin-right: 10px !important;
+}
+
+.m-b-s {
+  margin-bottom: 10px !important;
+}
+
+.m-l-s {
+  margin-left: 10px !important;
+}
+
+.m-a-xs {
+  margin: 5px !important;
+}
+
+.m-t-xs {
+  margin-top: 5px !important;
+}
+
+.m-r-xs {
+  margin-right: 5px !important;
+}
+
+.m-b-xs {
+  margin-bottom: 5px !important;
+}
+
+.m-l-xs {
+  margin-left: 5px !important;
+}
+
 .cursor {
   cursor: pointer;
 }
@@ -65,6 +105,13 @@ body {
 /* Bootstrap additions */
 .jumbotron-marless {
   margin-bottom: 0;
+}
+
+/* Innboks */
+.add-user-icon {
+  font-size: 2.6em !important;
+  position: relative;
+  bottom: 2px;
 }
 
 /* redigerBruker */
