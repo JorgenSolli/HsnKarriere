@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
+use App\Services\QuerryService;
 
 class UserController extends Controller
 {
@@ -14,12 +15,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(QuerryService $querry_service)
     {
         $brukerinfo = Auth::user();
+        $student_studerer = $querry_service->student_studerer($brukerinfo->student_studerer);
+
+
         return view('bruker.redigerBruker',
             [
-                'brukerinfo' => $brukerinfo
+                'brukerinfo' => $brukerinfo,
+                'student_studerer' => $student_studerer
             ]);
     }
 

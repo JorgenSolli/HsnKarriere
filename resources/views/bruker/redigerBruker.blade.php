@@ -2,7 +2,6 @@
 @include('includes.studier')
 
 @section('content')
-
   <div class="container p-t-md">
     <div class="row">
       <div class="col-md-3">
@@ -45,17 +44,15 @@
           </div>
         </div>
 
-        <div class="panel panel-default visible-md-block visible-lg-block">
+        <div class="panel panel-success panel-hover-success cursor">
           <div class="panel-body">
-            <h5 class="m-t-0">CV</h5>
-            <p>Last opp CV</p>
+            <h4 class="m-t-s text-center"><span class="fa fa-upload"></span> Last opp CV</h4>
           </div>
         </div>
 
-         <div class="panel panel-default visible-md-block visible-lg-block">
+         <div class="panel panel-info panel-hover-info cursor">
           <div class="panel-body">
-            <h5 class="m-t-0">Attester</h5>
-            <p>Last opp attester</p>
+            <h4 class="m-t-s text-center"><span class="fa fa-upload"></span> Last opp Attester</h4>
           </div>
         </div>
       </div>
@@ -172,11 +169,11 @@
                   <label for="studiested">Studiested</label>
                   <select name="student_campus" id="studiested" class="form-control">
                     @if ($brukerinfo->student_campus == "bø")
-                      <option value="bø" selected>Bø</option>
-                      <option value="notodden">Notodden</option>
+                      <option value="bø" selected>Campus Bø</option>
+                      <option value="notodden">Campus Notodden</option>
                     @else
-                      <option value="notodden" selected>Notodden</option>
-                      <option value="bø">Bø</option>
+                      <option value="notodden" selected>Campus Notodden</option>
+                      <option value="bø">Campus Bø</option>
                     @endif
                   </select>
                 </div>
@@ -184,7 +181,42 @@
                   <label for="studieretning">Studieretning</label>
                   @yield('selectStudieretning')
                 </div>
-                <div id="studieretningValg"></div>
+                <div id="studieretningValg">
+                  @unless ($student_studerer == "")
+                    @foreach ($student_studerer as $value)
+                      <div class="studieretningValg">
+                        <hr>
+                        <div class="form-group">
+                           <input class="form-control" name="student_studerer[]" value="{{ $value[0] }}">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-5 form-group p-r-0">
+                                    <select class="form-control" name="campus[]">
+                                        <option selected value="{{ $value[1] }}">{{ $value[1] }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-3 form-group p-r-0">
+                                    <select class="form-control" name="datoFra[]" class="datoFra">
+                                        <option selected value="{{ $value[2] }}">{{ $value[2] }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-3 form-group">
+                                    <select class="form-control" name="datoTil[]" class="datoTil">
+                                        <option selected value="{{ $value[3] }}">{{ $value[3] }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-1">
+                                    <span class="slettRad scaryRed-color">
+                                    <span class="fa fa-close fa-lg cursor"></span>
+                                    </span>
+                                </div>
+                           </div>
+                        </div>
+                      </div>
+                    @endforeach
+                  @endunless
+                </div>
               </div>
             </li>
             <li class="media list-group-item p-a">
@@ -255,21 +287,11 @@
         <div class="panel panel-default panel-link-list">
           <div class="panel-body">
             © 2017 Link Telemark
-
-            <a href="#">About</a>
-            <a href="#">Help</a>
-            <a href="#">Terms</a>
-            <a href="#">Privacy</a>
+            <a href="#">Om</a> ·
+            <a href="#">Hjelp</a> ·
+            <a href="#">tos</a> ·
+            <a href="#">Personvern</a> ·
             <a href="#">Cookies</a>
-            <a href="#">Ads </a>
-
-            <a href="#">info</a>
-            <a href="#">Brand</a>
-            <a href="#">Blog</a>
-            <a href="#">Status</a>
-            <a href="#">Apps</a>
-            <a href="#">Jobs</a>
-            <a href="#">Advertise</a>
           </div>
         </div>
       </div>

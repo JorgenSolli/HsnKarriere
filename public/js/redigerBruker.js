@@ -99,8 +99,8 @@ function studvalgInput (studretning) {
                 '<div class="col-xs-5 form-group p-r-0">' +
                     '<select class="form-control" name="campus[]">' +
                         '<option selected disabled>Campus</option>' +
-                        '<option value="Campus Bø">Bø</option>' +
-                        '<option value="Campus Porsgrunn">Porsgrunn</option>' +
+                        '<option value="Bø">Campus Bø</option>' +
+                        '<option value="Porsgrunn">Campus Notodden</option>' +
                     '</select>' +
                 '</div>' +
                 '<div class="col-xs-3 form-group p-r-0">' +

@@ -83,11 +83,15 @@ body {
   margin-left: 5px !important;
 }
 
+.a-no-dec:hover {
+  text-decoration: none;
+}
+
 .cursor {
   cursor: pointer;
 }
 
-.panel-hover {
+.panel-hover, .panel-hover-info, .panel-hover-success {
   -webkit-transition: .3s;
   transition: .3s;
 }
@@ -96,6 +100,18 @@ body {
   -webkit-transition: .5s;
   transition: .5s;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);
+}
+
+.panel-hover-info:hover {
+  -webkit-transition: .5s;
+  transition: .5s;
+  box-shadow: 0 2px 3px #d9edf7, 0 0 0 2px #d9edf7;
+}
+
+.panel-hover-success:hover {
+  -webkit-transition: .5s;
+  transition: .5s;
+  box-shadow: 0 2px 3px #dff0d8, 0 0 0 2px #dff0d8;
 }
 
 .mar-bot {

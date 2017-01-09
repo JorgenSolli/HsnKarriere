@@ -60,17 +60,31 @@ body {
 .m-b-xs {margin-bottom: 5px !important}
 .m-l-xs {margin-left: 5px !important}
 
+.a-no-dec:hover {
+    text-decoration: none;
+}
+
 .cursor {
   cursor: pointer;
 }
 
-.panel-hover {
+.panel-hover, .panel-hover-info, .panel-hover-success {
     transition: .3s;
 }
 
 .panel-hover:hover {
     transition: .5s;
     box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);
+}
+
+.panel-hover-info:hover {
+    transition: .5s;
+    box-shadow: 0 2px 3px rgba(217, 237, 247, 1), 0 0 0 2px rgba(217, 237, 247, 1);
+}
+
+.panel-hover-success:hover {
+    transition: .5s;
+    box-shadow: 0 2px 3px rgba(223, 240, 216, 1), 0 0 0 2px rgba(223, 240, 216, 1);
 }
 
 .mar-bot {
