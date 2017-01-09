@@ -1,3 +1,4 @@
+@section('logginn')
 <div id="loggInnModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -66,3 +67,4 @@
     </div>
   </div>
 </div>
+@stop

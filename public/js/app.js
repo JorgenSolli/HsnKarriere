@@ -17,21 +17,23 @@ $(function () {
     }
   })
 
-  $('[data-toggle="popover"]').popover({
-    template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
-    title: '',
-    html: true,
-    trigger: 'manual',
-    placement:'bottom',
-    viewport: {
-      selector: 'body',
-      padding: getRight()
-    },
-    content: function () {
-      var $nav = $('.app-navbar .navbar-nav:last-child').clone()
-      return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
-    }
-  })
+  if ($(".popover").length) {
+    $('[data-toggle="popover"]').popover({
+      template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
+      title: '',
+      html: true,
+      trigger: 'manual',
+      placement:'bottom',
+      viewport: {
+        selector: 'body',
+        padding: getRight()
+      },
+      content: function () {
+        var $nav = $('.app-navbar .navbar-nav:last-child').clone()
+        return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
+      }
+    })
+  }
 
   $('[data-toggle="popover"]').on('click', function (e) {
     e.stopPropagation()

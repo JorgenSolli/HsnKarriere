@@ -16,7 +16,7 @@ $(document).ready(function () {
             offset = elOffset;
         }
 
-        alert("height: " + elHeight + " and offset: " + offset + " and windowHeight: " + windowHeight);
+        // alert("height: " + elHeight + " and offset: " + offset + " and windowHeight: " + windowHeight);
 
 
         $.smoothScroll({
@@ -27,14 +27,14 @@ $(document).ready(function () {
     });
 
     $(".hvemErDuStudent, #hvemErDuStudentA, .hvemErDuBedrift, #hvemErDuBedriftA, .hvemErDuLarer, #hvemErDuLarerA").on('click', function () {
-        $(".overlay").fadeIn(500);
+        $(".overlay, .video-overlay").fadeIn(500);
     });
     $("#studentStep1To0, #bedriftStep1To0, #faglarerStep1To0").on('click', function () {
-        $(".overlay").fadeOut(500);
+        $(".overlay, .video-overlay").fadeOut(500);
     });
 
-    $(".overlay").on('click', function () {
-        $(".overlay").fadeOut(500);
+    $(".overlay, .video-overlay").on('click', function () {
+        $(".overlay, .video-overlay").fadeOut(500);
         $("#index-student-box").hide();
         $("#index-bedrift-box").hide();
         $("#index-faglarer-box").hide();
@@ -126,4 +126,7 @@ $(document).ready(function () {
             $("#larer-group-epost, #larer-group-navn, #bedrift-group, #student-group-navn, #student-group-campus").addClass('is-grouped');
         }).trigger('resize');
     })(jQuery);
+
+    /* Validation Registration */
+    
 });

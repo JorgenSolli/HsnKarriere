@@ -118,6 +118,15 @@ body {
   margin-bottom: 15px;
 }
 
+.help {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.is-danger {
+  color: #ff3860;
+}
+
 /* Bootstrap additions */
 .jumbotron-marless {
   margin-bottom: 0;
@@ -210,6 +219,10 @@ body {
   background: #c6eafa;
 }
 
+#index-student-box, #index-faglarer-box, #index-bedrift-box {
+  background: url("../img/registrer-bruker-bg.jpg") center center;
+}
+
 .bedriftsamarbeid-btn {
   background-color: transparent;
   border-color: #62b3fe !important;
@@ -288,7 +301,7 @@ body {
 }
 
 .registrer-container {
-  padding: 130px 0 0 0;
+  padding: 50px 0 0 0;
 }
 
 .hvemErDuStudent {
@@ -366,6 +379,7 @@ body {
 }
 
 .input-newstyle {
+  background: none;
   outline: none;
   padding: 7px;
   border: none;
@@ -377,6 +391,10 @@ body {
   color: #000;
   box-shadow: none;
   border-radius: 0;
+}
+
+.input-newstyle:focus {
+  background-color: transparent;
 }
 
 .input-newstyle:hover {
@@ -431,11 +449,12 @@ body {
   right: 0;
   top: 0;
   overflow: hidden;
+  height: calc(100vh + 51px);
 }
 
 .hero-video video {
   left: 50%;
-  min-height: 100%;
+  min-height: calc(100vh - 51px);
   min-width: 100%;
   position: absolute;
   top: 50%;
@@ -466,10 +485,6 @@ body {
   justify-content: space-between;
 }
 
-.hero.is-fullheight {
-  min-height: 100vh;
-}
-
 .hero.is-fullheight .hero-body {
   -webkit-box-align: center;
   align-items: center;
@@ -498,7 +513,8 @@ body {
 }
 
 .hero.is-fullheight {
-  min-height: 100vh;
+  /* screen height minus navbar height */
+  min-height: calc(100vh - 51px);
 }
 
 .hero-body {
@@ -537,6 +553,17 @@ body {
   position: absolute;
   width: 110%;
   height: 100vh;
+  background: #000;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  z-index: 5;
+  display: none;
+}
+
+.video-overlay {
+  position: absolute;
+  height: 95vh;
+  width: 110%;
   background: #000;
   opacity: 0.6;
   filter: alpha(opacity=60);

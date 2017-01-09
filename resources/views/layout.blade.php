@@ -21,7 +21,7 @@
     </head>
     <body class="with-top-navbar">
         <div class="growl" id="app-growl"></div>
-        @yield('loggInnModal')
+        @yield('logginn')
         <nav class="navbar navbar-inverse navbar-fixed-top app-navbar">
             <div class="container">
                 <div class="navbar-header">
@@ -54,7 +54,7 @@
                         <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
                             <li>
                                 <a href="#registrer" class="btn-success-outline">
-                                    <span class="fa fa-user-plus"></span> Registrer deg
+                                    <span class="fa fa-user-plus"></span> Opprett profil
                                 </a>
                             </li>
                             <li>
@@ -92,7 +92,7 @@
                         @if (Auth::guest())
                             <li>
                                 <a href="#registrer" class="btn-success-outline">
-                                    <span class="fa fa-user-plus"></span> Registrer deg
+                                    <span class="fa fa-user-plus"></span> Opprett profil
                                 </a>
                             </li>
                             <li>

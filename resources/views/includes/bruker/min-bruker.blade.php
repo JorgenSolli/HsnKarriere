@@ -47,8 +47,7 @@
     <div class="col-sm-3 p-r-s p-l-s">
       <a href="/uploads/{{ $brukerinfo->student_cv }}" class="a-no-dec" style="width: 100%">
         <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
-          <span class="text-center fa fa-download fa-lg"></span>
-          <h4 class="m-t text-center"> Last ned CV</h4>
+          <h4 class="m-t text-center"><span class="text-center fa fa-download fa-lg"></span> Last ned CV</h4>
         </div>
       </a>
     </div>
