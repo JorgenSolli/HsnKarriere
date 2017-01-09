@@ -12,17 +12,14 @@
 */
 
 Route::get('/', 'PageController@hjem');
-
 Route::get('bruker', 'BrukerController@bruker')->middleware('auth');
-
 Route::get('bruker/rediger', 'UserController@index')->middleware('auth');
-
 Route::get('bruker/{bruker}', 'BrukerController@seBruker')->middleware('auth');
-
 Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
 
 // Update a user
 Route::patch('bruker/{user}', 'UserController@updateUser');
+
 
 // Upload something
 Route::post('bruker/uploads/forsidebilde', 'UploadController@uploadForsidebilde');

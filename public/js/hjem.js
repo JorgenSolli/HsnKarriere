@@ -2,7 +2,7 @@ $(document).ready(function () {
     // Scroller til student, bedrift og foreleser. Setter boksen vertikalt midt i skjermen!.
     $('#index-hvemerdu a').on('click', function(e) {
         e.preventDefault();
-
+        
         var el = $("#registrer");
         var elOffset = el.offset().top;
         var elHeight = el.height();
@@ -15,15 +15,7 @@ $(document).ready(function () {
         else {
             offset = elOffset;
         }
-
-        // alert("height: " + elHeight + " and offset: " + offset + " and windowHeight: " + windowHeight);
-
-
-        $.smoothScroll({
-          speed: 700,
-          offset: offset,
-          scrollTarget: '#registrer'
-        });
+        $.smoothScroll({speed: 700 },offset);
     });
 
     $(".hvemErDuStudent, #hvemErDuStudentA, .hvemErDuBedrift, #hvemErDuBedriftA, .hvemErDuLarer, #hvemErDuLarerA").on('click', function () {

@@ -1,0 +1,1 @@
+token: <a href='{{ url("register/confirm/{ $user->token }") }}'>{ $user->token }</a>

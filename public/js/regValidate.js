@@ -274,198 +274,198 @@ function studentValStep1() {
 }
 
 function studentValStep2() {
-    var fornavn = document.getElementById('studRegFnavn').value;
-    var etternavn = document.getElementById('studRegEnavn').value;
-    var epost = document.getElementById('studRegEpost').value;
+  var fornavn = document.getElementById('studRegFnavn').value;
+  var etternavn = document.getElementById('studRegEnavn').value;
+  var epost = document.getElementById('studRegEpost').value;
 
-    var e = document.getElementById("regStudsted");
-    var campus = e.options[e.selectedIndex].value;
+  var e = document.getElementById("regStudsted");
+  var campus = e.options[e.selectedIndex].value;
 
-    var ok = 0;
+  var ok = 0;
 
-    if (valNavn(fornavn)) {
-        ok += 1;
+  if (valNavn(fornavn)) {
+    ok += 1;
+  }
+
+  if (valNavn(etternavn)) {
+    ok += 1;
+  }
+
+  if (sjekkEpost(epost, 'student')) {
+    ok += 1;
+  }
+
+  if (valCampus(campus)) {
+      ok +=1;
+  } else {
+    if (campus == "Campus") {
+      document.getElementById("campusError").innerHTML = "Du må velge campus først!";
+      $("#regStudsted").css("border-bottom", 'solid 1px #e35152');
     }
+  }
 
-    if (valNavn(etternavn)) {
-        ok += 1;
-    }
-
-    if (sjekkEpost(epost, 'student')) {
-        ok += 1;
-    }
-
-    if (valCampus(campus)) {
-        ok +=1;
-    } else {
-        if (campus == "Campus") {
-            document.getElementById("campusError").innerHTML = "Du må velge campus først!";
-            $("#regStudsted").parent().css("border-bottom", 'solid 1px #e35152');
-        }
-    }
-
-    if (ok === 4) {
-        return true;
-    } else {
-        return false;
-    }
+  if (ok === 4) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function bedriftValStep1() {
-    var bednavn = document.getElementById('bedRegNavn').value;;
-    var epost = document.getElementById('bedRegEpost').value;
+  var bednavn = document.getElementById('bedRegNavn').value;;
+  var epost = document.getElementById('bedRegEpost').value;
 
-    var ok = 0;
+  var ok = 0;
 
-    if (valNavn(bednavn)) {
-        ok += 1;
-    }
+  if (valNavn(bednavn)) {
+    ok += 1;
+  }
 
-    if (valEpost(epost)) {
-        ok += 1;
-    }
+  if (valEpost(epost)) {
+    ok += 1;
+  }
 
-    if (ok === 2) {
-        $("#bedriftStep2").show();
-        $("#bedriftStep1").hide();
-    } else {
-        return false;
-    }
+  if (ok === 2) {
+    $("#bedriftStep2").show();
+    $("#bedriftStep1").hide();
+  } else {
+    return false;
+  }
 }
 
 function faglarerValStep1() {
-    var fornavn = document.getElementById('faglarerRegFnavn').value;
-    var etternavn = document.getElementById('faglarerRegEnavn').value;
+  var fornavn = document.getElementById('faglarerRegFnavn').value;
+  var etternavn = document.getElementById('faglarerRegEnavn').value;
 
-    var ok = 0;
+  var ok = 0;
 
-    if (valNavn(fornavn)) {
-        ok += 1;
-    }
+  if (valNavn(fornavn)) {
+    ok += 1;
+  }
 
-    if (valNavn(etternavn)) {
-        ok += 1;
-    }
+  if (valNavn(etternavn)) {
+    ok += 1;
+  }
 
-    if (ok === 2) {
-        $("#faglarerStep2").show();
-        $("#faglarerStep1").hide();
-    } else {
-        return false;
-    }
+  if (ok === 2) {
+    $("#faglarerStep2").show();
+    $("#faglarerStep1").hide();
+  } else {
+    return false;
+  }
 }
 
 function faglarerValStep2() {
-    var fornavn = document.getElementById('faglarerRegFnavn').value;
-    var etternavn = document.getElementById('faglarerRegEnavn').value;
-    var epost = document.getElementById('faglarerRegEpost').value;
+  var fornavn = document.getElementById('faglarerRegFnavn').value;
+  var etternavn = document.getElementById('faglarerRegEnavn').value;
+  var epost = document.getElementById('faglarerRegEpost').value;
 
-    var e = document.getElementById("faglarerRegStudsted");
-    var campus = e.options[e.selectedIndex].value;
+  var e = document.getElementById("faglarerRegStudsted");
+  var campus = e.options[e.selectedIndex].value;
 
-    var ok = 0;
+  var ok = 0;
 
-    if (valNavn(fornavn)) {
-        ok += 1;
+  if (valNavn(fornavn)) {
+    ok += 1;
+  }
+
+  if (valNavn(etternavn)) {
+    ok += 1;
+  }
+
+  if (sjekkEpost(epost, 'faglarer')) {
+    ok += 1;
+  }
+
+  if (valCampus(campus)) {
+    ok +=1;
+  } else {
+    if (campus == "Campus") {
+      document.getElementById("faglarerCampusError").innerHTML = "Du må velge campus først!";
+      $("#faglarerRegStudsted").parent().css("border-bottom", 'solid 1px #e35152');
     }
+  }
 
-    if (valNavn(etternavn)) {
-        ok += 1;
-    }
-
-    if (sjekkEpost(epost, 'faglarer')) {
-        ok += 1;
-    }
-
-    if (valCampus(campus)) {
-        ok +=1;
-    } else {
-        if (campus == "Campus") {
-            document.getElementById("faglarerCampusError").innerHTML = "Du må velge campus først!";
-            $("#faglarerRegStudsted").parent().css("border-bottom", 'solid 1px #e35152');
-        }
-    }
-
-    if (ok === 4) {
-        return true;
-    } else {
-        return false;
-    }
+  if (ok === 4) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function postRegStep1() {
-    var pass1 = document.getElementById("reg-pass").value;
-    var pass2 = document.getElementById("reg-pass-two").value;
+  var pass1 = document.getElementById("reg-pass").value;
+  var pass2 = document.getElementById("reg-pass-two").value;
 
-    if (valPassord(pass1) && valPassord(pass2) && pass1 === pass2) {
-        $("#postReg-step1").fadeOut("fast", function () {
-            $("#postReg-step2").fadeIn();
-        });
-    }
+  if (valPassord(pass1) && valPassord(pass2) && pass1 === pass2) {
+    $("#postReg-step1").fadeOut("fast", function () {
+      $("#postReg-step2").fadeIn();
+    });
+  }
 }
 
 $("#postRegStudentMore").click(function () {
-    $("#postReg-step2").fadeOut("fast", function () {
-        $("#postReg-step3").fadeIn();
-    });
+  $("#postReg-step2").fadeOut("fast", function () {
+    $("#postReg-step3").fadeIn();
+  });
 });
 
 $("#postReg-step3-back").click(function () {
-    $("#postReg-step3").fadeOut("fast", function () {
-        $("#postReg-step2").fadeIn();
-    });
+  $("#postReg-step3").fadeOut("fast", function () {
+    $("#postReg-step2").fadeIn();
+  });
 });
 $("#postReg-step3-next").click(function () {
-    $("#postReg-step3").fadeOut("fast", function () {
-        $("#postReg-step4").fadeIn();
-    });
+  $("#postReg-step3").fadeOut("fast", function () {
+    $("#postReg-step4").fadeIn();
+  });
 });
 
 $("#postReg-step4-back").click(function () {
-    $("#postReg-step4").fadeOut("fast", function () {
-        $("#postReg-step3").fadeIn();
-    });
+  $("#postReg-step4").fadeOut("fast", function () {
+    $("#postReg-step3").fadeIn();
+  });
 });
 $("#postReg-step4-next").click(function () {
-    $("#postReg-step4").fadeOut("fast", function () {
-        $("#postReg-step5").fadeIn();
-    });
+  $("#postReg-step4").fadeOut("fast", function () {
+    $("#postReg-step5").fadeIn();
+  });
 });
 
 $("#postReg-step5-back").click(function () {
-    $("#postReg-step5").fadeOut("fast", function () {
-        $("#postReg-step4").fadeIn();
-    });
+  $("#postReg-step5").fadeOut("fast", function () {
+    $("#postReg-step4").fadeIn();
+  });
 });
 $("#postReg-step5-next").click(function () {
-    $("#postReg-step5").fadeOut("fast", function () {
-        $("#postReg-step6").fadeIn();
-    });
+  $("#postReg-step5").fadeOut("fast", function () {
+    $("#postReg-step6").fadeIn();
+  });
 });
 
 $("#postReg-step6-back").click(function () {
-    $("#postReg-step6").fadeOut("fast", function () {
-        $("#postReg-step5").fadeIn();
-    });
+  $("#postReg-step6").fadeOut("fast", function () {
+    $("#postReg-step5").fadeIn();
+  });
 });
 
 // Validerer for nytt passord
 // todo: legg til visuell validering
 function endrePass() {
-    var pass = document.getElementById('reg-pass-ny').value;
-    var passTo = document.getElementById('reg-pass-two-ny').value;
+  var pass = document.getElementById('reg-pass-ny').value;
+  var passTo = document.getElementById('reg-pass-two-ny').value;
 
-    var ok = 0;
-    if (valPassord(pass)) {
-        ok += 1;
-    }
+  var ok = 0;
+  if (valPassord(pass)) {
+    ok += 1;
+  }
 
-    if (pass === passTo) {
-        ok += 1;
-    }
+  if (pass === passTo) {
+    ok += 1;
+  }
 
-    // Hvis alle 2 felter er riktige, send skjema!
-    if (ok == 2) {
-        return true;
-    } else return false;
+  // Hvis alle 2 felter er riktige, send skjema!
+  if (ok == 2) {
+    return true;
+  } else return false;
 }

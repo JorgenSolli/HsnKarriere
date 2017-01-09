@@ -48,9 +48,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'fornavn' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'studRegFnavn' => 'required|max:100',
+            'studRegEnavn' => 'required|max:100',
+            'mail' => 'required|email|max:255|unique:users',
+            'regStudsted' => 'required|max:100'
         ]);
     }
 
@@ -61,13 +62,34 @@ class RegisterController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {
-        if ($data =>['brukertype'] == "student") {
+    {   
+        dd("create");
+
+
+        if ($data['bruker_type'] == "student") {
+            dd("student <br>" . $data);
             return User::create([
                 'fornavn' => $data['fornavn'],
                 'email' => $data['email'],
                 'password' => bcrypt($data['password'])
             ]);
         }
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        Mail::to($user->email)->send(new ConfirmationEmail);
+
+        retun back()->with('status', 'Venligst bekreft epost adressen din.');
     }
 }
