@@ -17,7 +17,7 @@ $(function () {
     }
   })
 
-  if ($(".popover").length) {
+  if ($("#popoverNav").length) {
     $('[data-toggle="popover"]').popover({
       template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
       title: '',
@@ -33,25 +33,25 @@ $(function () {
         return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
       }
     })
+  
+    $('[data-toggle="popover"]').on('click', function (e) {
+      e.stopPropagation()
+
+      if ($('[data-toggle="popover"]').data('bs.popover').tip().hasClass('in')) {
+        $('[data-toggle="popover"]').popover('hide')
+        $(document).off('click.app.popover')
+
+      } else {
+        $('[data-toggle="popover"]').popover('show')
+
+        setTimeout(function () {
+          $(document).one('click.app.popover', function () {
+            $('[data-toggle="popover"]').popover('hide')
+          })
+        }, 1)
+      }
+    })
   }
-
-  $('[data-toggle="popover"]').on('click', function (e) {
-    e.stopPropagation()
-
-    if ($('[data-toggle="popover"]').data('bs.popover').tip().hasClass('in')) {
-      $('[data-toggle="popover"]').popover('hide')
-      $(document).off('click.app.popover')
-
-    } else {
-      $('[data-toggle="popover"]').popover('show')
-
-      setTimeout(function () {
-        $(document).one('click.app.popover', function () {
-          $('[data-toggle="popover"]').popover('hide')
-        })
-      }, 1)
-    }
-  })
 
 })
 

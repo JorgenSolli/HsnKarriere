@@ -64,7 +64,7 @@
                             </li>
                         </ul>
                     @else
-                        <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+                        <ul id="popoverNav" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
                             <li>
                                 <a class="app-notifications" href="/innboks">
                                     <span class="icon icon-bell"></span>
@@ -79,7 +79,7 @@
 
                         <form class="navbar-form navbar-right app-search" role="search">
                             <div class="form-group">
-                                <input type="text" class="form-control" data-action="grow" placeholder="Search">
+                                <input type="text" class="form-control" data-action="grow" placeholder="Søk">
                             </div>
                         </form>
                     @endif
