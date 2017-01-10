@@ -52,13 +52,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-      return Validator::make($data, [
-        'studRegFnavn'  => 'required|max:100',
-        'studRegEnavn'  => 'required|max:100',
-        'email'         => 'required|max:255|email|unique:users',
-        'campus'   => 'required|max:100',
-        'bruker_type'   => 'required'
-      ]);
+        return Validator::make($data, [
+            'studRegFnavn'  => 'required|max:100',
+            'studRegEnavn'  => 'required|max:100',
+            'email'         => 'required|max:255|email|unique:users',
+            'campus'   => 'required|max:100',
+            'bruker_type'   => 'required'
+        ]);
     }
 
     /**
@@ -69,13 +69,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
-      return User::create([
-        'fornavn' => $data['studRegFnavn'],
-        'etternavn' => $data['studRegEnavn'],
-        'email' => $data['email'],
-        'student_campus' => $data['campus'],
-        'bruker_type' => $data['bruker_type']
-      ]);
+        return User::create([
+            'fornavn' => $data['studRegFnavn'],
+            'etternavn' => $data['studRegEnavn'],
+            'email' => $data['email'],
+            'student_campus' => $data['campus'],
+            'bruker_type' => $data['bruker_type']
+        ]);
     }
 
     /**
@@ -86,17 +86,23 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-      // Validates data through validator func
-      $this->validator($request->all())->validate();
+        // Validates data through validator func
+        $this->validator($request->all())->validate();
 
-      // Creates user through create func
-      event(new Registered($user = $this->create($request->all())));
+        // Creates user through create func
+        event(new Registered($user = $this->create($request->all())));
 
-      // Sends user a verify email
-      Mail::to($user->email)->send(new ConfirmationEmail($user));
+        // Sends user a verify email
+        Mail::to($user->email)->send(new ConfirmationEmail($user));
 
-      // Returns back with a status message
-      return back()->with([
-        'status', 'Venligst sjekk eposten din for å aktivere brukeren.']);
+        // Returns back with a status message
+        return back()->with('status', 'Takk for at du registrerte deg! Venligst sjekk eposten din for å aktivere brukeren.');
+    }
+
+    public function confirmEmail($token)
+    {
+        User::whereToken($token)->firstOrFail()->hasVerified();
+
+        return redirect('/')->with('status', 'Din bruker er aktivert og du kan nå logge inn');
     }
 }

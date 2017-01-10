@@ -92,7 +92,7 @@
             For å fullføre registreringen, venligst trykk på knappen under. Har du ikke bla bla, ignorer denne eposten.
           </div></td></tr><tr><td style="word-break:break-word;font-size:0px;padding:10px 25px;" align="left"><div style="cursor:auto;color:#525252;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;text-align:left;">
             
-          </div></td></tr><tr><td style="word-break:break-word;font-size:0px;padding:10px 25px;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:separate;" align="center" border="0"><tbody><tr><td style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:10px 25px;" align="center" valign="middle" bgcolor="#F45E43"><a href='{{ url("bekreft/{ $user->token }") }}' style="text-decoration:none;line-height:100%;background:#F45E43;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;text-transform:none;margin:0px;" target="_blank">BEKREFT BRUKER</a></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]>
+          </div></td></tr><tr><td style="word-break:break-word;font-size:0px;padding:10px 25px;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:separate;" align="center" border="0"><tbody><tr><td style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:10px 25px;" align="center" valign="middle" bgcolor="#F45E43"><a href='{{ url("bekreft/$user->token") }}' style="text-decoration:none;line-height:100%;background:#F45E43;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;text-transform:none;margin:0px;" target="_blank">BEKREFT BRUKER</a></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]>
       </td></tr></table>
       <![endif]--></td></tr></tbody></table></div><!--[if mso | IE]>
       </td></tr></table>
@@ -108,5 +108,6 @@
       <![endif]--></td></tr></tbody></table></div><!--[if mso | IE]>
       </td></tr></table>
       <![endif]--></div>
+      token: {{ url("bekreft/$user->token") }}
 </body>
 </html>

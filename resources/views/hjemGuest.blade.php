@@ -126,7 +126,7 @@
     </div>
   @endif
   <!-- Melding etter registrering -->
-  @include('notifications.afterRegister')
+  @include('notifications.checkMailAndLogIn')
 @stop
 
 @section('script')

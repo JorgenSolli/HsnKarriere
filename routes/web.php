@@ -20,7 +20,6 @@ Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
 // Update a user
 Route::patch('bruker/{user}', 'UserController@updateUser');
 
-
 // Upload something
 Route::post('bruker/uploads/forsidebilde', 'UploadController@uploadForsidebilde');
 Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
