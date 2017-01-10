@@ -1,6 +1,5 @@
 @extends('layout')
 @include('includes.hjem.registrerBruker')
-
 @section('content')
   @if (Auth::guest())
     @extends('auth.login')
@@ -126,6 +125,8 @@
       </div>
     </div>
   @endif
+  <!-- Melding etter registrering -->
+  @include('notifications.afterRegister')
 @stop
 
 @section('script')

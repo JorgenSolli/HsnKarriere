@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('bruker_type')->nullable();
             $table->integer('bruker_aktivert')->nullable();
+            $table->string('token')->nullable();
             $table->string('fornavn')->nullable();
             $table->string('etternavn')->nullable();
             $table->integer('telefon')->nullable();

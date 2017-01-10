@@ -13,7 +13,7 @@
         <div id="student-group-navn" class="row">
           <div class="col-sm-6">
             <label for="studRegFnavn" class="placeholder" id="studRegFnavn-jumper" style="font-size: 1.3em; margin-top: 15px;">Fornavn</label>
-            <input onblur="sjekkFNavn(id, 'student')" onchange="sjekkFNavn(id, 'student')" class="form-control input-newstyle" name="mail" id="studRegFnavn" type="text">
+            <input onblur="sjekkFNavn(id, 'student')" onchange="sjekkFNavn(id, 'student')" class="form-control input-newstyle" name="studRegFnavn" id="studRegFnavn" type="text">
             <small id="fnavnErr-ny" class="help is-danger"></small>
           </div>
           <div class="col-sm-6">
@@ -42,11 +42,11 @@
         <div id="student-group-campus" class="row">
           <div class="col-sm-6">
             <span class="placeholder" id="studRegEpost-jumper">studnr@student.hit.no</span>
-            <input onblur="sjekkEpost(this.value, 'student')" onchange="sjekkEpost(this.value, 'student')" name="studRegEpost" id="studRegEpost" class="form-control input-newstyle" type="email">
+            <input onblur="sjekkEpost(this.value, 'student')" onchange="sjekkEpost(this.value, 'student')" name="email" id="studRegEpost" class="form-control input-newstyle" type="email">
             <span id="studpostError" class="help is-danger"></span><span id="studpostSjekk" class="help is-danger"></span>
           </div>
           <div class="col-sm-6">
-            <select name="studsted" id="regStudsted" class="form-control input-newstyle">
+            <select name="campus" id="regStudsted" class="form-control input-newstyle">
               <option value="Campus" selected>Campus</option>
               <option value="Bø">Bø</option>
               <option value="Porsgrunn">Porsgrunn</option>

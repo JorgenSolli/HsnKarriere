@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use App\Mail\ConfirmationEmail;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -27,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/bruker';
+    // protected $redirectTo = '/bruker';
 
     /**
      * Create a new controller instance.
@@ -47,12 +52,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'studRegFnavn' => 'required|max:100',
-            'studRegEnavn' => 'required|max:100',
-            'mail' => 'required|email|max:255|unique:users',
-            'regStudsted' => 'required|max:100'
-        ]);
+      return Validator::make($data, [
+        'studRegFnavn'  => 'required|max:100',
+        'studRegEnavn'  => 'required|max:100',
+        'email'         => 'required|max:255|email|unique:users',
+        'campus'   => 'required|max:100',
+        'bruker_type'   => 'required'
+      ]);
     }
 
     /**
@@ -63,17 +69,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
-        dd("create");
-
-
-        if ($data['bruker_type'] == "student") {
-            dd("student <br>" . $data);
-            return User::create([
-                'fornavn' => $data['fornavn'],
-                'email' => $data['email'],
-                'password' => bcrypt($data['password'])
-            ]);
-        }
+      return User::create([
+        'fornavn' => $data['studRegFnavn'],
+        'etternavn' => $data['studRegEnavn'],
+        'email' => $data['email'],
+        'student_campus' => $data['campus'],
+        'bruker_type' => $data['bruker_type']
+      ]);
     }
 
     /**
@@ -84,12 +86,17 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+      // Validates data through validator func
+      $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+      // Creates user through create func
+      event(new Registered($user = $this->create($request->all())));
 
-        Mail::to($user->email)->send(new ConfirmationEmail);
+      // Sends user a verify email
+      Mail::to($user->email)->send(new ConfirmationEmail($user));
 
-        retun back()->with('status', 'Venligst bekreft epost adressen din.');
+      // Returns back with a status message
+      return back()->with([
+        'status', 'Venligst sjekk eposten din for å aktivere brukeren.']);
     }
 }

@@ -1,0 +1,50 @@
+<mjml>
+  <mj-body>
+    <mj-container>
+
+      <!-- Company Header -->
+      <mj-section background-color="#f0f0f0">
+        <mj-column>
+          <mj-text font-style="bold" font-size="20" color="#626262">
+            Link Telemark
+          </mj-text>
+        </mj-column>
+      </mj-section>
+
+      <!-- Image Header -->
+      <mj-section background-color="#666666">
+        <mj-column width="600">
+          <mj-image src="https://scontent.xx.fbcdn.net/v/t1.0-9/14947846_1032410046867514_8249677994129445303_n.png?oh=cd85f1584eb6b95e0fa5daba882f1004&oe=591621D4" />
+        </mj-column>
+      </mj-section>
+
+      <!-- Intro text -->
+      <mj-section background-color="#fafafa">
+        <mj-column width="400">
+
+          <mj-text font-style="italic" font-size="20" font-family="Helvetica Neue" align="center" color="#626262">
+            Velkommen til Studentsamarbeid!
+          </mj-text>
+          <mj-text>
+            For å fullføre registreringen, venligst trykk på knappen under. Har du ikke bla bla, ignorer denne eposten.
+          </mj-text>
+
+          <mj-text color="#525252">
+            
+          </mj-text>
+
+          <mj-button background-color="#F45E43" href='#'>BEKREFT BRUKER</mj-button>
+
+        </mj-column>
+      </mj-section>
+
+      <mj-section background-color="#e7e7e7">
+        <mj-column>
+          <mj-social mode="vertical" display="facebook" facebook-href="https://www.facebook.com/LinkTelemark/" facebook-content="" />
+          <mj-text align="center">post@studentsamarbeid.no</mj-text>
+        </mj-column>
+      </mj-section>
+
+    </mj-container>
+  </mj-body>
+</mjml>
