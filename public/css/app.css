@@ -1,5 +1,6 @@
 body {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  overflow-y: scroll;
 }
 
 /* Helpers */
@@ -141,6 +142,15 @@ body {
   font-size: 2.6em !important;
   position: relative;
   bottom: 2px;
+}
+
+/* bruker */
+.social_icons {
+  color: #dbdbdb;
+}
+
+.social_icons:hover {
+  color: #fff;
 }
 
 /* redigerBruker */

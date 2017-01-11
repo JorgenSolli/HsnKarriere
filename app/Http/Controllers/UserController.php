@@ -17,15 +17,17 @@ class UserController extends Controller
      */
     public function index(QuerryService $querry_service)
     {
-        $brukerinfo = Auth::user();
-        $student_studerer = $querry_service->student_studerer($brukerinfo->student_studerer);
+        if (Auth::user()->bruker_type == "student") {
+            $brukerinfo = Auth::user();
+            $student_studerer = $querry_service->student_studerer($brukerinfo->student_studerer);
 
 
-        return view('bruker.redigerBruker',
-            [
-                'brukerinfo' => $brukerinfo,
-                'student_studerer' => $student_studerer
-            ]);
+            return view('bruker.student.redigerBruker',
+                [
+                    'brukerinfo' => $brukerinfo,
+                    'student_studerer' => $student_studerer
+                ]);
+        }
     }
 
     /**
@@ -83,6 +85,13 @@ class UserController extends Controller
         // Gets all data from form and pushes to DB
         $data = $request->all();
 
+        // exit if this is not your user and you are not admin
+        if ($user->id !== Auth::id() && Auth::user()->bruker_type != "admin") {
+            abort(403, 'Unauthorized action.');
+        }
+
+        dd($data);
+
         // Formats the data for the student_studerer field. Concats studretning, campus, datoFra og datoTil
         $student_studerer = NULL;
         /* Går gjennom valg (student_studerer, campus, år-fra->til) for studentretning */
@@ -101,6 +110,11 @@ class UserController extends Controller
 
         // Adds contacenated data to Request data array
         $data['student_studerer'] = $student_studerer;
+
+        // Sets phone nr to 0 if left blank
+        if (empty($data['telefon'])) {
+            $data['telefon'] = 0;
+        }
 
         // Updates the DB with new data
         $user->update($data);

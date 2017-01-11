@@ -52,13 +52,24 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'studRegFnavn'  => 'required|max:100',
-            'studRegEnavn'  => 'required|max:100',
-            'email'         => 'required|max:255|email|unique:users',
-            'campus'   => 'required|max:100',
-            'bruker_type'   => 'required'
-        ]);
+        if ($data['bruker_type'] == "student") {
+            return Validator::make($data, [
+                'studRegFnavn'  => 'required|max:100',
+                'studRegEnavn'  => 'required|max:100',
+                'email'         => 'required|max:255|email|unique:users',
+                'campus'        => 'required|max:100',
+                'bruker_type'   => 'required',
+                'password'      => 'required|max:100|min:6'
+            ]);
+        }
+        else if ($data['bruker_type'] == "bedrift") {
+            return Validator::make($data, [
+                'bedRegNavn'    => 'required|max:100',
+                'email'         => 'required|max:255|email|unique:users',
+                'bruker_type'   => 'required',
+                'password'      => 'required|max:100|min:6'
+            ]);
+        }
     }
 
     /**
@@ -69,13 +80,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
-        return User::create([
-            'fornavn' => $data['studRegFnavn'],
-            'etternavn' => $data['studRegEnavn'],
-            'email' => $data['email'],
-            'student_campus' => $data['campus'],
-            'bruker_type' => $data['bruker_type']
-        ]);
+        if ($data['bruker_type'] == "student") {
+
+            return User::create([
+                'fornavn' => $data['studRegFnavn'],
+                'etternavn' => $data['studRegEnavn'],
+                'email' => $data['email'],
+                'student_campus' => $data['campus'],
+                'bruker_type' => $data['bruker_type'],
+                'password' => bcrypt($data['password']),
+                'profilbilde' => 'img/profilbilder/student_profilbilde.jpg',
+                'forsidebilde' => 'img/forsidebilder/student_forsidebilde.png'
+            ]);
+        } 
+
+        else if ($data['bruker_type'] == "bedrift") {
+            return User::create([
+                'bedrift_navn' => $data['bedRegNavn'],
+                'email' => $data['email'],
+                'bruker_type' => $data['bruker_type'],
+                'bedrift_avdeling' => $data['bedRegAvd'],
+                'password' => bcrypt($data['password']),
+                'profilbilde' => 'img/profilbilder/bedrift_profilbilde.jpg',
+                'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.png'
+            ]);
+        } 
     }
 
     /**

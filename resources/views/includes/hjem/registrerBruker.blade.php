@@ -2,7 +2,7 @@
 <!-- Student -->
 <div id="index-student-box" class="hero-body" style="display: none">
   <div class="container">
-    <form method="post" class="focusJump" action="{{ url('register') }}" onsubmit="return studentValStep2()" _lpchecked="1">
+    <form method="post" class="focusJump" action="{{ url('register') }}" onsubmit="return studentValStep3()" _lpchecked="1">
       {{ csrf_field() }}
       <div id="studentStep1">
         <div class="header text-center">
@@ -27,7 +27,6 @@
             <i class="fa fa-angle-left"></i>
             Tilbake
           </a>
-
           <a class="btn btn-primary" id="studentStep1To2" onclick="return studentValStep1()">
             Gå videre
             <i class="fa fa-angle-right"></i>
@@ -55,10 +54,42 @@
             <span id="campusError" class="help is-danger"></span>
           </div>
         </div>
-        <input type="hidden" name="bruker_type" value="student">
 
         <div class="text-center">
           <a id="studentStep2To1" class="btn btn-primary">
+            <i class="fa fa-angle-left"></i>
+            <span>Tilbake</span>
+          </a>
+
+          <a class="btn btn-primary" id="studentStep2To3" onclick="return studentValStep2()">
+            Gå videre
+            <i class="fa fa-angle-right"></i>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Step 3 (Password) -->
+      <div id="studentStep3" style="display: none">
+        <div class="header text-center">
+          <p class="title is-4">Velg ditt ønsket passord</p><br>
+        </div>
+        <div id="student-group-password" class="row">
+          <div class="col-sm-6">
+            <span class="placeholder" id="studRegPass-jumper">Ditt passord</span>
+            <input onblur="sjekkPass(this.value, 'student')" onchange="sjekkPass(this.value, 'student')" name="password" id="studRegPass" class="form-control input-newstyle" type="password">
+            <span id="studPassError" class="help is-danger"></span>
+          </div>
+          <div class="col-sm-6">
+            <span class="placeholder" id="studRegPassTo-jumper">Gjennta passord</span>
+            <input onblur="sjekkPassTo(this.value, 'student')" onchange="sjekkPassTo(this.value, 'student')" name="passwordTwo" id="studRegPassTo" class="form-control input-newstyle" type="password">
+            <span id="studPassToError" class="help is-danger"></span>
+          </div>
+        </div>
+        <input type="hidden" name="bruker_type" value="student">
+
+        <div class="text-center">
+          <a id="studentStep3To2" class="btn btn-primary">
             <i class="fa fa-angle-left"></i>
             <span>Tilbake</span>
           </a>
@@ -76,7 +107,9 @@
 <!-- Bedrift -->
 <div class="hero-body" id="index-bedrift-box" style="display: none;">
   <div class="container">
-    <form method="post" class="focusJump" action="registrer.php?type=bedrift" onsubmit="return bedriftVal()">
+    <form method="post" class="focusJump" action="{{ url('register') }}" onsubmit="return bedriftVal()">
+      {{ csrf_field() }}
+      <!-- Bedrift step 1 -->
       <div id="bedriftStep1">
         <div class="header text-center">
           <p class="title is-4">Opprett din profil på under 2 minutter!</p>
@@ -86,13 +119,13 @@
         <div id="bedrift-group-navn" class="row">
           <div class="col-sm-6">
             <label for="bedRegNavn" class="placeholder" id="bedRegNavn-jumper">Bedriftsnavn </label>
-            <input onblur="sjekksjekkBedNavn(id)" onchange="sjekksjekkBedNavn(id)" class="form-control input-newstyle" name="bedRegNavn" id="bedRegNavn" type="text" placeholder="">
+            <input onblur="sjekksjekkBedNavn(id)" onchange="sjekksjekkBedNavn(id)" class="form-control input-newstyle" name="bedRegNavn" id="bedRegNavn" type="text">
             <small id="bednavnErr" class="is-danger"></small>
           </div>
           
           <div class="col-sm-6">
             <label for="bedRegEpost" class="placeholder" id="bedRegEpost-jumper">Bedriftsmail </label>
-            <input onblur="sjekkEpost(this.value, 'bedrift')" onchange="sjekkEpost(this.value, 'bedrift')" class="form-control input-newstyle" name="bedRegEpost" id="bedRegEpost" type="text" placeholder="">
+            <input onblur="sjekkEpost(this.value, 'bedrift')" onchange="sjekkEpost(this.value, 'bedrift')" class="form-control input-newstyle" name="email" id="bedRegEpost" type="text">
             <span id="bedpostError" class="help is-danger"></span>
             <span id="bedpostSjekk" class="help is-danger"></span>
           </div>
@@ -114,6 +147,7 @@
         </div>
       </div>
 
+      <!-- Bedrift step 2 -->
       <div id="bedriftStep2" style="display: none">
         <div class="header text-center">
           <p class="title is-4">Tilhører du en avdeling?</p><br>
@@ -128,6 +162,38 @@
           <a id="bedriftStep2To1" class="btn btn-primary">
             <i class="fa fa-angle-left"></i>
             Tilbake
+          </a>
+
+          <a class="btn btn-primary" id="bedriftStep2To3">
+            Gå videre
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bedrift step 3 (Password) -->
+      <div id="bedriftStep3" style="display: none">
+        <div class="header text-center">
+          <p class="title is-4">Velg ditt ønsket passord</p><br>
+        </div>
+        <div id="student-group-password" class="row">
+          <div class="col-sm-6">
+            <label for="bedRegPass" class="placeholder" id="bedRegPass-jumper">Ditt passord</label>
+            <input onblur="sjekkPass(this.value, 'bedrift')" onchange="sjekkPass(this.value, 'bedrift')" name="password" id="bedRegPass" class="form-control input-newstyle" type="password">
+            <span id="bedPassError" class="help is-danger"></span>
+          </div>
+          <div class="col-sm-6">
+            <label for="bedRegPassTo" class="placeholder" id="bedRegPassTo-jumper">Gjennta passord</label>
+            <input onblur="sjekkPassTo(this.value, 'bedrift')" onchange="sjekkPassTo(this.value, 'bedrift')" name="passwordTwo" id="bedRegPassTo" class="form-control input-newstyle" type="password">
+            <span id="bedPassToError" class="help is-danger"></span>
+          </div>
+        </div>
+        <input type="hidden" name="bruker_type" value="bedrift">
+
+        <div class="text-center">
+          <a id="studentStep3To2" class="btn btn-primary">
+            <i class="fa fa-angle-left"></i>
+            <span>Tilbake</span>
           </a>
 
           <button type="submit" class="btn btn-success">

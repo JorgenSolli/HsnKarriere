@@ -9,9 +9,15 @@
     <div class="container-inner">
       <img class="img-circle media-object" src="/uploads/{{ $brukerinfo->profilbilde }}">
       <h3 class="profile-header-user">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</h3>
-      <a href="{{ $brukerinfo->facebook }}" class="p-r-s"><span class="fa fa-facebook-official fa-2x"></span></a>
-      <a href="{{ $brukerinfo->linkedin }}" class="p-r-s"><span class="fa fa-linkedin-square fa-2x"></span></a>
-      <a href="{{ $brukerinfo->nettside }}"><span class="fa fa-globe fa-2x"></span></a>
+      @if ($brukerinfo->facebook != "")
+        <a href="{{ $brukerinfo->facebook }}" class="p-r-s"><span class="social_icons fa fa-facebook-official fa-2x"></span></a>
+      @endif
+      @if ($brukerinfo->linkedin != "")
+        <a href="{{ $brukerinfo->linkedin }}" class="p-r-s"><span class="social_icons fa fa-linkedin-square fa-2x"></span></a>
+      @endif
+      @if ($brukerinfo->nettside != "")
+        <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-globe fa-2x"></span></a>
+      @endif
       <p class="profile-header-bio">Student ved campus {{ $brukerinfo->student_campus }} </p>
     </div>
   </div>

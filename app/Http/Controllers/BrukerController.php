@@ -9,19 +9,25 @@ use App\Services\QuerryService;
 
 class BrukerController extends Controller
 {
-  public function bruker(QuerryService $querry_service) {
-    $brukerinfo = Auth::user();
-    $bedrifter  = $querry_service->finnBedrifter($brukerinfo->student_studerer);
-    $kontakter  = "";
-    $student_studerer = $querry_service->student_studerer($brukerinfo->student_studerer);
+    public function bruker(QuerryService $querry_service) {
+        if (Auth::user()->bruker_type == "student") {
+        
+            $brukerinfo = Auth::user();
+            $bedrifter  = $querry_service->finnBedrifter($brukerinfo->student_studerer);
+            $kontakter  = "";
+            $student_studerer = $querry_service->student_studerer($brukerinfo->student_studerer);
 
-    return view('bruker.bruker', 
-    	[
-    	'bedrifter' => $bedrifter, 
-    	'kontakter' => $kontakter,
-    	'student_studerer' => $student_studerer,
-    	'brukerinfo' => $brukerinfo
-    	]);
+            return view('bruker.student.bruker', 
+                [
+                    'bedrifter' => $bedrifter, 
+                    'kontakter' => $kontakter,
+                    'student_studerer' => $student_studerer,
+                    'brukerinfo' => $brukerinfo
+                ]);
+        }
+        else if (Auth::user()->bruker_type == "bedrift") {
+            return "bedrift";
+        }
 	}
 
   public function seBruker(QuerryService $querry_service, $id) {

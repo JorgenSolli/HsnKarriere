@@ -64,6 +64,11 @@ $(document).ready(function () {
         $("#bedriftStep1").show();
     });
 
+    $("#bedriftStep2To3").click(function () {
+        $("#bedriftStep2").hide();
+        $("#bedriftStep3").show();
+    });
+
     /* Faglærer kontrolerer steps 0-1 */
     $("#faglarerStep1To0").click(function () {
         $("#index-faglarer-box").hide();

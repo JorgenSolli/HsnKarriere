@@ -13,7 +13,7 @@ function valStudEpost(verdi) {
 }
 
 function valEpost(verdi) {
-    var ptn = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    ptn = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return ptn.test(verdi)
 }
 
@@ -211,43 +211,76 @@ function sjekkEpost(epost, type) {
     }
 }
 
-function sjekkPass(verdi) {
+function sjekkPass(verdi, type) {
     var ptn = /^(?=.*[a-z])(?=.*[A-Z])(?=.+[0-9])[a-zA-Z0-9$@$!%*?&]{6,}$/;
 
-    var pw = document.getElementById(verdi).value;
+    if (type === "bedrift") {
+        passwordID = "bedRegPass";
+        passwordErr = "bedPassError";
+    }
+
+    else if (type === "student") {
+        passwordID = "studRegPass";
+        passwordErr = "studPassError";
+    }
+
+    else if (type === "faglarer") {
+        passwordID = "faglarerRegPass";
+        passwordErr = "faglarerPassError";
+    }
+
+    var pw = document.getElementById(passwordID).value;
     if (pw == 0) {
-        document.getElementById("passErr").innerHTML = "Passordet kan ikke være blank";
-        document.getElementById(verdi).style.border = 'solid 1px #e35152';
+        document.getElementById(passwordErr).innerHTML = "Passordet kan ikke være blank";
+        document.getElementById(passwordID).style.borderBottom = 'solid 1px #e35152';
     } else {
         if (pw.length < 6) {
-            document.getElementById('passErr').innerHTML = "Passordet må ha minst 6 karakterer.";
-            document.getElementById(verdi).style.border = 'solid 1px #e35152';
-            document.getElementById('passErr').style.display = "block"
+            document.getElementById(passwordErr).innerHTML = "Passordet må ha minst 6 karakterer.";
+            document.getElementById(passwordID).style.borderBottom = 'solid 1px #e35152';
+            document.getElementById(passwordErr).style.display = "block"
         }
-        else if (ptn.test(document.getElementById(verdi).value)) {
-            document.getElementById("passErr").innerHTML = "";
-            document.getElementById(verdi).style.border = 'solid 1px #60bb80';
+        else if (ptn.test(pw)) {
+            document.getElementById(passwordErr).innerHTML = "";
+            document.getElementById(passwordID).style.borderBottom = 'solid 1px #60bb80';
             return true;
         }
         else {
-            document.getElementById('passErr').innerHTML = "Passordet må minst ha en stor bokstav og ett tall. Noen spesielle karakterer kan også gi feilmelding.";
-            document.getElementById(verdi).style.border = 'solid 1px #e35152';
-            document.getElementById('passErr').style.display = "block";
+            document.getElementById(passwordErr).innerHTML = "Passordet må minst ha en stor bokstav og ett tall. Noen spesielle karakterer kan også gi feilmelding.";
+            document.getElementById(passwordID).style.borderBottom = 'solid 1px #e35152';
+            document.getElementById(passwordErr).style.display = "block";
         }
     }
 }
 
-function sjekkPassTo(verdi) {
-    var pass1 = document.getElementById('reg-pass').value;
-    var pass2 = document.getElementById('reg-pass-two').value;
+function sjekkPassTo(verdi, type) {
+    if (type === "bedrift") {
+        passwordID = "bedRegPass";
+        passwordToId = "bedRegPassTo"
+        passwordErr = "bedPassToError";
+    }
+
+    else if (type === "student") {
+        passwordID = "studRegPass";
+        passwordToId = "studRegPassTo"
+        passwordErr = "studPassToError";
+    }
+
+    else if (type === "faglarer") {
+        passwordID = "faglarerRegPass";
+        passwordToId = "faglarerRegPassTo"
+        passwordErr = "faglarerPassToError";
+    }
+
+    var pass1 = document.getElementById(passwordID).value;
+    var pass2 = document.getElementById(passwordToId).value;
 
     if (pass2 == pass1) {
-        document.getElementById('passTwoErr').innerHTML = "";
-        document.getElementById(verdi).style.border = "solid 1px #60bb80";
+        document.getElementById(passwordErr).innerHTML = "";
+        document.getElementById(passwordToId).style.borderBottom = "solid 1px #60bb80";
         return true;
     } else {
-        document.getElementById(verdi).style.border = "solid 1px #e35152";
-        document.getElementById('passTwoErr').innerHTML = "Passordene er ikke like!";
+        document.getElementById(passwordToId).style.borderBottom = "solid 1px #e35152";
+        document.getElementById(passwordErr).innerHTML = "Passordene er ikke like!";
     }
 }
 
@@ -305,7 +338,8 @@ function studentValStep2() {
   }
 
   if (ok === 4) {
-    return true;
+    $("#studentStep2").hide();
+    $("#studentStep3").show();
   } else {
     return false;
   }
@@ -332,6 +366,32 @@ function bedriftValStep1() {
     $("#bedrift_next_error").html('Fyll ut alle felt!');
     return false;
   }
+}
+
+function bedriftVal() {
+    var bednavn = $("#bedRegNavn").val();
+    var epost = $("#bedRegEpost").val();
+    var pass = $("#bedRegPass").val();
+    var passTo = $("#bedRegPassTo").val();
+    var err = false;
+
+    if (valNavn(bednavn)) {
+        err = true;
+    }
+
+    if (valEpost(epost)) {
+        err = true;
+    }
+
+    if (pass == passTo && pass != "") {
+        err = true;
+    }
+
+    if (err) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function faglarerValStep1() {
