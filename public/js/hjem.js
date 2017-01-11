@@ -51,21 +51,23 @@ $(document).ready(function () {
         $("#studentStep1").show();
     });
 
-    /* Bedrift kontrolerer steps 0-1 */
+    /* Bedrift kontrolerer steps 0-2 */
     $("#bedriftStep1To0").click(function () {
         $("#index-bedrift-box").hide();
         $("#index-hvemerdu").show();
     });
 
-    /* Bedrift kontrolerer steps 0-2 */
-    $("#faglarerStep1To0").click(function () {
-        $("#index-faglarer-box").hide();
-        $("#index-hvemerdu").show();
-    });
+    // refValidate takes care of step 1 - 2
 
     $("#bedriftStep2To1").click(function () {
         $("#bedriftStep2").hide();
         $("#bedriftStep1").show();
+    });
+
+    /* Faglærer kontrolerer steps 0-1 */
+    $("#faglarerStep1To0").click(function () {
+        $("#index-faglarer-box").hide();
+        $("#index-hvemerdu").show();
     });
 
     $("#faglarerStep2To1").click(function () {

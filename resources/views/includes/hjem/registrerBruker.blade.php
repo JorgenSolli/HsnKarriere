@@ -81,56 +81,59 @@
         <div class="header text-center">
           <p class="title is-4">Opprett din profil på under 2 minutter!</p>
           <p class="subtitle">Søk etter studenter innen din bransje, og kom i kontakt med potensielle studenter interessert i bedriftssamarbeid lokalt i Telemark.</p>
-          <!--<img class="regStepImg" src="img/registerProcess.png">-->
         </div>
         <br>
-        <div id="bedrift-group" class="control is-grouped">
-          <p class="control is-expanded">
-            <span class="placeholder" id="bedRegNavn-jumper">Bedriftsnavn </span>
-            <input onblur="sjekksjekkBedNavn(id)" onchange="sjekksjekkBedNavn(id)" class="input input-newstyle" name="bedRegNavn" id="bedRegNavn" type="text" placeholder="">
+        <div id="bedrift-group-navn" class="row">
+          <div class="col-sm-6">
+            <label for="bedRegNavn" class="placeholder" id="bedRegNavn-jumper">Bedriftsnavn </label>
+            <input onblur="sjekksjekkBedNavn(id)" onchange="sjekksjekkBedNavn(id)" class="form-control input-newstyle" name="bedRegNavn" id="bedRegNavn" type="text" placeholder="">
             <small id="bednavnErr" class="is-danger"></small>
-          </p>
-          <p class="control is-expanded">
-            <span class="placeholder" id="bedRegEpost-jumper">Bedriftsmail </span>
-            <input onblur="sjekkEpost(this.value, 'bedrift')" onchange="sjekkEpost(this.value, 'bedrift')" class="input input-newstyle" name="bedRegEpost" id="bedRegEpost" type="text" placeholder="">
-            <span id="bedpostError" class="help is-danger"></span><span id="bedpostSjekk" class="help is-danger"></span>
-          </p>
+          </div>
+          
+          <div class="col-sm-6">
+            <label for="bedRegEpost" class="placeholder" id="bedRegEpost-jumper">Bedriftsmail </label>
+            <input onblur="sjekkEpost(this.value, 'bedrift')" onchange="sjekkEpost(this.value, 'bedrift')" class="form-control input-newstyle" name="bedRegEpost" id="bedRegEpost" type="text" placeholder="">
+            <span id="bedpostError" class="help is-danger"></span>
+            <span id="bedpostSjekk" class="help is-danger"></span>
+          </div>
         </div>
-        <div class="text-center">
-          <a class="button container" id="bedriftStep1To0">
-            <span class="icon">
-              <i class="fa fa-angle-left"></i>
-            </span>
-            <span>Tilbake</span>
+        <p class="text-center">
+          <span id="bedrift_next_error" class="help is-danger text-center"></span>
+        </p>
+
+        <div class="text-center m-t-s">
+          <a class="btn btn-primary m-r-s" id="bedriftStep1To0">
+            <i class="fa fa-angle-left"></i>
+            Tilbake
           </a>
 
-          <a class="button container" id="bedriftStep1To2" onclick="return bedriftValStep1()">
-            <span>Gå videre</span>
-            <span class="icon">
-                <i class="fa fa-angle-right"></i>
-            </span>
+          <a class="btn btn-primary" id="bedriftStep1To2" onclick="return bedriftValStep1()">
+            Gå videre
+            <i class="fa fa-angle-right"></i>
           </a>
         </div>
       </div>
 
-      <div id="bedriftStep2" class="hidden">
+      <div id="bedriftStep2" style="display: none">
         <div class="header text-center">
           <p class="title is-4">Tilhører du en avdeling?</p><br>
         </div>
-        <div class="control is-grouped is-fullwidth">
-          <span class="placeholder" id="bedRegAvd-jumper">Har bedriften din avdeliger? Hvis ikke, la være blank. </span>
-          <input name="bedRegAvd" id="bedRegAvd" type="text" class="input input-newstyle" placeholder="">
+        <div class="row">
+          <div class="col-sm-12">
+            <label for="bedRegAvd" class="placeholder" id="bedRegAvd-jumper">Har bedriften din avdeliger? Hvis ikke, la være blank. </label>
+            <input name="bedRegAvd" id="bedRegAvd" type="text" class="form-control input-newstyle">
+          </div>
         </div>
-
         <div class="text-center">
-          <a id="bedriftStep2To1" class="button container">
-            <span class="icon">
-              <i class="fa fa-angle-left"></i>
-            </span>
-            <span>Tilbake</span>
+          <a id="bedriftStep2To1" class="btn btn-primary">
+            <i class="fa fa-angle-left"></i>
+            Tilbake
           </a>
 
-          <input type="submit" name="registrerBtn-bedrift" id="registrerBtn-bedrift" class="button is-success" value="Opprett konto">
+          <button type="submit" class="btn btn-success">
+            <i class="fa fa-check"></i> 
+            Opprett konto
+          </button>
         </div>
       </div>
     </form>

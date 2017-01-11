@@ -329,6 +329,7 @@ function bedriftValStep1() {
     $("#bedriftStep2").show();
     $("#bedriftStep1").hide();
   } else {
+    $("#bedrift_next_error").html('Fyll ut alle felt!');
     return false;
   }
 }
