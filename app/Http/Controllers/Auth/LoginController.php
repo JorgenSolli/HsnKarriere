@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -27,6 +31,10 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/bruker';
 
+    public function showLoginForm() {
+        return redirect('/')->with('logginn', 'logginn');
+    }
+
     /**
      * Create a new controller instance.
      *
@@ -35,5 +43,35 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        if (!User::where('email', $request->email)->first()) {
+            return redirect()
+                ->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors([$this->username() => Lang::get('auth.email')])
+                ->with('logginn', 'logginn');
+        }
+
+        if (!User::where('email', $request->email)->where('verified', 1)->first()) {
+            return redirect()
+                ->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors(['verified' => Lang::get('auth.verified')])
+                ->with('logginn', 'logginn');
+        }
+
+        if (!User::where('email', $request->email)
+            ->where('password', bcrypt($request->password))
+            ->first()) {
+
+            return redirect()
+                ->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors(['password' => Lang::get('auth.password')])
+                ->with('logginn', 'logginn');
+        }
     }
 }

@@ -130,6 +130,11 @@
 @stop
 
 @section('script')
+  @if (session('logginn'))
+    <script>
+      $("#loggInnModal").modal();
+    </script>
+  @endif
   <script src="/js/hjem.js"></script>
   <script src="/js/regValidate.js"></script>
 @stop

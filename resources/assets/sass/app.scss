@@ -60,6 +60,10 @@ body {
 .m-b-xs {margin-bottom: 5px !important}
 .m-l-xs {margin-left: 5px !important}
 
+.is-fullwidth {
+    width: 100%;
+}
+
 .a-no-dec:hover {
     text-decoration: none;
 }
@@ -556,4 +560,13 @@ body {
     filter     : alpha(opacity=60);
     z-index    : 5;
     display: none;
+}
+
+/* Logg Inn Modal */ 
+#loggInnModal .modal-content {
+    border-radius: 2px;
+}
+
+#loggInnModal .modal-header, #loggInnModal .modal-footer {
+    background: #F5F5F5;
 }

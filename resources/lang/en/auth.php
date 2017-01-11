@@ -13,7 +13,9 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'email' => 'Brukeren med denne eposten finnes ikke.',
+    'password' => 'Passordet stemmer ikke med eposten.',
+    'verified' => 'Brukeren er ikke aktivert. Sjekk eposten din!',
+    'throttle' => 'For mange påloggingsforsøk! Prøv igjen om :seconds sekunder.',
 
 ];
