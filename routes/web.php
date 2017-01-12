@@ -25,6 +25,10 @@ Route::get('bruker', 'UserHomeController@bruker')->middleware('auth');
 Route::post('bruker/uploads/forsidebilde', 'UploadController@uploadForsidebilde');
 Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
 
+// Delete something
+Route::delete('bruker/rediger/forsidebilde/{user}', 'UserEditController@deleteFrontImg');
+Route::delete('bruker/rediger/profilbilde/{user}', 'UserEditController@deleteProfilImg');
+
 // Confirm User
 Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');
 

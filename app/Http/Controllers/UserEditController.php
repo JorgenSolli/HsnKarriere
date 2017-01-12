@@ -122,13 +122,60 @@ class UserEditController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Removes the users Header Image from the DB restores it back to stdImg.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteFrontImg(User $user)
     {
-        //
+        $stdImg = "img/forsidebilder/" . $user->bruker_type . "_forsidebilde.jpg";
+
+        if ($user->id == Auth::id() || Auth::user()->bruker_type == "admin" || $user->profilbilde != $stdImg) {
+            
+            $currentImg = $user->forsidebilde;
+
+            // Deletes the current image
+            unlink("uploads/" . $currentImg);
+
+            // Sets the IMG back to standard
+            $user = User::find(Auth::id());
+            $user->forsidebilde = $stdImg;
+            $user->save();
+
+            return back();
+
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
+    }
+
+    /**
+     * Removes the users Profile Image from the DB restores it back to stdImg.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteProfilImg(User $user)
+    {
+        $stdImg = "img/profilbilder/" . $user->bruker_type . "_profilbilde.png";
+
+        if ($user->id == Auth::id() || Auth::user()->bruker_type == "admin" || $user->profilbilde != $stdImg) {
+            
+            $currentImg = $user->profilbilde;
+
+            // Deletes the current image
+            unlink("uploads/" . $currentImg);
+
+            // Sets the IMG back to standard
+            $user = User::find(Auth::id());
+            $user->profilbilde = $stdImg;
+            $user->save();
+
+            return back();
+
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 }

@@ -14,7 +14,7 @@
             <div class="container hero-body">
                 <div class="headerTitle">
                     <div class="textbox">
-                        <h1>Velkommen til <br>Studentsamarbeid.no</h1>
+                        <h1 class="white-color">Velkommen til <br>Studentsamarbeid.no</h1>
                         <hr align="left" class="is-hidden-mobile">
                         <h3>Møteplassen mellom din bedrift og <br>studenter fra Høgskolen i Sørøst-Norge</h3>
                     </div>

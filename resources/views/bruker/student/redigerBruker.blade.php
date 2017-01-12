@@ -16,7 +16,7 @@
             <div class="profilbildeRelative pos-r">
               <a id="_profilbildeContainer">
                 <img id="profilbildeContainer" class="cursor panel-profile-img" src="/uploads/{{ $brukerinfo->profilbilde }}"
-                data-toggle="modal" data-target="#nyttProfilbildeModal">
+                data-toggle="modal" data-target="#nyttProfilbildeModal" alt="Profilbilde">
                 <span id="nyttProfilbilde" class="pos-a fa fa-camera fa-2x" style="display: none"
                 data-toggle="modal" data-target="#nyttProfilbildeModal"></span>
               </a>
@@ -202,12 +202,12 @@
                                     </select>
                                 </div>
                                 <div class="col-xs-3 form-group p-r-0">
-                                    <select class="form-control" name="datoFra[]" class="datoFra">
+                                    <select class="form-control datoFra" name="datoFra[]">
                                         <option selected value="{{ $value[2] }}">{{ $value[2] }}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-3 form-group">
-                                    <select class="form-control" name="datoTil[]" class="datoTil">
+                                    <select class="form-control datoTil" name="datoTil[]">
                                         <option selected value="{{ $value[3] }}">{{ $value[3] }}</option>
                                     </select>
                                 </div>
@@ -258,7 +258,8 @@
               <a class="media-left" href="#">
                 <img
                   class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}">
+                  src="/uploads/{{ $brukerinfo->profilbilde }}"
+                  alt="Profilbilde">
               </a>
               <div class="media-body">
                 <strong>Step Media</strong> · Bø
@@ -272,13 +273,14 @@
               <a class="media-left" href="#">
                 <img
                   class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}">
+                  src="/uploads/{{ $brukerinfo->profilbilde }}"
+                  alt="Profilbilde">
               </a>
               <div class="media-body">
                 <strong>Drangedal kommune</strong> · Drangedal
                 <div class="media-body-actions">
                   <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil</button></button>
+                    <span class="fa fa-info"></span> Se profil</button>
                 </div>
               </div>
             </li>
@@ -304,24 +306,32 @@
   </div>
 
   <!-- MODALS -->
-  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="forsidebildeModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
+          <h4 class="modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
         </div>
-        <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
-          <div class="modal-body">
+        <div class="modal-body">
+          <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
             {{ csrf_field() }}
             <input id="forsidebilde-input" name="forsidebilde" type="file" multiple data-min-file-count="1">
             <br>
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+            <button type="submit" class="pull-right btn btn-primary">Last opp</button>
+          </form>
+            @if ($brukerinfo->forsidebilde != "img/forsidebilder/student_forsidebilde.jpg")
+              <form method="POST" action="/bruker/rediger/forsidebilde/{{ $brukerinfo->id }}">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <button type="submit" class="pull-right btn btn-danger">Slett nåværende bilde</button>
+              </form>
+            @endif
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Last opp</button>
-            <button type="reset" class="btn btn-default">Nullstill</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -333,17 +343,25 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Nytt profilbilde</h4>
         </div>
-        <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
-          <div class="modal-body">
+        <div class="modal-body">
+          <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
             {{ csrf_field() }}
             <input id="profilbilde-input" name="profilbilde" type="file" multiple data-min-file-count="1">
             <br>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Last opp</button>
-            <button type="reset" class="btn btn-default">Nullstill</button>
+            <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+            <button type="submit" class="pull-right btn btn-primary">Last opp</button>
+          </form>
+          @if ($brukerinfo->profilbilde != "img/profilbilder/student_profilbilde.png")
+            <form method="POST" action="/bruker/rediger/profilbilde/{{ $brukerinfo->id }}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+              <button type="submit" class="pull-right btn btn-danger">Slett nåværende bilde</button>
+            </form>
+          @endif
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@ class UploadController extends Controller
 
     	// Gets file, uplads it, and store the path and filename
     	$file = request()->file('forsidebilde');
-		$path = $file->store('img/forsidebilder');
+		$path = $file->store('uploads/img/forsidebilder');
 
 		$user = User::find(Auth::id());
 		$user->forsidebilde = $path;
@@ -40,7 +40,7 @@ class UploadController extends Controller
 
     	// Gets file, uplads it, and store the path and filename
     	$file = request()->file('profilbilde');
-		$path = $file->store('img/profilbilder');
+		$path = $file->store('uploads/img/profilbilder');
 
 		$user = User::find(Auth::id());
 		$user->profilbilde = $path;

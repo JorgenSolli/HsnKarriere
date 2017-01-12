@@ -1,9 +1,10 @@
-<optgroup label="Dine valg">
-    @foreach ($bedrift_ser_etter as $value)
-        <option value="{{ $value }}" selected="">{{ $value }}</option>
-    @endforeach
-</optgroup>
-
+@if ($brukerinfo->bruker_type == "bedrift")
+    <optgroup label="Dine valg">
+        @foreach ($bedrift_ser_etter as $value)
+            <option value="{{ $value }}" selected="">{{ $value }}</option>
+        @endforeach
+    </optgroup>
+@endif
 
 <optgroup label="Institutt for Økonomi og Informatikk">
     <option value="Geografiske Informasjonssystemer">Geografiske Informasjonssystemer</option>

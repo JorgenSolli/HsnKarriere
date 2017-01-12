@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2017 at 07:09 PM
+-- Generation Time: Jan 12, 2017 at 03:35 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -23,11 +23,213 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bekreft`
+--
+
+CREATE TABLE `bekreft` (
+  `hash` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bruker_id` int(11) DEFAULT NULL,
+  `bruker_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `harsett`
+--
+
+CREATE TABLE `harsett` (
+  `samarbeid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `meldinger`
+--
+
+CREATE TABLE `meldinger` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `fra_bruker_id` int(11) DEFAULT NULL,
+  `til_bruker_id` int(11) DEFAULT NULL,
+  `tittel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `innhold` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sett_av` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `meldinger_svar`
+--
+
+CREATE TABLE `meldinger_svar` (
+  `svar_id` int(10) UNSIGNED NOT NULL,
+  `melding_id` int(11) DEFAULT NULL,
+  `forfatter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `innhold` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sett_av` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(10, '2014_10_12_000000_create_users_table', 1),
+(11, '2014_10_12_100000_create_password_resets_table', 1),
+(12, '2017_01_05_105306_create_bekreft_table', 1),
+(13, '2017_01_05_111636_create_harsett_table', 1),
+(14, '2017_01_05_111739_create_meldinger_table', 1),
+(15, '2017_01_05_112303_create_meldinger_svar_table', 1),
+(16, '2017_01_05_112632_create_oppgaver_table', 1),
+(17, '2017_01_05_120655_create_samarbeid_table', 1),
+(18, '2017_01_05_121130_create_stillinger_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oppgaver`
+--
+
+CREATE TABLE `oppgaver` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `fil` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bedrift_id` int(11) DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tittel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `info` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `samarbeid`
+--
+
+CREATE TABLE `samarbeid` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `type_samarbeid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bedrift_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `foreleser_id` int(11) DEFAULT NULL,
+  `godkjent_av_foreleser` int(11) DEFAULT NULL,
+  `godkjent_av_student` int(11) DEFAULT NULL,
+  `godkjent_av_bedrift` int(11) DEFAULT NULL,
+  `signert_av_student` int(11) DEFAULT NULL,
+  `signert_av_bedrift` int(11) DEFAULT NULL,
+  `kontrakt_godkjent_av_foreleser` int(11) DEFAULT NULL,
+  `kontrakt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `arbeidsbesk` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `startdato` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stillinger`
+--
+
+CREATE TABLE `stillinger` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `bedrift_id` int(11) DEFAULT NULL,
+  `sted` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `varighet` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `frist` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `stilling_tittel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bransje` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `info` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bruker_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `verified` int(1) DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fornavn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `etternavn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefon` int(11) DEFAULT NULL,
+  `adresse` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `postnr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `poststed` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bio` text COLLATE utf8_unicode_ci,
+  `dob` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `profilbilde` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `forsidebilde` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `student_nr` int(11) DEFAULT NULL,
+  `student_campus` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `student_cv` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `student_attester` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `student_studerer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bedrift_navn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bedrift_avdeling` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bedrift_fagfelt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bedrift_ser_etter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `foreleser_rom_nr` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nettside` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `facebook` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `linkedin` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sist_aktiv` date DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `bruker_type`, `verified`, `token`, `fornavn`, `etternavn`, `telefon`, `adresse`, `postnr`, `poststed`, `bio`, `dob`, `profilbilde`, `forsidebilde`, `student_nr`, `student_campus`, `student_cv`, `student_attester`, `student_studerer`, `bedrift_navn`, `bedrift_avdeling`, `bedrift_fagfelt`, `bedrift_ser_etter`, `foreleser_rom_nr`, `nettside`, `facebook`, `linkedin`, `sist_aktiv`, `remember_token`, `created_at`, `updated_at`) VALUES
 (0, 'admin@studentsamarbeid.no', '8f1c539b8f046853f5264ed57c431e831756b59d', 'admin', 1, NULL, 'Admin', '', NULL, NULL, NULL, NULL, NULL, NULL, 'profilbilde.jpg', NULL, 0, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '', NULL, NULL, '2016-11-25', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(1, 'jorgen@jorgensolli.no', '$2y$10$CgeKQte8HdFhBKsegDPmOeFsHGF5nYx/ciLGYr4tA6FkyS4R1d0NG', 'student', 1, NULL, 'Jørgen', 'Solli', 90104220, 'haukåsen 8E', '3743', 'Skien', 'Studerer informatikk i Bø. Er praktikant hos Aplia i mitt siste semester frem til mai. Da blir det fest!', '16/01/1993', 'img/profilbilder/a5eb96fc1553756b3c3a1cff0db42670.jpeg', 'img/forsidebilder/student_forsidebilde.jpg', NULL, 'bø', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'www.jorgensolli.no', 'https://www.facebook.com/jorgen.sol', 'https://www.linkedin.com/in/j%C3%B8rgen-solli-a293b8b5?trk=hp-identity-name', NULL, 'InDV2JEZA3662rzKr0PYM5auyzkr8wXyjURrAG3BWY5GuQdiBMS26eomPqOf', '2017-01-06 06:21:37', '2017-01-07 19:35:39'),
 (9, 'bedrift@gmail.com', '$2y$10$/nfIaz/KrV4SfIyT.Xj7ROq8MylUkFCFfgsIbiNAygCIdXBlhSL5S', 'bedrift', 1, NULL, 'Jørgen', 'Solli', 0, '', '', '', '', NULL, 'img/profilbilder/bedrift_profilbilde.png', 'img/forsidebilder/bedrift_forsidebilde.jpg', NULL, NULL, NULL, NULL, NULL, 'TestBedrift', '', NULL, 'Regnskap og Revisjon;Eiendomsmegling;Informatikk', NULL, '', '', '', NULL, NULL, '2017-01-12 07:47:43', '2017-01-12 12:31:18'),
 (189, 'foreleser@hit.no', '8f1c539b8f046853f5264ed57c431e831756b59d', 'faglarer', 1, NULL, 'Test', 'Foreleser', 90104220, NULL, NULL, NULL, NULL, NULL, 'img/profilbilder/580f58b33ee76_id189IMG_0014.JPG', '', 0, 'Bø', NULL, NULL, 'Barnehagelærer', '', '', NULL, NULL, '1-131', '', '', '', '2016-12-01', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (190, 'sigurdssorensen@gmail.com', 'd1b1bb91a99de27cb44b35b8a9102a82979244a2', 'admin', 1, NULL, 'Sigurd', 'Sæther', 45519920, 'Bø i Telemark', '3800', 'Bøgata 44', '', '2013-01-08', 'img/profilbilder/57cff8c706228_id190BM5R1241.jpg', NULL, 0, 'Bø', NULL, NULL, NULL, '', '', NULL, NULL, NULL, '', NULL, NULL, '2016-11-04', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -155,6 +357,49 @@ INSERT INTO `users` (`id`, `email`, `password`, `bruker_type`, `verified`, `toke
 --
 
 --
+-- Indexes for table `meldinger`
+--
+ALTER TABLE `meldinger`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `meldinger_svar`
+--
+ALTER TABLE `meldinger_svar`
+  ADD PRIMARY KEY (`svar_id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oppgaver`
+--
+ALTER TABLE `oppgaver`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`),
+  ADD KEY `password_resets_token_index` (`token`);
+
+--
+-- Indexes for table `samarbeid`
+--
+ALTER TABLE `samarbeid`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `stillinger`
+--
+ALTER TABLE `stillinger`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -165,6 +410,36 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `meldinger`
+--
+ALTER TABLE `meldinger`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `meldinger_svar`
+--
+ALTER TABLE `meldinger_svar`
+  MODIFY `svar_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `oppgaver`
+--
+ALTER TABLE `oppgaver`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `samarbeid`
+--
+ALTER TABLE `samarbeid`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `stillinger`
+--
+ALTER TABLE `stillinger`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
