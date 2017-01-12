@@ -12,17 +12,20 @@
 */
 
 Route::get('/', 'PageController@hjem');
-Route::get('bruker/rediger', 'UserController@index')->middleware('auth');
-Route::get('bruker/{bruker}', 'BrukerController@seBruker')->middleware('auth');
 Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
 
-Route::get('bruker', 'BrukerController@bruker')->middleware('auth');
+// User routes //
+Route::patch('bruker/{user}', 'UserEditController@updateUser');
+Route::get('bruker/rediger', 'UserEditController@index')->middleware('auth');
 
-// Update a user
-Route::patch('bruker/{user}', 'UserController@updateUser');
+Route::get('bruker/{bruker}', 'UserHomeController@seBruker')->middleware('auth');
+Route::get('bruker', 'UserHomeController@bruker')->middleware('auth');
 
 // Upload something
 Route::post('bruker/uploads/forsidebilde', 'UploadController@uploadForsidebilde');
 Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
+
+// Confirm User
+Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');
 
 Auth::routes();

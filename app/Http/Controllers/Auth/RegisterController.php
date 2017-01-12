@@ -101,8 +101,8 @@ class RegisterController extends Controller
                 'bruker_type' => $data['bruker_type'],
                 'bedrift_avdeling' => $data['bedRegAvd'],
                 'password' => bcrypt($data['password']),
-                'profilbilde' => 'img/profilbilder/bedrift_profilbilde.jpg',
-                'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.png'
+                'profilbilde' => 'img/profilbilder/bedrift_profilbilde.png',
+                'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.jpg'
             ]);
         } 
     }

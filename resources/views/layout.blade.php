@@ -10,6 +10,7 @@
 
         <!-- styles -->
         <link rel="stylesheet" href="/css/dist/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/dist/select2.min.css">
         <link rel="stylesheet" href="/css/dist/fileinput.min.css">
         <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
         <link rel="stylesheet" href="/css/dist/toolkit.min.css">
@@ -72,7 +73,8 @@
                             </li>
                             <li>
                                 <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
-                                    <img class="img-circle" src="/uploads/{{ $avatar }}">
+                                    <img class="img-circle" src="/uploads/{{ $avatar }}"
+                                    alt="Profilbilde">
                                 </button>
                             </li>
                         </ul>
@@ -118,10 +120,10 @@
                             <li><a href="/bruker"><span class="fa fa-user"></span> Min profil</a></li>
                             <li><a href="/bruker/rediger"><span class="fa fa-cog"></span> Rediger profil</a></li>
                             <li>
-                                <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-popover').submit();">
                                     <span class="fa fa-sign-out"></span> Logg ut
                                 </a>
-                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                <form id="logout-form-popover" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
                             </li>
@@ -139,7 +141,8 @@
                 <div class="col-sm-3">
                     <h3>Samarbeidspartnere</h3>
                     <a class="samarbeidspartnere" href="https://usn.no">
-                        <img src="/img/usn.png" alt="USN">
+                        <img src="/img/usn.png"
+                        alt="usn logo">
                     </a>
                 </div>
                 <div class="col-sm-3">
@@ -171,6 +174,8 @@
         <script src="/js/dist/bootstrap-datepicker.min.js"></script>
         <script src="/js/dist/toolkit.min.js"></script>
         <script src="/js/dist/jquery.smooth-scroll.js"></script>
+        <script src="/js/dist/select2/select2.full.min.js"></script>
+        <script src="/js/dist/select2/i18n/nb.js"></script>
         <script src="/js/dist/fileinput.min.js"></script>
         <script src="/js/dist/locales/no.js"></script>
         <script src="/js/app.js"></script>

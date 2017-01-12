@@ -1,4 +1,7 @@
 $(function () {
+    // Select2 load
+    $('.select2').select2();
+
     // Legger til nye rader per studieretning
     $("#studieretning").on('change', function () {
         // Finner studieretningen

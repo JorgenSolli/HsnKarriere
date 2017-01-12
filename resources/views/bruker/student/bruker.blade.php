@@ -1,7 +1,9 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
-@include('includes.bruker.min-bruker')
-@include('includes.bruker.mine-kontakter')
-@include('includes.bruker.bedrifter')
+@include('includes.bruker.student.min-bruker')
+@include('includes.bruker.student.mine-kontakter')
+@include('includes.bruker.student.bedrifter')
+
+<!-- BRUKER STUDENT -->
 
 @section('content')
 <div class="profile-header text-center" style="background-image: url(/uploads/{{ $brukerinfo->forsidebilde }}); ">
@@ -16,7 +18,7 @@
         <a href="{{ $brukerinfo->linkedin }}" class="p-r-s"><span class="social_icons fa fa-linkedin-square fa-2x"></span></a>
       @endif
       @if ($brukerinfo->nettside != "")
-        <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-globe fa-2x"></span></a>
+        <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-home fa-2x"></span></a>
       @endif
       <p class="profile-header-bio">Student ved campus {{ $brukerinfo->student_campus }} </p>
     </div>

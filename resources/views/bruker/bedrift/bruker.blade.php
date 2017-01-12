@@ -1,14 +1,15 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
-@include('includes.bruker.min-bruker')
-@include('includes.bruker.mine-kontakter')
-@include('includes.bruker.bedrifter')
+@include('includes.bruker.bedrift.min-bruker')
+@include('includes.bruker.bedrift.mine-kontakter')
+
+<!-- BRUKER BEDRIFT -->
 
 @section('content')
 <div class="profile-header text-center" style="background-image: url(/uploads/{{ $brukerinfo->forsidebilde }}); ">
   <div class="container-fluid">
     <div class="container-inner">
       <img class="img-circle media-object" src="/uploads/{{ $brukerinfo->profilbilde }}">
-      <h3 class="profile-header-user">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</h3>
+      <h3 class="profile-header-user">{{ $brukerinfo->bedrift_navn }}</h3>
       @if ($brukerinfo->facebook != "")
         <a href="{{ $brukerinfo->facebook }}" class="p-r-s"><span class="social_icons fa fa-facebook-official fa-2x"></span></a>
       @endif
@@ -16,9 +17,12 @@
         <a href="{{ $brukerinfo->linkedin }}" class="p-r-s"><span class="social_icons fa fa-linkedin-square fa-2x"></span></a>
       @endif
       @if ($brukerinfo->nettside != "")
-        <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-globe fa-2x"></span></a>
+        <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-home fa-2x"></span></a>
       @endif
-      <p class="profile-header-bio">Student ved campus {{ $brukerinfo->student_campus }} </p>
+      <p class="profile-header-bio">Holder til i {{ $brukerinfo->poststed }}
+      @unless ($brukerinfo->bedrift_avdeling == "")
+        ved avdeling {{ $brukerinfo->bedrift_avdeling }}
+      @endunless</p>
     </div>
   </div>
     
@@ -32,7 +36,7 @@
         <a href="#mine-kontakter" aria-controls="mine-kontakter" role="tab" data-toggle="tab">Mine Kontakter</a>
       </li>
       <li role="presentation">
-        <a href="#bedrifter" aria-controls="bedrifter" role="tab" data-toggle="tab">Bedrifter</a>
+        <a href="#studenter" aria-controls="bedrifter" role="tab" data-toggle="tab">Studenter</a>
       </li>
     </ul>
   </nav>
@@ -47,8 +51,8 @@
     @yield('mine-kontakter')
   </div>
 
-  <div id="bedrifter" class="tab-pane m-t" role="tabpanel">
-    @yield('bedrifter')
+  <div id="studenter" class="tab-pane m-t" role="tabpanel">
+    @include('includes.bruker.bedrift.studenter')
   </div>
 </div>
 

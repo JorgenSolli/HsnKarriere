@@ -38,6 +38,7 @@ class User extends Authenticatable
         'bedrift_navn',
         'bedrift_avdeling',
         'bedrift_fagfelt',
+        'bedrift_ser_etter',
         'foreleser_rom_nr',
         'nettside',
         'facebook',

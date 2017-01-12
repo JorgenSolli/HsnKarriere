@@ -1,6 +1,6 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
 
-<!-- REDIGER BRUKER STUDENT -->
+<!-- REDIGER BRUKER BEDRIFT -->
 
 @section('content')
   <div class="container p-t-md">
@@ -16,13 +16,14 @@
             <div class="profilbildeRelative pos-r">
               <a id="_profilbildeContainer">
                 <img id="profilbildeContainer" class="cursor panel-profile-img" src="/uploads/{{ $brukerinfo->profilbilde }}"
+                alt="Profilbilde"
                 data-toggle="modal" data-target="#nyttProfilbildeModal">
                 <span id="nyttProfilbilde" class="pos-a fa fa-camera fa-2x" style="display: none"
                 data-toggle="modal" data-target="#nyttProfilbildeModal"></span>
               </a>
             </div>
             <h5 class="panel-title">
-              <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</a>
+              <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->bedrift_navn }}</a>
             </h5>
 
             <p class="m-b-md">{{ $brukerinfo->bio }}</p>
@@ -46,14 +47,23 @@
         </div>
 
         <div class="panel panel-success panel-hover-success cursor">
-          <div class="panel-body">
-            <h4 class="m-t-s text-center"><span class="fa fa-upload"></span> Last opp CV</h4>
+          <div class="panel-body text-center">
+            <span class="fa fa-briefcase fa-3x"></span>
+            <h4 class="m-t-s text-center">Utlys stilling</h4>
           </div>
         </div>
 
-         <div class="panel panel-info panel-hover-info cursor">
-          <div class="panel-body">
-            <h4 class="m-t-s text-center"><span class="fa fa-upload"></span> Last opp Attester</h4>
+        <div class="panel panel-info panel-hover-info cursor">
+          <div class="panel-body text-center">
+            <span class="fa fa-file-pdf-o fa-3x"></span> 
+            <h4 class="m-t-s text-center">Legg til mMsteroppgave</h4>
+          </div>
+        </div>
+
+        <div class="panel panel-info panel-hover-info cursor">
+          <div class="panel-body text-center">
+            <span class="fa fa-file-pdf-o fa-3x"></span>
+            <h4 class="m-t-s text-center">Legg til Bacheloroppgave</h4>
           </div>
         </div>
       </div>
@@ -69,10 +79,10 @@
               </div>
               <div class="media-body">
                 <div class="media-heading">
-                  <small class="pull-right text-muted">Kort om deg</small>
-                  <h4>Biografi</h4>
+                  <small class="pull-right text-muted">Kort om bedriften</small>
+                  <h4>Litt om {{ $brukerinfo->bedrift_navn }}</h4>
                 </div>
-                <textarea name="bio" class="form-control" placeholder="Kort om deg">{{ $brukerinfo->bio }}</textarea>
+                <textarea name="bio" class="form-control" placeholder="Du trenger ikke skrive så mye.">{{ $brukerinfo->bio }}</textarea>
               </div>
             </li>
 
@@ -84,10 +94,10 @@
                 <div class="media-body-text">
                   <div class="media-heading">
                     <small class="pull-right text-muted">Bare litt...</small>
-                    <h4>Litt om deg</h4>
+                    <h4>Generel informasjon</h4>
                   </div>
                     <div class="form-group">
-                      <label for="fornavn">Navn</label>
+                      <label for="fornavn">Kontaktperson</label>
                       <div class="row">
                         <div class="col-xs-6 p-r-0">
                           <input name="fornavn" type="text" class="form-control" id="fornavn" placeholder="Fornavn" 
@@ -100,7 +110,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="adresse">Bosted</label>
+                      <label for="adresse">Bedriftens adresse</label>
                       <div class="row">
                         <div class="col-xs-5 p-r-0">
                           <input name="adresse" type="text" class="form-control" id="adresse" placeholder="Adresse" 
@@ -117,6 +127,19 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label for="fagFelt">Bedriftens fagområde</label>
+                      <select name="fagFelt[]" id="fagFelt" 
+                      class="select select2 js-example-basic-multiple is-fullwidth form-control"
+                      multiple="multiple">
+                        <option value="" disabled>Hva driver bedriften din med?</option>
+                        @include('includes.selects.fagomraader')
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="avdeling">Avdeling</label>
+                        <input name="avdeling" id="avdeling" type="text" class="form-control" placeholder="Hvilken avdeling tillhører du?" value="{{ $brukerinfo->bedrift_avdeling }}">
+                    </div>
+                    <div class="form-group">
                       <label for="epost">Epost</label>
                       <input name="email" type="email" class="form-control" id="epost" placeholder="Epost" value="{{ $brukerinfo->email }}">
                     </div>
@@ -124,12 +147,6 @@
                       <label for="telefon">Telefon</label>
                       <input name="telefon" type="number" class="form-control" id="telefon" placeholder="Telefonnummer" 
                       value="@unless ($brukerinfo->telefon == 0){{ $brukerinfo->telefon }}@endunless">
-                    </div>
-                    <div class="form-group">
-                      <label for="dob">Fødselsdato</label>
-                      <div class="input-group date">
-                        <input name="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                      </div>
                     </div>
                     <div class="form-group">
                       <label for="nettside">Nettside</label>
@@ -164,63 +181,18 @@
               </div>
               <div class="media-body">
                 <div class="media-heading">
-                  <small class="pull-right text-muted">Studier og tider</small>
-                  <h4>Dine studier</h4>
+                  <small class="pull-right text-muted">Hmmm</small>
+                  <h4>Studenter</h4>
                 </div>
                 <div class="form-group">
-                  <label for="studiested">Studiested</label>
-                  <select name="student_campus" id="studiested" class="form-control">
-                    @if ($brukerinfo->student_campus == "bø")
-                      <option value="bø" selected>Campus Bø</option>
-                      <option value="notodden">Campus Notodden</option>
-                    @else
-                      <option value="notodden" selected>Campus Notodden</option>
-                      <option value="bø">Campus Bø</option>
-                    @endif
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="studieretning">Studieretning</label>
-                  <select name="studieretning" id="studieretning" class="form-control">
-                    <option value="" disabled="" selected="">Velg en eller flere studieretninger</option>
-                    @include('includes.selects.studier')
-                  </select>
-                </div>
-                <div id="studieretningValg">
-                  @unless ($student_studerer == "")
-                    @foreach ($student_studerer as $value)
-                      <div class="studieretningValg">
-                        <hr>
-                        <div class="form-group">
-                           <input class="form-control" name="student_studerer[]" value="{{ $value[0] }}">
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-5 form-group p-r-0">
-                                    <select class="form-control" name="campus[]">
-                                        <option selected value="{{ $value[1] }}">{{ $value[1] }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-3 form-group p-r-0">
-                                    <select class="form-control" name="datoFra[]" class="datoFra">
-                                        <option selected value="{{ $value[2] }}">{{ $value[2] }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-3 form-group">
-                                    <select class="form-control" name="datoTil[]" class="datoTil">
-                                        <option selected value="{{ $value[3] }}">{{ $value[3] }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-1">
-                                    <span class="slettRad scaryRed-color">
-                                    <span class="fa fa-close fa-lg cursor"></span>
-                                    </span>
-                                </div>
-                           </div>
-                        </div>
-                      </div>
-                    @endforeach
-                  @endunless
+                  <div class="form-group">
+                    <label for="bedrift_ser_etter">Hvilke studenter ser du etter?</label>
+                    <select name="bedrift_ser_etter[]" id="bedrift_ser_etter" class="select select2 js-example-basic-multiple is-fullwidth form-control"
+                            multiple="multiple">
+                      <option value="" disabled>Hvilke studenter er dere på jakt etter?</option>
+                      @include('includes.selects.studier')
+                    </select>
+                  </div>
                 </div>
               </div>
             </li>
@@ -252,33 +224,39 @@
 
         <div class="panel panel-default m-b-md hidden-xs">
           <div class="panel-body">
-          <h5 class="m-t-0">Passende Bedrifter <small>· <a href="#">Se Alle</a></small></h5>
+          <h5 class="m-t-0">Passende Studenter <small>· <a href="#">Se Alle</a></small></h5>
           <ul class="media-list media-list-stream">
             <li class="media m-b">
               <a class="media-left" href="#">
                 <img
                   class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}">
+                  src="/uploads/{{ $brukerinfo->profilbilde }}"
+                  alt="Profilbilde">
               </a>
               <div class="media-body">
-                <strong>Step Media</strong> · Bø
+                <strong>Jørgen Solli</strong> · Bø
                 <div class="media-body-actions">
                   <button class="btn btn-primary-outline btn-xs">
                     <span class="fa fa-info"></span> Se profil</button>
                 </div>
               </div>
             </li>
-             <li class="media">
+            <li>
+              <hr class="m-a-0">
+            </li>
+            <li class="media">
               <a class="media-left" href="#">
                 <img
                   class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}">
+                  src="/uploads/{{ $brukerinfo->profilbilde }}"
+                  alt="profilbilde">
               </a>
               <div class="media-body">
-                <strong>Drangedal kommune</strong> · Drangedal
+                <strong>Sigurd Sørensen</strong> · Kina
                 <div class="media-body-actions">
                   <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil</button></button>
+                    <span class="fa fa-info"></span> Se profil
+                  </button>
                 </div>
               </div>
             </li>
@@ -304,12 +282,12 @@
   </div>
 
   <!-- MODALS -->
-  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
+          <h4 class="modal-title"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
         </div>
         <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
           <div class="modal-body">
