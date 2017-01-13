@@ -28,21 +28,20 @@ class QuerryService {
             }
 
             $sqlFirst = "SELECT * FROM users WHERE ";
-            $sqlParams = "`bruker_type` = 'bedrift' AND `bedrift_fagfelt` LIKE ";
+            $sqlParams = "`bruker_type` = 'bedrift' AND `bedrift_ser_etter` LIKE ";
             $sqlCounter = count($fagtypeNavnArray);
             
             for ($i = 0; $i <= $sqlCounter; $i++) {
                 if (--$sqlCounter <= 0) {
                     $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%'";
                 } else {
-                    $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%' OR `bruker_type` = 'bedrift' AND `bedrift_fagfelt` LIKE ";
+                    $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%' OR `bruker_type` = 'bedrift' AND `bedrift_ser_etter` LIKE ";
                 }
             }
 
             $sql = $sqlFirst . $sqlParams;
             $bedrifter = DB::select($sql);
         }
-
         if (empty($bedrifter)) {
             $bedrifter = null;
         }

@@ -129,6 +129,18 @@ body {
     }
 }
 
+.sort-field {
+    line-height: 30px;
+
+    .seperator {
+        bottom: 1px;
+    }
+
+    .sort-icons {
+        top: 1px;
+    }
+}
+
 /* redigerBruker */
 #nyttProfilbilde {
     width: 100%;

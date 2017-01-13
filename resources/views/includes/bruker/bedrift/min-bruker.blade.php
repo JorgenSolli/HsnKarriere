@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col-sm-6 p-r-s p-l-s">
       <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
-        <h4><span class="fa fa-file-text-o"></span> Bio</h4>
+        <h4><span class="fa fa-file-text-o"></span> Om {{ $brukerinfo->bedrift_navn }}</h4>
         <p>{{ $brukerinfo->bio }}</p>
       </div>
     </div>
     <div class="col-sm-3 p-r-s p-l-s">
       <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
-        <h4><span class="fa fa-graduation-cap"></span> Driver med</h4>
-        
+        <h4><span class="fa fa-briefcase"></span> Driver med</h4>
+        {{ $brukerinfo->bedrift_fagfelt }}
       </div>
     </div>
     <div class="col-sm-3 p-r-s p-l-s">
