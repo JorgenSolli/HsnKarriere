@@ -76,5 +76,5 @@
 
 @stop
 @section('script')
-  <script src="/js/seBruker.js"></script>
+  <script src="/js/minBruker.js"></script>
 @stop
