@@ -149,16 +149,22 @@ body {
 }
 
 /* bruker */
-.sort-icons a span {
+@media (max-width: 992px) {
+  .media-list-users {
+    padding-right: 0;
+  }
+}
+
+.sort-icons span {
   color: #0a0a0a;
   opacity: 0.5;
 }
 
-.sort-icons a span:hover {
+.sort-icons span:hover {
   opacity: 1;
 }
 
-.sort-icons a .active {
+.sort-icons .active {
   opacity: 1 !important;
 }
 
@@ -180,6 +186,28 @@ body {
 
 .sort-field .sort-icons {
   top: 1px;
+}
+
+@media (max-width: 768px) {
+  #sort-view p {
+    float: left;
+    margin-bottom: 0;
+  }
+  #sort-view .sort-icons {
+    float: none !important;
+  }
+  #sort-category-floater {
+    float: right;
+  }
+  #sort-category .seperator {
+    display: none;
+  }
+  #sort-category #sort-category-text {
+    float: none !important;
+  }
+  #sort-category select {
+    float: none !important;
+  }
 }
 
 /* redigerBruker */

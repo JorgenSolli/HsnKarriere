@@ -1,3 +1,0 @@
-@section('mine-kontakter')
-
-@stop

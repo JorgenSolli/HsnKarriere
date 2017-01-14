@@ -39,6 +39,13 @@
         </div>
       </a>
     </div>
+    <div class="col-sm-3 p-r-s p-l-s">
+      <a href="" class="a-no-dec" style="width: 100%" data-toggle="modal" data-target="#seAttester">
+        <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
+          <h4 class="m-t text-center"><span class="fa fa-file-pdf-o fa-lg"></span> Masteroppgaver</h4>
+        </div>
+      </a>
+    </div>
   </div> <!-- end row  -->
   <div class="row">
     <div class="col-sm-3 p-r-s p-l-s">
@@ -48,12 +55,6 @@
         </div>
       </a>
     </div>
-    <div class="col-sm-3 p-r-s p-l-s">
-      <a href="" class="a-no-dec" style="width: 100%" data-toggle="modal" data-target="#seAttester">
-        <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
-          <h4 class="m-t text-center"><span class="fa fa-file-pdf-o fa-lg"></span> Masteroppgaver</h4>
-        </div>
-      </a>
-    </div>
+    
   </div>
 @stop

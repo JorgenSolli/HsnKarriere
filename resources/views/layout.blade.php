@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Studentsamarbeid.no</title>
+        <title>HSN Karriere</title>
 
         <!-- styles -->
         <link rel="stylesheet" href="/css/dist/bootstrap.min.css">
@@ -34,7 +34,7 @@
                     </button>
                     <a class="navbar-brand" href="/">
                         <!-- <img src="../assets/img/brand-white.png" alt="brand"> -->
-                        Link Telemark
+                        HSN KARRIERE
                     </a>
                 </div>
                 <div class="navbar-collapse collapse" id="navbar-collapse-main">

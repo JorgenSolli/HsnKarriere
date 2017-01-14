@@ -8,7 +8,7 @@
 <div class="profile-header text-center" style="background-image: url(/uploads/{{ $brukerinfo->forsidebilde }}); ">
   <div class="container-fluid">
     <div class="container-inner">
-      <img class="img-circle media-object" src="/uploads/{{ $brukerinfo->profilbilde }}">
+      <img class="img-circle media-object" src="/uploads/{{ $brukerinfo->profilbilde }}" alt="Profilbilde">
       <h3 class="profile-header-user">{{ $brukerinfo->bedrift_navn }}</h3>
       @if ($brukerinfo->facebook != "")
         <a href="{{ $brukerinfo->facebook }}" class="p-r-s"><span class="social_icons fa fa-facebook-official fa-2x"></span></a>
@@ -52,7 +52,29 @@
   </div>
 
   <div id="studenter" class="tab-pane m-t" role="tabpanel">
-    @include('includes.bruker.bedrift.studenter')
+    <div class="text-center clearfix m-b sort-field">
+      <div id="sort-view" class="pull-left">
+        <p class="pull-left p-r-s">Velg visning</p>
+        <div class="sort-icons pull-left p-r pos-r">
+          <span id="sortCards" class="active cursor fa fa-th-large fa-lg p-r-s"></span>
+          <span id="sortList" class="cursor fa fa-th-list fa-lg"></span>
+        </div>
+      </div>
+      <div id="sort-category-floater">
+        <div id="sort-category" class="pull-left">
+          <small class="seperator pull-left p-r pos-r">|</small>
+          <p id="sort-category-text" class="pull-left m-a-0 p-r-s">Sorter etter</p>
+          <select class="pull-left custom-select custom-select-sm">
+            <option>Relevans</option>
+            <option>Alfabetisk</option>
+            <option>Nærmest deg</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="users-data">
+      @include('includes.bruker.bedrift.studenter.cards')
+    </div>
   </div>
 </div>
 
