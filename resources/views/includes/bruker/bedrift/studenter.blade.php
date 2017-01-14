@@ -2,8 +2,8 @@
   <div class="pull-left">
     <p class="pull-left p-r-s">Velg visning</p>
     <div class="sort-icons pull-left p-r pos-r">
-      <a href="?sort=tiles"><span class="cursor fa fa-th-large fa-lg p-r-s"></span></a>
-      <a href="?sort=list"><span class="cursor fa fa-th-list fa-lg"></span></a>
+      <a href="?sort=tiles#studenter"><span class="cursor fa fa-th-large fa-lg p-r-s"></span></a>
+      <a href="?sort=list#studenter"><span class="cursor fa fa-th-list fa-lg"></span></a>
     </div>
   </div>
   <div class="pull-left">
@@ -19,7 +19,7 @@
 <div class="row">
   @unless ($studenter == null)
     <!-- Card sort -->
-    @if (app('request')->input('sort') == 'tiles')
+    @if (app('request')->input('sort') != 'list')
       @foreach ($studenter as $student)
       <div class="col-md-3">
         <div class="panel panel-default panel-profile">
@@ -42,7 +42,7 @@
     @endforeach
       
     <!-- List sort -->
-    @else
+    @elseif (app('request')->input('sort') == 'list')
       @foreach ($studenter as $student)
         <ul class="media-list media-list-users list-group col-md-6">
           <li class="list-group-item">
