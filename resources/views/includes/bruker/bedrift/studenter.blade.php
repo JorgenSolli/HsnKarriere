@@ -2,8 +2,13 @@
   <div class="pull-left">
     <p class="pull-left p-r-s">Velg visning</p>
     <div class="sort-icons pull-left p-r pos-r">
-      <a href="?sort=tiles#studenter"><span class="cursor fa fa-th-large fa-lg p-r-s"></span></a>
-      <a href="?sort=list#studenter"><span class="cursor fa fa-th-list fa-lg"></span></a>
+      @if (app('request')->input('sort') != 'list')
+        <a href="?sort=tiles#studenter"><span class="active cursor fa fa-th-large fa-lg p-r-s"></span></a>
+        <a href="?sort=list#studenter"><span class="cursor fa fa-th-list fa-lg"></span></a>
+      @else
+        <a href="?sort=tiles#studenter"><span class="cursor fa fa-th-large fa-lg p-r-s"></span></a>
+        <a href="?sort=list#studenter"><span class="active cursor fa fa-th-list fa-lg"></span></a>
+      @endif
     </div>
   </div>
   <div class="pull-left">

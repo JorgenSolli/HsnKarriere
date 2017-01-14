@@ -149,6 +149,19 @@ body {
 }
 
 /* bruker */
+.sort-icons a span {
+  color: #0a0a0a;
+  opacity: 0.5;
+}
+
+.sort-icons a span:hover {
+  opacity: 1;
+}
+
+.sort-icons a .active {
+  opacity: 1 !important;
+}
+
 .social_icons {
   color: #dbdbdb;
 }

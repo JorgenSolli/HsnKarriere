@@ -122,6 +122,18 @@ body {
 }
 
 /* bruker */
+.sort-icons a span {
+    color: $black;
+    opacity: 0.5;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.sort-icons a .active {
+    opacity: 1 !important;
+}
+
 .social_icons {
     color: $grey-lighter;
     &:hover {
