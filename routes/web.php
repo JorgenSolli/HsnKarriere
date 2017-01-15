@@ -4,11 +4,6 @@
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
 */
 
 Route::get('/', 'PageController@hjem');
@@ -28,6 +23,13 @@ Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
 // Delete Routes
 Route::delete('bruker/rediger/forsidebilde/{user}', 'UserEditController@deleteFrontImg');
 Route::delete('bruker/rediger/profilbilde/{user}', 'UserEditController@deleteProfilImg');
+
+// Bedrift add and edit stuff
+Route::post('bruker/addJob/{user}', 'BedriftController@addJob');
+Route::get('bruker/editJob/{jobId}', 'BedriftController@seeJob');
+Route::patch('bruker/editJob/{job}', 'BedriftController@editJob');
+Route::post('bruker/addBachelor/{user}', 'BedriftController@addBachelor');
+Route::patch('bruker/editBachelor/{bachelor}', 'BedriftController@editBachelor');
 
 // Ajax calls
 Route::get('ajax/sort/list', 'Ajax\SortController@sortList');

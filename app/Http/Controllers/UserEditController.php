@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use App\Job;
 use App\User;
+use Validator;
+use App\Http\Requests;
 use App\Services\QuerryService;
+use App\Http\Controllers\Controller;
 
 class UserEditController extends Controller
 {
@@ -15,7 +18,7 @@ class UserEditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(QuerryService $querry_service)
+    public function index (QuerryService $querry_service)
     {
         if (Auth::user()->bruker_type == "student") {
             $brukerinfo = Auth::user();
@@ -31,14 +34,24 @@ class UserEditController extends Controller
 
         else if (Auth::user()->bruker_type == "bedrift") {
             $brukerinfo = Auth::user();
+            $jobs = Job::where('bedrift_id', Auth::id())->orderBy('created_at', 'desc')->get();
+            $masters = "";
+            $bachelors = "";
+            
             if (!empty(Auth::user()->bedrift_ser_etter)) {
                 $bedrift_ser_etter = explode(";", Auth::user()->bedrift_ser_etter);
             }
 
+            if (!empty(Auth::user()->bedrift_fagfelt)) {
+                $bedrift_fagfelt = explode(";", Auth::user()->bedrift_fagfelt);
+            }
+
             return view('bruker.bedrift.redigerBruker',
                 [
-                    'brukerinfo' => $brukerinfo,
-                    'bedrift_ser_etter' => $bedrift_ser_etter
+                    'brukerinfo'        => $brukerinfo,
+                    'bedrift_fagfelt'   => $bedrift_fagfelt,
+                    'bedrift_ser_etter' => $bedrift_ser_etter,
+                    'jobs'              => $jobs
                 ]);
         }
     }
@@ -50,7 +63,7 @@ class UserEditController extends Controller
      * @param  int  $user (id)
      * @return \Illuminate\Http\Response
      */
-    public function updateUser(Request $request, User $user)
+    public function updateUser (Request $request, User $user)
     {
         // Gets all data from form and pushes to DB
         $data = $request->all();
@@ -99,6 +112,23 @@ class UserEditController extends Controller
                 }
                 $data['bedrift_ser_etter'] = $bedrift_ser_etter;
             }
+            
+            if (!empty($data['bedrift_fagfelt'])) {
+                $bedrift_fagfelt = "";
+                $i = 0;
+                $len = count($data['bedrift_fagfelt']);
+                
+                foreach ($data['bedrift_fagfelt'] as $value) {
+                    // Last element in array. Wont add ";"
+                    if ($i == $len - 1) {
+                        $bedrift_fagfelt .= $value;
+                    } else {
+                        $bedrift_fagfelt .= $value . ";";
+                    }
+                    $i++;
+                }
+                $data['bedrift_fagfelt'] = $bedrift_fagfelt;
+            }
         }
 
         else if (Auth::user()->bruker_type == "faglarer") {
@@ -127,7 +157,7 @@ class UserEditController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function deleteFrontImg(User $user)
+    public function deleteFrontImg (User $user)
     {
         $stdImg = "img/forsidebilder/" . $user->bruker_type . "_forsidebilde.jpg";
 
@@ -156,7 +186,7 @@ class UserEditController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function deleteProfilImg(User $user)
+    public function deleteProfilImg (User $user)
     {
         $stdImg = "img/profilbilder/" . $user->bruker_type . "_profilbilde.png";
 

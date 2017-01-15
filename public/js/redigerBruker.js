@@ -56,7 +56,7 @@ $(function () {
     profilbildeBtn();
 
     /* Datepicker for DOB */
-    $('.input-group.date').datepicker({
+    $('.input-group.date.dateDob').datepicker({
       endDate: "today",
       startView: 3,
       maxViewMode: 3,
@@ -65,14 +65,55 @@ $(function () {
       autoclose: true
     });
 
+    /* Datepicker for Jobs */
+    $('.input-group.date.dateJob').datepicker({
+      startDate: "today",
+      startView: 0,
+      maxViewMode: 2,
+      format: "dd/mm/yyyy",
+      language: "no",
+      autoclose: true
+    });
+
     /* Uploads */
-    /* Todo: make sure images (specifically the avatar) is SQARE! Can probably fix this with CSS */
+    /* Todo: make sure images (specifically the avatar) are SQARE! Can probably fix this with CSS */
     $('#forsidebilde-input, #profilbilde-input').fileinput({
         language: 'no',
         uploadUrl: '#',
         maxFileSize: 2000,
         allowedFileExtensions : ['jpg', 'png','gif'],
     });
+
+    // See/edit jobs
+    $("#listJobs a").on('click', function() {
+        var container = $("#listJobs");
+        var containerParent = $("#listJobsParent");
+        var containerNewContent = $("#listJobsAjax");
+        
+        var jobBtn = "#" + $(this).attr('id');
+        var jobId = jobBtn.slice(6);
+
+        $(jobBtn + ' .edit').removeClass('fa-cog').addClass('fa-circle-o-notch fa-spin');
+
+        $.ajax({
+            type: 'GET',
+            url: 'editJob/' + jobId, 
+            success: function(data) {
+                $(".ajaxLoading").remove();
+                containerParent.hide();
+                containerNewContent.removeClass('hidden').append(data['job']);
+                console.log(jobBtn);
+                $(jobBtn + ' .edit').removeClass('fa-circle-o-notch fa-spin').addClass('fa-cog');
+                
+            }
+        });
+    });
+
+    $(document).on('click', '#tilbakeSeeJobs', function () {
+        $(".ajaxLoading").remove();
+        $("#listJobsAjax div").remove();
+        $("#listJobsParent").show();
+    })
 
 });
 

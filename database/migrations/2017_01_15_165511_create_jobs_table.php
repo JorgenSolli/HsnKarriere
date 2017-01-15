@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStillingerTable extends Migration
+class CreateJobsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateStillingerTable extends Migration
      */
     public function up()
     {
-        Schema::create('stillinger', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('bedrift_id')->nullable();
             $table->string('sted')->nullable();
-            $table->string('varighet')->nullable();
+            $table->integer('varighet_int')->nullable();
+            $table->string('varighet_prefix')->nullable();
             $table->string('type')->nullable();
             $table->string('frist')->nullable();
             $table->string('stilling_tittel')->nullable();
@@ -34,6 +35,6 @@ class CreateStillingerTable extends Migration
      */
     public function down()
     {
-        Schema::drop('stillinger');
+        Schema::drop('jobs');
     }
 }

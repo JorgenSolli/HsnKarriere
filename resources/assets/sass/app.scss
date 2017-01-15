@@ -190,6 +190,16 @@ body {
 }
 
 /* redigerBruker */
+.list-items-border {
+    li {
+        border-bottom: 1px solid $grey-light;
+        padding-bottom: 15px;
+    }
+    li:last-child {
+        border-bottom: 0;
+    }
+}
+
 #nyttProfilbilde {
     width: 100%;
     right: 0;

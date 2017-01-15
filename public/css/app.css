@@ -211,6 +211,15 @@ body {
 }
 
 /* redigerBruker */
+.list-items-border li {
+  border-bottom: 1px solid #b5b5b5;
+  padding-bottom: 15px;
+}
+
+.list-items-border li:last-child {
+  border-bottom: 0;
+}
+
 #nyttProfilbilde {
   width: 100%;
   right: 0;

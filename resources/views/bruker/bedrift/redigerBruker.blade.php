@@ -3,6 +3,7 @@
 <!-- REDIGER BRUKER BEDRIFT -->
 
 @section('content')
+  @include('notifications.notifications')
   <div class="container p-t-md">
     <div class="row">
       <div class="col-md-3">
@@ -46,25 +47,46 @@
           </div>
         </div>
 
-        <div class="panel panel-success panel-hover-success cursor">
+        <div class="panel panel-info panel-hover-info cursor m-b-xs"
+          data-toggle="modal" data-target="#utlysStilling">
           <div class="panel-body text-center">
             <span class="fa fa-briefcase fa-3x"></span>
             <h4 class="m-t-s text-center">Utlys stilling</h4>
           </div>
         </div>
+        @if ($jobs)
+          <div class="panel panel-info panel-hover-info cursor "
+            data-toggle="modal" data-target="#seStillinger">
+              <h5 class="m-t-s text-center">
+                <span class="m-r-md fa fa-cogs"></span>Rediger utlyste stillinger
+              </h5>
+          </div>
+        @endif
 
-        <div class="panel panel-info panel-hover-info cursor">
+        <div class="panel panel-info panel-hover-info cursor m-b-xs">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span> 
-            <h4 class="m-t-s text-center">Legg til mMsteroppgave</h4>
+            <h4 class="m-t-s text-center">Legg til Masteroppgave</h4>
           </div>
         </div>
+        <div class="panel panel-info panel-hover-info cursor "
+          data-toggle="modal" data-target="#utlysStilling">
+            <h5 class="m-t-s text-center">
+              <span class="m-r-md fa fa-cogs"></span>Rediger Masteroppgaver
+            </h5>
+        </div>
 
-        <div class="panel panel-info panel-hover-info cursor">
+        <div class="panel panel-info panel-hover-info cursor m-b-xs">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span>
             <h4 class="m-t-s text-center">Legg til Bacheloroppgave</h4>
           </div>
+        </div>
+        <div class="panel panel-info panel-hover-info cursor "
+          data-toggle="modal" data-target="#utlysStilling">
+            <h5 class="m-t-s text-center">
+              <span class="m-r-md fa fa-cogs"></span>Rediger Bacheloroppgaver
+            </h5>
         </div>
       </div>
 
@@ -127,8 +149,8 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="fagFelt">Bedriftens fagområde</label>
-                      <select name="fagFelt[]" id="fagFelt" 
+                      <label for="bedrift_fagfelt">Bedriftens fagområde</label>
+                      <select name="bedrift_fagfelt[]" id="bedrift_fagfelt" 
                       class="select select2 js-example-basic-multiple is-fullwidth form-control"
                       multiple="multiple">
                         <option value="" disabled>Hva driver bedriften din med?</option>
@@ -282,24 +304,32 @@
   </div>
 
   <!-- MODALS -->
-  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog">
+  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="forsidebildeModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
+          <h4 class="modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
         </div>
-        <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
-          <div class="modal-body">
+        <div class="modal-body">
+          <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
             {{ csrf_field() }}
             <input id="forsidebilde-input" name="forsidebilde" type="file" multiple data-min-file-count="1">
             <br>
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+            <button type="submit" class="pull-right btn btn-primary">Last opp</button>
+          </form>
+            @if ($brukerinfo->forsidebilde != "img/forsidebilder/bedrift_forsidebilde.jpg")
+              <form method="POST" action="/bruker/rediger/forsidebilde/{{ $brukerinfo->id }}">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <button type="submit" class="pull-right btn btn-danger">Slett nåværende bilde</button>
+              </form>
+            @endif
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Last opp</button>
-            <button type="reset" class="btn btn-default">Nullstill</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -311,17 +341,130 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Nytt profilbilde</h4>
         </div>
-        <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
-          <div class="modal-body">
+        <div class="modal-body">
+          <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
             {{ csrf_field() }}
             <input id="profilbilde-input" name="profilbilde" type="file" multiple data-min-file-count="1">
             <br>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Last opp</button>
-            <button type="reset" class="btn btn-default">Nullstill</button>
+            <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+            <button type="submit" class="pull-right btn btn-primary">Last opp</button>
+          </form>
+          @if ($brukerinfo->profilbilde != "img/profilbilder/bedrift_profilbilde.png")
+            <form method="POST" action="/bruker/rediger/profilbilde/{{ $brukerinfo->id }}">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+              <button type="submit" class="pull-right btn btn-danger">Slett nåværende bilde</button>
+            </form>
+          @endif
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="utlysStilling" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Utlys stilling</h4>
+        </div>
+        <form method="POST" action="/bruker/addJob/{{ $brukerinfo->id }}" enctype="multipart/form-data">
+          <div class="modal-body">
+            {{ csrf_field() }}
+            <div class="form-group">
+              <label for="stilling_sted">Sted</label>
+              <input name="stilling_sted" id="stilling_sted" type="text" class="form-control" placeholder="Hvor befinner jobben seg?">
+            </div>
+
+            <div class="form-group">
+              <label for="stilling_varighetInt">Varighet</label>
+              <div class="input-group is-fullwidth">
+                <input name="stilling_varighetInt" id="stilling_varighetInt" type="number" class="form-control" placeholder="Hvor lenge varer jobben?">
+                <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                <select id="stilling_varighetPrefix" name="stilling_varighetPrefix" class="form-control">
+                  <option value="years">År</option>
+                  <option value="months">Måneder</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="stilling_type">Type</label>
+              <select id="stilling_type" id="stilling_type" name="stilling_type" class="form-control">
+                <option value="praksis">Praksis</option>
+                <option value="deltidsjobb">Deltidsjobb</option>
+                <option value="sommerjobb">Sommerjobb</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="stilling_frist">Frist</label>
+              <div class="input-group date dateJob">
+                <input name="stilling_frist" id="stilling_frist" type="text" class="form-control" placeholder="Frist">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="stilling_tittel">Stillingstittel</label>
+              <input name="stilling_tittel" id="stilling_tittel" type="text" class="form-control" placeholder="Stillingstittel">
+            </div>
+
+            <div class="form-group">
+              <label for="stilling_bransje">Bransje</label>
+              <select id="stilling_bransje" name="stilling_bransje" class="form-control">
+                @foreach ($bedrift_fagfelt as $fagfelt)
+                  <option value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+                @endforeach
+              </select>
+            </div>
+
+            <label for="stilling_info">Om stillingen</label>
+            <textarea name="stilling_info" id="stilling_info" class="form-control" placeholder="Om stillingen..."></textarea>
+
+          </div>
+          <div class="modal-footer">
+            <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+            <button type="submit" class="pull-right btn btn-primary">Legg til</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+  
+  <div id="seStillinger" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div id="listJobsAjax"></div>
+    <div id="listJobsParent" class="modal-dialog" role="document">
+      <div id="showJobs" class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Mine utlyste stillinger</h4>
+        </div>
+        <div class="modal-body">
+          <ul id="listJobs" class="media-list media-list-stream list-items-border m-b-0">
+            @foreach ($jobs as $job)
+              <li class="media">
+                <div class="media-body">
+                  <strong>{{ $job->stilling_tittel }}</strong> · {{ $job->sted }}
+                  <div class="media-body-actions">
+                    <a id="jobId{{ $job->id }}" class="btn btn-primary-outline btn-xs m-r-s">
+                      <span class="edit fa fa-cog"></span> Rediger
+                    </a>
+                    <a href="" class="btn btn-danger-outline btn-xs">
+                      <span class="delete fa fa-close"></span> Slett
+                    </a>
+                  </div>
+                </div>
+              </li>
+            @endforeach
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" aria-label="Close" class="btn btn-primary">Lukk</button>
+        </div>
       </div>
     </div>
   </div>

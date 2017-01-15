@@ -127,7 +127,7 @@
                     </div>
                     <div class="form-group">
                       <label for="dob">Fødselsdato</label>
-                      <div class="input-group date">
+                      <div class="input-group date dateDob">
                         <input name="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                       </div>
                     </div>

@@ -1,3 +1,11 @@
+@if ($brukerinfo->bruker_type == "bedrift")
+    <optgroup label="Dine valg">
+      @foreach ($bedrift_fagfelt as $fagfelt)
+        <option selected value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+      @endforeach
+    </optgroup>
+@endif
+
 <optgroup label="Admin./økonomi, kontor og jus">
   <option value="Bank, finans og forsikring">
       Bank, finans og forsikring
