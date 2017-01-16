@@ -1,0 +1,58 @@
+body {
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
+// lead overrides
+
+
+.lead {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 0;
+
+  @media (min-width: $screen-sm-min) {
+    font-size: 21px;
+  }
+}
+
+// improve list readability
+.list-spaced li {
+  margin-bottom: 3px;
+}
+
+.list-bordered li {
+  border-top: 1px solid $gray-light;
+}
+.list-bordered li:last-child {
+  border-bottom: 1px solid $gray-light;
+}
+
+// serif family helper
+.text-serif {
+  font-family: $font-family-serif;
+}
+
+// responsive text helpers
+.text-xs-left   { text-align: left; }
+.text-xs-right  { text-align: right; }
+.text-xs-center { text-align: center; }
+
+@media (min-width: $screen-sm-min) {
+  .text-sm-left   { text-align: left; }
+  .text-sm-right  { text-align: right; }
+  .text-sm-center { text-align: center; }
+}
+
+@media (min-width: $screen-md-min) {
+  .text-md-left   { text-align: left; }
+  .text-md-right  { text-align: right; }
+  .text-md-center { text-align: center; }
+}
+
+@media (min-width: $screen-lg-min) {
+  .text-lg-left   { text-align: left; }
+  .text-lg-right  { text-align: right; }
+  .text-lg-center { text-align: center; }
+}
