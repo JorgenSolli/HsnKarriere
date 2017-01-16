@@ -1,22 +1,268 @@
-@import "mixins/buttons-outline";
+//@import "mixins/buttons-outline";
 // Button Outline
 // --------------------------------------------------
 
 .btn-default-outline {
-  button-outline-variant($btn-default-color);
+  color: $btn-default-color;
+  background-color: transparent;
+  border-color: $btn-default-color;
 }
+.btn-default-outline:focus,
+.btn-default-outline.focus,
+.btn-default-outline:hover,
+.btn-default-outline:active,
+.btn-default-outline.active,
+.open > .dropdown-toggle.btn-default-outline {
+  color: #fff;
+  background-color: $btn-default-color;
+  box-shadow: none;
+}
+.btn-default-outline.disabled,
+.btn-default-outline[disabled],
+fieldset[disabled] .btn-default-outline,
+.btn-default-outline.disabled:hover,
+.btn-default-outline[disabled]:hover,
+fieldset[disabled] .btn-default-outline:hover,
+.btn-default-outline.disabled:focus,
+.btn-default-outline[disabled]:focus,
+fieldset[disabled] .btn-default-outline:focus,
+.btn-default-outline.disabled.focus,
+.btn-default-outline[disabled].focus,
+fieldset[disabled] .btn-default-outline.focus,
+.btn-default-outline.disabled:active,
+.btn-default-outline[disabled]:active,
+fieldset[disabled] .btn-default-outline:active,
+.btn-default-outline.disabled.active,
+.btn-default-outline[disabled].active,
+fieldset[disabled] .btn-default-outline.active {
+  border-color: $btn-default-color;
+}
+.btn-default-outline .badge {
+  color: #fff;
+  background-color: $btn-default-color;
+}
+
+// Primary
 .btn-primary-outline {
-  button-outline-variant($btn-primary-border);
+  color: $btn-primary-border;
+  background-color: transparent;
+  border-color: $btn-primary-border;
 }
+.btn-primary-outline:focus,
+.btn-primary-outline.focus,
+.btn-primary-outline:hover,
+.btn-primary-outline:active,
+.btn-primary-outline.active,
+.open > .dropdown-toggle.btn-primary-outline {
+  color: #fff;
+  background-color: $btn-primary-border;
+  box-shadow: none;
+}
+.btn-primary-outline.disabled,
+.btn-primary-outline[disabled],
+fieldset[disabled] .btn-primary-outline,
+.btn-primary-outline.disabled:hover,
+.btn-primary-outline[disabled]:hover,
+fieldset[disabled] .btn-primary-outline:hover,
+.btn-primary-outline.disabled:focus,
+.btn-primary-outline[disabled]:focus,
+fieldset[disabled] .btn-primary-outline:focus,
+.btn-primary-outline.disabled.focus,
+.btn-primary-outline[disabled].focus,
+fieldset[disabled] .btn-primary-outline.focus,
+.btn-primary-outline.disabled:active,
+.btn-primary-outline[disabled]:active,
+fieldset[disabled] .btn-primary-outline:active,
+.btn-primary-outline.disabled.active,
+.btn-primary-outline[disabled].active,
+fieldset[disabled] .btn-primary-outline.active {
+  border-color: $btn-primary-border;
+}
+.btn-primary-outline .badge {
+  color: #fff;
+  background-color: $btn-primary-border;
+}
+
+// Success
 .btn-success-outline {
-  button-outline-variant($btn-success-border);
+  color: $btn-success-border;
+  background-color: transparent;
+  border-color: $btn-success-border;
 }
+.btn-success-outline:focus,
+.btn-success-outline.focus,
+.btn-success-outline:hover,
+.btn-success-outline:active,
+.btn-success-outline.active,
+.open > .dropdown-toggle.btn-success-outline {
+  color: #fff;
+  background-color: $btn-success-border;
+  box-shadow: none;
+}
+.btn-success-outline.disabled,
+.btn-success-outline[disabled],
+fieldset[disabled] .btn-success-outline,
+.btn-success-outline.disabled:hover,
+.btn-success-outline[disabled]:hover,
+fieldset[disabled] .btn-success-outline:hover,
+.btn-success-outline.disabled:focus,
+.btn-success-outline[disabled]:focus,
+fieldset[disabled] .btn-success-outline:focus,
+.btn-success-outline.disabled.focus,
+.btn-success-outline[disabled].focus,
+fieldset[disabled] .btn-success-outline.focus,
+.btn-success-outline.disabled:active,
+.btn-success-outline[disabled]:active,
+fieldset[disabled] .btn-success-outline:active,
+.btn-success-outline.disabled.active,
+.btn-success-outline[disabled].active,
+fieldset[disabled] .btn-success-outline.active {
+  border-color: $btn-success-border;
+}
+.btn-success-outline .badge {
+  color: #fff;
+  background-color: $btn-success-border;
+}
+
+// Info
 .btn-info-outline {
-  button-outline-variant($btn-info-border);
+  color: $btn-info-border;
+  background-color: transparent;
+  border-color: $btn-info-border;
 }
+.btn-info-outline:focus,
+.btn-info-outline.focus,
+.btn-info-outline:hover,
+.btn-info-outline:active,
+.btn-info-outline.active,
+.open > .dropdown-toggle.btn-info-outline {
+  color: #fff;
+  background-color: $btn-info-border;
+  box-shadow: none;
+}
+.btn-info-outline.disabled,
+.btn-info-outline[disabled],
+fieldset[disabled] .btn-info-outline,
+.btn-info-outline.disabled:hover,
+.btn-info-outline[disabled]:hover,
+fieldset[disabled] .btn-info-outline:hover,
+.btn-info-outline.disabled:focus,
+.btn-info-outline[disabled]:focus,
+fieldset[disabled] .btn-info-outline:focus,
+.btn-info-outline.disabled.focus,
+.btn-info-outline[disabled].focus,
+fieldset[disabled] .btn-info-outline.focus,
+.btn-info-outline.disabled:active,
+.btn-info-outline[disabled]:active,
+fieldset[disabled] .btn-info-outline:active,
+.btn-info-outline.disabled.active,
+.btn-info-outline[disabled].active,
+fieldset[disabled] .btn-info-outline.active {
+  border-color: $btn-info-border;
+}
+.btn-info-outline .badge {
+  color: #fff;
+  background-color: $btn-info-border;
+}
+
+// Warning
 .btn-warning-outline {
-  button-outline-variant($btn-warning-border);
+  color: $btn-warning-border;
+  background-color: transparent;
+  border-color: $btn-warning-border;
 }
+.btn-warning-outline:focus,
+.btn-warning-outline.focus,
+.btn-warning-outline:hover,
+.btn-warning-outline:active,
+.btn-warning-outline.active,
+.open > .dropdown-toggle.btn-warning-outline {
+  color: #fff;
+  background-color: $btn-warning-border;
+  box-shadow: none;
+}
+.btn-warning-outline.disabled,
+.btn-warning-outline[disabled],
+fieldset[disabled] .btn-warning-outline,
+.btn-warning-outline.disabled:hover,
+.btn-warning-outline[disabled]:hover,
+fieldset[disabled] .btn-warning-outline:hover,
+.btn-warning-outline.disabled:focus,
+.btn-warning-outline[disabled]:focus,
+fieldset[disabled] .btn-warning-outline:focus,
+.btn-warning-outline.disabled.focus,
+.btn-warning-outline[disabled].focus,
+fieldset[disabled] .btn-warning-outline.focus,
+.btn-warning-outline.disabled:active,
+.btn-warning-outline[disabled]:active,
+fieldset[disabled] .btn-warning-outline:active,
+.btn-warning-outline.disabled.active,
+.btn-warning-outline[disabled].active,
+fieldset[disabled] .btn-warning-outline.active {
+  border-color: $btn-warning-border;
+}
+.btn-warning-outline .badge {
+  color: #fff;
+  background-color: $btn-warning-border;
+}
+
+// Danger
 .btn-danger-outline {
-  button-outline-variant($btn-danger-border);
+  color: $btn-danger-border;
+  background-color: transparent;
+  border-color: $btn-danger-border;
 }
+.btn-danger-outline:focus,
+.btn-danger-outline.focus,
+.btn-danger-outline:hover,
+.btn-danger-outline:active,
+.btn-danger-outline.active,
+.open > .dropdown-toggle.btn-danger-outline {
+  color: #fff;
+  background-color: $btn-danger-border;
+  box-shadow: none;
+}
+.btn-danger-outline.disabled,
+.btn-danger-outline[disabled],
+fieldset[disabled] .btn-danger-outline,
+.btn-danger-outline.disabled:hover,
+.btn-danger-outline[disabled]:hover,
+fieldset[disabled] .btn-danger-outline:hover,
+.btn-danger-outline.disabled:focus,
+.btn-danger-outline[disabled]:focus,
+fieldset[disabled] .btn-danger-outline:focus,
+.btn-danger-outline.disabled.focus,
+.btn-danger-outline[disabled].focus,
+fieldset[disabled] .btn-danger-outline.focus,
+.btn-danger-outline.disabled:active,
+.btn-danger-outline[disabled]:active,
+fieldset[disabled] .btn-danger-outline:active,
+.btn-danger-outline.disabled.active,
+.btn-danger-outline[disabled].active,
+fieldset[disabled] .btn-danger-outline.active {
+  border-color: $btn-danger-border;
+}
+.btn-danger-outline .badge {
+  color: #fff;
+  background-color: $btn-danger-border;
+}
+
+// Hardcoded in
+//.btn-default-outline {
+//  button-outline-variant($btn-default-color);
+//}
+//.btn-primary-outline {
+//  button-outline-variant($btn-primary-border);
+//}
+//.btn-success-outline {
+//  button-outline-variant($btn-success-border);
+//}
+//.btn-info-outline {
+//  button-outline-variant($btn-info-border);
+//}
+//.btn-warning-outline {
+//  button-outline-variant($btn-warning-border);
+//}
+//.btn-danger-outline {
+//  button-outline-variant($btn-danger-border);
+//}

@@ -1,8 +1,11 @@
 // Fonts
 // @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// Boots the theme
+@import "variables";
+
+// All other modules
+@import "modules";
 
 $black: #0a0a0a;
 $white:	#fff;
