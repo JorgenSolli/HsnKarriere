@@ -24,10 +24,12 @@ Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
 Route::delete('bruker/rediger/forsidebilde/{user}', 'UserEditController@deleteFrontImg');
 Route::delete('bruker/rediger/profilbilde/{user}', 'UserEditController@deleteProfilImg');
 
-// Bedrift add and edit stuff
+// Bedrift Jobs logic
 Route::post('bruker/addJob/{user}', 'BedriftController@addJob');
 Route::get('bruker/editJob/{jobId}', 'BedriftController@seeJob');
 Route::patch('bruker/editJob/{job}', 'BedriftController@editJob');
+Route::get('bruker/destroyJob/{job}', 'BedriftController@destroyJob');
+
 Route::post('bruker/addBachelor/{user}', 'BedriftController@addBachelor');
 Route::patch('bruker/editBachelor/{bachelor}', 'BedriftController@editBachelor');
 

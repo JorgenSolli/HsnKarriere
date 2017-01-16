@@ -1,12 +1,3 @@
-// Fonts
-// @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
-// Variables
-// @import "variables";
-
-// Bootstrap
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 $black:			#0a0a0a;
 $grey-darker:	#363636;
 $grey-dark:		#4a4a4a;
@@ -30,6 +21,13 @@ $danger: 	$red;
 $light: 	$grey-lighter;
 $dark: 		$grey-dark;
 $text: 		$grey-dark;
+
+// Fonts
+// @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
 
 body {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";

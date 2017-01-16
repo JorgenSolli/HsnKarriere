@@ -453,7 +453,7 @@
                     <a id="jobId{{ $job->id }}" class="btn btn-primary-outline btn-xs m-r-s">
                       <span class="edit fa fa-cog"></span> Rediger
                     </a>
-                    <a href="" class="btn btn-danger-outline btn-xs">
+                    <a href="destroyJob/{{ $job->id }}" class="btn btn-danger-outline btn-xs">
                       <span class="delete fa fa-close"></span> Slett
                     </a>
                   </div>

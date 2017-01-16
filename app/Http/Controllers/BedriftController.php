@@ -51,9 +51,48 @@ class BedriftController extends Controller
         return back()->with('danger', 'Noe gikk galt.. Venligst prøv igjen.');
     }
 
-    public function editJob (Job $job)
+    /**
+    * Job = Current job i DB
+    * Request = Updated Job
+    **/
+    public function editJob (Request $request, Job $job)
     {
+        if ($job->bedrift_id == Auth::id() || Auth::User()->bruker_type == "admin") {
+            $data = $request->all();
 
+            $validator = Validator::make($request->all(), [
+                'stilling_sted'             => 'required',
+                'stilling_varighetInt'      => 'required',
+                'stilling_varighetPrefix'   => 'required',
+                'stilling_type'             => 'required',
+                'stilling_frist'            => 'required',
+                'stilling_tittel'           => 'required',
+                'stilling_bransje'          => 'required',
+                'stilling_info'             => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('danger', 'Alle felt må fylles ut!');
+            }
+
+            $job->id                = $job->id;
+            $job->bedrift_id        = $job->bedrift_id;
+            $job->sted              = $request->stilling_sted;
+            $job->varighet_int      = $request->stilling_varighetInt;
+            $job->varighet_prefix   = $request->stilling_varighetPrefix;
+            $job->type              = $request->stilling_type;
+            $job->frist             = $request->stilling_frist;
+            $job->stilling_tittel   = $request->stilling_tittel;
+            $job->bransje           = $request->stilling_bransje;
+            $job->info              = $request->stilling_info;
+
+            $job->update();
+
+            return back()->with('success', 'Stillingen ble endret!');
+        } else {
+            abort(403, "No access!");
+        }
+        return back()->with('danger', 'Noe gikk galt.. Venligst prøv igjen.');
     }
 
     // Returns the data to a AJAX call
@@ -74,5 +113,17 @@ class BedriftController extends Controller
                 ->with('bedrift_fagfelt', $bedrift_fagfelt)
                 ->render();
         return response()->json(array('success' => true, 'job'=>$returnHTML));
+    }
+
+    public function destroyJob (Job $job) {
+            
+        if ($job->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
+            $job = Job::find($job->id);
+            $job->delete();
+
+            return back()->with('success', 'Stillingen ble slettet');
+        } else {
+            abort(403, 'Access denied');
+        }
     }
 }

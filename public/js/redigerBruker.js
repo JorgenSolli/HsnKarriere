@@ -66,14 +66,17 @@ $(function () {
     });
 
     /* Datepicker for Jobs */
-    $('.input-group.date.dateJob').datepicker({
-      startDate: "today",
-      startView: 0,
-      maxViewMode: 2,
-      format: "dd/mm/yyyy",
-      language: "no",
-      autoclose: true
-    });
+    var dateJob = function () {
+        $('.input-group.date.dateJob').datepicker({
+          startDate: "today",
+          startView: 0,
+          maxViewMode: 2,
+          format: "dd/mm/yyyy",
+          language: "no",
+          autoclose: true
+        });
+    } 
+    dateJob();
 
     /* Uploads */
     /* Todo: make sure images (specifically the avatar) are SQARE! Can probably fix this with CSS */
@@ -102,9 +105,8 @@ $(function () {
                 $(".ajaxLoading").remove();
                 containerParent.hide();
                 containerNewContent.removeClass('hidden').append(data['job']);
-                console.log(jobBtn);
                 $(jobBtn + ' .edit').removeClass('fa-circle-o-notch fa-spin').addClass('fa-cog');
-                
+                dateJob();
             }
         });
     });

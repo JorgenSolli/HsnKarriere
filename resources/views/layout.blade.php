@@ -9,11 +9,9 @@
         <title>HSN Karriere</title>
 
         <!-- styles -->
-        <link rel="stylesheet" href="/css/dist/bootstrap.min.css">
         <link rel="stylesheet" href="/css/dist/select2.min.css">
         <link rel="stylesheet" href="/css/dist/fileinput.min.css">
         <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
-        <link rel="stylesheet" href="/css/dist/toolkit.min.css">
         <link rel="stylesheet" href="/css/dist/bootstrap-datepicker.min.css">
         <link rel="stylesheet" href="/css/app.css">
 
