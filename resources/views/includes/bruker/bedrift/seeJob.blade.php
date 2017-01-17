@@ -81,7 +81,7 @@
 
       </div>
       <div class="modal-footer">
-        <button id="tilbakeSeeJobs" class="pull-left btn btn-danger">Tilbake</button>
+        <button id="tilbakeSeeJobs" class="pull-left btn btn-danger">Avbryt</button>
         <button type="submit" class="pull-right btn btn-primary">Lagre</button>
       </div>
     </form>

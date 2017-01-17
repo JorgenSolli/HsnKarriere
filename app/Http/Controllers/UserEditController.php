@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Job;
 use App\User;
 use Validator;
+use App\Assignment;
 use App\Http\Requests;
 use App\Services\QuerryService;
 use App\Http\Controllers\Controller;
@@ -35,7 +36,7 @@ class UserEditController extends Controller
         else if (Auth::user()->bruker_type == "bedrift") {
             $brukerinfo = Auth::user();
             $jobs = Job::where('bedrift_id', Auth::id())->orderBy('created_at', 'desc')->get();
-            $masters = "";
+            $masters = Assignment::where('type', 'masteroppgave')->get();
             $bachelors = "";
             
             if (!empty(Auth::user()->bedrift_ser_etter)) {
@@ -51,7 +52,8 @@ class UserEditController extends Controller
                     'brukerinfo'        => $brukerinfo,
                     'bedrift_fagfelt'   => $bedrift_fagfelt,
                     'bedrift_ser_etter' => $bedrift_ser_etter,
-                    'jobs'              => $jobs
+                    'jobs'              => $jobs,
+                    'masters'           => $masters
                 ]);
         }
     }

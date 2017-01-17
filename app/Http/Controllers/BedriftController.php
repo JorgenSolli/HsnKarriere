@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
 use App\Job;
+use App\Assignment;
 use Validator;
 
 class BedriftController extends Controller
@@ -58,7 +59,6 @@ class BedriftController extends Controller
     public function editJob (Request $request, Job $job)
     {
         if ($job->bedrift_id == Auth::id() || Auth::User()->bruker_type == "admin") {
-            $data = $request->all();
 
             $validator = Validator::make($request->all(), [
                 'stilling_sted'             => 'required',
@@ -96,7 +96,8 @@ class BedriftController extends Controller
     }
 
     // Returns the data to a AJAX call
-    public function seeJob (Job $job, $jobId) {
+    public function seeJob (Job $job, $jobId)
+    {
         $brukerinfo = Auth::user();
         
         if (!empty(Auth::user()->bedrift_fagfelt)) {
@@ -115,7 +116,9 @@ class BedriftController extends Controller
         return response()->json(array('success' => true, 'job'=>$returnHTML));
     }
 
-    public function destroyJob (Job $job) {
+    // Delete a job
+    public function destroyJob (Job $job)
+    {
             
         if ($job->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
             $job = Job::find($job->id);
@@ -124,6 +127,139 @@ class BedriftController extends Controller
             return back()->with('success', 'Stillingen ble slettet');
         } else {
             abort(403, 'Access denied');
+        }
+    }
+
+    public function addMaster (Request $request, User $user)
+    {
+        if ($user->id == Auth::id() || Auth::user()->bruker_type == "admin") {
+            $validator = Validator::make($request->all(), [
+                'masteroppgave-file'    => 'required',
+                'master_tittel'         => 'required',
+                'master_info'           => 'required',
+                'master_fagfelt'        => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('danger', 'Alle felt må fylles ut!');
+            }
+
+            // Gets file, uplads it, and store the path and filename
+            $filename   = $request->file('masteroppgave-file')->getClientOriginalName();
+            $file       = $request->file('masteroppgave-file');
+            $path       = $file->store('/assignments/masters');
+
+            $assignment  = New Assignment;
+
+            $assignment->fil        = $path;
+            $assignment->filnavn    = $filename;
+            $assignment->bedrift_id = $user->id;
+            $assignment->type       = "masteroppgave";
+            $assignment->tittel     = $request->master_tittel;
+            $assignment->info       = $request->master_info;
+            $assignment->fagfelt    = $request->master_fagfelt;
+
+            $assignment->save();
+
+            return back()->with('success', 'Masteroppgaven har blitt lagt til.');
+        }
+        else {
+            abort(403);
+        }
+    }
+
+    public function seeMaster (Assignment $assignment, $assignmentId)
+    {
+        $brukerinfo = Auth::user();
+        
+        if (!empty(Auth::user()->bedrift_fagfelt)) {
+            $bedrift_fagfelt = explode(";", Auth::user()->bedrift_fagfelt);
+        } else {
+            $bedrift_fagfelt = "";
+        }
+
+        $assignment = $assignment->where('id', $assignmentId)->first();
+
+        $returnHTML = view('includes.bruker.bedrift.seeMaster')
+                ->with('assignment', $assignment)
+                ->with('brukerinfo', $brukerinfo)
+                ->with('bedrift_fagfelt', $bedrift_fagfelt)
+                ->render();
+        return response()->json(array('success' => true, 'assignment'=>$returnHTML));
+    }
+
+    public function editMaster (Request $request, Assignment $assignment)
+    {
+        $validator = Validator::make($request->all(), [
+            'master_tittel'         => 'required',
+            'master_info'           => 'required',
+            'master_fagfelt'        => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Alle felt (unntatt fil) må fylles ut!');
+        }
+
+        // The user did not change the file
+        if ($request->file('masteroppgave-file') == "") {
+            $filename = $assignment->filnavn;
+            $path = $assignment->fil;
+        } else {
+            // Gets file, uplads it, and store the path and filename
+            $filename   = $request->file('masteroppgave-file')->getClientOriginalName();
+            $file       = $request->file('masteroppgave-file');
+            $path       = $file->store('/assignments/masters');
+        }
+
+        $assignment->id         = $assignment->id;
+        $assignment->fil        = $path;
+        $assignment->filnavn    = $filename;
+        $assignment->bedrift_id = $assignment->id;
+        $assignment->type       = "masteroppgave";
+        $assignment->tittel     = $request->master_tittel;
+        $assignment->info       = $request->master_info;
+        $assignment->fagfelt    = $request->master_fagfelt;
+
+        $assignment->update();
+
+        return back()->with('success', 'Masteroppgaven ble endret.');
+    }
+
+    public function addBachelor (Request $request, User $user)
+    {
+        if ($user->id == Auth::id() || Auth::user()->bruker_type == "admin") {
+            $validator = Validator::make($request->all(), [
+                'bacheloroppgave-file'  => 'required',
+                'bachelor_tittel'       => 'required',
+                'bachelor_info'         => 'required',
+                'bachelor_fagfelt'      => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('danger', 'Alle felt må fylles ut!');
+            }
+
+            // Gets file, uplads it, and store the path and filename
+            $filename   = $request->file('bacheloroppgave-file')->getClientOriginalName();
+            $file       = $request->file('bacheloroppgave-file');
+            $path       = $file->store('/assignments/bachelors');
+
+            $assignment  = New Assignment;
+
+            $assignment->fil             = $path;
+            $assignment->filnavn         = $filename;
+            $assignment->bedrift_id      = $user->id;
+            $assignment->type            = "bacheloroppgave";
+            $assignment->tittel          = $request->bachelor_tittel;
+            $assignment->info            = $request->bachelor_info;
+            $assignment->fagfelt        = $request->bachelor_fagfelt;
+
+            $assignment->save();
+
+            return back()->with('success', 'Bacheloroppgaven har blitt lagt til.');
+        }
+        else {
+            abort(403);
         }
     }
 }

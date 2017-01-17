@@ -58,25 +58,27 @@
           <div class="panel panel-info panel-hover-info cursor "
             data-toggle="modal" data-target="#seStillinger">
               <p class="h6 m-t-s text-center">
-                <span class="m-r-md fa fa-cogs"></span>Rediger utlyste stillinger
+                <span class="m-r-md fa fa-cogs"></span>Se/endre utlyste stillinger
               </p>
           </div>
         @endif
 
-        <div class="panel panel-info panel-hover-info cursor m-b-xs">
+        <div class="panel panel-info panel-hover-info cursor m-b-xs"
+          data-toggle="modal" data-target="#nyMaster">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span> 
             <p class="h4 m-t-s text-center">Legg til Masteroppgave</p>
           </div>
         </div>
         <div class="panel panel-info panel-hover-info cursor "
-          data-toggle="modal" data-target="#utlysStilling">
+          data-toggle="modal" data-target="#seMasters">
             <p class="h6 m-t-s text-center">
-              <span class="m-r-md fa fa-cogs"></span>Rediger Masteroppgaver
+              <span class="m-r-md fa fa-cogs"></span>Se/endre Masteroppgaver
             </p>
         </div>
 
-        <div class="panel panel-info panel-hover-info cursor m-b-xs">
+        <div class="panel panel-info panel-hover-info cursor m-b-xs"
+          data-toggle="modal" data-target="#nyBachelor">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span>
             <p class="h4 m-t-s text-center">Legg til Bacheloroppgave</p>
@@ -85,7 +87,7 @@
         <div class="panel panel-info panel-hover-info cursor "
           data-toggle="modal" data-target="#utlysStilling">
             <p class="h6 m-t-s text-center">
-              <span class="m-r-md fa fa-cogs"></span>Rediger Bacheloroppgaver
+              <span class="m-r-md fa fa-cogs"></span>Se/endre Bacheloroppgaver
             </p>
         </div>
       </div>
@@ -116,7 +118,7 @@
                 <div class="media-body-text">
                   <div class="media-heading">
                     <small class="pull-right text-muted">Bare litt...</small>
-                    <h4>Generel informasjon</h4>
+                    <p class="h4">Generel informasjon</p>
                   </div>
                     <div class="form-group">
                       <label for="fornavn">Kontaktperson</label>
@@ -246,7 +248,7 @@
 
         <div class="panel panel-default m-b-md hidden-xs">
           <div class="panel-body">
-          <h5 class="m-t-0">Passende Studenter <small>· <a href="#">Se Alle</a></small></h5>
+          <p class="h5 m-t-0">Passende Studenter <small>· <a href="#">Se Alle</a></small></p>
           <ul class="media-list media-list-stream">
             <li class="media m-b">
               <a class="media-left" href="#">
@@ -309,7 +311,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
+          <p class="h4 modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</p>
         </div>
         <div class="modal-body">
           <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
@@ -319,7 +321,7 @@
         </div>
         <div class="modal-footer">
             <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
-            <button type="submit" class="pull-right btn btn-primary">Last opp</button>
+            <button type="submit" class="pull-right btn btn-success">Last opp</button>
           </form>
             @if ($brukerinfo->forsidebilde != "img/forsidebilder/bedrift_forsidebilde.jpg")
               <form method="POST" action="/bruker/rediger/forsidebilde/{{ $brukerinfo->id }}">
@@ -339,7 +341,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Nytt profilbilde</h4>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Nytt profilbilde</p>
         </div>
         <div class="modal-body">
           <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
@@ -349,7 +351,7 @@
           </div>
           <div class="modal-footer">
             <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
-            <button type="submit" class="pull-right btn btn-primary">Last opp</button>
+            <button type="submit" class="pull-right btn btn-success">Last opp</button>
           </form>
           @if ($brukerinfo->profilbilde != "img/profilbilder/bedrift_profilbilde.png")
             <form method="POST" action="/bruker/rediger/profilbilde/{{ $brukerinfo->id }}">
@@ -369,7 +371,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Utlys stilling</h4>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-briefcase"></span> Utlys stilling</p>
         </div>
         <form method="POST" action="/bruker/addJob/{{ $brukerinfo->id }}" enctype="multipart/form-data">
           <div class="modal-body">
@@ -441,7 +443,7 @@
       <div id="showJobs" class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Mine utlyste stillinger</h4>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Mine utlyste stillinger</p>
         </div>
         <div class="modal-body">
           <ul id="listJobs" class="media-list media-list-stream list-items-border m-b-0">
@@ -468,6 +470,130 @@
       </div>
     </div>
   </div>
+
+  <div id="nyMaster" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-paper-plane"></span> Legg til Masteroppgave</p>
+        </div>
+          <form method="POST" action="/bruker/addMaster/{{ $brukerinfo->id }}" enctype="multipart/form-data"> 
+            <div class="modal-body">
+              {{ csrf_field() }}
+
+              <div class="form-group">
+                <label for="master_tittel">Tittel</label>
+                <input name="master_tittel" id="master_tittel" type="text" class="form-control" placeholder="Tittel">
+              </div>
+
+              <div class="form-group">
+                <label for="master_fagfelt">Tilhørende fagfelt</label>
+                <select id="master_fagfelt" name="master_fagfelt" class="form-control">
+                  @foreach ($bedrift_fagfelt as $fagfelt)
+                    <option value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+                  @endforeach
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="master_info">Kort om oppgaven</label>
+                <textarea name="master_info" id="master_info" class="form-control" placeholder="Om stillingen..."></textarea>
+              </div>
+
+              <label for="masteroppgave-file">Last opp oppgave (kun pdf tillatt)</label>
+
+              <input id="masteroppgave-file" name="masteroppgave-file" type="file">
+            </div>
+            <div class="modal-footer">
+              <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+              <button type="submit" class="pull-right btn btn-success">Last opp</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="seMasters" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div id="listMastersAjax"></div>
+    <div id="listMastersParent" class="modal-dialog" role="document">
+      <div id="showMasters" class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Mine utlyste stillinger</p>
+        </div>
+        <div class="modal-body">
+          <ul id="listMasters" class="media-list media-list-stream list-items-border m-b-0">
+            @foreach ($masters as $master)
+              <li class="media">
+                <div class="media-body">
+                  <strong>{{ $master->tittel }}</strong> · {{ $master->filnavn }}
+                  <div class="media-body-actions">
+                    <a id="masterId{{ $master->id }}" class="btn btn-primary-outline btn-xs m-r-s">
+                      <span class="edit fa fa-cog"></span> Rediger
+                    </a>
+                    <a href="destroyMaster/{{ $master->id }}" class="btn btn-danger-outline btn-xs">
+                      <span class="delete fa fa-close"></span> Slett
+                    </a>
+                  </div>
+                </div>
+              </li>
+            @endforeach
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" aria-label="Close" class="btn btn-primary">Lukk</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="nyBachelor" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-paper-plane"></span> Legg til Bacheloroppgave</p>
+        </div>
+          <form method="POST" action="/bruker/addBachelor/{{ $brukerinfo->id }}" enctype="multipart/form-data"> 
+            <div class="modal-body">
+              {{ csrf_field() }}
+
+              <div class="form-group">
+                <label for="bachelor_tittel">Tittel</label>
+                <input name="bachelor_tittel" id="bachelor_tittel" type="text" class="form-control" placeholder="Tittel">
+              </div>
+
+              <div class="form-group">
+                <label for="bachelor_fagfelt">Tilhørende fagfelt</label>
+                <select id="bachelor_fagfelt" name="bachelor_fagfelt" class="form-control">
+                  @foreach ($bedrift_fagfelt as $fagfelt)
+                    <option value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+                  @endforeach
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="bachelor_info">Kort om oppgaven</label>
+                <textarea name="bachelor_info" id="bachelor_info" class="form-control" placeholder="Om stillingen..."></textarea>
+              </div>
+
+              <label for="bacheloroppgave-file">Last opp oppgave (kun pdf tillatt)</label>
+
+              <input id="bacheloroppgave-file" name="bacheloroppgave-file" type="file">
+            </div>
+            <div class="modal-footer">
+              <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+              <button type="submit" class="pull-right btn btn-success">Last opp</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
 @stop
 @section('script')
   <script src="/js/redigerBruker.js"></script>

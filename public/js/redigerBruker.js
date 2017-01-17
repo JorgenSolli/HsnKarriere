@@ -115,7 +115,37 @@ $(function () {
         $(".ajaxLoading").remove();
         $("#listJobsAjax div").remove();
         $("#listJobsParent").show();
-    })
+    });
+
+    // See/edit masters
+    $("#listMasters a").on('click', function() {
+        var container = $("#listMasters");
+        var containerParent = $("#listMastersParent");
+        var containerNewContent = $("#listMastersAjax");
+        
+        var masterBtn = "#" + $(this).attr('id');
+        var masterId = masterBtn.slice(9);
+
+        $(masterBtn + ' .edit').removeClass('fa-cog').addClass('fa-circle-o-notch fa-spin');
+
+        $.ajax({
+            type: 'GET',
+            url: 'editMaster/' + masterId, 
+            success: function(data) {
+                $(".ajaxLoading").remove();
+                containerParent.hide();
+                containerNewContent.removeClass('hidden').append(data['assignment']);
+                $(masterBtn + ' .edit').removeClass('fa-circle-o-notch fa-spin').addClass('fa-cog');
+                dateJob();
+            }
+        });
+    });
+
+    $(document).on('click', '#tilbakeSeeMasters', function () {
+        $(".ajaxLoading").remove();
+        $("#listMastersAjax div").remove();
+        $("#listMastersParent").show();
+    });
 
 });
 

@@ -30,8 +30,20 @@ Route::get('bruker/editJob/{jobId}', 'BedriftController@seeJob');
 Route::patch('bruker/editJob/{job}', 'BedriftController@editJob');
 Route::get('bruker/destroyJob/{job}', 'BedriftController@destroyJob');
 
+// Bedrift Bachelor logic
 Route::post('bruker/addBachelor/{user}', 'BedriftController@addBachelor');
-Route::patch('bruker/editBachelor/{bachelor}', 'BedriftController@editBachelor');
+Route::get('bruker/editBachelor/{assignmentId}', 'BedriftController@seeBachelor');
+Route::patch('bruker/editBachelor/{assignment}', 'BedriftController@editBachelor');
+Route::get('bruker/destroyBachelor/{assignment}', 'BedriftController@destroyBachelor');
+
+// Bedrift Master logic
+Route::post('bruker/addMaster/{user}', 'BedriftController@addMaster');
+Route::get('bruker/editMaster/{assignmentId}', 'BedriftController@seeMaster');
+Route::patch('bruker/editMaster/{assignment}','BedriftController@editMaster');
+Route::get('bruker/destroyMaster/{assignment}', 'BedriftController@destroyMaster');
+
+
+Route::post('bruker/addBachelor/{user}', 'BedriftController@addBachelor');
 
 // Ajax calls
 Route::get('ajax/sort/list', 'Ajax\SortController@sortList');

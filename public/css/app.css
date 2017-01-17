@@ -7036,7 +7036,7 @@ fieldset[disabled] .btn-danger-outline.active {
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 0;
 }
 
 .btn-xs, .btn-group-xs > .btn,
@@ -9993,6 +9993,10 @@ body {
   color: white;
 }
 
+.danger-text {
+  color: #D64349;
+}
+
 .is-fullwidth {
   width: 100%;
 }
@@ -10013,7 +10017,7 @@ body {
 .panel-hover:hover {
   -webkit-transition: .5s;
   transition: .5s;
-  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 2px 3px rgba(70, 70, 165, 0.2), 0 0 0 2px rgba(70, 70, 165, 0.2);
 }
 
 .panel-hover-info:hover {

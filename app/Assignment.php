@@ -1,0 +1,17 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Assignment extends Model
+{
+	protected $fillable = [
+		'fil',
+		'filnavn',
+		'bedrift_id',
+		'type',
+		'tittel',
+		'info'
+	];
+}

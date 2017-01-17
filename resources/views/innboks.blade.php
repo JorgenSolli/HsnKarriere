@@ -6,7 +6,7 @@
     <div class="col-md-4">
   		<div class="panel panel-info">
 				<div class="panel-heading p-t-0 p-b-0 clearfix">
-					<h3 class="m-t-s pull-left">Meldinger</h3>
+					<p class="h3 m-t-s pull-left">Meldinger</p>
 					<button type="button" class="pull-right btn btn-sm btn-default m-t-s"><span class="fa fa-plus-square-o"></span> Ny melding</button>
 				</div>
 		 		<ul class="list-group">
@@ -43,7 +43,7 @@
   	  <ul class="media-list media-list-conversation c-w-md panel panel-default">
 	    	<!-- Participands -->
 	    	<div class="panel-heading clearfix">
-	    		<p>2 personer er med i denne samtalen</p>
+	    		<p>2 personer deltar i denne samtalen</p>
 		  	  <ul class="avatar-list">
 					  <li class="avatar-list-item">
 					    <img class="img-circle" src="/uploads/{{ $brukerinfo->profilbilde }}">

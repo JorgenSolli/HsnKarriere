@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOppgaverTable extends Migration
+class CreateAssignmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateOppgaverTable extends Migration
      */
     public function up()
     {
-        Schema::create('oppgaver', function (Blueprint $table) {
+        Schema::create('assignments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fil')->nullable();
+            $table->string('filnavn')->nullable();
             $table->integer('bedrift_id')->nullable();
             $table->string('type')->nullable();
+            $table->string('fagfelt')->nullable();
             $table->string('tittel')->nullable();
             $table->string('info')->nullable();
             $table->timestamps();
@@ -31,6 +33,6 @@ class CreateOppgaverTable extends Migration
      */
     public function down()
     {
-        Schema::drop('oppgaver');
+        Schema::drop('assignments');
     }
 }
