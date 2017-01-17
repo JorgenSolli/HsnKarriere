@@ -1,4 +1,5 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "bootstrap/mixins";
+@import "bootstrap/variables";
 
 // icons
 $icon-font-path: "fonts/";
@@ -27,11 +28,14 @@ $gray-lightest: #f5f8fa;
 
 
 // Brand Scale
-$brand-primary: #3097D1;
-$brand-success: #4eb76e;
-$brand-warning: #cbb956;
-$brand-danger:  #bf5329;
-$brand-info:    #8eb4cb;
+$brand-primary: #4646A5;
+$brand-success: #00978A;
+$brand-warning: #FFD240;
+$brand-danger:  #D64349;
+$brand-info:    #27B2D0;
+
+$mainOne: #4646A5;
+$mainTwo: #3BAFA2;
 
 
 // alerts

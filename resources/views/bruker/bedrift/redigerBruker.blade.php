@@ -23,9 +23,9 @@
                 data-toggle="modal" data-target="#nyttProfilbildeModal"></span>
               </a>
             </div>
-            <h5 class="panel-title">
+            <p class="h5 panel-title">
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->bedrift_navn }}</a>
-            </h5>
+            </p>
 
             <p class="m-b-md">{{ $brukerinfo->bio }}</p>
 
@@ -33,14 +33,14 @@
               <li class="panel-menu-item">
                 <a href="#userModal" class="text-inherit" data-toggle="modal">
                   Noe
-                  <h5 class="m-y-0">120</h5>
+                  <p class="h5 m-y-0">120</p>
                 </a>
               </li>
 
               <li class="panel-menu-item">
                 <a href="#userModal" class="text-inherit" data-toggle="modal">
                   Annet
-                  <h5 class="m-y-0">5</h5>
+                  <p class="h5 m-y-0">5</p>
                 </a>
               </li>
             </ul>
@@ -51,42 +51,42 @@
           data-toggle="modal" data-target="#utlysStilling">
           <div class="panel-body text-center">
             <span class="fa fa-briefcase fa-3x"></span>
-            <h4 class="m-t-s text-center">Utlys stilling</h4>
+            <p class="h4 m-t-s text-center">Utlys stilling</p>
           </div>
         </div>
         @if ($jobs)
           <div class="panel panel-info panel-hover-info cursor "
             data-toggle="modal" data-target="#seStillinger">
-              <h5 class="m-t-s text-center">
+              <p class="h6 m-t-s text-center">
                 <span class="m-r-md fa fa-cogs"></span>Rediger utlyste stillinger
-              </h5>
+              </p>
           </div>
         @endif
 
         <div class="panel panel-info panel-hover-info cursor m-b-xs">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span> 
-            <h4 class="m-t-s text-center">Legg til Masteroppgave</h4>
+            <p class="h4 m-t-s text-center">Legg til Masteroppgave</p>
           </div>
         </div>
         <div class="panel panel-info panel-hover-info cursor "
           data-toggle="modal" data-target="#utlysStilling">
-            <h5 class="m-t-s text-center">
+            <p class="h6 m-t-s text-center">
               <span class="m-r-md fa fa-cogs"></span>Rediger Masteroppgaver
-            </h5>
+            </p>
         </div>
 
         <div class="panel panel-info panel-hover-info cursor m-b-xs">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span>
-            <h4 class="m-t-s text-center">Legg til Bacheloroppgave</h4>
+            <p class="h4 m-t-s text-center">Legg til Bacheloroppgave</p>
           </div>
         </div>
         <div class="panel panel-info panel-hover-info cursor "
           data-toggle="modal" data-target="#utlysStilling">
-            <h5 class="m-t-s text-center">
+            <p class="h6 m-t-s text-center">
               <span class="m-r-md fa fa-cogs"></span>Rediger Bacheloroppgaver
-            </h5>
+            </p>
         </div>
       </div>
 
@@ -102,7 +102,7 @@
               <div class="media-body">
                 <div class="media-heading">
                   <small class="pull-right text-muted">Kort om bedriften</small>
-                  <h4>Litt om {{ $brukerinfo->bedrift_navn }}</h4>
+                  <p class="h4">Litt om {{ $brukerinfo->bedrift_navn }}</p>
                 </div>
                 <textarea name="bio" class="form-control" placeholder="Du trenger ikke skrive så mye.">{{ $brukerinfo->bio }}</textarea>
               </div>
@@ -204,7 +204,7 @@
               <div class="media-body">
                 <div class="media-heading">
                   <small class="pull-right text-muted">Hmmm</small>
-                  <h4>Studenter</h4>
+                  <p class="h4">Studenter</p>
                 </div>
                 <div class="form-group">
                   <div class="form-group">
@@ -224,8 +224,8 @@
               </div> <!-- end media-left -->
               <div class="media-body">
                 <div class="form-group">
-                  <a href="/bruker" class="btn btn-danger pull-right">Avbryt</a>
-                  <button type="submit" class="btn btn-success pull-right m-r">Lagre</button>
+                  <a href="/bruker" class="btn btn-danger pull-right">AVBRYT</a>
+                  <button type="submit" class="btn btn-success pull-right m-r">LAGRE</button>
                 </div>
               </div> <!-- end media-body -->
             </li>

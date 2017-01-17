@@ -16,7 +16,7 @@
               <div class="textbox">
                 <h1 class="white-color">Velkommen til <br>Studentsamarbeid.no</h1>
                 <hr class="is-hidden-mobile">
-                <h3>Møteplassen mellom din bedrift og <br>studenter fra Høgskolen i Sørøst-Norge</h3>
+                <p class="h3 white-color">Møteplassen mellom din bedrift og <br>studenter fra Høgskolen i Sørøst-Norge</p>
               </div>
               <div class="registrerBtn">
                 <a id="index-hvemerdu-btn" href="#registrer" class="smoothScrollRegistrer registrer-btn btn btn-lg btn-primary mar-right">
