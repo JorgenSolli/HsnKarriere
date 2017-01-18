@@ -1,28 +1,34 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
 
 @section('content')
+@include('notifications.notifications')
 <div class="container m-t">
   <div class="row">
     <div class="col-md-4">
   		<div class="panel panel-info">
 				<div class="panel-heading p-t-0 p-b-0 clearfix">
 					<p class="h3 m-t-s pull-left">Meldinger</p>
-					<button type="button" class="pull-right btn btn-sm btn-default m-t-s"><span class="fa fa-plus-square-o"></span> Ny melding</button>
+					<button id="newMessage" type="button" class="pull-right btn btn-sm btn-default m-t-s"><span class="fa fa-plus-square-o"></span> Ny melding</button>
 				</div>
-		 		<ul class="list-group">
+		 		<ul id="messages" class="list-group">
 		 			@if ($meldinger->isEmpty())
 		 				<p class="list-group-item">
 		 				Ingen meldinger å vise
 			    	</p>
 		 			@else
 			 			@foreach ($meldinger as $melding)
-					    <a href="#" class="list-group-item active">
+					    <a id="{{ $melding->id }}" class="list-group-item cursor">
 					    	<div class="row">
 				    			<div class="col-sm-1">
-							    	<span class="fa fa-envelope-open-o fa-lg p-t-s"></span>
+							    	<span class="fa fa-envelope-o fa-lg p-t-s"></span>
 				    			</div>
 				    			<div class="col-sm-11">
-				            <small class="pull-right">Sigurd, deg</small>
+				            <small class="pull-right">
+				            {{ $melding->til_bruker_navn}} ,
+				            @unless ($melding->til_bruker_to_navn == "")
+				            	{{ $melding->til_bruker_to_navn }}, 
+				            @endunless
+				            {{ $melding->fra_bruker_navn }}</small>
 				            <b>Hei, Sigurd</b>
 				            <p>Dette er bare en testmelding :)</p>
 				    			</div>
@@ -35,67 +41,14 @@
     </div> <!-- end col-md-4 -->
 
     <!-- Messeges -->
-    <div id="newOrRead" class="col-md-8">
-  	  <ul class="media-list media-list-conversation c-w-md panel panel-default">
-	    	<!-- Participands -->
-	    	<div class="panel-heading clearfix">
-	    		<p>2 personer deltar i denne samtalen</p>
-		  	  <ul class="avatar-list">
-					  <li class="avatar-list-item">
-					    <img class="img-circle" src="/uploads/{{ $brukerinfo->profilbilde }}">
-					  </li>
-					  <li class="avatar-list-item">
-					    <img class="img-circle" src="/uploads/img/profilbilder/57cff8c706228_id190BM5R1241.jpg">
-					  </li>
-					  <li class="avatar-list-item">
-					    <span class="fa fa-plus-circle add-user-icon cursor" data-toggle="modal" data-target="#add-user-to-chat"></span>
-					  </li>
-					</ul>
-				</div>
-				<div class="panel-body">
-				  <li class="media media-current-user m-b-md">
-				    <div class="media-body">
-				      <div class="media-body-text">
-				        Dette er bare en testmelding :)
-				      </div>
-				      <div class="media-footer">
-				        <small class="text-muted">
-				          <a href="#">Jørgen Solli </a><span class="fa fa-clock-o"></span> 16:43
-				        </small>
-				      </div>
-				    </div>
-				    <a class="media-right" href="#">
-				      <img class="img-circle media-object" src="/uploads/{{ $brukerinfo->profilbilde }}">
-				    </a>
-				  </li>
-				  <li class="media m-b-md">
-				    <a class="media-left" href="#">
-				      <img class="img-circle media-object" src="/uploads/img/profilbilder/57cff8c706228_id190BM5R1241.jpg">
-				    </a>
-				    <div class="media-body">
-				      <div class="media-body-text">
-				       Heihei :)
-				      </div>
-				      <div class="media-body-text">
-				       Vestibulum id ligula porta felis euismod semper. Aenean lacinia bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-				      </div>
-				      <div class="media-body-text">
-				       Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus.
-				      </div>
-				      <div class="media-footer">
-				        <small class="text-muted">
-				          <a href="#">Sigurd Sørensen </a><span class="fa fa-clock-o"></span> 18:21
-				        </small>
-				      </div>
-				    </div>
-				  </li>
-			  </div>
-	  	</ul>
+    <div class="col-md-8">
+    	<div class="ajaxLoading text-center m-t-md m-b-md" style="display: none;">
+    		<span class="fa fa-circle-o-notch fa-spin fa-4x"></span>
+  		</div>
+    	<div id="newOrRead"></div>
     </div> <!-- end col-md-8 -->
   </div>
 </div> <!-- end container -->
-
-
 
 <!-- MODALS -->
 <div id="add-user-to-chat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

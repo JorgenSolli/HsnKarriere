@@ -7,7 +7,6 @@
 */
 
 Route::get('/', 'PageController@hjem');
-Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
 
 // User routes
 Route::patch('bruker/{user}', 'UserEditController@updateUser');
@@ -41,6 +40,12 @@ Route::post('bruker/addBachelor/{user}', 'BedriftController@addBachelor');
 Route::get('bruker/seeBachelor/{assignmentId}', 'BedriftController@seeBachelor');
 Route::patch('bruker/editBachelor/{assignment}', 'BedriftController@editBachelor');
 Route::get('bruker/destroyBachelor/{assignment}', 'BedriftController@destroyBachelor');
+
+// Messages
+Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
+Route::get('innboks/newMessage', 'InnboksController@newMessage');
+Route::post('innboks/sendMessage', 'InnboksController@sendMessage');
+Route::get('innboks/seeMessage/{message}', 'InnboksController@seeMessage');
 
 // Ajax calls
 Route::get('ajax/sort/list', 'Ajax\SortController@sortList');

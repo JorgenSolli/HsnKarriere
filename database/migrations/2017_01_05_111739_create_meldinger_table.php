@@ -17,6 +17,7 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->integer('fra_bruker_id')->nullable();
             $table->integer('til_bruker_id')->nullable();
+            $table->integer('til_bruker_to_id')->nullable();
             $table->string('tittel')->nullable();
             $table->string('innhold')->nullable();
             $table->string('sett_av')->nullable();
