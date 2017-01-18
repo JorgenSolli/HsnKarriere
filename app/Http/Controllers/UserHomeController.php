@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\QuerryService;
+use App\Assignment;
+use App\Job;
 
 class UserHomeController extends Controller
 {
@@ -29,7 +31,7 @@ class UserHomeController extends Controller
 
             $brukerinfo = Auth::user();
             $studenter = $querry_service->finnStudenter($brukerinfo->bedrift_ser_etter);
-
+            
             return view('bruker.bedrift.bruker',
                 [
                     'studenter' => $studenter,
@@ -53,9 +55,16 @@ class UserHomeController extends Controller
         }
 
         else if ($brukerinfo->bruker_type == "bedrift") {
+            $jobs = Job::where('bedrift_id', $id)->orderBy('created_at', 'desc')->get();
+            $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', $id)->get();
+            $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', $id)->get();
+
             return view('bruker.bedrift.seBruker',
             [
-                'brukerinfo' => $brukerinfo
+                'brukerinfo' => $brukerinfo,
+                'bachelors' => $bachelors,
+                'masters'   => $masters,
+                'jobs'      => $jobs
             ]);
         }
 

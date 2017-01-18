@@ -36,8 +36,8 @@ class UserEditController extends Controller
         else if (Auth::user()->bruker_type == "bedrift") {
             $brukerinfo = Auth::user();
             $jobs = Job::where('bedrift_id', Auth::id())->orderBy('created_at', 'desc')->get();
-            $masters = Assignment::where('type', 'masteroppgave')->get();
-            $bachelors = "";
+            $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', Auth::id())->get();
+            $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', Auth::id())->get();
             
             if (!empty(Auth::user()->bedrift_ser_etter)) {
                 $bedrift_ser_etter = explode(";", Auth::user()->bedrift_ser_etter);
@@ -53,7 +53,8 @@ class UserEditController extends Controller
                     'bedrift_fagfelt'   => $bedrift_fagfelt,
                     'bedrift_ser_etter' => $bedrift_ser_etter,
                     'jobs'              => $jobs,
-                    'masters'           => $masters
+                    'masters'           => $masters,
+                    'bachelors'         => $bachelors
                 ]);
         }
     }

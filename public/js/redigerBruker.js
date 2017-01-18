@@ -100,7 +100,7 @@ $(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'editJob/' + jobId, 
+            url: 'seeJob/' + jobId, 
             success: function(data) {
                 $(".ajaxLoading").remove();
                 containerParent.hide();
@@ -130,7 +130,7 @@ $(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'editMaster/' + masterId, 
+            url: 'seeMaster/' + masterId, 
             success: function(data) {
                 $(".ajaxLoading").remove();
                 containerParent.hide();
@@ -145,6 +145,36 @@ $(function () {
         $(".ajaxLoading").remove();
         $("#listMastersAjax div").remove();
         $("#listMastersParent").show();
+    });
+
+    // See/edit bachelors
+    $("#listBachelors a").on('click', function() {
+        var container = $("#listBachelors");
+        var containerParent = $("#listBachelorsParent");
+        var containerNewContent = $("#listBachelorsAjax");
+        
+        var bachelorBtn = "#" + $(this).attr('id');
+        var bachelorId = bachelorBtn.slice(11);
+
+        $(bachelorBtn + ' .edit').removeClass('fa-cog').addClass('fa-circle-o-notch fa-spin');
+
+        $.ajax({
+            type: 'GET',
+            url: 'seeBachelor/' + bachelorId, 
+            success: function(data) {
+                $(".ajaxLoading").remove();
+                containerParent.hide();
+                containerNewContent.removeClass('hidden').append(data['assignment']);
+                $(bachelorBtn + ' .edit').removeClass('fa-circle-o-notch fa-spin').addClass('fa-cog');
+                dateJob();
+            }
+        });
+    });
+
+    $(document).on('click', '#tilbakeSeeBachelors', function () {
+        $(".ajaxLoading").remove();
+        $("#listBachelorsAjax div").remove();
+        $("#listBachelorsParent").show();
     });
 
 });

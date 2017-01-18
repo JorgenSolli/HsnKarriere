@@ -54,42 +54,46 @@
             <p class="h4 m-t-s text-center">Utlys stilling</p>
           </div>
         </div>
-        @if ($jobs)
-          <div class="panel panel-info panel-hover-info cursor "
+        @unless ($jobs->isEmpty())
+          <div class="panel panel-info panel-hover-info cursor"
             data-toggle="modal" data-target="#seStillinger">
               <p class="h6 m-t-s text-center">
                 <span class="m-r-md fa fa-cogs"></span>Se/endre utlyste stillinger
               </p>
           </div>
-        @endif
+        @endunless
 
-        <div class="panel panel-info panel-hover-info cursor m-b-xs"
+        <div class="panel panel-info panel-hover-info cursor m-t-md m-b-xs"
           data-toggle="modal" data-target="#nyMaster">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span> 
             <p class="h4 m-t-s text-center">Legg til Masteroppgave</p>
           </div>
         </div>
-        <div class="panel panel-info panel-hover-info cursor "
-          data-toggle="modal" data-target="#seMasters">
-            <p class="h6 m-t-s text-center">
-              <span class="m-r-md fa fa-cogs"></span>Se/endre Masteroppgaver
-            </p>
-        </div>
+        @unless ($masters->isEmpty())
+          <div class="panel panel-info panel-hover-info cursor"
+            data-toggle="modal" data-target="#seMasters">
+              <p class="h6 m-t-s text-center">
+                <span class="m-r-md fa fa-cogs"></span>Se/endre Masteroppgaver
+              </p>
+          </div>
+        @endunless
 
-        <div class="panel panel-info panel-hover-info cursor m-b-xs"
+        <div class="panel panel-info panel-hover-info cursor m-t-md m-b-xs"
           data-toggle="modal" data-target="#nyBachelor">
           <div class="panel-body text-center">
             <span class="fa fa-file-pdf-o fa-3x"></span>
             <p class="h4 m-t-s text-center">Legg til Bacheloroppgave</p>
           </div>
         </div>
-        <div class="panel panel-info panel-hover-info cursor "
-          data-toggle="modal" data-target="#utlysStilling">
-            <p class="h6 m-t-s text-center">
-              <span class="m-r-md fa fa-cogs"></span>Se/endre Bacheloroppgaver
-            </p>
-        </div>
+        @unless ($bachelors->isEmpty())
+          <div class="panel panel-info panel-hover-info cursor "
+            data-toggle="modal" data-target="#seBachelors">
+              <p class="h6 m-t-s text-center">
+                <span class="m-r-md fa fa-cogs"></span>Se/endre Bacheloroppgaver
+              </p>
+          </div>
+        @endunless
       </div>
 
       <div class="col-md-6">
@@ -588,6 +592,40 @@
               <button type="submit" class="pull-right btn btn-success">Last opp</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="seBachelors" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div id="listBachelorsAjax"></div>
+    <div id="listBachelorsParent" class="modal-dialog" role="document">
+      <div id="showBachelors" class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Mine utlyste stillinger</p>
+        </div>
+        <div class="modal-body">
+          <ul id="listBachelors" class="media-list media-list-stream list-items-border m-b-0">
+            @foreach ($bachelors as $bachelor)
+              <li class="media">
+                <div class="media-body">
+                  <strong>{{ $bachelor->tittel }}</strong> · {{ $bachelor->filnavn }}
+                  <div class="media-body-actions">
+                    <a id="bachelorId{{ $bachelor->id }}" class="btn btn-primary-outline btn-xs m-r-s">
+                      <span class="edit fa fa-cog"></span> Rediger
+                    </a>
+                    <a href="destroyBachelor/{{ $bachelor->id }}" class="btn btn-danger-outline btn-xs">
+                      <span class="delete fa fa-close"></span> Slett
+                    </a>
+                  </div>
+                </div>
+              </li>
+            @endforeach
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" aria-label="Close" class="btn btn-primary">Lukk</button>
         </div>
       </div>
     </div>

@@ -214,7 +214,7 @@ class BedriftController extends Controller
         $assignment->id         = $assignment->id;
         $assignment->fil        = $path;
         $assignment->filnavn    = $filename;
-        $assignment->bedrift_id = $assignment->id;
+        $assignment->bedrift_id = $assignment->bedrift_id;
         $assignment->type       = "masteroppgave";
         $assignment->tittel     = $request->master_tittel;
         $assignment->info       = $request->master_info;
@@ -223,6 +223,25 @@ class BedriftController extends Controller
         $assignment->update();
 
         return back()->with('success', 'Masteroppgaven ble endret.');
+    }
+
+    public function destroyMaster (Assignment $assignment) {
+
+        if ($assignment->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
+
+            // Gets the file for unlink()
+            $file = $assignment->fil;
+            // Deletes the document
+            if (file_exists("uploads/" . $file)) {
+                unlink("uploads/" . $file);
+            }
+
+            $assignment->delete();
+
+            return back()->with('success', 'Masteroppgaven ble slettet');
+        } else {
+            abort(403, 'Access denied');
+        }
     }
 
     public function addBachelor (Request $request, User $user)
@@ -260,6 +279,82 @@ class BedriftController extends Controller
         }
         else {
             abort(403);
+        }
+    }
+
+    public function seeBachelor (Assignment $assignment, $assignmentId)
+    {
+        $brukerinfo = Auth::user();
+        
+        if (!empty(Auth::user()->bedrift_fagfelt)) {
+            $bedrift_fagfelt = explode(";", Auth::user()->bedrift_fagfelt);
+        } else {
+            $bedrift_fagfelt = "";
+        }
+
+        $assignment = $assignment->where('id', $assignmentId)->first();
+
+        $returnHTML = view('includes.bruker.bedrift.seeBachelor')
+                ->with('assignment', $assignment)
+                ->with('brukerinfo', $brukerinfo)
+                ->with('bedrift_fagfelt', $bedrift_fagfelt)
+                ->render();
+        return response()->json(array('success' => true, 'assignment'=>$returnHTML));
+    }
+
+    public function editBachelor (Request $request, Assignment $assignment)
+    {
+        $validator = Validator::make($request->all(), [
+            'bachelor_tittel'   => 'required',
+            'bachelor_info'     => 'required',
+            'bachelor_fagfelt'  => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Alle felt (unntatt fil) må fylles ut!');
+        }
+
+        // The user did not change the file
+        if ($request->file('bacheloroppgave-file') == "") {
+            $filename = $assignment->filnavn;
+            $path = $assignment->fil;
+        } else {
+            // Gets file, uplads it, and store the path and filename
+            $filename   = $request->file('bacheloroppgave-file')->getClientOriginalName();
+            $file       = $request->file('bacheloroppgave-file');
+            $path       = $file->store('/assignments/bachelors');
+        }
+
+        $assignment->id         = $assignment->id;
+        $assignment->fil        = $path;
+        $assignment->filnavn    = $filename;
+        $assignment->bedrift_id = $assignment->bedrift_id;
+        $assignment->type       = "bacheloroppgave";
+        $assignment->tittel     = $request->bachelor_tittel;
+        $assignment->info       = $request->bachelor_info;
+        $assignment->fagfelt    = $request->bachelor_fagfelt;
+
+        $assignment->update();
+
+        return back()->with('success', 'Bacheloroppgaven ble endret.');
+    }
+
+    public function destroyBachelor (Assignment $assignment) {
+
+        if ($assignment->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
+            
+            // Gets the file for unlink()
+            $file = $assignment->fil;
+            // Deletes the document
+            if (file_exists("uploads/" . $file)) {
+                unlink("uploads/" . $file);
+            }
+
+            $assignment->delete();
+
+            return back()->with('success', 'Bacheloroppgaven ble slettet');
+        } else {
+            abort(403, 'Access denied');
         }
     }
 }

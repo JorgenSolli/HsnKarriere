@@ -8,7 +8,7 @@
           <div class="panel-heading" style="background-image: url(/uploads/{{ $bedrift->forsidebilde }});"></div>
           <div class="panel-body text-center">
             <img class="panel-profile-img" src="/uploads/{{ $bedrift->profilbilde }}">
-            <h5 class="panel-title">{{ $bedrift->bedrift_navn }}</h5>
+            <p class="h5 panel-title">{{ $bedrift->bedrift_navn }}</p>
             <p class="m-b-md">
               <span class="fa fa-envelope-o"></span> {{ $bedrift->email }}
               <br>

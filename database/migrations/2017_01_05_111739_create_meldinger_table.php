@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMeldingerTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMeldingerTable extends Migration
      */
     public function up()
     {
-        Schema::create('meldinger', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fra_bruker_id')->nullable();
             $table->integer('til_bruker_id')->nullable();
@@ -31,6 +31,6 @@ class CreateMeldingerTable extends Migration
      */
     public function down()
     {
-        Schema::drop('meldinger');
+        Schema::drop('messages');
     }
 }

@@ -5,7 +5,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle"></i></button>
-        <h3 class="modal-title"><i class="fa fa-sign-in"></i> Logg inn</h3>
+        <p class="h3 modal-title"><i class="fa fa-sign-in"></i> Logg inn</p>
       </div>
 
       <div class="modal-body">

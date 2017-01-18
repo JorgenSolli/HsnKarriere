@@ -10,36 +10,32 @@
 					<button type="button" class="pull-right btn btn-sm btn-default m-t-s"><span class="fa fa-plus-square-o"></span> Ny melding</button>
 				</div>
 		 		<ul class="list-group">
-			    <a href="#" class="list-group-item active">
-			    	<div class="row">
-		    			<div class="col-sm-1">
-					    	<span class="fa fa-envelope-open-o fa-lg p-t-s"></span>
-		    			</div>
-		    			<div class="col-sm-11">
-		            <small class="pull-right">Sigurd, deg</small>
-		            <b>Hei, Sigurd</b>
-		            <p>Dette er bare en testmelding :)</p>
-		    			</div>
-	    			</div>
-		    	</a>
-		    	<a href="#" class="list-group-item">
-			    	<div class="row">
-		    			<div class="col-sm-1">
-					    	<span class="fa fa-envelope-o fa-lg p-t-s"></span>
-		    			</div>
-		    			<div class="col-sm-11">
-		            <small class="pull-right">John, deg</small>
-		            <b>Hei, John</b>
-		            <p>Dette er bare enda en testmelding med litt lengr...</p>
-		    			</div>
-	    			</div>
-		    	</a>
+		 			@if ($meldinger->isEmpty())
+		 				<p class="list-group-item">
+		 				Ingen meldinger å vise
+			    	</p>
+		 			@else
+			 			@foreach ($meldinger as $melding)
+					    <a href="#" class="list-group-item active">
+					    	<div class="row">
+				    			<div class="col-sm-1">
+							    	<span class="fa fa-envelope-open-o fa-lg p-t-s"></span>
+				    			</div>
+				    			<div class="col-sm-11">
+				            <small class="pull-right">Sigurd, deg</small>
+				            <b>Hei, Sigurd</b>
+				            <p>Dette er bare en testmelding :)</p>
+				    			</div>
+			    			</div>
+				    	</a>
+			    	@endforeach
+		    	@endif
 			  </ul>
   		</div>
     </div> <!-- end col-md-4 -->
 
     <!-- Messeges -->
-    <div class="col-md-8">
+    <div id="newOrRead" class="col-md-8">
   	  <ul class="media-list media-list-conversation c-w-md panel panel-default">
 	    	<!-- Participands -->
 	    	<div class="panel-heading clearfix">
@@ -125,5 +121,7 @@
     </div>
   </div>
 </div>
-
+@stop
+@section('script')
+	<script src="/js/innboks.js"></script>
 @stop
