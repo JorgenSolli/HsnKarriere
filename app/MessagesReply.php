@@ -11,5 +11,5 @@ class MessagesReply extends Model
     	'user_id',
     	'user_name',
     	'message',
-    ]
+    ];
 }

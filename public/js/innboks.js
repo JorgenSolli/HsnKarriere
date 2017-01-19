@@ -36,6 +36,5 @@ $(document).ready(function() {
 				container.html(data['data']);
 			}
 		})
-		console.log(id);
 	});
 });

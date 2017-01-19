@@ -11,30 +11,27 @@
 					<button id="newMessage" type="button" class="pull-right btn btn-sm btn-default m-t-s"><span class="fa fa-plus-square-o"></span> Ny melding</button>
 				</div>
 		 		<ul id="messages" class="list-group">
-		 			@if ($meldinger->isEmpty())
+		 			@if ($messages->isEmpty())
 		 				<p class="list-group-item">
 		 				Ingen meldinger å vise
 			    	</p>
 		 			@else
-			 			@foreach ($meldinger as $melding)
-					    <a id="{{ $melding->id }}" class="list-group-item cursor">
-					    	<div class="row">
-				    			<div class="col-sm-1">
-							    	<span class="fa fa-envelope-o fa-lg p-t-s"></span>
-				    			</div>
-				    			<div class="col-sm-11">
-				            <small class="pull-right">
-				            {{ $melding->bruker_navn}} ,
-				            @unless ($melding->til_bruker_to_navn == "")
-				            	{{ $melding->til_bruker_to_navn }}, 
-				            @endunless
-				            {{ $melding->fra_bruker_navn }}</small>
-				            <b>{{ $melding->emne }}</b>
-				            <p>{{ $melding->melding }}</p>
-				    			</div>
-			    			</div>
-				    	</a>
-			    	@endforeach
+            @foreach ($messages as $message)
+              <a id="{{ $message['id'] }}" class="list-group-item cursor">
+                <div class="row">
+                  <div class="col-sm-1">
+                    <span class="fa fa-envelope-o fa-lg p-t-s"></span>
+                  </div>
+                  <div class="col-sm-11">
+                    <small class="pull-right">
+                    Fra, til, osv :)</small>
+                    <b> {{ $message['emne'] }} </b>
+                    <p> {{ $message['melding'] }} </p>
+                  </div>
+                </div>
+              </a>
+            @endforeach
+			 			
 		    	@endif
 			  </ul>
   		</div>

@@ -7,21 +7,36 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Message;
 use App\MessagesJunction;
-use App\Messages_Reply;
+use App\MessagesReply;
 use App\User;
 use App\Services\QuerryService;
 
 class InnboksController extends Controller
 {
-    public function seMeldinger() {
+    public function listMessages() {
     	$brukerinfo = Auth::user();
-    	$meldinger = Message::where('bruker_id', Auth::id())->get();
+        $junctions = MessagesJunction::where('user_id', Auth::id())->get();
+        // $meldinger = Message::where('bruker_id', Auth::id())->get();
+        
+        $messages = collect([]);
 
+        foreach ($junctions as $junction) {
+            $data = Message::where('id', $junction->message_id)->first();
+            $messages->push([
+                'id'            => $data->id,
+                'bruker_id'     => $data->bruker_id,
+                'bruker_navn'   => $data->bruker_navn,
+                'emne'          => $data->emne,
+                'melding'       => $data->melding,
+                'created_at'    => $data->created_at,
+                'updated_at'    => $data->updated_at,
+            ]);
+        }
 
     	return view('innboks', 
 			[
 				'brukerinfo' 	=> $brukerinfo,
-				'meldinger'		=> $meldinger
+				'messages'		=> $messages
 			]);
     }
 
@@ -40,8 +55,17 @@ class InnboksController extends Controller
             return response()->json(array('success' => true, 'data' => $returnHTML));
         }
 
+
         elseif ($brukerinfo->bruker_type == "bedrift") {
-            return false;
+            // Finding the companies the user is allowed to contact
+            $kontakter = $querry_service->finnStudenter($brukerinfo->bedrift_ser_etter);
+
+            //dd($kontakter);
+            $returnHTML = view('includes.innboks.newMessage')
+                ->with('brukerinfo', $brukerinfo)
+                ->with('kontakter', $kontakter)
+                ->render();
+            return response()->json(array('success' => true, 'data' => $returnHTML));
         }
     }
 
@@ -85,17 +109,37 @@ class InnboksController extends Controller
 
     public function seeMessage (Message $message)
     {
-    	$message_id  = $message->message_id;
-        $sender_info = User::where('id', $message->bruker_id)->first();
 
+        $sender_info = User::where('id', $message->bruker_id)->first();
+        $junctions = MessagesJunction::where('message_id', $message->id)->get();
+
+        $replies = MessagesReply::where('message_id', $message->id)->get();
 
         $returnHTML = view('includes.innboks.seeMessage')
             ->with('message', $message)
             ->with('sender_info', $sender_info)
-            ->with('reciepment_one_info', $reciepment_one_info)
-            ->with('reciepment_two_info', $reciepment_two_info)
+            ->with('participants', $junctions)
+            ->with('replies', $replies)
             ->render();
         return response()->json(array('success' => true, 'data' => $returnHTML));
-        dd($message);
+    }
+
+    public function replyMessage (Request $request, Message $message)
+    {   
+        
+        $reply = New MessagesReply;
+        $reply->message_id = $message->id;
+        $reply->user_id = Auth::id();
+        $reply->message = $request->reply;
+
+        if (Auth::User()->bruker_type == "bedrift") {
+            $reply->user_name = Auth::User()->bedrift_navn;
+        } else {
+            $reply->user_name = Auth::User()->fornavn;
+        }
+
+        $reply->save();
+
+        return back()->with('success', 'Svar sendt');
     }
 }

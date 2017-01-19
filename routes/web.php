@@ -42,11 +42,12 @@ Route::patch('bruker/editBachelor/{assignment}', 'BedriftController@editBachelor
 Route::get('bruker/destroyBachelor/{assignment}', 'BedriftController@destroyBachelor');
 
 // Messages
-Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
+Route::get('innboks', 'InnboksController@listMessages')->middleware('auth');
 Route::get('innboks/newMessage', 'InnboksController@newMessage');
 Route::post('innboks/sendNewMessage', 'InnboksController@sendNewMessage');
 Route::post('innboks/sendMessage', 'InnboksController@replyMessage');
 Route::get('innboks/seeMessage/{message}', 'InnboksController@seeMessage');
+Route::post('innboks/replyMessage/{message}', 'InnboksController@replyMessage');
 
 // Ajax calls
 Route::get('ajax/sort/list', 'Ajax\SortController@sortList');
