@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Message;
-use App\Message_Reply;
+use App\MessagesJunction;
+use App\Messages_Reply;
 use App\User;
 use App\Services\QuerryService;
 
@@ -14,8 +15,7 @@ class InnboksController extends Controller
 {
     public function seMeldinger() {
     	$brukerinfo = Auth::user();
-    	$meldinger = Message::where('fra_bruker_id', Auth::id())
-    		->orWhere('til_bruker_id', Auth::id())->get();
+    	$meldinger = Message::where('bruker_id', Auth::id())->get();
 
 
     	return view('innboks', 
@@ -45,56 +45,49 @@ class InnboksController extends Controller
         }
     }
 
-    public function sendMessage (Request $request)
+    public function sendNewMessage (Request $request)
     {   
-        $message = New Message;
-
-        $message->fra_bruker_id     = Auth::id();
-        $message->tittel            = $request->tittel;
-        $message->innhold           = $request->melding;
-        $message->til_bruker_id     = $request->mottakere[0];
-        $mottaker_one               = User::find($request->mottakere[0]);
+        $message  = New Message;
 
         if (Auth::user()->bruker_type == "bedrift") {
-            $message->fra_bruker_navn = Auth::user()->bedrift_navn;
+        	$navn = Auth::user()->bedrift_navn;
         } else {
-            $message->fra_bruker_navn = Auth::user()->fornavn;
+        	$navn = Auth::user()->fornavn;
         }
 
-        if ($mottaker_one->bruker_type == "bedrift") {
-            $message->til_bruker_navn = $mottaker_one->bedrift_navn;
-        } else {
-            $message->til_bruker_navn = $mottaker_one->fornavn;
-        }
-
-        // Adds the second reciepment if the user is selected.
-        if (!empty($request->mottakere[1])) {
-            $mottaker_two = User::find($request->mottakere[1]);
-
-            if ($mottaker_two->bruker_type == "bedrift") {
-                $message->til_bruker_navn = $mottaker_two->bedrift_navn;
-            } else {
-                $message->til_bruker_navn = $mottaker_two->fornavn;
-            }
-            $message->til_bruker_to_id  = $request->mottakere[1];
-        }
+        // Gets the message information
+        $message->bruker_id 	= Auth::id();
+        $message->bruker_navn 	= $navn; 		
+        $message->emne 			= $request->tittel;
+        $message->melding 		= $request->melding;
 
         // Saves the message.
+
         $message->save();
+        $messageId = $message->id;
+
+        // Adds the sender to the junction table
+        $junction 				= New MessagesJunction;
+        $junction->user_id 		= Auth::id();
+        $junction->message_id	= $messageId;
+        $junction->save();
+
+        // Adds all reciepments to the junction table
+        foreach ($request->mottakere as $mottaker) {
+        	$junction = New MessagesJunction;
+        	$junction->user_id = $mottaker;
+        	$junction->message_id = $messageId;
+        	$junction->save();
+        }
 
         return back()->with('success', 'Meldingen ble sendt!');
     }
 
     public function seeMessage (Message $message)
     {
-        $sender_info            = User::where('id', $message->fra_bruker_id)->first();
-        $reciepment_one_info    = User::where('id', $message->til_bruker_id)->first();
+    	$message_id  = $message->message_id;
+        $sender_info = User::where('id', $message->bruker_id)->first();
 
-        if (!empty($message->til_bruker_to_id)) {
-            $reciepment_two_info    = User::where('id', $message->til_bruker_to_id)->first();
-        } else {
-            $reciepment_two_info = null;
-        }
 
         $returnHTML = view('includes.innboks.seeMessage')
             ->with('message', $message)

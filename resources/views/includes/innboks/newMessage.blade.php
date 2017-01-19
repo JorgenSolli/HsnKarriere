@@ -7,7 +7,7 @@
   <li class="media list-group-item p-a">
     <div class="media-body">
       <div class="media-body-text">
-      	<form action="innboks/sendMessage" method="POST">
+      	<form action="/innboks/sendNewMessage" method="POST">
       		{{ csrf_field() }}
         	<div class="form-group">
             <label for="mottakere">Mottaker(e)</label>

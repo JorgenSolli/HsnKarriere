@@ -44,7 +44,8 @@ Route::get('bruker/destroyBachelor/{assignment}', 'BedriftController@destroyBach
 // Messages
 Route::get('innboks', 'InnboksController@seMeldinger')->middleware('auth');
 Route::get('innboks/newMessage', 'InnboksController@newMessage');
-Route::post('innboks/sendMessage', 'InnboksController@sendMessage');
+Route::post('innboks/sendNewMessage', 'InnboksController@sendNewMessage');
+Route::post('innboks/sendMessage', 'InnboksController@replyMessage');
 Route::get('innboks/seeMessage/{message}', 'InnboksController@seeMessage');
 
 // Ajax calls

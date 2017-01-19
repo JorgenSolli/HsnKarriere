@@ -6,7 +6,7 @@ $(document).ready(function() {
 		loading.show();
 		$.ajax({
             type: 'GET',
-            url: 'innboks/newMessage/', 
+            url: '/innboks/newMessage/', 
             success: function(data) {
             	loading.hide();
                 $(".ajaxLoading").remove();
@@ -29,7 +29,7 @@ $(document).ready(function() {
 
 		$.ajax({
 			type: 'GET',
-			url: 'innboks/seeMessage/' + id,
+			url: '/innboks/seeMessage/' + id,
 			success: function(data) {
 				$("#" + id).addClass('active');
 				loading.hide();

@@ -24,13 +24,13 @@
 				    			</div>
 				    			<div class="col-sm-11">
 				            <small class="pull-right">
-				            {{ $melding->til_bruker_navn}} ,
+				            {{ $melding->bruker_navn}} ,
 				            @unless ($melding->til_bruker_to_navn == "")
 				            	{{ $melding->til_bruker_to_navn }}, 
 				            @endunless
 				            {{ $melding->fra_bruker_navn }}</small>
-				            <b>Hei, Sigurd</b>
-				            <p>Dette er bare en testmelding :)</p>
+				            <b>{{ $melding->emne }}</b>
+				            <p>{{ $melding->melding }}</p>
 				    			</div>
 			    			</div>
 				    	</a>
