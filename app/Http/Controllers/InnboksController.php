@@ -16,22 +16,31 @@ class InnboksController extends Controller
     public function listMessages() {
     	$brukerinfo = Auth::user();
         $junctions = MessagesJunction::where('user_id', Auth::id())->get();
-        // $meldinger = Message::where('bruker_id', Auth::id())->get();
+        
         
         $messages = collect([]);
+        $participants = collect([]);
 
         foreach ($junctions as $junction) {
             $data = Message::where('id', $junction->message_id)->first();
+            $participants = DB::table('users')
+	        	->join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
+	        	->select('users.bruker_type', 'users.fornavn', 'users.bedrift_navn')
+	        	->where('messages_junctions.message_id', '=', $junction->message_id)
+	        	->get();
+
             $messages->push([
                 'id'            => $data->id,
-                'bruker_id'     => $data->bruker_id,
-                'bruker_navn'   => $data->bruker_navn,
-                'emne'          => $data->emne,
-                'melding'       => $data->melding,
+                'participants'	=> $participants,
+                'user_id'  	   	=> $data->user_id,
+                'subject'       => $data->subject,
+                'message'       => $data->message,
                 'created_at'    => $data->created_at,
                 'updated_at'    => $data->updated_at,
             ]);
         }
+
+        //dd($messages);
 
     	return view('innboks', 
 			[
@@ -80,10 +89,10 @@ class InnboksController extends Controller
         }
 
         // Gets the message information
-        $message->bruker_id 	= Auth::id();
-        $message->bruker_navn 	= $navn; 		
-        $message->emne 			= $request->tittel;
-        $message->melding 		= $request->melding;
+        $message->user_id 		= Auth::id();
+        $message->user_name 	= $navn; 		
+        $message->subject 		= $request->tittel;
+        $message->message 		= $request->melding;
 
         // Saves the message.
 
@@ -109,11 +118,36 @@ class InnboksController extends Controller
 
     public function seeMessage (Message $message)
     {
-
-        $sender_info = User::where('id', $message->bruker_id)->first();
         $junctions = MessagesJunction::where('message_id', $message->id)->get();
+    	
+    	// Error trapping and authign
+    	$err = false;
+    	foreach ($junctions as $junction) {
+    		if ($junction->user_id == Auth::id()) {
+    			$err = true;
+    		}
+    	}
+
+    	if (!$err) {
+    		abort(403);
+    	}
+
+        $sender_info = User::where('id', $message->user_id)->first();
 
         $replies = MessagesReply::where('message_id', $message->id)->get();
+
+        $replies = DB::table('users')
+        	->join('messages_replies', 'users.id', '=', 'messages_replies.user_id')
+        	->select( 
+        		'users.bruker_type', 
+        		'users.profilbilde', 
+        		'messages_replies.user_id',
+        		'messages_replies.message_id', 
+        		'messages_replies.user_name', 
+        		'messages_replies.message', 
+        		'messages_replies.created_at', 
+        		'messages_replies.updated_at')
+        	->get();
 
         $returnHTML = view('includes.innboks.seeMessage')
             ->with('message', $message)

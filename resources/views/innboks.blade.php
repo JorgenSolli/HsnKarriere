@@ -24,9 +24,20 @@
                   </div>
                   <div class="col-sm-11">
                     <small class="pull-right">
-                    Fra, til, osv :)</small>
-                    <b> {{ $message['emne'] }} </b>
-                    <p> {{ $message['melding'] }} </p>
+                      @foreach ($message['participants'] as $participant)
+                        @if ($participant->bruker_type == "bedrift")
+                          {{ $participant->bedrift_navn }}
+                        @else
+                          {{ $participant->fornavn }}
+                        @endif
+
+                        @unless ($loop->last)
+                          · 
+                        @endunless
+                      @endforeach
+                    </small>
+                    <b> {{ $message['subject'] }} </b>
+                    <p> {{ $message['message'] }} </p>
                   </div>
                 </div>
               </a>

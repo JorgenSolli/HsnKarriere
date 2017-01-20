@@ -11,61 +11,81 @@
 			  </li>
 			</ul>
 		</div>
-		<p class="h4 pull-left">Emne:  {{ $message->emne }}</p>
+		<p class="h4 pull-left">Emne:  {{ $message->subject }}</p>
 	</div>
 	<div class="panel-body">
-		<!-- SENDER BODY -->
-	  <li class="media media-current-user m-b-md">
-	    <div class="media-body">
-	      <div class="media-body-text">
-	        {{ $message->melding }}
-	      </div>
-	      <div class="media-footer">
-	        <small class="text-muted">
-	          <a href="#">{{ $message->fra_bruker_navn }} </a><span class="fa fa-clock-o"></span> {{ $message->created_at }}
-	        </small>
-	      </div>
-	    </div>
-	    <a class="media-right" href="#">
-	      <img class="img-circle media-object" src="/uploads/{{ $sender_info->profilbilde }}">
-	    </a>
-	  </li>
+		@php $currUser = $message->user_id @endphp
+		@if ($message->user_id == Auth::id())
+			<!-- SENDER BODY -->
+		  <li class="media media-current-user m-b-s">
+		    <div class="media-body">
+		      <div class="media-body-text">
+		        {{ $message->message }}
+		      </div>
+		      <div class="media-footer">
+		        <small class="text-muted">
+		          <a href="#">{{ $message->user_name }} </a><span class="fa fa-clock-o"></span> {{ $message->created_at }}
+		        </small>
+		      </div>
+		    </div>
+	      <a class="media-right" href="#">
+		      <img class="img-circle media-object" src="/uploads/{{ $sender_info->profilbilde }}">
+		    </a>
+	    </li>
+	  @else
+	  	<li class="media m-b-s">
+    		<a class="media-left" href="#">
+		      <img class="img-circle media-object" src="/uploads/{{ $sender_info->profilbilde }}">
+		    </a>
+		    <div class="media-body">
+		      <div class="media-body-text">
+		      	{{ $message->message }}
+		      </div>
+
+		      <div class="media-footer">
+		        <small class="text-muted">
+		          <a href="#">{{ $message->user_name }} </a><span class="fa fa-clock-o"></span> {{ $message->created_at }}
+		        </small>
+		      </div>
+		    </div>
+		  </li>
+	  @endif
 	  <!-- ALL REPLIES FOLLOWS -->
-	  @foreach ($replies as $reply)
-	  	@if ($reply->user_id == Auth::id())
-	  		<li class="media media-current-user m-b-md">
-			    <div class="media-body">
-			      <div class="media-body-text">
-			        {{ $reply->message }}
-			      </div>
-			      <div class="media-footer">
-			        <small class="text-muted">
-			          <a href="#">{{ $reply->user_name }} </a><span class="fa fa-clock-o"></span> {{ $reply->created_at }}
-			        </small>
-			      </div>
-			    </div>
-			    <a class="media-right" href="#">
-			      <img class="img-circle media-object" src="/uploads/{{ $sender_info->profilbilde }}">
-			    </a>
-			  </li>
+	  @for ($i = 0; $i < count($replies); $i++)
+	  	@if ($replies[$i]->user_id == Auth::id())
+	      <li class="media media-current-user m-b-s">
+		    <div class="media-body">
+		      <div class="media-body-text">
+		        {{ $replies[$i]->message }}
+		      </div>
+		      <div class="media-footer">
+		        <small class="text-muted">
+		          <a href="#">{{ $replies[$i]->user_name }} </a><span class="fa fa-clock-o"></span> {{ $replies[$i]->created_at }}
+		        </small>
+		      </div>
+		    </div>
+	      <a class="media-right" href="#">
+		      <img class="img-circle media-object" src="/uploads/{{ $replies[$i]->profilbilde }}">
+		    </a>
+	    </li>
 	  	@else
-	  		<li class="media m-b-md">
-			    <a class="media-left" href="#">
-			      <img class="img-circle media-object" src="/uploads/">
+	  		<li class="media m-b-s">
+	  			<a class="media-left" href="#">
+			      <img class="img-circle media-object" src="/uploads/{{ $replies[$i]->profilbilde }}">
 			    </a>
 			    <div class="media-body">
 			      <div class="media-body-text">
-							{{ $reply->message }}
+			        {{ $replies[$i]->message }}
 			      </div>
 			      <div class="media-footer">
 			        <small class="text-muted">
-			          <a href="#">{{ $reply->user_name }} </a><span class="fa fa-clock-o"></span> {{ $reply->created_at }}
+			          <a href="#">{{ $replies[$i]->user_name }} </a><span class="fa fa-clock-o"></span> {{ $replies[$i]->created_at }}
 			        </small>
 			      </div>
 			    </div>
-		  	</li>
-	  	@endif
-  	@endforeach
+  		@endif
+	  	@php $currUser = $replies[$i]->user_id @endphp
+  	@endfor
 
 	  <!-- REPLY TO THE CONVERSATION -->
 	  <li class="media">
