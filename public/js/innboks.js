@@ -1,12 +1,23 @@
 $(document).ready(function() {
-	$("#newMessage").on('click', function() {
+
+	var newMessage = function () {
 		var container = $("#newOrRead");
+		container.html("");
 		var loading = $(".ajaxLoading");
+		var id = null;
+
+		if (window.location.hash.substr(1)) {
+			var hash = window.location.hash.substr(1);
+			var id = hash.slice(4);
+		}
 
 		loading.show();
 		$.ajax({
             type: 'GET',
             url: '/innboks/newMessage/', 
+            data: {
+            	reciepment: id
+        	},
             success: function(data) {
             	loading.hide();
                 $(".ajaxLoading").remove();
@@ -16,17 +27,20 @@ $(document).ready(function() {
                 });
             }
         });
+	};
+
+	$("#newMessage").on('click', function() {
+		newMessage();
 	});
 
-	$("#messages a").on('click', function() {
+	var seeMessage = function(id) {
 		var container = $("#newOrRead");
+		container.html("");
 		var loading = $(".ajaxLoading");
-		var id = $(this).attr('id');
 		loading.show();
 
 		// Resets the active color on your message
 		$("#messages a").removeClass('active');
-
 		$.ajax({
 			type: 'GET',
 			url: '/innboks/seeMessage/' + id,
@@ -35,6 +49,30 @@ $(document).ready(function() {
 				loading.hide();
 				container.html(data['data']);
 			}
-		})
+		});
+	};
+
+	$("#messages a").on('click', function() {
+		var id = $(this).attr('id');
+		seeMessage(id);
 	});
-});
+
+	// Load message if notification is clicked from /innboks
+	$(window).on('hashchange', function() {
+		var hash = window.location.hash.substr(1);
+		var id = hash.slice(3);
+		seeMessage(id);
+	});
+
+	// gets the message on page-load
+	if (window.location.hash.substr(1).includes('msg')) {
+		var hash = window.location.hash.substr(1);
+		var id = hash.slice(3);
+		seeMessage(id);
+	}
+
+	// pre-loads new message with reciepment and topic
+	if (window.location.hash.substr(1).includes('send')) {
+		newMessage();
+	}
+}); // Close document ready

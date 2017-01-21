@@ -9,7 +9,7 @@
             </div>
             <div class="panel-body text-center">
               <img class="panel-profile-img" src="/uploads/{{ $student->profilbilde }}" alt="Profilbilde">
-              <h5 class="panel-title">{{ $student->fornavn }} {{ $student->etternavn }}</h5>
+              <p class="h5 panel-title">{{ $student->fornavn }} {{ $student->etternavn }}</p>
               <p>Studerer ved campus {{ $student->student_campus }}</p>
               <p class="m-b-md">
                 <span class="fa fa-envelope-o"></span> {{ $student->email }}

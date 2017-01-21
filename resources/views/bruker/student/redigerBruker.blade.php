@@ -21,9 +21,9 @@
                 data-toggle="modal" data-target="#nyttProfilbildeModal"></span>
               </a>
             </div>
-            <h5 class="panel-title">
+            <p class="h5 panel-title">
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</a>
-            </h5>
+            </p>
 
             <p class="m-b-md">{{ $brukerinfo->bio }}</p>
 
@@ -31,14 +31,14 @@
               <li class="panel-menu-item">
                 <a href="#userModal" class="text-inherit" data-toggle="modal">
                   Noe
-                  <h5 class="m-y-0">120</h5>
+                  <p class="h5 m-y-0">120</p>
                 </a>
               </li>
 
               <li class="panel-menu-item">
                 <a href="#userModal" class="text-inherit" data-toggle="modal">
                   Annet
-                  <h5 class="m-y-0">5</h5>
+                  <p class="h5 m-y-0">5</p>
                 </a>
               </li>
             </ul>
@@ -47,13 +47,13 @@
 
         <div class="panel panel-success panel-hover-success cursor">
           <div class="panel-body">
-            <h4 class="m-t-s text-center"><span class="fa fa-upload"></span> Last opp CV</h4>
+            <p class="h4 m-t-s text-center"><span class="fa fa-upload"></span> Last opp CV</p>
           </div>
         </div>
 
          <div class="panel panel-info panel-hover-info cursor">
           <div class="panel-body">
-            <h4 class="m-t-s text-center"><span class="fa fa-upload"></span> Last opp Attester</h4>
+            <p class="h4 m-t-s text-center"><span class="fa fa-upload"></span> Last opp Attester</p>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
               <div class="media-body">
                 <div class="media-heading">
                   <small class="pull-right text-muted">Kort om deg</small>
-                  <h4>Biografi</h4>
+                  <p class="h4">Biografi</p>
                 </div>
                 <textarea name="bio" class="form-control" placeholder="Kort om deg">{{ $brukerinfo->bio }}</textarea>
               </div>
@@ -84,7 +84,7 @@
                 <div class="media-body-text">
                   <div class="media-heading">
                     <small class="pull-right text-muted">Bare litt...</small>
-                    <h4>Litt om deg</h4>
+                    <p class="h4">Litt om deg</p>
                   </div>
                     <div class="form-group">
                       <label for="fornavn">Navn</label>
@@ -165,7 +165,7 @@
               <div class="media-body">
                 <div class="media-heading">
                   <small class="pull-right text-muted">Studier og tider</small>
-                  <h4>Dine studier</h4>
+                  <p class="h4">Dine studier</p>
                 </div>
                 <div class="form-group">
                   <label for="studiested">Studiested</label>
@@ -252,7 +252,7 @@
 
         <div class="panel panel-default m-b-md hidden-xs">
           <div class="panel-body">
-          <h5 class="m-t-0">Passende Bedrifter <small>· <a href="#">Se Alle</a></small></h5>
+          <p class="h5 m-t-0">Passende Bedrifter <small>· <a href="#">Se Alle</a></small></p>
           <ul class="media-list media-list-stream">
             <li class="media m-b">
               <a class="media-left" href="#">
@@ -311,7 +311,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</h4>
+          <p class="h4 modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</p>
         </div>
         <div class="modal-body">
           <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
@@ -341,7 +341,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Nytt profilbilde</h4>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Nytt profilbilde</p>
         </div>
         <div class="modal-body">
           <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 

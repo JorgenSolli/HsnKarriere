@@ -20,7 +20,11 @@
               <a id="{{ $message['id'] }}" class="list-group-item cursor">
                 <div class="row">
                   <div class="col-sm-1">
-                    <span class="fa fa-envelope-o fa-lg p-t-s"></span>
+                    @if ($message['message_read'] == 1)
+                      <span class="fa fa-envelope-open-o fa-lg p-t-s"></span>
+                    @else
+                      <span class="fa fa-envelope-o fa-lg p-t-s"></span>
+                    @endif
                   </div>
                   <div class="col-sm-11">
                     <small class="pull-right">

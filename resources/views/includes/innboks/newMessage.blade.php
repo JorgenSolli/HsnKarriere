@@ -17,7 +17,12 @@
               <option disabled>Velg en eller flere mottakere</option>
               @unless ($kontakter == null)
                 @foreach ($kontakter as $kontakt)
-                	<option value="{{ $kontakt->id }}">
+                  @if ($kontakt->id == Request::get('reciepment'))
+                    <option selected value="{{ $kontakt->id }}">
+                  @else
+                    <option value="{{ $kontakt->id }}">
+                  @endif
+                  
                 		@if ($kontakt->bruker_type == "bedrift")
                 			{{ $kontakt->bedrift_navn }}
                 		@else

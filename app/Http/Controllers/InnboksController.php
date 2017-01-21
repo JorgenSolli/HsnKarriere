@@ -25,10 +25,16 @@ class InnboksController extends Controller
             $data = Message::where('id', $junction->message_id)->first();
             $participants = DB::table('users')
 	        	->join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
-	        	->select('users.bruker_type', 'users.fornavn', 'users.bedrift_navn')
+	        	->select('users.bruker_type', 'users.fornavn', 'users.bedrift_navn', 'messages_junctions.message_read')
 	        	->where('messages_junctions.message_id', '=', $junction->message_id)
 	        	->get();
 
+            $message_read = DB::table('users')
+                ->join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
+                ->select('messages_junctions.message_read')
+                ->where('messages_junctions.message_id', '=', $junction->message_id)
+                ->where('messages_junctions.user_id', '=', Auth::id())
+                ->first();
 
             $messages->push([
                 'id'            => $data->id,
@@ -36,6 +42,7 @@ class InnboksController extends Controller
                 'user_id'  	   	=> $data->user_id,
                 'subject'       => $data->subject,
                 'message'       => $data->message,
+                'message_read'  => $message_read->message_read,
                 'created_at'    => $data->created_at,
                 'updated_at'    => $data->updated_at,
             ]);
@@ -102,6 +109,7 @@ class InnboksController extends Controller
         $junction 				= New MessagesJunction;
         $junction->user_id 		= Auth::id();
         $junction->message_id	= $messageId;
+        $junction->message_read = 1;
         $junction->save();
 
         // Adds all reciepments to the junction table
@@ -124,6 +132,9 @@ class InnboksController extends Controller
     	foreach ($junctions as $junction) {
     		if ($junction->user_id == Auth::id()) {
     			$err = true;
+                $setRead = MessagesJunction::where('user_id', Auth::id())
+                    ->where('message_id', $message->id)
+                    ->update(['message_read' => 1]);
     		}
     	}
 
@@ -135,6 +146,7 @@ class InnboksController extends Controller
 
         $replies = DB::table('users')
         	->join('messages_replies', 'users.id', '=', 'messages_replies.user_id')
+            ->where('message_id', '=', $message->id)
         	->select( 
         		'users.bruker_type', 
         		'users.profilbilde', 
@@ -147,10 +159,10 @@ class InnboksController extends Controller
         	->get();
 
         $participants = DB::table('users')
-                ->join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
-                ->select('users.id', 'users.profilbilde')
-                ->where('messages_junctions.message_id', '=', $junction->message_id)
-                ->get();
+            ->join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
+            ->select('users.id', 'users.profilbilde', 'message_read')
+            ->where('messages_junctions.message_id', '=', $junction->message_id)
+            ->get();
 
         $returnHTML = view('includes.innboks.seeMessage')
             ->with('message', $message)

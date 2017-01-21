@@ -1,16 +1,20 @@
 $(function () {
   // Notification with timerCheck
-
   // Function for notifying user when a new event happens
   var checkNewEvents = function () {
     $.ajax({
       methor: 'GET',
       url: '/notification/check',
       success: function (data) {
-        return data;
+        if (data['data'] != 0) {
+          $("#notificationAmount").show().html(data['data']);
+        }
       }
     });
   }
+  checkNewEvents(); // On load
+  setInterval(checkNewEvents(), 10000); //Re-check every 10 seconds
+
 
   // This function is called whenever the used OPENS the popover.
   var checkNotifications = function () {
@@ -70,7 +74,7 @@ $(function () {
     })
   }
 
-// Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
+  // Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
   if (window.location.hash.substr(1) == "logginn") {
       $("#loggInnModal").modal();
   }
