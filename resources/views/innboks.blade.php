@@ -64,7 +64,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><span class="fa fa-user"></span> Legg til person i denne samtalen</h4>
+        <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-user"></span> Legg til person i denne samtalen</p>
       </div>
       <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
         <div class="modal-body">

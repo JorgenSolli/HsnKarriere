@@ -64,17 +64,19 @@
                         </ul>
                     @else
                         <ul id="popoverNav" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
-                            <li>
-                                <a class="app-notifications" href="/innboks">
-                                    <span class="icon icon-bell"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
-                                    <img class="img-circle" src="/uploads/{{ $avatar }}"
-                                    alt="Profilbilde">
-                                </button>
-                            </li>
+                          <li>
+                            <a class="app-notifications cursor" data-toggle="nfPopover">
+                              <span class="icon icon-bell">
+                                  <small id="notificationAmount"  style="display: none;" class="pos-a text-center"></small>
+                              </span>
+                            </a>
+                          </li>
+                          <li>
+                            <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
+                              <img class="img-circle" src="/uploads/{{ $avatar }}"
+                                alt="Profilbilde">
+                            </button>
+                          </li>
                         </ul>
 
                         <form class="navbar-form navbar-right app-search" role="search">
@@ -114,18 +116,22 @@
 
                     <!-- Popover submenu -->
                     @unless (Auth::guest())
-                        <ul class="nav navbar-nav hidden">
-                            <li><a href="/bruker"><span class="fa fa-user"></span> Min profil</a></li>
-                            <li><a href="/bruker/rediger"><span class="fa fa-cog"></span> Rediger profil</a></li>
-                            <li>
-                                <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-popover').submit();">
-                                    <span class="fa fa-sign-out"></span> Logg ut
-                                </a>
-                                <form id="logout-form-popover" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        </ul>
+                      <!-- Notifications popover -->
+                      <!-- loads from AJAX -->
+
+                      <!-- Min bruker popover -->
+                      <ul class="nav navbar-nav hidden">
+                        <li><a href="/bruker"><span class="fa fa-user"></span> Min profil</a></li>
+                        <li><a href="/bruker/rediger"><span class="fa fa-cog"></span> Rediger profil</a></li>
+                        <li>
+                            <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-popover').submit();">
+                                <span class="fa fa-sign-out"></span> Logg ut
+                            </a>
+                            <form id="logout-form-popover" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                      </ul>
                     @endunless
                 </div>
             </div>

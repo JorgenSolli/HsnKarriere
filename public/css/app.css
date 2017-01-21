@@ -10045,6 +10045,31 @@ body {
   color: #D64349;
 }
 
+#notificationAmount {
+  display: block;
+  width: 15px;
+  height: 15px;
+  font-size: .4em;
+  background: #D64349;
+  border-radius: 100%;
+  top: 8px;
+  left: 6px;
+  line-height: 13px;
+}
+
+.notifications-nav {
+  padding: 5px 10px;
+}
+
+.unread a {
+  background-color: #4646A5;
+  color: #ffffff;
+}
+
+.unread a:focus, .unread a:hover {
+  background-color: #373781 !important;
+}
+
 /* Bootstrap additions */
 .jumbotron-marless {
   margin-bottom: 0;

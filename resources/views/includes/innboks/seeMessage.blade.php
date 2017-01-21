@@ -3,9 +3,13 @@
 	<div class="panel-heading clearfix">
 		<div class="pull-right">
 		  <ul class="avatar-list">
-			  <li class="avatar-list-item">
-			    <img class="img-circle" src="/uploads/{{ $sender_info->profilbilde }}">
-			  </li>
+		  	@foreach ($participants as $participant)
+				  <li class="avatar-list-item">
+				  	<a href="bruker/{{ $participant->id }}">
+				    	<img class="img-circle" src="/uploads/{{ $participant->profilbilde }}">
+			    	</a>
+				  </li>
+			  @endforeach
 			  <li class="avatar-list-item">
 			    <span class="fa fa-plus-circle add-user-icon cursor" data-toggle="modal" data-target="#add-user-to-chat"></span>
 			  </li>

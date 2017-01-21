@@ -1,6 +1,76 @@
 $(function () {
+  // Notification with timerCheck
+
+  // Function for notifying user when a new event happens
+  var checkNewEvents = function () {
+    $.ajax({
+      methor: 'GET',
+      url: '/notification/check',
+      success: function (data) {
+        return data;
+      }
+    });
+  }
+
+  // This function is called whenever the used OPENS the popover.
+  var checkNotifications = function () {
+    $.ajax({
+      method: 'GET',
+      url: '/notification',
+      success: function (data) {
+        $("#notification-data").html(data['data']);
+      }
+    });
+  }
+
+  function getRight() {
+    return ($(window).width() - ($('[data-toggle="nfPopover"]').offset().left + $('[data-toggle="nfPopover"]').outerWidth()))
+  }
+
+  $(window).on('resize', function () {
+    var instance = $('[data-toggle="nfPopover"]').data('bs.popover')
+    if (instance) {
+      instance.options.viewport.padding = getRight()
+    }
+  })
+
+  if ($("#popoverNav").length) {
+
+    $('[data-toggle="nfPopover"]').popover({
+      template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
+      title: '',
+      html: true,
+      trigger: 'manual',
+      placement:'bottom',
+      viewport: {
+        selector: 'body',
+        padding: getRight()
+      },
+      content: function () {
+        return '<div id="notification-data" class="nav nav-stacked" style="width: 260px">' + checkNotifications() + '</div>'
+      }
+    })
   
-  // Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
+    $('[data-toggle="nfPopover"]').on('click', function (e) {
+      e.stopPropagation()
+
+      if ($('[data-toggle="nfPopover"]').data('bs.popover').tip().hasClass('in')) {
+        $('[data-toggle="nfPopover"]').popover('hide')
+        $(document).off('click.app.popover')
+
+      } else {
+        $('[data-toggle="nfPopover"]').popover('show')
+
+        setTimeout(function () {
+          $(document).one('click.app.popover', function () {
+            $('[data-toggle="nfPopover"]').popover('hide')
+          })
+        }, 1)
+      }
+    })
+  }
+
+// Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
   if (window.location.hash.substr(1) == "logginn") {
       $("#loggInnModal").modal();
   }

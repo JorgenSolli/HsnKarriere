@@ -29,6 +29,7 @@ class InnboksController extends Controller
 	        	->where('messages_junctions.message_id', '=', $junction->message_id)
 	        	->get();
 
+
             $messages->push([
                 'id'            => $data->id,
                 'participants'	=> $participants,
@@ -39,8 +40,6 @@ class InnboksController extends Controller
                 'updated_at'    => $data->updated_at,
             ]);
         }
-
-        //dd($messages);
 
     	return view('innboks', 
 			[
@@ -134,8 +133,6 @@ class InnboksController extends Controller
 
         $sender_info = User::where('id', $message->user_id)->first();
 
-        $replies = MessagesReply::where('message_id', $message->id)->get();
-
         $replies = DB::table('users')
         	->join('messages_replies', 'users.id', '=', 'messages_replies.user_id')
         	->select( 
@@ -149,10 +146,16 @@ class InnboksController extends Controller
         		'messages_replies.updated_at')
         	->get();
 
+        $participants = DB::table('users')
+                ->join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
+                ->select('users.id', 'users.profilbilde')
+                ->where('messages_junctions.message_id', '=', $junction->message_id)
+                ->get();
+
         $returnHTML = view('includes.innboks.seeMessage')
             ->with('message', $message)
             ->with('sender_info', $sender_info)
-            ->with('participants', $junctions)
+            ->with('participants', $participants)
             ->with('replies', $replies)
             ->render();
         return response()->json(array('success' => true, 'data' => $returnHTML));
@@ -175,5 +178,10 @@ class InnboksController extends Controller
         $reply->save();
 
         return back()->with('success', 'Svar sendt');
+    }
+
+    public function addUser (MessagesJunction $messages_junctions)
+    {
+        dd($messages_junctions);
     }
 }

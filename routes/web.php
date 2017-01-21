@@ -8,6 +8,10 @@
 
 Route::get('/', 'PageController@hjem');
 
+// Notification AJAX call
+Route::get('notification', 'NotificationController@notification');
+Route::get('notification/check', 'NotificationController@check');
+
 // User routes
 Route::patch('bruker/{user}', 'UserEditController@updateUser');
 Route::get('bruker/rediger', 'UserEditController@index')->middleware('auth');
@@ -48,6 +52,7 @@ Route::post('innboks/sendNewMessage', 'InnboksController@sendNewMessage');
 Route::post('innboks/sendMessage', 'InnboksController@replyMessage');
 Route::get('innboks/seeMessage/{message}', 'InnboksController@seeMessage');
 Route::post('innboks/replyMessage/{message}', 'InnboksController@replyMessage');
+Route::post('innboks/addUser', 'InnboksController@addUser');
 
 // Ajax calls
 Route::get('ajax/sort/list', 'Ajax\SortController@sortList');
