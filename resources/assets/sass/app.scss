@@ -46,6 +46,61 @@ body {
 .m-b-xs {margin-bottom: 5px !important}
 .m-l-xs {margin-left: 5px !important}
 
+.danger-color {
+    color: $brand-danger;
+}
+.warning-color {
+    color: $brand-warning;
+}
+.success-color {
+    color: $brand-success;
+}
+.primary-color {
+    color: $brand-primary;
+}
+
+.step {
+    height: 35px;
+    width: 35px;
+    border-radius: 100%;
+    background-color: $brand-success;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.line-border {
+    border-left: 1px solid #b9b9b9;
+    margin-left: 10px;
+    padding-bottom: 20px;
+
+    .col-xs-1 {
+        position: relative;
+        right: 33px;
+        padding-right: 0;
+    }
+
+    .col-xs-11 {
+        padding-left: 0;
+    }
+}
+
+.line-border-last {
+    margin-left: 10px;
+
+    .col-xs-1 {
+        position: relative;
+        right: 33px;
+    }
+
+    .col-xs-11 {
+        padding-left: 0;
+    }
+}
+
+
+
 .white-color {
     color: white;
 }
@@ -135,6 +190,63 @@ body {
     font-size: 2.6em !important;
     position: relative;
     bottom: 2px;
+}
+
+/* Dashboard */
+.media-list-heading {
+    background-color: $brand-success;
+    // background-color: #d3e0e9;
+    padding: 10px 20px 10px 20px;
+
+    .media-heading {
+        margin-bottom: 0;
+    }
+}
+.dashboard-stats-boxes {
+    .panel {
+        height: 65px;
+        border: none;
+
+        .panel-body {
+            padding: 7px 5px 0 5px;
+
+            span {
+                padding-top: 10px;
+            }
+        }
+    }
+    .dashboard-stats-box {
+        .col-sm-4 {
+            .panel {
+                border-top: 1px solid #d3e0e9;
+                border-bottom: 1px solid #d3e0e9;
+                border-left: 1px solid #d3e0e9;
+            }
+        }
+
+        .col-sm-8 {
+            .panel {
+                border-top: 1px solid #d3e0e9;
+                border-bottom: 1px solid #d3e0e9;
+                border-right: 1px solid #d3e0e9;
+            }
+        }
+    }
+    .left-box {
+        background-color: $brand-primary;
+    }
+
+    .middle-box {
+        background-color: $brand-success;
+    }
+
+    .right-box {
+        background-color: $brand-info;
+    }
+}
+
+.step-inactive {
+    opacity: .3;
 }
 
 /* bruker */

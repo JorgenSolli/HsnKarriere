@@ -297,7 +297,7 @@
 
         <div class="panel panel-default panel-link-list">
           <div class="panel-body">
-            © 2017 Link Telemark
+            © 2017 HSN Karriere
             <a href="#">Om</a> ·
             <a href="#">Hjelp</a> ·
             <a href="#">tos</a> ·

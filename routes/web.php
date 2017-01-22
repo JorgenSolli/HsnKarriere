@@ -12,10 +12,12 @@ Route::get('/', 'PageController@hjem');
 Route::get('notification', 'NotificationController@notification');
 Route::get('notification/check', 'NotificationController@check');
 
+// User Oversikt/Overview/dashboard
+Route::get('oversikt', 'OverviewController@dashboard')->middleware('auth');
+
 // User routes
 Route::patch('bruker/{user}', 'UserEditController@updateUser');
 Route::get('bruker/rediger', 'UserEditController@index')->middleware('auth');
-
 Route::get('bruker/{bruker}', 'UserHomeController@seBruker')->middleware('auth');
 Route::get('bruker', 'UserHomeController@bruker')->middleware('auth');
 
