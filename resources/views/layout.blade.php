@@ -104,6 +104,7 @@
                             </li>
                         @else 
                             <li><a href="/bruker">Min profil</a></li>
+                            <li><a href="/oversikt">Min oversikt</a></li>
                             <li><a href="/bruker/rediger">Rediger profil</a></li>
                             <li>
                                 <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logg ut</a>
@@ -122,6 +123,7 @@
                       <!-- Min bruker popover -->
                       <ul class="nav navbar-nav hidden">
                         <li><a href="/bruker"><span class="fa fa-user"></span> Min profil</a></li>
+                        <li><a href="/oversikt"><span class="fa fa-tasks"></span> Min oversikt</a></li>
                         <li><a href="/bruker/rediger"><span class="fa fa-cog"></span> Rediger profil</a></li>
                         <li>
                             <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-popover').submit();">

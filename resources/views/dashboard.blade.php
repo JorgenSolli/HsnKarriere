@@ -183,13 +183,31 @@
             </div>
 
             <!-- Step five -->
+            <div class="row line-border step-inactive">
+	            <div class="col-xs-1">
+	            	<p class="step"><span class="fa fa-compass"></span></p>
+	            </div>
+	            <div class="col-xs-11">
+	            	<p class="h4">Fullfør praksis</p>
+	            	<p class="h4">Lykke til! </p>
+	            </div>
+            </div>
+
+            <!-- Step six -->
             <div class="row line-border-last step-inactive">
 	            <div class="col-xs-1">
 	            	<p class="step"><span class="fa fa-trophy"></span></p>
 	            </div>
 	            <div class="col-xs-11">
-	            	<p class="h4">Praksis i boks!</p>
-	            	<p class="h2">Lykke til! </p>
+	            	<p class="h4">Lever rapport</p>
+	            	<form>
+	            		<div class="form-group">
+	            			<span class="btn btn-primary-outline btn-file pull-left m-r-s disabled">
+									    Velg fil <input type="file" name="contract_upload">
+										</span>
+          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
+	            		</div>
+	            	</form>
 	            </div>
             </div>
           </div>
