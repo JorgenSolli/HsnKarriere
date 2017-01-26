@@ -17,51 +17,34 @@ class QuerryService {
     }
 
     public function finnBedrifter($studier) {
-        $bedrifter = "";
-        $student_studerer = "";
-
-        if ($studier != "") {
-            
-        }
-        if (empty($bedrifter)) {
-            $bedrifter = null;
-        }
+        $bedrifter = DB::table('companies')
+            ->select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed')
+            ->join('users', 'companies.user_id', '=', 'users.id')
+            ->whereIn('area_of_expertise', $studier)
+            ->get();
 
         return $bedrifter;       
     }
 
-    public function finnStudenter($fagType) {
-        $studenter = "";
+    public function finnStudenter($fagfelt) {
+        if (!empty($fagfelt)) {
+            $studenter = DB::table('student_studies')
+                ->select('fornavn', 'etternavn', 'user_id', 'student_campus', 'forsidebilde', 'profilbilde', 'telefon', 'email')
+                ->join('users', 'student_studies.user_id', '=', 'users.id')
+                ->whereIn('studie', $fagfelt)
+                ->get();
 
-        if ($fagType != "") {
-            $bedrift_ser_etter = explode(";", $fagType);
-
-            $sqlFirst = "SELECT * FROM users WHERE ";
-            $sqlParams = "`bruker_type` = 'student' AND `student_studerer` LIKE ";
-            $sqlCounter = count($bedrift_ser_etter);
-            foreach ($bedrift_ser_etter as $fag) {
-                if (--$sqlCounter <= 0) {
-                    $sqlParams .= " '%" . $fag . ":%'";
-                } else {
-                    $sqlParams .= "'%" . $fag . ":%' OR `bruker_type` = 'student' AND `student_studerer` LIKE ";
-                }
-            }
-            $sql = $sqlFirst . $sqlParams;
-
-            $studenter = DB::select($sql);
-        }
-
-        if (empty($studenter)) {
-            $studenter = null;
-        }
-
-        return $studenter;       
+            return $studenter;
+        } 
+        else {
+            return null;
+        }    
     }
 
-    public function finnKontakter($fagtype) {
+    public function finnKontakter($fagfelt) {
         if (Auth::user()->bruker_type == "student") {
 
-            if ($fagtype != "") {
+            if ($fagfelt != "") {
 
                 return;
 

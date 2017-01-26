@@ -1,15 +1,13 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
-@include('includes.bruker.bedrift.min-bruker')
-@include('includes.bruker.bedrift.mine-kontakter')
 
-<!-- BRUKER BEDRIFT -->
+<!-- BRUKER FAGLÆRER -->
 
 @section('content')
 <div class="profile-header text-center" style="background-image: url(/uploads/{{ $brukerinfo->forsidebilde }}); ">
   <div class="container-fluid">
     <div class="container-inner">
       <img class="img-circle media-object" src="/uploads/{{ $brukerinfo->profilbilde }}" alt="Profilbilde">
-      <p class="h3 profile-header-user">{{ $brukerinfo->bedrift_navn }}</p>
+      <p class="h3 profile-header-user">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</p>
       @if ($brukerinfo->facebook != "")
         <a href="{{ $brukerinfo->facebook }}" class="p-r-s"><span class="social_icons fa fa-facebook-official fa-2x"></span></a>
       @endif
@@ -19,10 +17,7 @@
       @if ($brukerinfo->nettside != "")
         <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-home fa-2x"></span></a>
       @endif
-      <p class="profile-header-bio">Holder til i {{ $brukerinfo->poststed }}
-      @unless ($brukerinfo->bedrift_avdeling == "")
-        ved avdeling {{ $brukerinfo->bedrift_avdeling }}
-      @endunless</p>
+      <p class="profile-header-bio">Institutt: {{ $brukerinfo->foreleser_avdeling }}</p>
     </div>
   </div>
     
@@ -33,10 +28,10 @@
         <a href="#min-profil" aria-controls="min-profil" role="tab" data-toggle="tab">Min Profil</a>
       </li>
       <li role="presentation">
-        <a href="#mine-kontakter" aria-controls="mine-kontakter" role="tab" data-toggle="tab">Mine Kontakter</a>
+        <a href="#mine-kontakter" aria-controls="mine-kontakter" role="tab" data-toggle="tab">Mine Studenter</a>
       </li>
       <li role="presentation">
-        <a href="#studenter" aria-controls="bedrifter" role="tab" data-toggle="tab">Studenter</a>
+        <a href="#bedrifter" aria-controls="bedrifter" role="tab" data-toggle="tab">Bedrifter</a>
       </li>
     </ul>
   </nav>
@@ -44,14 +39,10 @@
         
 <div class="container tab-content">
   <div role="tabpanel" class="tab-pane active m-t" id="min-profil">
-    @yield('min-bruker')
+    @include('includes.bruker.faglarer.min-bruker')
   </div>
 
-  <div role="tabpanel" class="tab-pane" id="mine-kontakter">
-    @yield('mine-kontakter')
-  </div>
-
-  <div id="studenter" class="tab-pane m-t" role="tabpanel">
+  <div role="tabpanel" class="tab-pane m-t" id="mine-kontakter">
     <div class="text-center clearfix m-b sort-field">
       <div id="sort-view" class="pull-left">
         <p class="pull-left p-r-s">Velg visning</p>
@@ -73,7 +64,33 @@
       </div>
     </div>
     <div id="users-data">
-      @include('includes.bruker.bedrift.studenter.cards')
+      @include('includes.bruker.faglarer.studenter.cards')
+    </div>
+  </div>
+
+  <div id="bedrifter" class="tab-pane m-t" role="tabpanel">
+    <div class="text-center clearfix m-b sort-field">
+      <div id="sort-view" class="pull-left">
+        <p class="pull-left p-r-s">Velg visning</p>
+        <div class="sort-icons pull-left p-r pos-r">
+          <span id="sortCards" class="active cursor fa fa-th-large fa-lg p-r-s"></span>
+          <span id="sortList" class="cursor fa fa-th-list fa-lg"></span>
+        </div>
+      </div>
+      <div id="sort-category-floater">
+        <div id="sort-category" class="pull-left">
+          <small class="seperator pull-left p-r pos-r">|</small>
+          <p id="sort-category-text" class="pull-left m-a-0 p-r-s">Sorter etter</p>
+          <select class="pull-left custom-select custom-select-sm">
+            <option>Relevans</option>
+            <option>Alfabetisk</option>
+            <option>Nærmest deg</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="users-data">
+      @include('includes.bruker.faglarer.bedrifter.cards')
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 @if ($brukerinfo->bruker_type == "bedrift")
     <optgroup label="Dine valg">
-      @foreach ($bedrift_fagfelt as $fagfelt)
-        <option selected value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+      @foreach ($company as $fagfelt)
+        <option selected value="{{ $fagfelt['area_of_expertise'] }}">{{ $fagfelt['area_of_expertise'] }} </option>
       @endforeach
     </optgroup>
 @endif

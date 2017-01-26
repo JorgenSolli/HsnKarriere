@@ -9,7 +9,11 @@
     <div class="col-sm-3 p-r-s p-l-s">
       <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
         <p class="h4"><span class="fa fa-briefcase"></span> Driver med</p>
-        {{ $brukerinfo->bedrift_fagfelt }}
+        @unless ($company == "")
+          @foreach ($company as $key => $value)
+            {{ $company['area_of_expertise'][$key] }}
+          @endforeach
+        @endunless
       </div>
     </div>
     <div class="col-sm-3 p-r-s p-l-s">

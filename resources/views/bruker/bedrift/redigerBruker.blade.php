@@ -160,7 +160,7 @@
                       class="select select2 js-example-basic-multiple is-fullwidth form-control"
                       multiple="multiple">
                         <option value="" disabled>Hva driver bedriften din med?</option>
-                        @include('includes.selects.fagomraader')
+                        @include('includes.selects.studier')
                       </select>
                     </div>
                     <div class="form-group">
@@ -421,8 +421,8 @@
             <div class="form-group">
               <label for="stilling_bransje">Bransje</label>
               <select id="stilling_bransje" name="stilling_bransje" class="form-control">
-                @foreach ($bedrift_fagfelt as $fagfelt)
-                  <option value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+                @foreach ($company as $fagfelt)
+                  <option value="{{ $fagfelt }}">{{ $fagfelt['area_of_expertise'] }} </option>
                 @endforeach
               </select>
             </div>
@@ -493,8 +493,8 @@
               <div class="form-group">
                 <label for="master_fagfelt">Tilhørende fagfelt</label>
                 <select id="master_fagfelt" name="master_fagfelt" class="form-control">
-                  @foreach ($bedrift_fagfelt as $fagfelt)
-                    <option value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+                  @foreach ($company as $fagfelt)
+                    <option value="{{ $fagfelt }}">{{ $fagfelt['area_of_expertise'] }} </option>
                   @endforeach
                 </select>
               </div>
@@ -571,8 +571,8 @@
               <div class="form-group">
                 <label for="bachelor_fagfelt">Tilhørende fagfelt</label>
                 <select id="bachelor_fagfelt" name="bachelor_fagfelt" class="form-control">
-                  @foreach ($bedrift_fagfelt as $fagfelt)
-                    <option value="{{ $fagfelt }}">{{ $fagfelt }} </option>
+                  @foreach ($company as $fagfelt)
+                    <option value="{{ $fagfelt }}">{{ $fagfelt['area_of_expertise'] }} </option>
                   @endforeach
                 </select>
               </div>

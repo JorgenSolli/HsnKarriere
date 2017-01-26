@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\QuerryService;
 use App\StudentStudy;
+use App\Company;
 use App\Assignment;
 use App\Job;
 
@@ -16,7 +17,9 @@ class UserHomeController extends Controller
         if (Auth::user()->bruker_type == "student") {
         
             $brukerinfo = Auth::user();
-            $student_studerer = StudentStudy::where('user_id', Auth::id());
+            $student_studerer = StudentStudy::where('user_id', Auth::id())
+                ->select('studie')
+                ->get();
             $bedrifter  = $querry_service->finnBedrifter($student_studerer);
             $kontakter  = $querry_service->finnKontakter($student_studerer);
 
@@ -31,12 +34,14 @@ class UserHomeController extends Controller
         else if (Auth::user()->bruker_type == "bedrift") {
 
             $brukerinfo = Auth::user();
-            $studenter = $querry_service->finnStudenter($brukerinfo->bedrift_ser_etter);
+            $company = Company::where('user_id', Auth::id());
+            $studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get());
             $kontater = "";
             
             return view('bruker.bedrift.bruker',
                 [
                     'studenter' => $studenter,
+                    'company' => $company,
                     'brukerinfo' => $brukerinfo
                 ]);
         } 
@@ -45,8 +50,9 @@ class UserHomeController extends Controller
             $studenter = "";
             $bedrifter = "";
             return view('bruker.faglarer.bruker', [
-                'studenter' => $studenter,
-                'bedrifter' => $bedrifter
+                'brukerinfo' => $brukerinfo,
+                'studenter'  => $studenter,
+                'bedrifter'  => $bedrifter
             ]);
         }
 	}
@@ -67,15 +73,17 @@ class UserHomeController extends Controller
 
         else if ($brukerinfo->bruker_type == "bedrift") {
             $jobs = Job::where('bedrift_id', $id)->orderBy('created_at', 'desc')->get();
+            $company = Company::where('user_id', $id)->get();
             $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', $id)->get();
             $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', $id)->get();
 
             return view('bruker.bedrift.seBruker',
             [
                 'brukerinfo' => $brukerinfo,
-                'bachelors' => $bachelors,
-                'masters'   => $masters,
-                'jobs'      => $jobs
+                'company'    => $company, 
+                'bachelors'  => $bachelors,
+                'masters'    => $masters,
+                'jobs'       => $jobs
             ]);
         }
 

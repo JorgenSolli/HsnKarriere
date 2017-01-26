@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Services\QuerryService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Company;
+use App\StudentStudy;
 
 class SortController extends Controller
 {
@@ -13,7 +16,10 @@ class SortController extends Controller
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
-	    	$bedrifter = $querry_service->finnBedrifter($brukerinfo->student_studerer);
+	    	$student_studerer = StudentStudy::where('user_id', Auth::id())
+                ->select('studie')
+                ->get();
+            $bedrifter  = $querry_service->finnBedrifter($student_studerer);
 
 	    	$returnHTML = view('includes.bruker.student.bedrifter.list')
 	    		->with('bedrifter', $bedrifter)
@@ -22,7 +28,7 @@ class SortController extends Controller
     	}
 
     	if ($brukerinfo->bruker_type == "bedrift") {
-	    	$studenter = $querry_service->finnStudenter($brukerinfo->bedrift_ser_etter);
+    		$studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get());
 
 	    	$returnHTML = view('includes.bruker.bedrift.studenter.list')
 	    		->with('studenter', $studenter)
@@ -35,7 +41,10 @@ class SortController extends Controller
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
-	    	$bedrifter = $querry_service->finnBedrifter($brukerinfo->student_studerer);
+	    	$student_studerer = StudentStudy::where('user_id', Auth::id())
+                ->select('studie')
+                ->get();
+            $bedrifter  = $querry_service->finnBedrifter($student_studerer);
 
 	    	$returnHTML = view('includes.bruker.student.bedrifter.cards')
 	    		->with('bedrifter', $bedrifter)
@@ -44,7 +53,7 @@ class SortController extends Controller
 		}
 
 		if ($brukerinfo->bruker_type == "bedrift") {
-	    	$studenter = $querry_service->finnStudenter($brukerinfo->bedrift_ser_etter);
+	    	$studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get());
 
 	    	$returnHTML = view('includes.bruker.bedrift.studenter.cards')
 	    		->with('studenter', $studenter)

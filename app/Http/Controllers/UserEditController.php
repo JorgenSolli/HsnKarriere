@@ -37,25 +37,26 @@ class UserEditController extends Controller
 
         else if (Auth::user()->bruker_type == "bedrift") {
             $brukerinfo = Auth::user();
+            $company = Company::where('user_id', Auth::id())->get();
             $jobs = Job::where('bedrift_id', Auth::id())->orderBy('created_at', 'desc')->get();
             $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', Auth::id())->get();
             $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', Auth::id())->get();
-            
-            if (!empty(Auth::user()->bedrift_ser_etter)) {
-                $bedrift_ser_etter = explode(";", Auth::user()->bedrift_ser_etter);
-            }
 
-            if (!empty(Auth::user()->bedrift_fagfelt)) {
-                $bedrift_fagfelt = explode(";", Auth::user()->bedrift_fagfelt);
-            }
+            return view('bruker.bedrift.redigerBruker', [
+                'brukerinfo'  => $brukerinfo,
+                'company'     => $company,
+                'jobs'        => $jobs,
+                'masters'     => $masters,
+                'bachelors'   => $bachelors
+            ]);
+        }
 
-            return view('bruker.bedrift.redigerBruker',
-                [
-                    'brukerinfo'        => $brukerinfo,
-                    'jobs'              => $jobs,
-                    'masters'           => $masters,
-                    'bachelors'         => $bachelors
-                ]);
+        else if (Auth::user()->bruker_type == "faglarer") {
+            $brukerinfo = Auth::user();
+
+            return view('bruker.faglarer.redigerBruker', [
+                'brukerinfo' => $brukerinfo
+            ]);
         }
     }
 
