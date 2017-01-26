@@ -12,8 +12,17 @@ class OverviewController extends Controller
     {	
     	$brukerinfo = Auth::user();
 
-    	return view('dashboard', [
-    		'brukerinfo' => $brukerinfo
-		]);
+    	if ($brukerinfo->bruker_type == "student") {
+	    	return view('bruker.student.dashboard', [
+	    		'brukerinfo' => $brukerinfo
+			]);
+    	}
+
+    	else if ($brukerinfo->bruker_type == "bedrift") {
+    		return view('bruker.bedrift.dashboard', [
+				'brukerinfo' => $brukerinfo
+			]);
+    	}
+
     }
 }
