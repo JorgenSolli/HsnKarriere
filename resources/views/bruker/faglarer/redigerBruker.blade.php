@@ -156,7 +156,7 @@
                     </div>
                     <div class="form-group">
                       <label for="bedrift_fagfelt">Bedriftens fagområde</label>
-                      <select name="area_of_expertise[]" id="bedrift_fagfelt" 
+                      <select name="bedrift_fagfelt[]" id="bedrift_fagfelt" 
                       class="select select2 js-example-basic-multiple is-fullwidth form-control"
                       multiple="multiple">
                         <option value="" disabled>Hva driver bedriften din med?</option>
@@ -203,7 +203,7 @@
               </div>
             </li>
 
-            <li class="media list-group-item p-a hidden">
+            <li class="media list-group-item p-a">
               <div class="media-left">
                 <span class="media-object fa fa-graduation-cap"></span>
               </div>
@@ -218,6 +218,7 @@
                     <select name="bedrift_ser_etter[]" id="bedrift_ser_etter" class="select select2 js-example-basic-multiple is-fullwidth form-control"
                             multiple="multiple">
                       <option value="" disabled>Hvilke studenter er dere på jakt etter?</option>
+                      @include('includes.selects.studier')
                     </select>
                   </div>
                 </div>

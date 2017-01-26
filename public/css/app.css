@@ -10711,4 +10711,10 @@ body {
   background: #F5F5F5;
 }
 
+.slettRad {
+  position: relative;
+  top: 4px;
+  right: 11px;
+}
+
 /*# sourceMappingURL=app.css.map */

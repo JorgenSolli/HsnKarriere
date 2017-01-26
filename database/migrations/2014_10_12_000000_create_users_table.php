@@ -34,12 +34,10 @@ class CreateUsersTable extends Migration
             $table->string('student_campus')->nullable();
             $table->string('student_cv')->nullable();
             $table->string('student_attester')->nullable();
-            $table->string('student_studerer')->nullable();
             $table->string('bedrift_navn')->nullable();
-            $table->string('bedrift_avdeling')->nullable();
-            $table->string('bedrift_fagfelt')->nullable();
-            $table->string('bedrift_ser_etter')->nullable();
+            $table->string('avdeling')->nullable();
             $table->string('foreleser_rom_nr')->nullable();
+            $table->string('foreleser_avdeling')->nullable();
             $table->string('nettside')->nullable();
             $table->string('facebook')->nullable();
             $table->string('linkedin')->nullable();

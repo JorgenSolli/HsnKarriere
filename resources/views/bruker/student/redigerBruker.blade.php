@@ -188,31 +188,31 @@
                 </div>
                 <div id="studieretningValg">
                   @unless ($student_studerer == "")
-                    @foreach ($student_studerer as $value)
+                    @foreach ($student_studerer as $key => $value)
                       <div class="studieretningValg">
                         <hr>
                         <div class="form-group">
-                           <input class="form-control" name="student_studerer[]" value="{{ $value[0] }}">
+                           <input class="form-control" name="student_studerer[]" value="{{ $student_studerer[$key]['studie'] }}">
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-xs-5 form-group p-r-0">
                                     <select class="form-control" name="campus[]">
-                                        <option selected value="{{ $value[1] }}">{{ $value[1] }}</option>
+                                        <option selected value="{{ $student_studerer[$key]['campus'] }}">{{ $student_studerer[$key]['campus'] }}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-3 form-group p-r-0">
                                     <select class="form-control datoFra" name="datoFra[]">
-                                        <option selected value="{{ $value[2] }}">{{ $value[2] }}</option>
+                                        <option selected value="{{ $student_studerer[$key]['fra'] }}">{{ $student_studerer[$key]['fra'] }}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-3 form-group">
                                     <select class="form-control datoTil" name="datoTil[]">
-                                        <option selected value="{{ $value[3] }}">{{ $value[3] }}</option>
+                                        <option selected value="{{ $student_studerer[$key]['til'] }}">{{ $student_studerer[$key]['til'] }}</option>
                                     </select>
                                 </div>
                                 <div class="col-xs-1">
-                                    <span class="slettRad scaryRed-color">
+                                    <span class="slettRad danger-color">
                                     <span class="fa fa-close fa-lg cursor"></span>
                                     </span>
                                 </div>

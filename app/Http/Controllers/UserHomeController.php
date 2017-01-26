@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\QuerryService;
+use App\StudentStudy;
 use App\Assignment;
 use App\Job;
 
@@ -15,9 +16,9 @@ class UserHomeController extends Controller
         if (Auth::user()->bruker_type == "student") {
         
             $brukerinfo = Auth::user();
-            $bedrifter  = $querry_service->finnBedrifter($brukerinfo->student_studerer);
-            $kontakter  = "";
-            $student_studerer = $querry_service->student_studerer($brukerinfo->student_studerer);
+            $student_studerer = StudentStudy::where('user_id', Auth::id());
+            $bedrifter  = $querry_service->finnBedrifter($student_studerer);
+            $kontakter  = $querry_service->finnKontakter($student_studerer);
 
             return view('bruker.student.bruker', 
                 [
@@ -31,12 +32,22 @@ class UserHomeController extends Controller
 
             $brukerinfo = Auth::user();
             $studenter = $querry_service->finnStudenter($brukerinfo->bedrift_ser_etter);
+            $kontater = "";
             
             return view('bruker.bedrift.bruker',
                 [
                     'studenter' => $studenter,
                     'brukerinfo' => $brukerinfo
                 ]);
+        } 
+        else if (Auth::user()->bruker_type == "faglarer") {
+            $brukerinfo = Auth::user();
+            $studenter = "";
+            $bedrifter = "";
+            return view('bruker.faglarer.bruker', [
+                'studenter' => $studenter,
+                'bedrifter' => $bedrifter
+            ]);
         }
 	}
 

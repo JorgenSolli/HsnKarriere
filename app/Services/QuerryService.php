@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class QuerryService {
 
@@ -15,32 +16,12 @@ class QuerryService {
         return $student_studerer;
     }
 
-    public function finnBedrifter($fagType) {
+    public function finnBedrifter($studier) {
         $bedrifter = "";
         $student_studerer = "";
 
-        if ($fagType != "") {
-            $student_studerer = array_chunk(preg_split('/(:|;)/', $fagType), 4);
-
-            $fagtypeNavnArray = array();
-            foreach ($student_studerer as $item) {
-                $fagtypeNavnArray[] = $item[0];
-            }
-
-            $sqlFirst = "SELECT * FROM users WHERE ";
-            $sqlParams = "`bruker_type` = 'bedrift' AND `bedrift_ser_etter` LIKE ";
-            $sqlCounter = count($fagtypeNavnArray);
+        if ($studier != "") {
             
-            for ($i = 0; $i <= $sqlCounter; $i++) {
-                if (--$sqlCounter <= 0) {
-                    $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%'";
-                } else {
-                    $sqlParams .= " '%" . $fagtypeNavnArray[$i] . "%' OR `bruker_type` = 'bedrift' AND `bedrift_ser_etter` LIKE ";
-                }
-            }
-
-            $sql = $sqlFirst . $sqlParams;
-            $bedrifter = DB::select($sql);
         }
         if (empty($bedrifter)) {
             $bedrifter = null;
@@ -78,6 +59,22 @@ class QuerryService {
     }
 
     public function finnKontakter($fagtype) {
-        return null;
+        if (Auth::user()->bruker_type == "student") {
+
+            if ($fagtype != "") {
+
+                return;
+
+            } else {
+                return null;
+            }
+
+
+            ;
+            $stmt = $conn->prepare($sql);
+        }
+        else if (Auth::user()->bruker_type == "bedrift") {
+
+        }
     }
 }

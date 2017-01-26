@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Job;
 use App\User;
 use Validator;
+use App\Company;
 use App\Assignment;
+use App\StudentStudy;
 use App\Http\Requests;
 use App\Services\QuerryService;
 use App\Http\Controllers\Controller;
@@ -23,7 +25,7 @@ class UserEditController extends Controller
     {
         if (Auth::user()->bruker_type == "student") {
             $brukerinfo = Auth::user();
-            $student_studerer = $querry_service->student_studerer($brukerinfo->student_studerer);
+            $student_studerer = StudentStudy::where('user_id', Auth::id())->get();
 
 
             return view('bruker.student.redigerBruker',
@@ -50,8 +52,6 @@ class UserEditController extends Controller
             return view('bruker.bedrift.redigerBruker',
                 [
                     'brukerinfo'        => $brukerinfo,
-                    'bedrift_fagfelt'   => $bedrift_fagfelt,
-                    'bedrift_ser_etter' => $bedrift_ser_etter,
                     'jobs'              => $jobs,
                     'masters'           => $masters,
                     'bachelors'         => $bachelors
@@ -80,16 +80,19 @@ class UserEditController extends Controller
             // Formats the data for the student_studerer field. Concats studretning, campus, datoFra og datoTil
             $student_studerer = NULL;
             /* Går gjennom valg (student_studerer, campus, år-fra->til) for studentretning */
+            StudentStudy::where('user_id', Auth::id())->delete();
             if (isset($data['datoTil']) && isset($data['datoFra']) && isset($data['campus']) && isset($data['student_studerer'])) {
-                // -1 because the index starts at 0
-                $len = count($data['datoTil']) -1;
-                for ($i = 0; $i <= $len; $i++) {
-                    /* Dropper skilletegn på siste input i array */
-                    if ($i === $len) {
-                        $student_studerer .= $data['student_studerer'][$i] . ":" . $data['campus'][$i] . ":" . $data['datoFra'][$i] . ":" . $data['datoTil'][$i];
-                    } else {
-                        $student_studerer .= $data['student_studerer'][$i] . ":" . $data['campus'][$i] . ":" . $data['datoFra'][$i] . ":" . $data['datoTil'][$i] . ";";
-                    }
+
+                
+                for ($i = 0; $i < count($data['datoFra']); $i++) {
+                    $studentStudy = New StudentStudy;
+
+                    $studentStudy->user_id  = Auth::id();
+                    $studentStudy->studie   = $data['student_studerer'][$i];
+                    $studentStudy->campus   = $data['campus'][$i];
+                    $studentStudy->fra      = $data['datoFra'][$i];
+                    $studentStudy->til      = $data['datoTil'][$i];
+                    $studentStudy->save();
                 }
             }
 
@@ -99,38 +102,14 @@ class UserEditController extends Controller
 
         else if (Auth::user()->bruker_type == "bedrift") {
             // Concatenates arrays to oneliners
-            if (!empty($data['bedrift_ser_etter'])) {
-                $bedrift_ser_etter = "";
-                $i = 0;
-                $len = count($data['bedrift_ser_etter']);
-                
-                foreach ($data['bedrift_ser_etter'] as $value) {
-                    // Last element in array. Wont add ";"
-                    if ($i == $len - 1) {
-                        $bedrift_ser_etter .= $value;
-                    } else {
-                        $bedrift_ser_etter .= $value . ";";
-                    }
-                    $i++;
+            Company::where('user_id', Auth::id())->delete();
+            if (!empty($data['area_of_expertise'])) {
+                for ($i = 0; $i < count($data['area_of_expertise']); $i++) {
+                    $company = New Company;
+                    $company->user_id = Auth::id();
+                    $company->area_of_expertise = $data['area_of_expertise'][$i];
+                    $company->save();
                 }
-                $data['bedrift_ser_etter'] = $bedrift_ser_etter;
-            }
-            
-            if (!empty($data['bedrift_fagfelt'])) {
-                $bedrift_fagfelt = "";
-                $i = 0;
-                $len = count($data['bedrift_fagfelt']);
-                
-                foreach ($data['bedrift_fagfelt'] as $value) {
-                    // Last element in array. Wont add ";"
-                    if ($i == $len - 1) {
-                        $bedrift_fagfelt .= $value;
-                    } else {
-                        $bedrift_fagfelt .= $value . ";";
-                    }
-                    $i++;
-                }
-                $data['bedrift_fagfelt'] = $bedrift_fagfelt;
             }
         }
 
