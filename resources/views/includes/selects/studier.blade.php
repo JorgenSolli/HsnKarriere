@@ -6,6 +6,14 @@
     </optgroup>
 @endif
 
+@if ($brukerinfo->bruker_type == "faglarer")
+    <optgroup label="Dine valg">
+      @foreach ($studier as $studie)
+        <option selected value="{{ $studie['studie'] }}">{{ $studie['studie'] }} </option>
+      @endforeach
+    </optgroup>
+@endif
+
 <optgroup label="Institutt for Økonomi og Informatikk">
     <option value="Geografiske Informasjonssystemer">Geografiske Informasjonssystemer</option>
     <option value="Regnskap og Revisjon">Regnskap og Revisjon</option>

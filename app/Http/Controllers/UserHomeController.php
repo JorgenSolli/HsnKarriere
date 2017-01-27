@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\QuerryService;
-use App\StudentStudy;
-use App\Company;
-use App\Assignment;
 use App\Job;
+use App\Company;
+use App\Professor;
+use App\Assignment;
+use App\StudentStudy;
 
 class UserHomeController extends Controller
 {
@@ -36,21 +37,22 @@ class UserHomeController extends Controller
             $brukerinfo = Auth::user();
             $company = Company::where('user_id', Auth::id());
             $studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get());
-            $kontater = "";
             
             return view('bruker.bedrift.bruker',
                 [
-                    'studenter' => $studenter,
-                    'company' => $company,
+                    'studenter'  => $studenter,
+                    'company'    => $company,
                     'brukerinfo' => $brukerinfo
                 ]);
         } 
         else if (Auth::user()->bruker_type == "faglarer") {
             $brukerinfo = Auth::user();
+            $studier = Professor::where('user_id', Auth::id())->get();
             $studenter = "";
             $bedrifter = "";
             return view('bruker.faglarer.bruker', [
                 'brukerinfo' => $brukerinfo,
+                'studier'    => $studier,
                 'studenter'  => $studenter,
                 'bedrifter'  => $bedrifter
             ]);
@@ -77,9 +79,14 @@ class UserHomeController extends Controller
             $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', $id)->get();
             $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', $id)->get();
 
+            $studier = StudentStudy::where('user_id', Auth::id())
+                ->select('studie')
+                ->get();
+            $faglarere = $querry_service->finnKontakter($studier);
             return view('bruker.bedrift.seBruker',
             [
                 'brukerinfo' => $brukerinfo,
+                'faglarere'  => $faglarere,
                 'company'    => $company, 
                 'bachelors'  => $bachelors,
                 'masters'    => $masters,

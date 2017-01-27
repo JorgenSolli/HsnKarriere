@@ -3,7 +3,6 @@
 <!-- REDIGER BRUKER BEDRIFT -->
 
 @section('content')
-  @include('notifications.notifications')
   <div class="container p-t-md">
     <div class="row">
       <div class="col-md-3">

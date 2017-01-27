@@ -8,6 +8,7 @@ use App\Job;
 use App\User;
 use Validator;
 use App\Company;
+use App\Professor;
 use App\Assignment;
 use App\StudentStudy;
 use App\Http\Requests;
@@ -53,9 +54,11 @@ class UserEditController extends Controller
 
         else if (Auth::user()->bruker_type == "faglarer") {
             $brukerinfo = Auth::user();
+            $studier = Professor::where('user_id', Auth::id())->get();
 
             return view('bruker.faglarer.redigerBruker', [
-                'brukerinfo' => $brukerinfo
+                'brukerinfo' => $brukerinfo,
+                'studier'    => $studier
             ]);
         }
     }
@@ -115,7 +118,15 @@ class UserEditController extends Controller
         }
 
         else if (Auth::user()->bruker_type == "faglarer") {
-
+            Professor::where('user_id', Auth::id())->delete();
+            if (!empty($data['studie'])) {
+                for ($i = 0; $i < count($data['studie']); $i++) {
+                    $professor = New Professor;
+                    $professor->user_id = Auth::id();
+                    $professor->studie = $data['studie'][$i];
+                    $professor->save();
+                }
+            }
         }
 
         else {
@@ -149,7 +160,9 @@ class UserEditController extends Controller
             $currentImg = $user->forsidebilde;
 
             // Deletes the current image
-            unlink("uploads/" . $currentImg);
+            if (file_exists('uploads/' . $currentImg)) {
+                unlink("uploads/" . $currentImg);
+            }
 
             // Sets the IMG back to standard
             $user = User::find(Auth::id());
@@ -178,7 +191,9 @@ class UserEditController extends Controller
             $currentImg = $user->profilbilde;
 
             // Deletes the current image
-            unlink("uploads/" . $currentImg);
+            if (file_exists('uploads/' . $currentImg)) {
+                unlink("uploads/" . $currentImg);
+            }
 
             // Sets the IMG back to standard
             $user = User::find(Auth::id());

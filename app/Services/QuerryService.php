@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Professor;
 
 class QuerryService {
 
@@ -45,16 +46,16 @@ class QuerryService {
         if (Auth::user()->bruker_type == "student") {
 
             if ($fagfelt != "") {
+                $kontakter = Professor::whereIn('studie', $fagfelt)
+                    ->select('fornavn', 'etternavn', 'user_id', 'student_campus')
+                    ->join('users', 'professors.user_id', '=', 'users.id')
+                    ->get();
 
-                return;
+                return $kontakter;
 
             } else {
                 return null;
             }
-
-
-            ;
-            $stmt = $conn->prepare($sql);
         }
         else if (Auth::user()->bruker_type == "bedrift") {
 

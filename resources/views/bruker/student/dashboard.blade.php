@@ -1,9 +1,8 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
 
 @section('content')
-@include('notifications.notifications')
 
-	<div class="container p-t-md">
+<div class="container p-t-md">
   <div class="row">
     <div class="col-md-3">
       <div class="panel panel-default visible-md-block visible-lg-block">
@@ -18,7 +17,7 @@
         </div>
       </div>
 
- 			<div class="panel panel-default panel-link-list">
+			<div class="panel panel-default panel-link-list">
         <div class="panel-body">
           © 2017 HSN Karriere
           <a href="#">Om</a> ·
@@ -95,124 +94,156 @@
 	    		</div>
 	    	</div>
     	</div>
-      <ul class="list-group media-list media-list-stream">
-      	<li class="media list-group-item media-list-heading">
-          <div class="media-body">
-            <div class="media-heading">
-              <h3 class="white-color m-a-0">
-              	<span class="fa fa-briefcase fa-sm"></span> Praksisplass
-              	<span class="cursor pull-right fa fa-minus-square">
-            	</h3>
-            </div>
-          </div>
-        </li>
-        <li class="media list-group-item p-a">
-          <div class="media-body">
-            <!-- Step gz -->
-            <div class="row line-border">
-	            <div class="col-xs-1">
-	            	<p class="step"><span class="fa fa-thumbs-o-up" aria-hidden="true"></span></p>
-	            </div>
-	            <div class="col-xs-11">
-	            	<p class="h4">Gratulerer med godkjent praksisplass!</p>
-	            	<p>Nå manger vi bare noen signaturer og en arbeidsbeskrivelse.</p>
-	            </div>
-            </div>
-            <!-- Step one -->
-            <div class="row line-border">
-	            <div class="col-xs-1">
-	            	<p class="step">1</p>
-	            </div>
-	            <div class="col-xs-11">
-	            	<p class="h4">Last ned kontrakten</p>
-	            	<a href="" class="btn btn-primary-outline"><span class="fa fa-download"></span> LAST NED</a>
-	            	<p><small>Kontrakt for Økonomi og Informatikk</small></p>
-	            </div>
-            </div>
+      	@unless ($samarbeid == "")
+	        @for ($i = 0; $i < count($samarbeid); $i++)
+	        	<ul class="list-group media-list media-list-stream">
+			      	<li class="media list-group-item media-list-heading">
+			          <div class="media-body">
+			            <div class="media-heading">
+			              <h3 class="white-color m-a-0">
+			              	<span class="fa fa-briefcase fa-sm"></span> {{ $samarbeid[$i]['type_samarbeid'] }}
+			              	<span class="cursor pull-right fa fa-minus-square"></span>
+			            	</h3>
+			            </div>
+			          </div>
+			        </li>
 
-            <!-- Step two -->
-            <div class="row line-border">
-	            <div class="col-xs-1">
-	            	<p class="step">2</p>
-	            </div>
-	            <div class="col-xs-11">
-	            	<p class="h4">Fyll ut og last opp kontrakten</p>
-	            	<form>
-	            		<div class="form-group">
-	            			<span class="btn btn-primary-outline btn-file pull-left m-r-s">
-									    Velg fil <input type="file" name="contract_upload">
-										</span>
-          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
-	            		</div>
-	            	</form>
-	            </div>
-            </div>
+	        	@if ($samarbeid[$i]['godkjent_av_foreleser'] == null && $samarbeid[$i]['godkjent_av_bedrift'] == null)
+	        		<li class="media list-group-item p-a">
+        				<div class="media-body text-center">
+	        				<p class="h4">Venter på godkjenning av alle parter</p>
+	        				<div class="row">
+		            		<div class="col-xs-6">
+		            			@if ($samarbeid[$i]['godkjent_av_foreleser'] == null)
+		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> {{ $bedrift[$i]['bedrift_navn'] }} har ikke godtatt</p>
+	            				@else
+	            					<p class="h5"><span class="fa fa-check fa-lg success-color"></span> {{ $bedrift[$i]['bedrift_navn'] }} har godtatt</p>
+		            			@endif
+		            		</div>
 
-            <!-- Step three -->
-            <div class="row line-border step-inactive">
-	            <div class="col-xs-1">
-	            	<p class="step">3</p>
-	            </div>
-	            <div class="col-xs-11">
-	            	<p class="h4">{bedrift_navn} må laste opp arbeidsbeskrivelsen</p>
-	            	<p><span class="fa fa-hourglass-half warning-color"></span> Ingen arbeidsbeksrivele lastet opp enda...</p>
-	            </div>
-            </div>
+		            		<div class="col-xs-6">
+		            			@if ($samarbeid[$i]['godkjent_av_bedrift'] == null)
+		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> {{ $faglarer[$i]['fornavn']}} {{ $faglarer[$i]['etternavn']}} har ikke godkjent</p>
+		            			@else
+		            				<p class="h5"><span class="fa fa-check fa-lg success-color"></span> {{ $faglarer[$i]['fornavn']}} {{ $faglarer[$i]['etternavn']}} har godkjent</p>
+		            			@endif
+		            		</div>
+		            	</div>
+      					</div>
+	        		</li>
+	        	@else
+			        <li class="media list-group-item p-a">
+			          <div class="media-body">
+			            <!-- Step gz -->
+			            <div class="row line-border">
+				            <div class="col-xs-1">
+				            	<p class="step"><span class="fa fa-thumbs-o-up" aria-hidden="true"></span></p>
+				            </div>
+				            <div class="col-xs-11">
+				            	<p class="h4">Gratulerer med godkjent praksisplass!</p>
+				            	<p>Nå manger vi bare noen signaturer og en arbeidsbeskrivelse.</p>
+				            </div>
+			            </div>
+			            <!-- Step one -->
+			            <div class="row line-border">
+				            <div class="col-xs-1">
+				            	<p class="step">1</p>
+				            </div>
+				            <div class="col-xs-11">
+				            	<p class="h4">Last ned kontrakten</p>
+				            	<a href="" class="btn btn-primary-outline"><span class="fa fa-download"></span> LAST NED</a>
+				            	<p><small>Kontrakt for Økonomi og Informatikk</small></p>
+				            </div>
+			            </div>
 
-            <!-- Step four -->
-            <div class="row line-border step-inactive">
-	            <div class="col-xs-1">
-	            	<p class="step">4</p>
-	            </div>
-	            <div class="col-xs-11">
-	            	<p class="h4">Ventet på godkjenning av alle parter</p>
-	            	<div class="row">
-	            		<div class="col-md-4">
-	            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> Du har signert</p>
-	            		</div>
+			            <!-- Step two -->
+			            <div class="row line-border">
+				            <div class="col-xs-1">
+				            	<p class="step">2</p>
+				            </div>
+				            <div class="col-xs-11">
+				            	<p class="h4">Fyll ut og last opp kontrakten</p>
+				            	<form>
+				            		<div class="form-group">
+				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s">
+												    Velg fil <input type="file" name="contract_upload">
+													</span>
+			          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
+				            		</div>
+				            	</form>
+				            </div>
+			            </div>
 
-	            		<div class="col-md-4">
-	            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> { bedrift_navn } har signert</p>
-	            		</div>
+			            <!-- Step three -->
+			            <div class="row line-border step-inactive">
+				            <div class="col-xs-1">
+				            	<p class="step">3</p>
+				            </div>
+				            <div class="col-xs-11">
+				            	<p class="h4">{bedrift_navn} må laste opp arbeidsbeskrivelsen</p>
+				            	<p><span class="fa fa-hourglass-half warning-color"></span> Ingen arbeidsbeksrivele lastet opp enda...</p>
+				            </div>
+			            </div>
 
-	            		<div class="col-md-4">
-	            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> Faglærer har godkjent</p>
-	            		</div>
-	            	</div>
-	            </div>
-            </div>
+			            <!-- Step four -->
+			            <div class="row line-border step-inactive">
+				            <div class="col-xs-1">
+				            	<p class="step">4</p>
+				            </div>
+				            <div class="col-xs-11">
+				            	<p class="h4">Ventet på godkjenning av alle parter</p>
+				            	<div class="row">
+				            		<div class="col-md-4">
+				            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> Du har signert</p>
+				            		</div>
 
-            <!-- Step five -->
-            <div class="row line-border step-inactive">
-	            <div class="col-xs-1">
-	            	<p class="step"><span class="fa fa-compass"></span></p>
-	            </div>
-	            <div class="col-xs-11">
-	            	<p class="h4">Fullfør praksis</p>
-	            	<p class="h4">Lykke til! </p>
-	            </div>
-            </div>
+				            		<div class="col-md-4">
+				            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> { bedrift_navn } har signert</p>
+				            		</div>
 
-            <!-- Step six -->
-            <div class="row line-border-last step-inactive">
-	            <div class="col-xs-1">
-	            	<p class="step"><span class="fa fa-trophy"></span></p>
-	            </div>
-	            <div class="col-xs-11">
-	            	<p class="h4">Lever rapport</p>
-	            	<form>
-	            		<div class="form-group">
-	            			<span class="btn btn-primary-outline btn-file pull-left m-r-s disabled">
-									    Velg fil <input type="file" name="contract_upload">
-										</span>
-          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
-	            		</div>
-	            	</form>
-	            </div>
-            </div>
-          </div>
-        </li>
-      </ul>
+				            		<div class="col-md-4">
+				            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> Faglærer har godkjent</p>
+				            		</div>
+				            	</div>
+				            </div>
+			            </div>
+
+			            <!-- Step five -->
+			            <div class="row line-border step-inactive">
+				            <div class="col-xs-1">
+				            	<p class="step"><span class="fa fa-compass"></span></p>
+				            </div>
+				            <div class="col-xs-11">
+				            	<p class="h4">Fullfør praksis</p>
+				            	<p class="h4">Lykke til! </p>
+				            </div>
+			            </div>
+
+			            <!-- Step six -->
+			            <div class="row line-border-last step-inactive">
+				            <div class="col-xs-1">
+				            	<p class="step"><span class="fa fa-trophy"></span></p>
+				            </div>
+				            <div class="col-xs-11">
+				            	<p class="h4">Lever rapport</p>
+				            	<form>
+				            		<div class="form-group">
+				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s disabled">
+												    Velg fil <input type="file" name="contract_upload">
+													</span>
+			          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
+				            		</div>
+				            	</form>
+				            </div>
+			            </div>
+			          </div>
+			        </li>
+		        @endif
+      			</ul>
+	        @endfor
+        @else
+         <p>Du har ikke påbegynt noen samarbeid enda</p>
+        @endunless
     </div>
   </div>
 </div>

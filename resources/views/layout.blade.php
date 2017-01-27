@@ -19,6 +19,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     </head>
     <body class="with-top-navbar">
+        @include('notifications.notifications')
         <div class="growl" id="app-growl"></div>
         @yield('logginn')
         <nav class="navbar navbar-inverse navbar-fixed-top app-navbar">

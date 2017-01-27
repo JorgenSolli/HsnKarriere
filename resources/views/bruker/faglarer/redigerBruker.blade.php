@@ -3,7 +3,6 @@
 <!-- REDIGER BRUKER BEDRIFT -->
 
 @section('content')
-  @include('notifications.notifications')
   <div class="container p-t-md">
     <div class="row">
       <div class="col-md-3">
@@ -77,8 +76,11 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="avdeling">Avdeling</label>
-                        <input name="avdeling" id="avdeling" type="text" class="form-control" placeholder="Hvilken avdeling tillhører du?" value="{{ $brukerinfo->foreleser_avdeling }}">
+                      <label for="studie">Hvilket studie tilhører du?</label>
+                      <select name="studie[]" id="studie" class="form-control">
+                        <option value="" disabled="" selected="">Velg en eller flere studieretninger</option>
+                        @include('includes.selects.studier')
+                      </select>
                     </div>
                     <div class="form-group">
                       <label for="avdeling">RomNr.</label>

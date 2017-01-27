@@ -56,6 +56,9 @@ Route::get('innboks/seeMessage/{message}', 'InnboksController@seeMessage');
 Route::post('innboks/replyMessage/{message}', 'InnboksController@replyMessage');
 Route::post('innboks/addUser', 'InnboksController@addUser');
 
+// Partnerships
+Route::post('samarbeid/nyttSamarbeid', 'SamarbeidController@nyttSamarbeid');
+
 // Ajax calls
 Route::get('ajax/sort/list', 'Ajax\SortController@sortList');
 Route::get('ajax/sort/cards', 'Ajax\SortController@sortCards');

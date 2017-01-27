@@ -1,7 +1,6 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
 
 @section('content')
-@include('notifications.notifications')
 
 	<div class="container p-t-md">
   <div class="row">
