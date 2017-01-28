@@ -200,7 +200,7 @@
       <div class="modal-footer">
           <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
           <button type="submit" class="pull-right btn btn-success">Last opp</button>
-        </form>
+          </form>
           @if ($brukerinfo->forsidebilde != "img/forsidebilder/bedrift_forsidebilde.jpg")
             <form method="POST" action="/bruker/rediger/forsidebilde/{{ $brukerinfo->id }}">
               {{ csrf_field() }}

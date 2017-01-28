@@ -124,6 +124,10 @@
                     <p class="h4">Generel informasjon</p>
                   </div>
                     <div class="form-group">
+                      <label for="bedrift_navn">Bedriftsnavn</label>
+                        <input name="bedrift_navn" id="bedrift_navn" type="text" class="form-control" placeholder="Navn på bedrift" value="{{ $brukerinfo->bedrift_navn }}">
+                    </div>
+                    <div class="form-group">
                       <label for="fornavn">Kontaktperson</label>
                       <div class="row">
                         <div class="col-xs-6 p-r-0">

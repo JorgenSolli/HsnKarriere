@@ -115,6 +115,7 @@ class UserEditController extends Controller
                     $company->save();
                 }
             }
+            $data['bedrift_navn'] = $request->bedrift_navn;
         }
 
         else if (Auth::user()->bruker_type == "faglarer") {

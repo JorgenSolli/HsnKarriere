@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Professor;
+use App\Company;
 
 class QuerryService {
 
@@ -19,11 +20,10 @@ class QuerryService {
 
     public function finnBedrifter($studier) {
         $bedrifter = DB::table('companies')
-            ->select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed')
+            ->select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
             ->join('users', 'companies.user_id', '=', 'users.id')
             ->whereIn('area_of_expertise', $studier)
-            ->get();
-
+            ->get()->unique('bedrift_navn');
         return $bedrifter;       
     }
 

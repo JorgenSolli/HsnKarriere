@@ -25,6 +25,14 @@ class SamarbeidController extends Controller
 	    		abort(403);
 	    	}
 
+            $checkCurrent = Partnership::where('student_id', Auth::id())
+                ->where('bedrift_id', $request->bedrift_id)
+                ->get();
+
+            if (!$checkCurrent->isEmpty()) {
+                return back()->with('danger', 'Du er allerede i et samarbeid med denne bedriften');
+            } 
+
 	    	$samarbeid->bedrift_id 	 = $request->bedrift_id;
 	    	$samarbeid->student_id 	 = Auth::id();
     	} 
@@ -35,6 +43,14 @@ class SamarbeidController extends Controller
 	    	if ($student->bruker_type != "bedrift") {
 	    		abort(403);
 	    	}
+
+            $checkCurrent = Partnership::where('bedrift_id', Auth::id())
+                ->where('bedrift_id', $request->student_id)
+                ->get();
+
+            if (!$checkCurrent->isEmpty()) {
+                return back()->with('danger', 'Du er allerede i et samarbeid med denne studenten');
+            } 
 
     		$samarbeid->bedrift_id 	 = Auth::id();
 	    	$samarbeid->student_id 	 = $request->student_id;
