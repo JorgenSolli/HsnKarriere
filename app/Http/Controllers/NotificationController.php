@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\MessagesJunction;
 use App\Services\DateFormater;
 use Illuminate\Http\Request;
@@ -12,6 +13,11 @@ class NotificationController extends Controller
 {
     public function notification (DateFormater $date_formater)
     {
+		$notifications = Notification::where('user_id', Auth::id())
+			->orderBy('has_seen', 'asc')
+			->limit(2)
+			->get();
+    	
     	$latestMessages = DB::table('messages_junctions')
     		->where('user_id', '=', Auth::id())
     		->orderBy('message_read', 'asc')
@@ -60,7 +66,8 @@ class NotificationController extends Controller
 		}
 
     	$returnHTML = view('popovers.notifications')
-            ->with('events', $data)
+    		->with('notifications', $notifications)
+            ->with('messages', $data)
             ->render();
         return response()->json(array('success' => true, 'data' => $returnHTML));
     }
@@ -74,8 +81,14 @@ class NotificationController extends Controller
 			])
 			->count();
 
+		$notifications = Notification::where('user_id', Auth::id())
+			->where('has_seen', null)
+			->count();
+
+		$total = $unreadMessages + $notifications;
+
 		$returnHTML = view('popovers.check')
-            ->with('unreadCount', $unreadMessages)
+            ->with('unreadCount', $total)
             ->render();
         return response()->json(array('success' => true, 'data' => $returnHTML));
     }

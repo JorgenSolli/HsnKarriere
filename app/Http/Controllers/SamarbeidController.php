@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Notification;
 use App\Partnership;
 use App\User;
 
@@ -35,6 +36,13 @@ class SamarbeidController extends Controller
 
 	    	$samarbeid->bedrift_id 	 = $request->bedrift_id;
 	    	$samarbeid->student_id 	 = Auth::id();
+
+            $notification = New Notification;
+            $notification->user_id = $request->bedrift_id;
+            $notification->type = "samarbeid";
+            $notification->heading = "Nytt samarbeid";
+            $notification->message = Auth::user()->fornavn . " " . Auth::user()->etternavn . " vil starte et samarbeid med deg!";
+            $notification->save();
     	} 
 
     	else if (Auth::user()->bruker_type == "bedrift") {

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Message;
-use App\MessagesJunction;
-use App\MessagesReply;
 use App\User;
+use App\Message;
+use App\Company;
+use App\StudentStudy;
+use App\MessagesReply;
+use App\MessagesJunction;
 use App\Services\QuerryService;
 
 class InnboksController extends Controller
@@ -61,7 +63,7 @@ class InnboksController extends Controller
 
         if ($brukerinfo->bruker_type == "student") {
             // Finding the companies the user is allowed to contact
-            $kontakter = $querry_service->finnBedrifter($brukerinfo->student_studerer);
+            $kontakter = $querry_service->finnBedrifter(StudentStudy::where('user_id', Auth::id())->select('studie')->get());
 
             $returnHTML = view('includes.innboks.newMessage')
                 ->with('brukerinfo', $brukerinfo)
@@ -73,9 +75,11 @@ class InnboksController extends Controller
 
         elseif ($brukerinfo->bruker_type == "bedrift") {
             // Finding the companies the user is allowed to contact
-            $kontakter = $querry_service->finnStudenter($brukerinfo->bedrift_ser_etter);
+            $kontakter = $querry_service->finnStudenter(Company::where('user_id', Auth::id())
+                ->join('users', 'companies.user_id', '=', 'users.id')
+                ->select('area_of_expertise')
+                ->get());
 
-            //dd($kontakter);
             $returnHTML = view('includes.innboks.newMessage')
                 ->with('brukerinfo', $brukerinfo)
                 ->with('kontakter', $kontakter)

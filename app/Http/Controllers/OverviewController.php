@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Partnership;
+use App\Notification;
 use App\User;
 
 class OverviewController extends Controller
 {
     public function dashboard ()
     {	
+        // Resets notifications with "samarbeid" when visiting this page
+        Notification::where('user_id', Auth::id())
+            ->where('type', 'samarbeid')
+            ->update(['has_seen' => 1]);
+
+
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
