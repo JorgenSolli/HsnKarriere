@@ -101,20 +101,38 @@
 			          <div class="media-body">
 			            <div class="media-heading">
 			              <h3 class="white-color m-a-0">
-			              	<span class="fa fa-briefcase fa-sm"></span> {{ $samarbeid[$i]['type_samarbeid'] }}
+			              	<span class="fa fa-briefcase fa-sm"></span> {{ $samarbeid[$i]['type_samarbeid'] }} hos {{ $bedrift[$i]['bedrift_navn'] }}
 			              	<span class="cursor pull-right fa fa-minus-square"></span>
 			            	</h3>
 			            </div>
 			          </div>
 			        </li>
+		        @if ($samarbeid[$i]['godkjent_av_student'] == null)
+		        	<li class="media list-group-item p-a">
+        				<div class="media-body text-center">
+	        				<p class="h4">Vil du takke ja til praksisplass hos 
+	        					{{ $bedrift[$i]['bedrift_navn'] }}?</p>
+	        				<div class="has-text-centered d-inline-block">
+	        					<form action="samarbeid/{{ $samarbeid[$i]['id'] }}" method="post" class="pull-left">
+	        						{{ csrf_field() }}
+	        						{{ method_field('DELETE') }}
+	        						<button type="submit" class="btn btn-danger m-r-s">IKKE GODKJENN</button>
+        						</form>
 
-	        	@if ($samarbeid[$i]['godkjent_av_foreleser'] == null && $samarbeid[$i]['godkjent_av_bedrift'] == null)
+        						<form method="post" action="godkjennSamarbeid/{{ $samarbeid[$i]['id'] }}" class="pull-left">
+        							{{ csrf_field() }}
+		        					<button type="submit" class="btn btn-success m-l-s">GODKJENN</button>
+        						</form>
+		            	</div>
+      					</div>
+	        		</li>
+	        	@elseif ($samarbeid[$i]['godkjent_av_foreleser'] == null || $samarbeid[$i]['godkjent_av_bedrift'] == null)
 	        		<li class="media list-group-item p-a">
         				<div class="media-body text-center">
 	        				<p class="h4">Venter på godkjenning av alle parter</p>
 	        				<div class="row">
 		            		<div class="col-xs-6">
-		            			@if ($samarbeid[$i]['godkjent_av_foreleser'] == null)
+		            			@if ($samarbeid[$i]['godkjent_av_bedrift'] == null)
 		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> {{ $bedrift[$i]['bedrift_navn'] }} har ikke godtatt</p>
 	            				@else
 	            					<p class="h5"><span class="fa fa-check fa-lg success-color"></span> {{ $bedrift[$i]['bedrift_navn'] }} har godtatt</p>
@@ -122,7 +140,7 @@
 		            		</div>
 
 		            		<div class="col-xs-6">
-		            			@if ($samarbeid[$i]['godkjent_av_bedrift'] == null)
+		            			@if ($samarbeid[$i]['godkjent_av_foreleser'] == null)
 		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> {{ $faglarer[$i]['fornavn']}} {{ $faglarer[$i]['etternavn']}} har ikke godkjent</p>
 		            			@else
 		            				<p class="h5"><span class="fa fa-check fa-lg success-color"></span> {{ $faglarer[$i]['fornavn']}} {{ $faglarer[$i]['etternavn']}} har godkjent</p>
@@ -250,8 +268,5 @@
 
 @stop
 @section('script')
-	<!-- 
-		Do we need this ?
 		<script src="/js/oversikt.js"></script>
-	-->
 @stop

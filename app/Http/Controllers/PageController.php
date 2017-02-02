@@ -11,12 +11,13 @@ class PageController extends Controller {
 
 		if (Auth::guest()) {
 			return view('hjemGuest');
-		} else {
+		} 
+
+		else {
 			$avatar = Auth::user()->profilbilde;
-			return view('hjemAuth', 
-				[
-					'avatar' => $avatar
-				]);
+			return view('hjemAuth', [
+				'avatar' => $avatar
+			]);
 		}
 	}
 }

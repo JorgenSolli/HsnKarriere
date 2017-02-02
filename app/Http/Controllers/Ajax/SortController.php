@@ -12,6 +12,10 @@ use App\StudentStudy;
 
 class SortController extends Controller
 {
+	public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function sortList(QuerryService $querry_service) {
     	$brukerinfo = Auth::user();
 

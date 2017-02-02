@@ -11,6 +11,10 @@ use Validator;
 
 class BedriftController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function addJob (Request $request, User $user)
     {
         if ($user->id == Auth::id() || Auth::User()->bruker_type == "admin") {

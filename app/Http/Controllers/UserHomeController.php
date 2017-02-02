@@ -14,6 +14,10 @@ use App\StudentStudy;
 
 class UserHomeController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function bruker(QuerryService $querry_service) {
         if (Auth::user()->bruker_type == "student") {
         

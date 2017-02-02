@@ -15,6 +15,10 @@ use App\Services\QuerryService;
 
 class InnboksController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     public function listMessages() {
     	$brukerinfo = Auth::user();
         $junctions = MessagesJunction::where('user_id', Auth::id())->get();

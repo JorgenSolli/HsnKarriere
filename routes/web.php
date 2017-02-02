@@ -13,13 +13,13 @@ Route::get('notification', 'NotificationController@notification');
 Route::get('notification/check', 'NotificationController@check');
 
 // User Oversikt/Overview/dashboard
-Route::get('oversikt', 'OverviewController@dashboard')->middleware('auth');
+Route::get('oversikt', 'DashboardController@dashboard');
 
 // User routes
 Route::patch('bruker/{user}', 'UserEditController@updateUser');
-Route::get('bruker/rediger', 'UserEditController@index')->middleware('auth');
-Route::get('bruker/{bruker}', 'UserHomeController@seBruker')->middleware('auth');
-Route::get('bruker', 'UserHomeController@bruker')->middleware('auth');
+Route::get('bruker/rediger', 'UserEditController@index');
+Route::get('bruker/{bruker}', 'UserHomeController@seBruker');
+Route::get('bruker', 'UserHomeController@bruker');
 
 // Upload Routes
 Route::post('bruker/uploads/forsidebilde', 'UploadController@uploadForsidebilde');
@@ -48,7 +48,7 @@ Route::patch('bruker/editBachelor/{assignment}', 'BedriftController@editBachelor
 Route::get('bruker/destroyBachelor/{assignment}', 'BedriftController@destroyBachelor');
 
 // Messages
-Route::get('innboks', 'InnboksController@listMessages')->middleware('auth');
+Route::get('innboks', 'InnboksController@listMessages');
 Route::get('innboks/newMessage', 'InnboksController@newMessage');
 Route::post('innboks/sendNewMessage', 'InnboksController@sendNewMessage');
 Route::post('innboks/sendMessage', 'InnboksController@replyMessage');
@@ -58,6 +58,8 @@ Route::post('innboks/addUser', 'InnboksController@addUser');
 
 // Partnerships
 Route::post('samarbeid/nyttSamarbeid', 'SamarbeidController@nyttSamarbeid');
+Route::post('godkjennSamarbeid/{partnership}', 'SamarbeidController@godkjennSamarbeid');
+Route::delete('samarbeid/{partnership}', 'SamarbeidController@slettSamarbeid');
 
 // Ajax calls
 Route::get('ajax/sort/list', 'Ajax\SortController@sortList');
