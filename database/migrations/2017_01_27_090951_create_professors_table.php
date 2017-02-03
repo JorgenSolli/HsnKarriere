@@ -14,9 +14,9 @@ class CreateProfessorsTable extends Migration
     public function up()
     {
         Schema::create('professors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->string('studie');
+            $table->primary('id');
+            $table->integer('user_id')->references('id')->on('users');
+            $table->string('studie')->nullable();
             $table->timestamps();
         });
     }

@@ -16,9 +16,9 @@ class CreatePartnershipsTable extends Migration
         Schema::create('partnerships', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type_samarbeid');
-            $table->integer('bedrift_id');
-            $table->integer('student_id');
-            $table->integer('foreleser_id');
+            $table->foreign('bedrift_id')->references('id')->on('users');
+            $table->integer('student_id')->references('id')->on('users');
+            $table->integer('foreleser_id')->references('id')->on('users');
             $table->boolean('godkjent_av_foreleser');
             $table->boolean('godkjent_av_student');
             $table->boolean('godkjent_av_bedrift');

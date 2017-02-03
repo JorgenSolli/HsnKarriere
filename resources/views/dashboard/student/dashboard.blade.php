@@ -101,7 +101,7 @@
 			          <div class="media-body">
 			            <div class="media-heading">
 			              <h3 class="white-color m-a-0">
-			              	<span class="fa fa-briefcase fa-sm"></span> {{ $samarbeid[$i]['type_samarbeid'] }} hos {{ $bedrift[$i]['bedrift_navn'] }}
+			              	<span class="fa fa-briefcase fa-sm"></span> {{ ucfirst($samarbeid[$i]['type_samarbeid']) }} hos {{ $bedrift[$i]['bedrift_navn'] }}
 			              	<span class="cursor pull-right fa fa-minus-square"></span>
 			            	</h3>
 			            </div>

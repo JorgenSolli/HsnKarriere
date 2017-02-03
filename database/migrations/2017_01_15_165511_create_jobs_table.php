@@ -14,16 +14,16 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('bedrift_id')->nullable();
-            $table->string('sted')->nullable();
-            $table->integer('varighet_int')->nullable();
-            $table->string('varighet_prefix')->nullable();
-            $table->string('type')->nullable();
-            $table->string('frist')->nullable();
-            $table->string('stilling_tittel')->nullable();
-            $table->string('bransje')->nullable();
-            $table->text('info')->nullable();
+            $table->primary('id');
+            $table->integer('bedrift_id')->references('id')->on('users');
+            $table->string('sted');
+            $table->integer('varighet_int');
+            $table->string('varighet_prefix');
+            $table->string('type');
+            $table->string('frist');
+            $table->string('stilling_tittel');
+            $table->string('bransje');
+            $table->text('info');
             $table->timestamps();
         });
     }

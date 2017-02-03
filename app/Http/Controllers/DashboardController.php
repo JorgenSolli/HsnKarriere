@@ -21,21 +21,23 @@ class DashboardController extends Controller
             ->where('type', 'samarbeid')
             ->update(['has_seen' => 1]);
 
-
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
             $samarbeid = Partnership::where('student_id', Auth::id())
+                ->orderBy('created_at', 'asc')
                 ->get();
 
             $bedrift = Partnership::where('student_id', Auth::id())
                 ->join('users', 'partnerships.bedrift_id', '=', 'users.id')
                 ->select('bedrift_navn', 'bedrift_id', 'email')
+                ->orderBy('partnerships.created_at', 'asc')
                 ->get();
 
             $faglarer = Partnership::where('student_id', Auth::id())
                 ->join('users', 'partnerships.foreleser_id', '=', 'users.id')
                 ->select('fornavn', 'etternavn', 'email')
+                ->orderBy('partnerships.created_at', 'asc')
                 ->get();
 	    	
             return view('dashboard.student.dashboard', [
@@ -48,16 +50,19 @@ class DashboardController extends Controller
 
     	else if ($brukerinfo->bruker_type == "bedrift") {
             $samarbeid = Partnership::where('bedrift_id', Auth::id())
+                ->orderBy('created_at', 'asc')
                 ->get();
 
             $studente = Partnership::where('bedrift_id', Auth::id())
                 ->join('users', 'partnerships.student_id', 'users.id')
                 ->select('fornavn', 'etternavn', 'email')
+                ->orderBy('partnerships.created_at', 'asc')
                 ->get();
 
             $faglarer = Partnership::where('bedrift_id', Auth::id())
                 ->join('users', 'partnerships.foreleser_id', 'users.id')
                 ->select('fornavn', 'etternavn', 'email')
+                ->orderBy('partnerships.created_at', 'asc')
                 ->get();
 
 
