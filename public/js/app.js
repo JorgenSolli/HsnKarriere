@@ -18,13 +18,15 @@ $(function () {
 
   // This function is called whenever the used OPENS the popover.
   var checkNotifications = function () {
+    var data = "<div class='text-center'><span class='fa fa-circle-o-notch fa-spin fa-2x'></span></div>";
     $.ajax({
       method: 'GET',
       url: '/notification',
       success: function (data) {
-        $("#notification-data").html(data['data']);
+        data = $("#notification-data").html(data['data']);
       }
     });
+    return data;
   }
 
   function getRight() {

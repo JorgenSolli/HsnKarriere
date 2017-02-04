@@ -17,7 +17,7 @@
                 <span class="fa fa-phone"></span> {{ $student->telefon }}
               </p>
               <a class="btn btn-primary-outline btn-sm" href="/bruker/{{ $student->user_id }}">
-                <span class="fa fa-user"></span> Se profil
+                <span class="icon icon-user"></span> Se profil
               </a>
             </div>
           </div>

@@ -94,9 +94,9 @@
 	    		</div>
 	    	</div>
     	</div>
-    	@unless ($samarbeid == "")
+    	@unless ($partnerships == "")
       	<ul class="list-group media-list media-list-stream">
-	      	<li class="media list-group-item media-list-heading">
+	      	<li class="media list-group-item media-list-heading is-bg-danger">
 	          <div class="media-body">
 	            <div class="media-heading">
 	              <h3 class="white-color m-a-0">
@@ -106,24 +106,24 @@
 	            </div>
 	          </div>
 	        </li>
-        @for ($i = 0; $i < count($samarbeid); $i++)
+        @foreach ($partnerships as $partnership)
         	<!-- Partnerships that you (the teacher) needs to approve -->
-	        @if ($samarbeid[$i]['godkjent_av_foreleser'] == null)
+	        @if ($partnership->godkjent_av_foreleser == null)
 	        	<li class="media list-group-item p-a">
       				<div class="media-body">
         				<p class="pull-left">
-        					Type: {{ $samarbeid[$i]['type_samarbeid'] }} · 
-        					Student: <a href="bruker/{{ $student[$i]['student_id'] }}"">{{ $student[$i]['fornavn'] }} {{ $student[$i]['etternavn'] }}</a> · 
-        					Bedrift: <a href="bruker/{{ $bedrift[$i]['bedrift_id'] }}">{{ $bedrift[$i]['bedrift_navn'] }}</a>
+        					Type: {{ $partnership->type_samarbeid }} · 
+        					Student: <a href="bruker/{{ $partnership->student_id }}"">{{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }}</a> · 
+        					Bedrift: <a href="bruker/{{ $partnership->bedrift_id }}">{{ $partnership->bedrift_navn }}</a>
       					</p>
         				<div class="pull-right">
-        					<form action="samarbeid/{{ $samarbeid[$i]['id'] }}" method="post" class="pull-left">
+        					<form action="samarbeid/{{ $partnership->id }}" method="post" class="pull-left">
         						{{ csrf_field() }}
         						{{ method_field('DELETE') }}
         						<button type="submit" class="btn btn-sm btn-danger m-r-s">IKKE GODKJENN</button>
       						</form>
 
-      						<form method="post" action="godkjennSamarbeid/{{ $samarbeid[$i]['id'] }}" class="pull-left">
+      						<form method="post" action="godkjennSamarbeid/{{ $partnership->id }}" class="pull-left">
       							{{ csrf_field() }}
 	        					<button type="submit" class="btn btn-sm btn-success m-l-s">GODKJENN</button>
       						</form>
@@ -131,10 +131,10 @@
     					</div>
         		</li>
       		@endif
-        @endfor
+        @endforeach
 				</ul>
 				<ul class="list-group media-list media-list-stream">
-	      	<li class="media list-group-item media-list-heading">
+	      	<li class="media list-group-item media-list-heading is-bg-warning">
 	          <div class="media-body">
 	            <div class="media-heading">
 	              <h3 class="white-color m-a-0">
@@ -145,10 +145,10 @@
 	          </div>
 	        </li>
 					{{-- Partnerships where we're waiting for others to complete something (ie. sign a contract) --}}
-	        @for ($i = 0; $i < count($samarbeid); $i++)
-	      		@if ($samarbeid[$i]['godkjent_av_foreleser'] == 1
-	      			&& ($samarbeid[$i]['signert_av_bedrift'] == null 
-      				|| $samarbeid[$i]['signert_av_student'] == null))
+	        @foreach ($partnerships as $partnership)
+	      		@if ($partnership->godkjent_av_foreleser == 1
+	      			&& ($partnership->signert_av_bedrift == null 
+      				|| $partnership->signert_av_student == null))
 	      			<li class="media list-group-item p-a">
 	      				<div class="media-body">
 	        				<p class="pull-left">
@@ -157,23 +157,23 @@
 	    					</div>
 	        		</li>
 	      		@endif
-	        @endfor
+	        @endforeach
         </ul>
 
         <ul class="list-group media-list media-list-stream">
-	      	<li class="media list-group-item media-list-heading">
+	      	<li class="media list-group-item media-list-heading is-bg-primary">
 	          <div class="media-body">
 	            <div class="media-heading">
 	              <h3 class="white-color m-a-0">
-	              	<span class="fa fa-handshake-o fa-sm"></span> Samarbeid som krever din godkjenning
+	              	<span class="fa fa-handshake-o fa-sm"></span> Kontrakter og arbeidsbeskrivelser for godkjenning
 	              	<span class="cursor pull-right fa fa-minus-square"></span>
 	            	</h3>
 	            </div>
 	          </div>
 	        </li>
-	        @for ($i = 0; $i < count($samarbeid); $i++)
+	        @foreach ($partnerships as $partnership)
 	      		<!-- Partnerships where a contract has to be approved. -->
-	        	@if ($samarbeid[$i]['signert_av_bedrift'] == 1 && $samarbeid[$i]['signert_av_student'] == 1)
+	        	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
 			        <li class="media list-group-item p-a">
 	      				<div class="media-body">
 	        				<p class="pull-left">
@@ -182,7 +182,32 @@
 	    					</div>
 	        		</li>
 		        @endif
-	        @endfor
+	        @endforeach
+        </ul>
+
+        <ul class="list-group media-list media-list-stream">
+	      	<li class="media list-group-item media-list-heading is-bg-success">
+	          <div class="media-body">
+	            <div class="media-heading">
+	              <h3 class="white-color m-a-0">
+	              	<span class="fa fa-handshake-o fa-sm"></span> Aktive samarbeid
+	              	<span class="cursor pull-right fa fa-minus-square"></span>
+	            	</h3>
+	            </div>
+	          </div>
+	        </li>
+	        @foreach ($partnerships as $partnership)
+	      		<!-- Partnerships where a contract has to be approved. -->
+	        	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
+			        <li class="media list-group-item p-a">
+	      				<div class="media-body">
+	        				<p class="pull-left">
+	        					Her kommer kontrakter og annet</a>
+	      					</p>
+	    					</div>
+	        		</li>
+		        @endif
+	        @endforeach
         </ul>
       @endunless
     </div>

@@ -24,74 +24,95 @@ class DashboardController extends Controller
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
-            $samarbeid = Partnership::where('student_id', Auth::id())
-                ->orderBy('created_at', 'asc')
-                ->get();
-
-            $bedrift = Partnership::where('student_id', Auth::id())
-                ->join('users', 'partnerships.bedrift_id', '=', 'users.id')
-                ->select('bedrift_navn', 'bedrift_id', 'email')
-                ->orderBy('partnerships.created_at', 'asc')
-                ->get();
-
-            $faglarer = Partnership::where('student_id', Auth::id())
-                ->join('users', 'partnerships.foreleser_id', '=', 'users.id')
-                ->select('fornavn', 'etternavn', 'email')
-                ->orderBy('partnerships.created_at', 'asc')
+            $partnerships = Partnership::where('student_id', Auth::id())
+                ->join('users AS bedrift', 'partnerships.bedrift_id', '=', 'bedrift.id')
+                ->join('users AS larer', 'partnerships.foreleser_id', '=', 'larer.id')
+                ->select('partnerships.type_samarbeid',
+                         'partnerships.godkjent_av_student',
+                         'partnerships.godkjent_av_foreleser',
+                         'partnerships.godkjent_av_bedrift',
+                         'partnerships.signert_av_student',
+                         'partnerships.signert_av_bedrift',
+                         'partnerships.kontrakt_godkjent_av_foreleser',
+                         'partnerships.kontrakt',
+                         'partnerships.arbeidsbesk',
+                         'partnerships.startdato',
+                         'partnerships.created_at',
+                         'partnerships.updated_at',
+                         'partnerships.id',
+                         'bedrift.bedrift_navn AS bedrift_navn',
+                         'bedrift.id AS bedrift_id',
+                         'larer.fornavn AS larer_fornavn',
+                         'larer.etternavn AS larer_etternavn',
+                         'larer.id AS larer_id')
+                ->orderBy('partnerships.updated_at')
                 ->get();
 	    	
             return view('dashboard.student.dashboard', [
-                'samarbeid'     => $samarbeid,
-                'bedrift'       => $bedrift,
-                'faglarer'      => $faglarer,
+                'partnerships'  => $partnerships,
 	    		'brukerinfo'    => $brukerinfo
 			]);
     	}
 
     	else if ($brukerinfo->bruker_type == "bedrift") {
-            $samarbeid = Partnership::where('bedrift_id', Auth::id())
-                ->orderBy('created_at', 'asc')
+            $partnerships = Partnership::where('bedrift_id', Auth::id())
+                ->join('users AS student', 'partnerships.student_id', '=', 'student.id')
+                ->join('users AS larer', 'partnerships.foreleser_id', '=', 'larer.id')
+                ->select('partnerships.type_samarbeid',
+                         'partnerships.godkjent_av_student',
+                         'partnerships.godkjent_av_foreleser',
+                         'partnerships.godkjent_av_bedrift',
+                         'partnerships.signert_av_student',
+                         'partnerships.signert_av_bedrift',
+                         'partnerships.kontrakt_godkjent_av_foreleser',
+                         'partnerships.kontrakt',
+                         'partnerships.arbeidsbesk',
+                         'partnerships.startdato',
+                         'partnerships.created_at',
+                         'partnerships.updated_at',
+                         'partnerships.id',
+                         'student.fornavn AS student_fornavn',
+                         'student.etternavn AS student_etternavn',
+                         'student.id AS student_id',
+                         'larer.fornavn AS larer_fornavn',
+                         'larer.etternavn AS larer_etternavn',
+                         'larer.id AS larer_id')
+                ->orderBy('partnerships.updated_at')
                 ->get();
-
-            $studente = Partnership::where('bedrift_id', Auth::id())
-                ->join('users', 'partnerships.student_id', 'users.id')
-                ->select('fornavn', 'etternavn', 'email')
-                ->orderBy('partnerships.created_at', 'asc')
-                ->get();
-
-            $faglarer = Partnership::where('bedrift_id', Auth::id())
-                ->join('users', 'partnerships.foreleser_id', 'users.id')
-                ->select('fornavn', 'etternavn', 'email')
-                ->orderBy('partnerships.created_at', 'asc')
-                ->get();
-
 
     		return view('dashboard.bedrift.dashboard', [
-                'samarbeid'     => $samarbeid,
-                'student'     => $studente,
-                'faglarer'     => $faglarer,
+                'partnerships'     => $partnerships,
 				'brukerinfo'    => $brukerinfo
 			]);
     	}
 
         else if ($brukerinfo->bruker_type == "faglarer") {
-            $samarbeid = Partnership::where('foreleser_id', Auth::id())
-                ->get();
-
-            $student = Partnership::where('foreleser_id', Auth::id())
-                ->join('users', 'partnerships.student_id', 'users.id')
-                ->select('fornavn', 'etternavn', 'student_id')
-                ->get();
-
-            $bedrift = Partnership::where('foreleser_id', Auth::id())
-                ->join('users', 'bedrift_id', 'users.id')
-                ->select('bedrift_navn', 'bedrift_id')
+            $partnerships = Partnership::where('foreleser_id', Auth::id())
+                ->join('users AS student', 'partnerships.student_id', '=', 'student.id')
+                ->join('users AS bedrift', 'partnerships.bedrift_id', '=', 'bedrift.id')
+                ->select('partnerships.type_samarbeid',
+                         'partnerships.godkjent_av_student',
+                         'partnerships.godkjent_av_foreleser',
+                         'partnerships.godkjent_av_bedrift',
+                         'partnerships.signert_av_student',
+                         'partnerships.signert_av_bedrift',
+                         'partnerships.kontrakt_godkjent_av_foreleser',
+                         'partnerships.kontrakt',
+                         'partnerships.arbeidsbesk',
+                         'partnerships.startdato',
+                         'partnerships.created_at',
+                         'partnerships.updated_at',
+                         'partnerships.id',
+                         'student.fornavn AS student_fornavn',
+                         'student.etternavn AS student_etternavn',
+                         'student.id AS student_id',
+                         'bedrift.bedrift_navn AS bedrift_navn',
+                         'bedrift.id AS bedrift_id')
+                ->orderBy('partnerships.updated_at')
                 ->get();
 
             return view('dashboard.larer.dashboard', [
-                'samarbeid'     => $samarbeid,
-                'student'       => $student,
-                'bedrift'       => $bedrift,
+                'partnerships'  => $partnerships,
                 'brukerinfo'    => $brukerinfo
             ]);
         }

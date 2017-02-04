@@ -22,6 +22,19 @@ body {
 }
 
 /* Helpers */
+.is-bg-primary {
+    background-color: $brand-primary;
+}
+.is-bg-success {
+    background-color: $brand-success;
+}
+.is-bg-warning {
+    background-color: $brand-warning;
+}
+.is-bg-danger {
+    background-color: $brand-danger;
+}
+
 .d-inline-block {display: inline-block}
 
 .p-a-s {padding: 10px !important}
@@ -196,8 +209,6 @@ body {
 
 /* Dashboard */
 .media-list-heading {
-    background-color: $brand-success;
-    // background-color: #d3e0e9;
     padding: 10px 20px 10px 20px;
 
     .media-heading {

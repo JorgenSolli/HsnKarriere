@@ -10,7 +10,7 @@
             </a>
             <div class="media-body">
               <a href="/bruker/{{ $bedrift->user_id }}" class="btn btn-primary-outline btn-sm pull-right">
-                <span class="icon icon-add-user"></span> Se profil
+                <span class="icon icon-user"></span> Se profil
               </a>
               <strong>{{ $bedrift->bedrift_navn }}</strong>
               <small>@ {{ $bedrift->email }}</small>

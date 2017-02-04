@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Notification;
@@ -9,18 +11,19 @@ use App\Partnership;
 use App\User;
 
 class SamarbeidController extends Controller
-{
+{   
+
     public function __construct() {
         $this->middleware('auth');
     }
     
     public function nyttSamarbeid (Request $request) {
-    	$samarbeid = New Partnership;
+        $samarbeid = New Partnership;
         $bruker_type = Auth::user()->bruker_type;
 
-    	// If the teacher is NOT a teacher
-    	$foreleser = User::find($request->faglarer);
-    	if ($foreleser->bruker_type != "faglarer") {
+        // If the teacher is NOT a teacher
+        $foreleser = User::find($request->faglarer);
+        if ($foreleser->bruker_type != "faglarer") {
     		abort(403);
     	}
 
@@ -86,15 +89,25 @@ class SamarbeidController extends Controller
     	return back()->with('success', 'Samarbeidet er startet!');
     }
 
-    public function godkjennSamarbeid (Partnership $partnership) {
-        // todo: seciritycheck
-        $bruker_type = Auth::user()->bruker_type;
+    public function godkjennSamarbeid (Partnership $partnership) {     
+        $bruker_info = Auth::user();
 
-        if ($bruker_type == "bedrift") {
+        if ($bruker_info->bruker_type == "bedrift") {
+            if ($partnership->bedrift_id !== $bruker_info->id) {
+                return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
+            }
             $partnership->godkjent_av_bedrift = 1;
-        } elseif ($bruker_type == "student") {
+        } 
+        elseif ($bruker_info->bruker_type == "student") {
+            if ($partnership->student_id !== $bruker_info->id) {
+                return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
+            }
             $partnership->godkjent_av_student = 1;
-        } elseif ($bruker_type == "faglarer") {
+        } 
+        elseif ($bruker_info->bruker_type == "faglarer") {
+            if ($partnership->foreleser_id !== $bruker_info->id) {
+                return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
+            }
             $partnership->godkjent_av_foreleser = 1;
         }
 
@@ -104,7 +117,27 @@ class SamarbeidController extends Controller
     }
 
     public function slettSamarbeid (Partnership $partnership) {
-        // todo: seciritycheck
+        $bruker_info = Auth::user();
+
+        if ($bruker_info->bruker_type == "bedrift") {
+            if ($partnership->bedrift_id !== $bruker_info->id) {
+                return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
+            }
+            $partnership->godkjent_av_bedrift = 1;
+        } 
+        elseif ($bruker_info->bruker_type == "student") {
+            if ($partnership->student_id !== $bruker_info->id) {
+                return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
+            }
+            $partnership->godkjent_av_student = 1;
+        } 
+        elseif ($bruker_info->bruker_type == "faglarer") {
+            if ($partnership->foreleser_id !== $bruker_info->id) {
+                return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
+            }
+            $partnership->godkjent_av_foreleser = 1;
+        }
+
         $partnership->delete();
         return back()->with('success', 'Samarbeidet ble avvist.');
     }
