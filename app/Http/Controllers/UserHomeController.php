@@ -67,8 +67,8 @@ class UserHomeController extends Controller
         $brukerinfo = DB::table('users')->where('id', $id)->first();
 
         if ($brukerinfo->bruker_type == "student") {
-            $student_studerer = $student_studerer = array_chunk(preg_split('/(:|;)/', $brukerinfo
-                ->student_studerer), 4);
+            $student_studerer = StudentStudy::where('user_id', $id)
+                ->get();
             
             return view('bruker.student.seBruker',
             [

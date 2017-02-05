@@ -36,8 +36,6 @@ class User extends Authenticatable
         'student_attester',
         'bedrift_navn',
         'bedrift_avdeling',
-        'bedrift_fagfelt',
-        'bedrift_ser_etter',
         'foreleser_rom_nr',
         'foreleser_avdeling',
         'nettside',

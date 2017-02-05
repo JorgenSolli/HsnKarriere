@@ -5,24 +5,24 @@
       <p>{{ $brukerinfo->bio }}</p>
     </div>
   </div>
-  <div class="col-sm-3 p-r-s p-l-s">
-    <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
-      <p class="h4"><span class="fa fa-graduation-cap"></span> Studerer/studerte</p>
-      @unless ($student_studerer == "")
-        @foreach ($student_studerer as $studerer)
-        <p>{{ $studerer[0] }} ved {{ $studerer[1] }} fra {{$studerer[2] }} til {{ $studerer[3] }}</p>
-        @endforeach
-      @else
+  <div class="col-sm-4 p-r-s p-l-s">
+      <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
+        <p class="h4"><span class="fa fa-graduation-cap"></span> Studerer/studerte</p>
+        @unless ($student_studerer == "")
+          @foreach ($student_studerer as $studerer)
+            <p>{{ $studerer->studie }} ved {{ $studerer->campus }} fra {{$studerer->fra }} til {{ $studerer->til }}</p>
+          @endforeach
+        @else
         <p>Ingen studier spesifisert</p>
       @endunless
+      </div>
     </div>
-  </div>
-  <div class="col-sm-3 p-r-s p-l-s">
-    <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
-      <p class="h4"><span class="fa fa-phone"></span> Telefon</>
-      <p>{{ $brukerinfo->telefon }}</p>
+    <div class="col-sm-2 p-r-s p-l-s">
+      <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
+        <p class="h4"><span class="fa fa-phone"></span> Telefon</p>
+        <p>{{ $brukerinfo->telefon }}</p>
+      </div>
     </div>
-  </div>
 </div>
 <div class="row">
   <div class="col-sm-3 p-r-s p-l-s">
