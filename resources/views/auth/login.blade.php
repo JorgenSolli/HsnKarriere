@@ -1,4 +1,53 @@
 @section('logginn')
+
+<div id="loggInnModal" class="modal modal-login fade in" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle"></i></button>
+        <p class="h3 modal-title"><i class="fa fa-sign-in"></i> Logg inn</p>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 social-login-student-row">
+            <p class="h4 text-center m-t-0">For studenter/ansatte</p>
+            <a href="{{ url('/auth/feide') }}" class="social-login-btn btn btn-feide">
+              <i class="fa fa-unlock-alt"></i> Feide
+            </a>
+          </div>
+          <div class="col-md-6 social-login-bedrift-row">
+            <p class="h4 text-center m-t-0">For bedrifter</p>
+            <a href="{{ url('/auth/github') }}" class="social-login-btn btn btn-github">
+              <i class="fa fa-github"></i> Github
+            </a>
+            <a href="{{ url('/auth/twitter') }}" class="social-login-btn btn btn-twitter">
+              <i class="fa fa-twitter"></i> Twitter
+            </a>
+            <a href="{{ url('/auth/facebook') }}" class="social-login-btn btn btn-facebook">
+              <i class="fa fa-facebook"></i> Facebook
+            </a>
+            <a href="{{ url('/auth/google') }}" class="social-login-btn btn btn-google">
+              <i class="fa fa-google"></i> Google
+            </a>
+            <a href="{{ url('/auth/linkedin') }}" class="social-login-btn btn btn-linkedin">
+              <i class="fa fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary-outline is-fullwidth" data-dismiss="modal">
+          Lukk
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{-- Commenting out old login box. Replaced with social login
 <div id="loggInnModal" class="modal modal-login fade in" role="dialog">
   <div class="modal-dialog">
 
@@ -81,4 +130,5 @@
     </div>
   </div>
 </div>
+--}}
 @stop

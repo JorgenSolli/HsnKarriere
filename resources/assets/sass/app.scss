@@ -21,6 +21,69 @@ body {
     overflow-y: scroll;
 }
 
+/* Custom buttons */
+.social-login-btn {
+    margin-bottom: 10px; 
+    width: 100%;
+    transition: 0.2s;
+}
+
+.btn-github {
+    background: #4f287b;
+    color: #fff;
+    &:hover {
+        background: darken(#672b81, 10%);
+        color: #fff;
+    }
+}
+
+.btn-twitter {
+    background: #1da1f2;
+    color: #fff;
+    &:hover {
+        background: darken(#1d86c7, 10%);
+        color: #fff;
+    }
+}
+
+.btn-facebook {
+    background: #3b5998;
+    color: #fff;
+
+    &:hover {
+        background: darken(#2f4b86, 10%);
+        color: #fff;
+    }
+}
+
+.btn-google {
+    background: #dd5044;
+    color: #fff;
+    &:hover {
+        background: darken(#cc4539, 10%);
+        color: #fff;
+    }
+}
+
+.btn-linkedin {
+    background: #007bb6;
+    color: #fff;
+    &:hover {
+        background: darken(#026a9c, 10%);
+        color: #fff;
+    }
+}
+
+.btn-feide {
+    background: #be1427;
+    color: #fff;
+    &:hover {
+        background: darken(#be1427, 10%);
+        color: #fff;
+    }
+}
+
+
 /* Helpers */
 .is-bg-primary {
     background-color: $brand-primary;
@@ -793,6 +856,10 @@ body {
 
 #loggInnModal .modal-header, #loggInnModal .modal-footer {
     background: #F5F5F5;
+}
+
+.social-login-bedrift-row {
+    border-left: 1px solid black;
 }
 
 .slettRad {

@@ -13,11 +13,11 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 class AuthController extends Controller
 {
 	/**
-     * Where to redirect users after login / registration.
+     * Determines is this is the users first login or not.
      *
-     * @var string
+     * @var boolean
      */
-    protected $redirectTo = '/';
+    protected $newOrNot = false;
 
     /**
      * Redirect the user to the OAuth Provider
@@ -62,9 +62,15 @@ class AuthController extends Controller
 		}
 
         
-        $authUser = $this->findOrCreateUser($user, $provider);
+        $authUser = $this->findOrCreateUser ($user, $provider);
         Auth::login($authUser, true);
-        return redirect($this->redirectTo);
+        
+        /* If the user is new, redirect to settings page */
+        if ($this->newOrNot == true) {
+            return redirect("/bruker/rediger")->with('success', 'Velkommen til HSN Karriere! La oss begynne med å fullføre profilen din.');
+        } else {
+            return redirect("/bruker");
+        }
     }
 
     /**
@@ -83,9 +89,12 @@ class AuthController extends Controller
     		return $authUser;
     	}
 
+        /* The user is a new user, and will be redirected to the settings page */
+        $this->newOrNot = true;
+        //dd($user);
     	if ($provider == 'google') {
-    		$fornavn = $user->name['givenName'];
-    		$etternavn = $user->name['familyName'];
+    		$fornavn = $user->user['name']['givenName'];
+    		$etternavn = $user->user['name']['familyName'];
     	} elseif ($provider == 'facebook') {
     		$fornavn = $user->user['first_name'];
     		$etternavn = $user->user['last_name'];

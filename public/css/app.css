@@ -9908,6 +9908,74 @@ body {
   overflow-y: scroll;
 }
 
+/* Custom buttons */
+.social-login-btn {
+  margin-bottom: 10px;
+  width: 100%;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.btn-github {
+  background: #4f287b;
+  color: #fff;
+}
+
+.btn-github:hover {
+  background: #481e5b;
+  color: #fff;
+}
+
+.btn-twitter {
+  background: #1da1f2;
+  color: #fff;
+}
+
+.btn-twitter:hover {
+  background: #17689a;
+  color: #fff;
+}
+
+.btn-facebook {
+  background: #3b5998;
+  color: #fff;
+}
+
+.btn-facebook:hover {
+  background: #223660;
+  color: #fff;
+}
+
+.btn-google {
+  background: #dd5044;
+  color: #fff;
+}
+
+.btn-google:hover {
+  background: #a7352b;
+  color: #fff;
+}
+
+.btn-linkedin {
+  background: #007bb6;
+  color: #fff;
+}
+
+.btn-linkedin:hover {
+  background: #01486a;
+  color: #fff;
+}
+
+.btn-feide {
+  background: #be1427;
+  color: #fff;
+}
+
+.btn-feide:hover {
+  background: #900f1e;
+  color: #fff;
+}
+
 /* Helpers */
 .is-bg-primary {
   background-color: #4646A5;
@@ -10728,6 +10796,10 @@ body {
 
 #loggInnModal .modal-header, #loggInnModal .modal-footer {
   background: #F5F5F5;
+}
+
+.social-login-bedrift-row {
+  border-left: 1px solid black;
 }
 
 .slettRad {
