@@ -68,5 +68,9 @@ Route::get('ajax/sort/cards', 'Ajax\SortController@sortCards');
 // Confirm User
 Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');
 
+// OAuth Routes
+Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
+
 // Auth routes (such as login, register etc)
 Auth::routes();

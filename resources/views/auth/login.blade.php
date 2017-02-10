@@ -47,7 +47,14 @@
                   <strong>{{ $errors->first('verified') }}</strong>
                 </span>
             </div>
-          @endif  
+          @endif
+          <div class="form-group">
+              <a href="{{ url('/auth/github') }}" class="btn btn-github"><i class="fa fa-github"></i> Github</a>
+              <a href="{{ url('/auth/twitter') }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
+              <a href="{{ url('/auth/facebook') }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
+              <a href="{{ url('/auth/google') }}" class="btn btn-google"><i class="fa fa-google"></i> Google</a>
+              <a href="{{ url('/auth/linkedin') }}" class="btn btn-linkedin"><i class="fa fa-linkedin"></i> LinkedIn</a>
+          </div> 
         </div>
         <div class="modal-footer">
           <div class="col-md-9">

@@ -1,0 +1,111 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use Auth;
+use App\User;
+use Socialite;
+use Validator;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
+class AuthController extends Controller
+{
+	/**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
+    /**
+     * Redirect the user to the OAuth Provider
+     *
+     * @return Response
+     */
+    public function redirectToProvider ($provider)
+    {
+    	return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from provider. Check if the user already exists in our
+     * database by looking up their provider_id in the database.
+     * If the user exists, log them in. Othervise, create a new user then log them in. After
+     * that, redirect them to the authenticated user to their dashboard
+     *
+     * @return Reponse
+     */
+    public function handleProviderCallback ($provider)
+    {
+    	/* Facebook requires us to force first and last name data */
+		if ($provider == 'facebook') {
+			try {
+	        	$user = Socialite::driver($provider)
+	        	->fields([
+	        		'first_name',
+	        		'last_name',
+	        		'email',
+        		])
+	        	->user();
+	        } catch (Exception $e) {
+	            return redirect('auth/'.$provider);
+	        }
+		} else {
+			try {
+	        	$user = Socialite::driver($provider)
+	        	->user();
+	        } catch (Exception $e) {
+	            return redirect('auth/'.$provider);
+	        }
+		}
+
+        
+        $authUser = $this->findOrCreateUser($user, $provider);
+        Auth::login($authUser, true);
+        return redirect($this->redirectTo);
+    }
+
+    /**
+     * If a user has registered bedore using social auth, return user.
+     * Else, create a new user object.
+     * 
+     * @param $user Socialite user object
+     * @param $provider Social auth provider
+     * @return User
+     */
+    public function findOrCreateUser ($user, $provider)
+    {
+    	$authUser = User::where('provider_id', $user->id)->first();
+
+    	if ($authUser) {
+    		return $authUser;
+    	}
+
+    	if ($provider == 'google') {
+    		$fornavn = $user->name['givenName'];
+    		$etternavn = $user->name['familyName'];
+    	} elseif ($provider == 'facebook') {
+    		$fornavn = $user->user['first_name'];
+    		$etternavn = $user->user['last_name'];
+    	} elseif ($provider == 'linkedin') {
+    		$fornavn = $user->user['firstName'];
+    		$etternavn = $user->user['lastName'];
+    	} else {
+    		$fornavn = "";
+    		$etternavn = "";
+    	}
+
+    	return User::create([
+    		'fornavn' => $fornavn,
+    		'etternavn' => $etternavn,
+    		'email' => $user->email,
+    		'provider' => $provider,
+    		'provider_id' => $user->id,
+    		'bruker_type' => 'bedrift',
+    		'profilbilde' => 'img/profilbilder/bedrift_profilbilde.png',
+    		'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.jpg',
+		]);
+    }
+}

@@ -16,19 +16,18 @@ class CreatePartnershipsTable extends Migration
         Schema::create('partnerships', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type_samarbeid');
-            $table->foreign('bedrift_id')->references('id')->on('users');
+            $table->integer('bedrift_id')->references('id')->on('users');
             $table->integer('student_id')->references('id')->on('users');
             $table->integer('foreleser_id')->references('id')->on('users');
-            $table->boolean('godkjent_av_foreleser');
-            $table->boolean('godkjent_av_student');
-            $table->boolean('godkjent_av_bedrift');
-            $table->boolean('signert_av_student');
-            $table->boolean('signert_av_bedrift');
-            $table->boolean('kontrakt_godkjent_av_foreleser');
-            $table->string('kontrakt');
-            $table->text('arbeidsbesk');
-            $table->string('startdato');
-
+            $table->integer('godkjent_av_foreleser')->nullable();
+            $table->integer('godkjent_av_student')->nullable();
+            $table->integer('godkjent_av_bedrift')->nullable();
+            $table->integer('signert_av_student')->nullable();
+            $table->integer('signert_av_bedrift')->nullable();
+            $table->integer('kontrakt_godkjent_av_foreleser')->nullable();
+            $table->string('kontrakt')->nullable();
+            $table->string('arbeidsbesk')->nullable();
+            $table->string('startdato')->nullable();
             $table->timestamps();
         });
     }
@@ -40,6 +39,6 @@ class CreatePartnershipsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partnerships');
+        Schema::drop('partnerships');
     }
 }

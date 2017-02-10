@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessages_ReplyTable extends Migration
+class CreateMessagesRepliesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMessages_ReplyTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages_reply', function (Blueprint $table) {
+        Schema::create('messages_replies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('melding_id')->nullable();
             $table->string('forfatter')->nullable();
@@ -30,6 +30,6 @@ class CreateMessages_ReplyTable extends Migration
      */
     public function down()
     {
-        Schema::drop('messages_reply');
+        Schema::drop('messages_replies');
     }
 }

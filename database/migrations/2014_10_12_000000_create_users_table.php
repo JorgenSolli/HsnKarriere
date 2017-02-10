@@ -15,11 +15,12 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email')->unique();
-            $table->string('password')->nullable();
-            $table->string('bruker_type')->nullable();
-            $table->boolean('verified')->nullable();
+            $table->string('provider');
+            $table->string('provider_id')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('token')->nullable();
+            $table->string('password')->nullable();
+            $table->string('bruker_type');
             $table->string('fornavn')->nullable();
             $table->string('etternavn')->nullable();
             $table->integer('telefon')->nullable();
@@ -32,10 +33,8 @@ class CreateUsersTable extends Migration
             $table->string('forsidebilde')->nullable();
             $table->integer('student_nr')->nullable();
             $table->string('student_campus')->nullable();
-            $table->string('student_cv')->nullable();
-            $table->string('student_attester')->nullable();
             $table->string('bedrift_navn')->nullable();
-            $table->string('avdeling')->nullable();
+            $table->string('bedrift_avdeling')->nullable();
             $table->string('foreleser_rom_nr')->nullable();
             $table->string('foreleser_avdeling')->nullable();
             $table->string('nettside')->nullable();

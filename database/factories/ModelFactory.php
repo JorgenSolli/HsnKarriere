@@ -22,8 +22,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'forsidebilde' => '',
         'student_nr' => $faker->numberBetween($min = 000000, $max = 179999),
         'student_campus' => '',
-        'student_cv' => $faker->md5,
-        'student_attester' => $faker->md5,
         'bedrift_navn' => '',
         'bedrift_avdeling' => '',
         'foreleser_rom_nr' => '',

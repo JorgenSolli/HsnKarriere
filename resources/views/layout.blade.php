@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- These meta tags come first. -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- These meta tags come first. -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>HSN Karriere</title>
+      <title>HSN Karriere</title>
 
-        <!-- styles -->
-        <link rel="stylesheet" href="/css/dist/select2.min.css">
-        <link rel="stylesheet" href="/css/dist/fileinput.min.css">
-        <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
-        <link rel="stylesheet" href="/css/dist/bootstrap-datepicker.min.css">
-        <link rel="stylesheet" href="/css/app.css">
+      <!-- styles -->
+      <link rel="stylesheet" href="/css/dist/select2.min.css">
+      <link rel="stylesheet" href="/css/dist/fileinput.min.css">
+      <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
+      <link rel="stylesheet" href="/css/dist/bootstrap-datepicker.min.css">
+      <link rel="stylesheet" href="/css/app.css">
+
+      <!-- CSRF Token -->
+      <meta name="csrf-token" content="{{ csrf_token() }}">
+      <script>
+          window.Laravel = {!! json_encode([
+              'csrfToken' => csrf_token(),
+          ]) !!};
+      </script>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">

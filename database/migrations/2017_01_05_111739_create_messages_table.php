@@ -14,7 +14,7 @@ class CreateMessagesTable extends Migration
     public function up()
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->primary('id');
+            $table->increments('id');
             $table->integer('user_id')->references('id')->on('users');
             $table->integer('user_name');
             $table->string('subject');
@@ -23,7 +23,7 @@ class CreateMessagesTable extends Migration
         });
 
         Schema::create('messages_junctions', function(Blueprint $table) {
-            $table->primary('id');
+            $table->increments('id');
             $table->integer('message_id')->references('id')->on('messages');
             $table->integer('user_id')->references('id')->on('users');
             $table->string('user_name');
