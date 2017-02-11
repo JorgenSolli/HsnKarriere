@@ -11,7 +11,8 @@ class UserCompanyTableSeeder extends Seeder {
         		'bruker_type' => 'bedrift',
         		'bedrift_navn' => $faker->unique()->company,
         		'profilbilde' => 'img/profilbilder/bedrift_profilbilde.png',
-        		'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.jpg'
+        		'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.jpg',
+        		'student_campus' => ""
 		]);
     }
 }

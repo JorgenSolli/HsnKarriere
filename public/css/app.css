@@ -10316,7 +10316,26 @@ body {
   top: 1px;
 }
 
+.seperator {
+  color: #000;
+}
+
 @media (max-width: 768px) {
+  #sort-search {
+    width: 100%;
+  }
+  #sort-search .seperator {
+    display: none;
+  }
+  #sort-search input {
+    width: calc(100% - 70px) !important;
+  }
+  #sort-search button {
+    float: right;
+  }
+  #sort-view {
+    margin-bottom: 15px;
+  }
   #sort-view p {
     float: left;
     margin-bottom: 0;

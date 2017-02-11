@@ -104,7 +104,7 @@
   </div>
 </div>
 
-<!-- MODALS -->
+{{-- MODALS --}}
 <div id="seeBachelors" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

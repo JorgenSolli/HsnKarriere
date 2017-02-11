@@ -12,17 +12,6 @@ class UserStudentTableSeeder extends Seeder {
 			'bruker_type' => 'student',
 			'profilbilde' => 'img/profilbilder/student_profilbilde.png',
 			'forsidebilde' => 'img/forsidebilder/student_forsidebilde.jpg',
-			'student_campus' => $faker->randomElement($array = array (
-				'Bø',
-				'Porsgrunn',
-				'Notodden',
-				'Rauland',
-				'Ringerike',
-				'Drammen',
-				'Kongsberg',
-				'Vestfold'
-			)),
-
 		]);
     }
 }

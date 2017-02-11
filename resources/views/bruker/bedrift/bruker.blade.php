@@ -60,8 +60,9 @@
           <span id="sortList" class="cursor fa fa-th-list fa-lg"></span>
         </div>
       </div>
+
       <div id="sort-category-floater">
-        <div id="sort-category" class="pull-left">
+        <div id="sort-category" class="pull-left p-r">
           <small class="seperator pull-left p-r pos-r">|</small>
           <p id="sort-category-text" class="pull-left m-a-0 p-r-s">Sorter etter</p>
           <select class="pull-left custom-select custom-select-sm">
@@ -70,6 +71,12 @@
             <option>Nærmest deg</option>
           </select>
         </div>
+      </div>
+      
+      <div id="sort-search" class="pull-left">
+        <small class="seperator pull-left p-r pos-r">|</small>
+        <input type="text" class="m-r-s pull-left custom-select custom-select-sm" data-action="grow" placeholder="Søk" style="background-repeat: repeat; background-image: none; background-position: 0% 0%; width: 140px;">
+        <button class="pull-left btn btn-primary custom-select-sm">SØK</button>
       </div>
     </div>
     <div id="users-data">

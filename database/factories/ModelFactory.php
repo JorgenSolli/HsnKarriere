@@ -21,7 +21,16 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'profilbilde' => '',
         'forsidebilde' => '',
         'student_nr' => $faker->numberBetween($min = 000000, $max = 179999),
-        'student_campus' => '',
+        'student_campus' => $faker->randomElement($array = array (
+			'Bø',
+			'Porsgrunn',
+			'Notodden',
+			'Rauland',
+			'Ringerike',
+			'Drammen',
+			'Kongsberg',
+			'Vestfold'
+		)),
         'bedrift_navn' => '',
         'bedrift_avdeling' => '',
         'foreleser_rom_nr' => '',

@@ -12,7 +12,8 @@ class UserTeacherTableSeeder extends Seeder {
         	'bruker_type' => 'faglarer',
         	'foreleser_rom_nr' => $faker->numberBetween($min = 1000, $max = 9999),
         	'profilbilde' => 'img/profilbilder/faglarer_profilbilde.png',
-    		'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.jpg'
+    		'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.jpg',
+            'student_campus' => ""
 		]);
     }
 }
