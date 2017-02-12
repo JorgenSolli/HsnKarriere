@@ -62,8 +62,7 @@ Route::post('godkjennSamarbeid/{partnership}', 'SamarbeidController@godkjennSama
 Route::delete('samarbeid/{partnership}', 'SamarbeidController@slettSamarbeid');
 
 // Ajax calls
-Route::get('ajax/sort/list', 'Ajax\SortController@sortList');
-Route::get('ajax/sort/cards', 'Ajax\SortController@sortCards');
+Route::get('users/showUsers/{display}', 'Ajax\SortController@showUsers');
 
 // Confirm User
 Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');

@@ -25,10 +25,10 @@ class UserHomeController extends Controller
             $student_studerer = StudentStudy::where('user_id', Auth::id())
                 ->select('studie')
                 ->get();
-            $bedrifter  = $querry_service->finnBedrifter($student_studerer);
-            $kontakter  = $querry_service->finnKontakter($student_studerer);
+            $bedrifter  = $querry_service->finnBedrifter($student_studerer, false);
+            $kontakter  = $querry_service->finnKontakter($student_studerer, false);
 
-            return view('bruker.student.bruker', 
+            return view('user.student.bruker', 
                 [
                     'bedrifter' => $bedrifter, 
                     'kontakter' => $kontakter,
@@ -40,9 +40,9 @@ class UserHomeController extends Controller
 
             $brukerinfo = Auth::user();
             $company = Company::where('user_id', Auth::id());
-            $studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get());
+            $studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get(), "");
             
-            return view('bruker.bedrift.bruker',
+            return view('user.bedrift.bruker',
                 [
                     'studenter'  => $studenter,
                     'company'    => $company,
@@ -54,7 +54,7 @@ class UserHomeController extends Controller
             $studier = Professor::where('user_id', Auth::id())->get();
             $studenter = "";
             $bedrifter = "";
-            return view('bruker.faglarer.bruker', [
+            return view('user.faglarer.bruker', [
                 'brukerinfo' => $brukerinfo,
                 'studier'    => $studier,
                 'studenter'  => $studenter,
@@ -70,7 +70,7 @@ class UserHomeController extends Controller
             $student_studerer = StudentStudy::where('user_id', $id)
                 ->get();
             
-            return view('bruker.student.seBruker',
+            return view('user.student.seBruker',
             [
                 'student_studerer' => $student_studerer,
                 'brukerinfo' => $brukerinfo
@@ -87,7 +87,7 @@ class UserHomeController extends Controller
                 ->select('studie')
                 ->get();
             $faglarere = $querry_service->finnKontakter($studier);
-            return view('bruker.bedrift.seBruker',
+            return view('user.bedrift.seBruker',
             [
                 'brukerinfo' => $brukerinfo,
                 'faglarere'  => $faglarere,
@@ -99,7 +99,7 @@ class UserHomeController extends Controller
         }
 
         else if ($brukerinfo->bruker_type == "faglarer") {
-            return view('bruker.faglarer.seBruker',
+            return view('user.faglarer.seBruker',
             [
                 'brukerinfo' => $brukerinfo
             ]);

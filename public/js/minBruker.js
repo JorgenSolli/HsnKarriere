@@ -8,9 +8,9 @@ $("#sortList").on('click', function() {
 	container.html(loading);
 	$.ajax({
 		type: 'GET',
-		url: 'ajax/sort/list', 
+		url: 'users/showUsers/list', 
 		success: function(data) {
-			container.html(data['users-list']);
+			container.html(data['data']);
 			$("#sortList").addClass('active');
 			$("#sortCards").removeClass('active');
 		}
@@ -22,11 +22,38 @@ $("#sortCards").on('click', function() {
 	container.html(loading);
 	$.ajax({
 		type: 'GET',
-		url: 'ajax/sort/cards', 
+		url: 'users/showUsers/cards', 
 		success: function(data) {
-			container.html(data['users-cards']);
+			container.html(data['data']);
 			$("#sortCards").addClass('active');
 			$("#sortList").removeClass('active');
 		}
 	});
+});
+
+// Ajax for searcing the cards
+$("#search-users-submit").on('submit', function(e) {
+	e.preventDefault();
+	var postUrl;
+	var searchString = $("#search-string").val();
+
+	if ($("#sortCards").attr('class').indexOf("active") >= 0) {
+		postUrl = 'users/showUsers/cards';
+	} else {
+		postUrl = 'users/showUsers/list';
+	}
+	
+	container.html(loading);
+	$.ajax({
+		type: 'GET',
+		url: postUrl,
+		data: {
+			searchString: searchString,
+			searching: true
+		},
+		success: function(data) {
+			container.html(data['data']);
+		}
+	});
+
 });

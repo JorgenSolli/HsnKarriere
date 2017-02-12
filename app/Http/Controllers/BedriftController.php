@@ -112,7 +112,7 @@ class BedriftController extends Controller
 
         $job = $job->where('id', $jobId)->first();
 
-        $returnHTML = view('includes.bruker.bedrift.seeJob')
+        $returnHTML = view('partials.user.bedrift.seeJob')
                 ->with('job', $job)
                 ->with('brukerinfo', $brukerinfo)
                 ->with('bedrift_fagfelt', $bedrift_fagfelt)
@@ -184,7 +184,7 @@ class BedriftController extends Controller
 
         $assignment = $assignment->where('id', $assignmentId)->first();
 
-        $returnHTML = view('includes.bruker.bedrift.seeMaster')
+        $returnHTML = view('partials.user.bedrift.seeMaster')
                 ->with('assignment', $assignment)
                 ->with('brukerinfo', $brukerinfo)
                 ->with('bedrift_fagfelt', $bedrift_fagfelt)
@@ -298,7 +298,7 @@ class BedriftController extends Controller
 
         $assignment = $assignment->where('id', $assignmentId)->first();
 
-        $returnHTML = view('includes.bruker.bedrift.seeBachelor')
+        $returnHTML = view('partials.user.bedrift.seeBachelor')
                 ->with('assignment', $assignment)
                 ->with('brukerinfo', $brukerinfo)
                 ->with('bedrift_fagfelt', $bedrift_fagfelt)

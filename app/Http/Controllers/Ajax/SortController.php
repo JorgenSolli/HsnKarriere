@@ -15,54 +15,56 @@ class SortController extends Controller
 	public function __construct() {
         $this->middleware('auth');
     }
-    
-    public function sortList(QuerryService $querry_service) {
+
+    /**
+    * Find users connected to you in a listed style
+    *
+    * @param  class $querry_service
+    * @param  collection $request
+    * @param  string $display
+    * @return response
+    */
+    public function showUsers(QuerryService $querry_service, Request $request, $display) {
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
 	    	$student_studerer = StudentStudy::where('user_id', Auth::id())
                 ->select('studie')
                 ->get();
-            $bedrifter  = $querry_service->finnBedrifter($student_studerer);
 
-	    	$returnHTML = view('includes.bruker.student.bedrifter.list')
+            if ($request->searching == true) {
+            	$bedrifter  = $querry_service->finnBedrifter($student_studerer, $request->searchString);
+			} 
+			else {
+	    		$bedrifter  = $querry_service->finnBedrifter($student_studerer, false);
+			}
+
+	    	$returnHTML = view('partials.user.student.bedrifter.' . $display)
 	    		->with('bedrifter', $bedrifter)
 	    		->render();
-			return response()->json(array('success' => true, 'users-list'=>$returnHTML));
-    	}
-
-    	if ($brukerinfo->bruker_type == "bedrift") {
-    		$studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get());
-
-	    	$returnHTML = view('includes.bruker.bedrift.studenter.list')
-	    		->with('studenter', $studenter)
-	    		->render();
-			return response()->json(array('success' => true, 'users-list'=>$returnHTML));
-    	}
-    }	
-
-    public function sortCards(QuerryService $querry_service) {
-    	$brukerinfo = Auth::user();
-
-    	if ($brukerinfo->bruker_type == "student") {
-	    	$student_studerer = StudentStudy::where('user_id', Auth::id())
-                ->select('studie')
-                ->get();
-            $bedrifter  = $querry_service->finnBedrifter($student_studerer);
-
-	    	$returnHTML = view('includes.bruker.student.bedrifter.cards')
-	    		->with('bedrifter', $bedrifter)
-	    		->render();
-			return response()->json(array('success' => true, 'users-cards'=>$returnHTML));
+			return response()->json(array('success' => true, 'data'=>$returnHTML));
 		}
 
-		if ($brukerinfo->bruker_type == "bedrift") {
-	    	$studenter = $querry_service->finnStudenter(Company::select('area_of_expertise')->where('user_id', Auth::id())->get());
+		elseif ($brukerinfo->bruker_type == "bedrift") {
+			$area_of_expertise = Company::select('area_of_expertise')
+				->where('user_id', Auth::id())
+				->get();
+				
+			if ($request->searching == true) {
+				$studenter = $querry_service->finnStudenter($area_of_expertise, $request->searchString);
+			} 
+			else {
+	    		$studenter = $querry_service->finnStudenter($area_of_expertise, false);
+			}
 
-	    	$returnHTML = view('includes.bruker.bedrift.studenter.cards')
+	    	$returnHTML = view('partials.user.bedrift.studenter.' . $display)
 	    		->with('studenter', $studenter)
 	    		->render();
-			return response()->json(array('success' => true, 'users-cards'=>$returnHTML));
+			return response()->json(array('success' => true, 'data'=>$returnHTML));
+		}
+
+    	else {
+			return abort(403);
 		}
     }
 }

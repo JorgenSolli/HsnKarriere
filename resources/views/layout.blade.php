@@ -151,39 +151,41 @@
         @yield('content')
 
         <!-- Footer -->
-        <footer class="container text-center">
-            <div class="row">
-                <div class="col-sm-3">
-                    <p class="h3">Samarbeidspartnere</p>
-                    <a class="samarbeidspartnere" href="https://usn.no">
-                        <img src="/img/usn.png"
-                        alt="usn logo">
-                    </a>
-                </div>
-                <div class="col-sm-3">
-                    <p class="h3">Bidragsytere</p>
-                    <div>
-                        <a class="bidragsytere" href="http://www.mtnu.no/"><img class="mar-bot-sm" src="/img/MTNU_Logo.svg" alt="MTNU"></a>
-                        <a class="bidragsytere" href="http://vig.no/"><img src="/img/VIG_Logo.svg" alt="VIG"></a>
+        <footer class="text-center">
+            <section class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="h3">Samarbeidspartnere</p>
+                        <a class="samarbeidspartnere" href="https://usn.no">
+                            <img src="/img/usn.png"
+                            alt="usn logo">
+                        </a>
                     </div>
+                    <div class="col-sm-3">
+                        <p class="h3">Bidragsytere</p>
+                        <div>
+                            <a class="bidragsytere" href="http://www.mtnu.no/"><img class="mar-bot-sm" src="/img/MTNU_Logo.svg" alt="MTNU"></a>
+                            <a class="bidragsytere" href="http://vig.no/"><img src="/img/VIG_Logo.svg" alt="VIG"></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="h3">Kontakt</p>
+                        <p class="wrap">admin@studentsamarbeid.no</p>
+                        <a href="https://www.facebook.com/LinkTelemark/" class="no_link">
+                            <i class="fa fa-facebook-official fa-2x"></i>
+                        </a>
+                    </div>
+                    <div class="col-sm-3">
+                        <p class="h3">Support</p>
+                        <p><a href="https://www.studentsamarbeid.no/personvern">Personvern</a></p>
+                        <p><a href="https://www.studentsamarbeid.no/cookies">Bruk av cookies</a></p>
+                    </div>
+                </div> <!-- end footer.row -->
+                <hr>
+                <div class="text-center">
+                    <p>Utviklet av <a href="https://jorgensolli.no">Jørgen Solli</a></p>
                 </div>
-                <div class="col-sm-3">
-                    <p class="h3">Kontakt</p>
-                    <p class="wrap">admin@studentsamarbeid.no</p>
-                    <a href="https://www.facebook.com/LinkTelemark/" class="no_link">
-                        <i class="fa fa-facebook-official fa-2x"></i>
-                    </a>
-                </div>
-                <div class="col-sm-3">
-                    <p class="h3">Support</p>
-                    <p><a href="https://www.studentsamarbeid.no/personvern">Personvern</a></p>
-                    <p><a href="https://www.studentsamarbeid.no/cookies">Bruk av cookies</a></p>
-                </div>
-            </div> <!-- end footer.row -->
-            <hr>
-            <div class="text-center">
-                <p>Utviklet av <a href="https://jorgensolli.no">Jørgen Solli</a></p>
-            </div>
+            </section>
         </footer>
         <script src="/js/jquery-3.1.1.min.js"></script>
         <script src="/js/dist/bootstrap-datepicker.min.js"></script>

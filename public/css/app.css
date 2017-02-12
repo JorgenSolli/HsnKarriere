@@ -9903,9 +9903,16 @@ img.zoom-img {
   border-radius: 0 !important;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   overflow-y: scroll;
+  /* Margin bottom by footer height */
+  margin-bottom: 206px;
 }
 
 /* Custom buttons */
@@ -10656,6 +10663,14 @@ body {
 }
 
 /* Footer */
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 206px;
+}
+
 .bidragsytere, .samarbeidspartnere {
   text-decoration: none;
   border-bottom: 0 !important;

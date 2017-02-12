@@ -33,7 +33,7 @@ class UserEditController extends Controller
             $student_studerer = StudentStudy::where('user_id', Auth::id())->get();
 
 
-            return view('bruker.student.redigerBruker',
+            return view('user.student.redigerBruker',
                 [
                     'brukerinfo' => $brukerinfo,
                     'student_studerer' => $student_studerer
@@ -47,7 +47,7 @@ class UserEditController extends Controller
             $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', Auth::id())->get();
             $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', Auth::id())->get();
 
-            return view('bruker.bedrift.redigerBruker', [
+            return view('user.bedrift.redigerBruker', [
                 'brukerinfo'  => $brukerinfo,
                 'company'     => $company,
                 'jobs'        => $jobs,
@@ -60,7 +60,7 @@ class UserEditController extends Controller
             $brukerinfo = Auth::user();
             $studier = Professor::where('user_id', Auth::id())->get();
 
-            return view('bruker.faglarer.redigerBruker', [
+            return view('user.faglarer.redigerBruker', [
                 'brukerinfo' => $brukerinfo,
                 'studier'    => $studier
             ]);

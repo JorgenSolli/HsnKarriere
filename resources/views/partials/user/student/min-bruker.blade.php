@@ -44,7 +44,7 @@
     </div>
   </div>
   <div class="col-sm-3 p-r-s p-l-s">
-    <a href="/uploads/{{ $brukerinfo->student_cv }}" class="a-no-dec" style="width: 100%">
+    <a href="/uploads/{ $brukerinfo->student_cv }" class="a-no-dec" style="width: 100%">
       <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
         <p class="h4 m-t text-center"><span class="text-center fa fa-download fa-lg"></span> Last ned CV</p>
       </div>
@@ -53,7 +53,7 @@
 </div> <!-- end row  -->
 <div class="row">
   <div class="col-sm-3 p-r-s p-l-s">
-    <a href="/uploads/{{ $brukerinfo->student_cv }}" class="a-no-dec" style="width: 100%" data-toggle="modal" data-target="#seAttester">
+    <a href="/uploads/{ $brukerinfo->student_cv }" class="a-no-dec" style="width: 100%" data-toggle="modal" data-target="#seAttester">
       <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
         <p class="h4 m-t text-center"><span class="fa fa-file-pdf-o fa-lg"></span> Se attester</p>
       </div>
