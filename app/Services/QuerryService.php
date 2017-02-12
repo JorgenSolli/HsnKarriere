@@ -51,8 +51,11 @@ class QuerryService {
         if (!empty($fagfelt)) {
 
             if ($searchString == false) {
+                /* Selects 'bedrift_navn' to determine if to present the name or the company name.
+                 * Use case when listing messages reciepments.
+                 */
                 $studenter = DB::table('student_studies')
-                    ->select('fornavn', 'etternavn', 'user_id', 'student_campus', 'forsidebilde', 'profilbilde', 'telefon', 'email')
+                    ->select('fornavn', 'etternavn', 'user_id', 'student_campus', 'forsidebilde', 'profilbilde', 'telefon', 'email', 'bedrift_navn')
                     ->join('users', 'student_studies.user_id', '=', 'users.id')
                     ->whereIn('studie', $fagfelt)
                     ->get()
