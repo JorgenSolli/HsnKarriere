@@ -1,21 +1,13 @@
 # HSN Karriere
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+HSN Karriere is a web-app with the goal of making it easier for students to find internships. This is done by letting various companies register and advertise their company. Both students and companies can be the initializer of a internship. 
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Proffessors will be encouraged to register and will be able to approve internships for the students they have responsibility for. This allows us to reduce the amount of effort and work it requires to initialize and maintan a internship by a huge margin. Paperwork and oganization will be less for both the students, proffessors and comapnies.
 
 ## Official Documentation
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+There is currently no official documentation available.
 
-## Contributing
+## Techinical specs
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The app is written in PHP 5.7 with Laravel 5.4
