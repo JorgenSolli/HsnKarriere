@@ -457,7 +457,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2017-02-04T18:53:04+00:00"
+            "time": "2017-02-04 18:53:04"
         },
         {
             "name": "laravel/framework",
