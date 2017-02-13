@@ -15,10 +15,25 @@ use App\Services\QuerryService;
 
 class InnboksController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Innboks Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles logic related the the inbox.
+    | All CRUD operations are handeled here.
+    | 
+    */
+
     public function __construct() {
         $this->middleware('auth');
     }
     
+    /**
+     * Lists all messages the user has access to.
+     * 
+     * @return string
+     */
     public function listMessages() {
     	$brukerinfo = Auth::user();
         $junctions = MessagesJunction::where('user_id', Auth::id())->get();
@@ -61,6 +76,12 @@ class InnboksController extends Controller
 			]);
     }
 
+    /**
+     * Created a new message in the database
+     * 
+     * @param  $querryservice class
+     * @return array
+     */
     public function newMessage (QuerryService $querry_service)
     {   
         $brukerinfo = Auth::user();
@@ -92,6 +113,12 @@ class InnboksController extends Controller
         }
     }
 
+    /**
+     * Sends a message to a specific user(s)
+     * 
+     * @param  $request collection
+     * @return string
+     */
     public function sendNewMessage (Request $request)
     {   
         $message  = New Message;
