@@ -54,7 +54,7 @@ Route::post('innboks/sendNewMessage', 'InnboksController@sendNewMessage');
 Route::post('innboks/sendMessage', 'InnboksController@replyMessage');
 Route::get('innboks/seeMessage/{message}', 'InnboksController@seeMessage');
 Route::post('innboks/replyMessage/{message}', 'InnboksController@replyMessage');
-Route::post('innboks/addUser', 'InnboksController@addUser');
+Route::post('innboks/addUser/{message}', 'InnboksController@addUser');
 
 // Partnerships
 Route::post('samarbeid/nyttSamarbeid', 'SamarbeidController@nyttSamarbeid');
@@ -63,6 +63,7 @@ Route::delete('samarbeid/{partnership}', 'SamarbeidController@slettSamarbeid');
 
 // Ajax calls
 Route::get('users/showUsers/{display}', 'Ajax\SortController@showUsers');
+Route::get('innboks/findUsers/{message}', 'Ajax\getUsers@listUsers');
 
 // Confirm User
 Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');

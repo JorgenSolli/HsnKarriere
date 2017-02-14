@@ -87,12 +87,6 @@
                             </button>
                           </li>
                         </ul>
-
-                        <form class="navbar-form navbar-right app-search" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" data-action="grow" placeholder="Søk">
-                            </div>
-                        </form>
                     @endif
 
                     <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">

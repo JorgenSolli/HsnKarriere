@@ -95,15 +95,30 @@ class AuthController extends Controller
     	if ($provider == 'google') {
     		$fornavn = $user->user['name']['givenName'];
     		$etternavn = $user->user['name']['familyName'];
-    	} elseif ($provider == 'facebook') {
-    		$fornavn = $user->user['first_name'];
-    		$etternavn = $user->user['last_name'];
-    	} elseif ($provider == 'linkedin') {
+            $brukertype = "bedrift";
+            $profilbilde = "img/profilbilder/bedrift_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/bedrift_forsidebilde.jpg";
+    	} 
+        elseif ($provider == 'linkedin') {
     		$fornavn = $user->user['firstName'];
     		$etternavn = $user->user['lastName'];
-    	} else {
+            $brukertype = "bedrift";
+            $profilbilde = "img/profilbilder/bedrift_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/bedrift_forsidebilde.jpg";
+    	} 
+        elseif ($provider == 'facebook') {
+            $fornavn = $user->user['first_name'];
+            $etternavn = $user->user['last_name'];
+            $brukertype = "student";
+            $profilbilde = "img/profilbilder/student_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/student_forsidebilde.jpg";
+        } 
+        else {
     		$fornavn = "";
     		$etternavn = "";
+            $brukertype = "faglarer";
+            $profilbilde = "img/profilbilder/faglarer_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/bedrift_forsidebilde.jpg";
     	}
 
     	return User::create([
@@ -112,9 +127,9 @@ class AuthController extends Controller
     		'email' => $user->email,
     		'provider' => $provider,
     		'provider_id' => $user->id,
-    		'bruker_type' => 'bedrift',
-    		'profilbilde' => 'img/profilbilder/bedrift_profilbilde.png',
-    		'forsidebilde' => 'img/forsidebilder/bedrift_forsidebilde.jpg',
+    		'bruker_type' => $brukertype,
+    		'profilbilde' => $profilbilde,
+    		'forsidebilde' => $forsidebilde,
 		]);
     }
 }

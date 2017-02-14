@@ -15,9 +15,9 @@ class CreateMessagesRepliesTable extends Migration
     {
         Schema::create('messages_replies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('melding_id')->nullable();
-            $table->string('forfatter')->nullable();
-            $table->string('innhold')->nullable();
+            $table->integer('message_id')->nullable();
+            $table->integer('user_id');
+            $table->text('message');
             $table->string('sett_av')->nullable();
             $table->timestamps();
         });

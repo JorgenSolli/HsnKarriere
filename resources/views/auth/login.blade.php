@@ -12,22 +12,24 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-6 social-login-student-row">
-            <p class="h4 text-center m-t-0">For studenter/ansatte</p>
-            <a href="{{ url('/auth/feide') }}" class="social-login-btn btn btn-feide">
-              <i class="fa fa-unlock-alt"></i> Feide
+            <p class="h4 text-center m-t-0">For studenter</p>
+            <a href="{{ url('/auth/facebook') }}" class="social-login-btn btn btn-facebook">
+              <i class="fa fa-facebook"></i> Facebook
             </a>
-          </div>
-          <div class="col-md-6 social-login-bedrift-row">
-            <p class="h4 text-center m-t-0">For bedrifter</p>
+            <a href="{{ url('/auth/feide') }}" class="social-login-btn btn btn-feide">
+              <i class="fa fa-unlock-alt"></i> Feide (Kommer snart...)
+            </a>
+
+            <p class="h4 text-center m-t-0">For ansatte</p>
             <a href="{{ url('/auth/github') }}" class="social-login-btn btn btn-github">
               <i class="fa fa-github"></i> Github
             </a>
             <a href="{{ url('/auth/twitter') }}" class="social-login-btn btn btn-twitter">
               <i class="fa fa-twitter"></i> Twitter
             </a>
-            <a href="{{ url('/auth/facebook') }}" class="social-login-btn btn btn-facebook">
-              <i class="fa fa-facebook"></i> Facebook
-            </a>
+          </div>
+          <div class="col-md-6 social-login-bedrift-row">
+            <p class="h4 text-center m-t-0">For bedrifter</p>
             <a href="{{ url('/auth/google') }}" class="social-login-btn btn btn-google">
               <i class="fa fa-google"></i> Google
             </a>

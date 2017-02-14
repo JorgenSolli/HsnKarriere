@@ -67,14 +67,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-user"></span> Legg til person i denne samtalen</p>
+        <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-user"></span> Legg til en person i denne samtalen</p>
       </div>
       <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
         <div class="modal-body">
           {{ csrf_field() }}
-          <select class="form-control">
-          	<option>Ola Nordmann</option>
-          </select>
+          <div class="selectAjaxLoading text-center m-t-md m-b-md" style="display: none;">
+            <span class="fa fa-circle-o-notch fa-spin fa-2x"></span>
+          </div>
+          <div id="addUserSelect">
+            {{-- Select list with users comes here (through ajax) --}}
+          </div>
           <br>
         </div>
         <div class="modal-footer">

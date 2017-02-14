@@ -33,6 +33,28 @@ $(document).ready(function() {
 		newMessage();
 	});
 
+	var addUser = function (messageId) {
+		var container = $("#addUserSelect");
+		container.html("");
+		var loading = $(".selectAjaxLoading");
+
+		loading.show();
+		$.ajax({
+            type: 'GET',
+            url: 'innboks/findUsers/' + messageId,
+            success: function(data) {
+            	loading.hide();
+                $(".ajaxLoading").remove();
+                container.html(data['data']);
+            }
+        });
+	}
+	
+	$(document).on('click', '#addUser', function() {
+		var messageId = $(this).children().attr('id');
+		addUser(messageId);
+	});
+
 	var seeMessage = function(id) {
 		var container = $("#newOrRead");
 		container.html("");

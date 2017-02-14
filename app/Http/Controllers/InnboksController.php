@@ -121,17 +121,17 @@ class InnboksController extends Controller
      */
     public function sendNewMessage (Request $request)
     {   
-        $message  = New Message;
+        $message = New Message;
 
         if (Auth::user()->bruker_type == "bedrift") {
-        	$navn = Auth::user()->bedrift_navn;
+        	$user_name = Auth::user()->bedrift_navn;
         } else {
-        	$navn = Auth::user()->fornavn;
+        	$user_name = Auth::user()->fornavn;
         }
 
         // Gets the message information
         $message->user_id 		= Auth::id();
-        $message->user_name 	= $navn; 		
+        $message->user_name 	= $user_name; 		
         $message->subject 		= $request->tittel;
         $message->message 		= $request->melding;
 
@@ -186,8 +186,7 @@ class InnboksController extends Controller
         		'users.bruker_type', 
         		'users.profilbilde', 
         		'messages_replies.user_id',
-        		'messages_replies.message_id', 
-        		'messages_replies.user_name', 
+        		'messages_replies.message_id',
         		'messages_replies.message', 
         		'messages_replies.created_at', 
         		'messages_replies.updated_at')
@@ -227,8 +226,8 @@ class InnboksController extends Controller
         return back()->with('success', 'Svar sendt');
     }
 
-    public function addUser (MessagesJunction $messages_junctions)
+    public function addUser (Message $message, Request $request)
     {
-        dd($messages_junctions);
+        dd($message);
     }
 }
