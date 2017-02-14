@@ -12,6 +12,17 @@ use App\StudentStudy;
 
 class SortController extends Controller
 {
+	/*
+    |--------------------------------------------------------------------------
+    | Sort Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the logic for showing students/companies and 
+    | teachers. It has the functions to sort them, show them in cards or list
+    | view, and also has a searchoption.
+    |
+    */
+
 	public function __construct() {
         $this->middleware('auth');
     }

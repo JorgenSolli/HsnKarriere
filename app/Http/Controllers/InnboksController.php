@@ -15,10 +15,25 @@ use App\Services\QuerryService;
 
 class InnboksController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Innboks Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles logic related the the inbox.
+    | All CRUD operations are handeled here.
+    | 
+    */
+
     public function __construct() {
         $this->middleware('auth');
     }
     
+    /**
+     * Lists all messages the user has access to.
+     * 
+     * @return string
+     */
     public function listMessages() {
     	$brukerinfo = Auth::user();
         $junctions = MessagesJunction::where('user_id', Auth::id())->get();
@@ -61,6 +76,12 @@ class InnboksController extends Controller
 			]);
     }
 
+    /**
+     * Created a new message in the database
+     * 
+     * @param  $querryservice class
+     * @return array
+     */
     public function newMessage (QuerryService $querry_service)
     {   
         $brukerinfo = Auth::user();
@@ -92,19 +113,25 @@ class InnboksController extends Controller
         }
     }
 
+    /**
+     * Sends a message to a specific user(s)
+     * 
+     * @param  $request collection
+     * @return string
+     */
     public function sendNewMessage (Request $request)
     {   
-        $message  = New Message;
+        $message = New Message;
 
         if (Auth::user()->bruker_type == "bedrift") {
-        	$navn = Auth::user()->bedrift_navn;
+        	$user_name = Auth::user()->bedrift_navn;
         } else {
-        	$navn = Auth::user()->fornavn;
+        	$user_name = Auth::user()->fornavn;
         }
 
         // Gets the message information
         $message->user_id 		= Auth::id();
-        $message->user_name 	= $navn; 		
+        $message->user_name 	= $user_name; 		
         $message->subject 		= $request->tittel;
         $message->message 		= $request->melding;
 
@@ -159,8 +186,7 @@ class InnboksController extends Controller
         		'users.bruker_type', 
         		'users.profilbilde', 
         		'messages_replies.user_id',
-        		'messages_replies.message_id', 
-        		'messages_replies.user_name', 
+        		'messages_replies.message_id',
         		'messages_replies.message', 
         		'messages_replies.created_at', 
         		'messages_replies.updated_at')
@@ -200,8 +226,8 @@ class InnboksController extends Controller
         return back()->with('success', 'Svar sendt');
     }
 
-    public function addUser (MessagesJunction $messages_junctions)
+    public function addUser (Message $message, Request $request)
     {
-        dd($messages_junctions);
+        dd($message);
     }
 }

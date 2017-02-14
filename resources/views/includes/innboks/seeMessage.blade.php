@@ -10,8 +10,8 @@
 			    	</a>
 				  </li>
 			  @endforeach
-			  <li class="avatar-list-item">
-			    <span class="fa fa-plus-circle add-user-icon cursor" data-toggle="modal" data-target="#add-user-to-chat"></span>
+			  <li id="addUser" class="avatar-list-item">
+			    <span id="{{ $message->id }}" class="fa fa-plus-circle add-user-icon cursor" data-toggle="modal" data-target="#add-user-to-chat"></span>
 			  </li>
 			</ul>
 		</div>

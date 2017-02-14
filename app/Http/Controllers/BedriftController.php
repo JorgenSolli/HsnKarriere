@@ -11,6 +11,16 @@ use Validator;
 
 class BedriftController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Bedrift Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles handles everything that a user with the usertype
+    | 'company'. It interacts with the database and handles all redirects and
+    | error trapping
+    |
+    */
     public function __construct() {
         $this->middleware('auth');
     }

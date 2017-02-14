@@ -16,7 +16,7 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->references('id')->on('users');
-            $table->integer('user_name');
+            $table->string('user_name')->nullable();
             $table->string('subject');
             $table->string('message');
             $table->timestamps();
@@ -27,8 +27,6 @@ class CreateMessagesTable extends Migration
             $table->integer('message_id')->references('id')->on('messages');
             $table->boolean('message_read')->default(0);
             $table->integer('user_id')->references('id')->on('users');
-            $table->string('user_name');
-            $table->text('message');
             $table->timestamps();
         });
     }

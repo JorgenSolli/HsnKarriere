@@ -81,23 +81,17 @@ class QuerryService {
         return null;
     }
 
-    public function finnKontakter($fagfelt) {
-        if (Auth::user()->bruker_type == "student") {
+    public function finnKontakter($fagfelt, $searchString) {
+        if ($fagfelt != "") {
+            $kontakter = Professor::whereIn('studie', $fagfelt)
+                ->select('fornavn', 'etternavn', 'user_id', 'student_campus')
+                ->join('users', 'professors.user_id', '=', 'users.id')
+                ->get();
 
-            if ($fagfelt != "") {
-                $kontakter = Professor::whereIn('studie', $fagfelt)
-                    ->select('fornavn', 'etternavn', 'user_id', 'student_campus')
-                    ->join('users', 'professors.user_id', '=', 'users.id')
-                    ->get();
+            return $kontakter;
 
-                return $kontakter;
-
-            } else {
-                return null;
-            }
-        }
-        else if (Auth::user()->bruker_type == "bedrift") {
-
+        } else {
+            return null;
         }
     }
 }

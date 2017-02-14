@@ -10,10 +10,24 @@ use App\User;
 
 class DashboardController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles gets the proper data for the user, and returns
+    | the view with this data.
+    |
+    */
     public function __construct() {
         $this->middleware('auth');
     }
     
+    /**
+     * Gets the data and returns the view
+     * 
+     * @return string
+     */
     public function dashboard ()
     {	
         // Resets notifications with "samarbeid" when visiting this page
