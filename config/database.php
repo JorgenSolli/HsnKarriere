@@ -52,13 +52,13 @@ return [
             'prefix' => '',
         ],
 
-        'mysql' => [
+        'mysql' => [ 
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST', 'us-cdbr-iron-east-04.cleardb.net'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'jorgensolli_no_studsammarbeid'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', '$B'),
+            'database' => env('DB_DATABASE', 'heroku_d1b97d590fac787'),
+            'username' => env('DB_USERNAME', 'bafe5474d42f5d'),
+            'password' => env('DB_PASSWORD', '0c744ec6'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
