@@ -26,7 +26,7 @@ class DashboardController extends Controller
     /**
      * Gets the data and returns the view
      * 
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function dashboard ()
     {	

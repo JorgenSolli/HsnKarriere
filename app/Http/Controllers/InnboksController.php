@@ -32,7 +32,7 @@ class InnboksController extends Controller
     /**
      * Lists all messages the user has access to.
      * 
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function listMessages() 
     {
@@ -81,7 +81,7 @@ class InnboksController extends Controller
      * Created a new message in the database
      * 
      * @param  class $querryservice
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     public function newMessage (QuerryService $querry_service)
     {   
@@ -118,7 +118,7 @@ class InnboksController extends Controller
      * Sends a message to a specific user(s)
      * 
      * @param  collection $request
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function sendNewMessage (Request $request)
     {   
@@ -163,7 +163,7 @@ class InnboksController extends Controller
      * View a specific Message
      *
      * @param  collection $message
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function seeMessage (Message $message)
     {
@@ -219,7 +219,7 @@ class InnboksController extends Controller
      *
      * @param  collection $request
      * @param  collection $request
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function replyMessage (Request $request, Message $message)
     {   
@@ -245,7 +245,7 @@ class InnboksController extends Controller
      *
      * @param  collection $message
      * @param  collection $request
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function addUser (Message $message, Request $request)
     {

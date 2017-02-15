@@ -31,7 +31,7 @@ class BedriftController extends Controller
      *
      * @param  collection $request
      * @param  collection $user the current user
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function addJob (Request $request, User $user)
     {
@@ -79,7 +79,7 @@ class BedriftController extends Controller
      *
      * @param  collection $request
      * @param  collection $job the current job
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function editJob (Request $request, Job $job)
     {
@@ -125,7 +125,7 @@ class BedriftController extends Controller
      *
      * @param  collection $job current job
      * @param  int $jobId the ID of the current job
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     public function seeJob (Job $job, $jobId)
     {
@@ -147,7 +147,7 @@ class BedriftController extends Controller
      * Deletes a job in the DB
      *
      * @param  collection $job the current job
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function destroyJob (Job $job)
     {
@@ -167,7 +167,7 @@ class BedriftController extends Controller
      *
      * @param collection $request
      * @param collection $user the current user
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function addMaster (Request $request, User $user)
     {
@@ -211,7 +211,7 @@ class BedriftController extends Controller
      * Views a specific master assignment
      *
      * @param  collection $assignment
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     public function seeMaster (Assignment $assignment)
     {
@@ -232,7 +232,7 @@ class BedriftController extends Controller
      *
      * @param  collection $request
      * @param  collection $assignment
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function editMaster (Request $request, Assignment $assignment)
     {
@@ -275,7 +275,7 @@ class BedriftController extends Controller
      * Deletes a specific master assignment
      *
      * @param  collection $assignment
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function destroyMaster (Assignment $assignment) 
     {
@@ -302,7 +302,7 @@ class BedriftController extends Controller
      *
      * @param  collection $request
      * @param  collection $user
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function addBachelor (Request $request, User $user)
     {
@@ -347,7 +347,7 @@ class BedriftController extends Controller
      *
      * @param  collection $assignment
      * @param  int @assignmentId the ID of the assignment
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     public function seeBachelor (Assignment $assignment, $assignmentId)
     {
@@ -370,7 +370,7 @@ class BedriftController extends Controller
      *
      * @param  collection $request
      * @param  collection $assignment
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function editBachelor (Request $request, Assignment $assignment)
     {
@@ -413,7 +413,7 @@ class BedriftController extends Controller
      * Deletes a specific bachelor assignment
      *
      * @param  collection $assignment
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function destroyBachelor (Assignment $assignment) 
     {
