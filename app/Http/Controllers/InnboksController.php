@@ -34,7 +34,8 @@ class InnboksController extends Controller
      * 
      * @return string
      */
-    public function listMessages() {
+    public function listMessages() 
+    {
     	$brukerinfo = Auth::user();
         $junctions = MessagesJunction::where('user_id', Auth::id())->get();
         
@@ -79,7 +80,7 @@ class InnboksController extends Controller
     /**
      * Created a new message in the database
      * 
-     * @param  $querryservice class
+     * @param  class $querryservice
      * @return array
      */
     public function newMessage (QuerryService $querry_service)
@@ -116,7 +117,7 @@ class InnboksController extends Controller
     /**
      * Sends a message to a specific user(s)
      * 
-     * @param  $request collection
+     * @param  collection $request
      * @return string
      */
     public function sendNewMessage (Request $request)
@@ -158,6 +159,12 @@ class InnboksController extends Controller
         return back()->with('success', 'Meldingen ble sendt!');
     }
 
+    /**
+     * View a specific Message
+     *
+     * @param  collection $message
+     * @return string
+     */
     public function seeMessage (Message $message)
     {
         $junctions = MessagesJunction::where('message_id', $message->id)->get();
@@ -207,6 +214,13 @@ class InnboksController extends Controller
         return response()->json(array('success' => true, 'data' => $returnHTML));
     }
 
+    /**
+     * Adds a reply to the DB
+     *
+     * @param  collection $request
+     * @param  collection $request
+     * @return string
+     */
     public function replyMessage (Request $request, Message $message)
     {   
         
@@ -226,6 +240,13 @@ class InnboksController extends Controller
         return back()->with('success', 'Svar sendt');
     }
 
+    /**
+     * Adds a user to a message in the DB
+     *
+     * @param  collection $message
+     * @param  collection $request
+     * @return string
+     */
     public function addUser (Message $message, Request $request)
     {
         dd($message);

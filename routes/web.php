@@ -37,7 +37,7 @@ Route::get('bruker/destroyJob/{job}', 'BedriftController@destroyJob');
 
 // Bedrift Master logic
 Route::post('bruker/addMaster/{user}', 'BedriftController@addMaster');
-Route::get('bruker/seeMaster/{assignmentId}', 'BedriftController@seeMaster');
+Route::get('bruker/seeMaster/{assignment}', 'BedriftController@seeMaster');
 Route::patch('bruker/editMaster/{assignment}','BedriftController@editMaster');
 Route::get('bruker/destroyMaster/{assignment}', 'BedriftController@destroyMaster');
 

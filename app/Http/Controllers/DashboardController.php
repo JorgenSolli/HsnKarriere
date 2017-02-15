@@ -130,6 +130,5 @@ class DashboardController extends Controller
                 'brukerinfo'    => $brukerinfo
             ]);
         }
-
     }
 }
