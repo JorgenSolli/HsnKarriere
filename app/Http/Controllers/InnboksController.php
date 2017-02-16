@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\User;
+use Validator;
 use App\Message;
 use App\Company;
 use App\StudentStudy;
@@ -38,7 +39,6 @@ class InnboksController extends Controller
     {
     	$brukerinfo = Auth::user();
         $junctions = MessagesJunction::where('user_id', Auth::id())->get();
-        
         
         $messages = collect([]);
         $participants = collect([]);
@@ -121,7 +121,17 @@ class InnboksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function sendNewMessage (Request $request)
-    {   
+    {
+        $validator = Validator::make($request->all(), [
+            'mottakere'     => 'required',
+            'tittel'         => 'required',
+            'melding'       => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Alle felt må fylles ut!');
+        }
+
         $message = New Message;
 
         if (Auth::user()->bruker_type == "bedrift") {
@@ -137,7 +147,6 @@ class InnboksController extends Controller
         $message->message 		= $request->melding;
 
         // Saves the message.
-
         $message->save();
         $messageId = $message->id;
 
@@ -222,8 +231,15 @@ class InnboksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function replyMessage (Request $request, Message $message)
-    {   
-        
+    {
+        $validator = Validator::make($request->all(), [
+            'reply' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Du kan ikke sende en tom melding!');
+        }
+
         $reply = New MessagesReply;
         $reply->message_id = $message->id;
         $reply->user_id = Auth::id();
@@ -250,5 +266,6 @@ class InnboksController extends Controller
     public function addUser (Message $message, Request $request)
     {
         dd($message);
+        //todo: finish this method
     }
 }

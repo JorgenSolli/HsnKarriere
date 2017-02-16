@@ -150,8 +150,7 @@ class BedriftController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroyJob (Job $job)
-    {
-            
+    {    
         if ($job->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
             $job = Job::find($job->id);
             $job->delete();
@@ -417,7 +416,6 @@ class BedriftController extends Controller
      */
     public function destroyBachelor (Assignment $assignment) 
     {
-
         if ($assignment->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
             
             // Gets the file for unlink()

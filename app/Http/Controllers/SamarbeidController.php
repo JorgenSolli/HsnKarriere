@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Notification;
 use App\Partnership;
+use Validator;
 use App\User;
 
 class SamarbeidController extends Controller
@@ -23,7 +24,18 @@ class SamarbeidController extends Controller
      * @param  collection $request
      * @return \Illuminate\Http\Response
      */
-    public function nyttSamarbeid (Request $request) {
+    public function nyttSamarbeid (Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'bedrift_id'    => 'required',
+            'type'          => 'required',
+            'faglarer'      => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Alle felt må fylles ut!');
+        }
+
         $samarbeid = New Partnership;
         $bruker_type = Auth::user()->bruker_type;
 
