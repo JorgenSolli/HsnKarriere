@@ -10234,6 +10234,50 @@ body {
 }
 
 /* Dashboard */
+.dashboard-sidebar {
+  padding-right: 0;
+}
+
+.dashboard-sidebar .sidebar-item {
+  width: 100%;
+  text-align: center;
+  height: 60px;
+  line-height: 70px;
+  cursor: pointer;
+}
+
+.dashboard-sidebar .sidebar-1 {
+  background-color: #eb705e;
+}
+
+.dashboard-sidebar .sidebar-1:hover {
+  background-color: #e54831;
+}
+
+.dashboard-sidebar .sidebar-2 {
+  background-color: #f1c500;
+}
+
+.dashboard-sidebar .sidebar-2:hover {
+  background-color: #be9b00;
+}
+
+.dashboard-sidebar .sidebar-3 {
+  background-color: #49caae;
+}
+
+.dashboard-sidebar .sidebar-3:hover {
+  background-color: #33ad93;
+}
+
+.dashboard-sidebar .sidebar-4 {
+  background-color: #33cc62;
+}
+
+.dashboard-sidebar .sidebar-4:hover {
+  background-color: #29a34e;
+}
+
 .media-list-heading {
   padding: 10px 20px 10px 20px;
 }

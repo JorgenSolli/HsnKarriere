@@ -15,6 +15,9 @@ Route::get('notification/check', 'NotificationController@check');
 // User Oversikt/Overview/dashboard
 Route::get('oversikt', 'DashboardController@dashboard');
 
+// Dashboard ajax calls for teachers
+Route::get('oversikt/{type}', 'DashboardController@getSpecificData');
+
 // User routes
 Route::patch('bruker/{user}', 'UserEditController@updateUser');
 Route::get('bruker/rediger', 'UserEditController@index');

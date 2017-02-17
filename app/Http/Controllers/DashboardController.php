@@ -99,8 +99,22 @@ class DashboardController extends Controller
 				'brukerinfo'    => $brukerinfo
 			]);
     	}
-
         else if ($brukerinfo->bruker_type == "faglarer") {
+
+            return view('dashboard.faglarer.dashboard', [
+                'brukerinfo'    => $brukerinfo
+            ]);
+        }
+    }
+
+    /**
+     * Gets a specific type, process thats data and returns the json object
+     * 
+     * @param  string $type the specific type the user wants
+     * @return array
+     */
+    public function getSpecificData($type) {
+        if (Auth::user()->bruker_type == "faglarer") {
             $partnerships = Partnership::where('foreleser_id', Auth::id())
                 ->join('users AS student', 'partnerships.student_id', '=', 'student.id')
                 ->join('users AS bedrift', 'partnerships.bedrift_id', '=', 'bedrift.id')
@@ -124,12 +138,27 @@ class DashboardController extends Controller
                          'bedrift.id AS bedrift_id')
                 ->orderBy('partnerships.updated_at')
                 ->get();
-
-            return view('dashboard.larer.dashboard', [
-                'partnerships'  => $partnerships,
-                'brukerinfo'    => $brukerinfo
-            ]);
+                
+            $returnHTML = view('partials.user.faglarer.dashboard')
+                ->with('type', $type)
+                ->with('partnerships', $partnerships)
+                ->render();
+            return response()->json(array('success' => true, 'data'=>$returnHTML));
+        } else {
+            return abort(403);
         }
 
+        // if ($type === 'aktive-samarbeid') {
+        //     return "Du har valgt aktive samarbeid";
+        // }
+        // else if ($type === 'kontrakt-godkjenning') {
+        //     return "Du har valgt godkjenning av kontrakt";
+        // }
+        // else if ($type === 'venter-kontrakt') {
+        //     return "Du har valgt Venter på kontrakt";
+        // } 
+        // else if ($type === 'godkjenning') {
+        //     return "Du har valgt Venter på godkjenning";
+        // }
     }
 }
