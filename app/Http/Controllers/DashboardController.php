@@ -147,21 +147,5 @@ class DashboardController extends Controller
         } else {
             return abort(403);
         }
-<<<<<<< HEAD
-
-        // if ($type === 'aktive-samarbeid') {
-        //     return "Du har valgt aktive samarbeid";
-        // }
-        // else if ($type === 'kontrakt-godkjenning') {
-        //     return "Du har valgt godkjenning av kontrakt";
-        // }
-        // else if ($type === 'venter-kontrakt') {
-        //     return "Du har valgt Venter på kontrakt";
-        // } 
-        // else if ($type === 'godkjenning') {
-        //     return "Du har valgt Venter på godkjenning";
-        // }
-=======
->>>>>>> f7e9fe9570ca543a1c0e607eb643fbd54eb21949
     }
 }
