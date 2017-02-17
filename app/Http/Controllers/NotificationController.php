@@ -15,6 +15,12 @@ class NotificationController extends Controller
         $this->middleware('auth');
     }
     
+    /**
+     * Gets the notification data
+     *
+     * @param  class $date_formater
+     * @return \Illuminate\Http\Response
+     */
     public function notification (DateFormater $date_formater)
     {
 		$notifications = Notification::where('user_id', Auth::id())
@@ -76,6 +82,11 @@ class NotificationController extends Controller
         return response()->json(array('success' => true, 'data' => $returnHTML));
     }
 
+    /**
+     * Checks for new notifications
+     *
+     * @return array
+     */
     public function check ()
     {
     	$unreadMessages = DB::table('messages_junctions')

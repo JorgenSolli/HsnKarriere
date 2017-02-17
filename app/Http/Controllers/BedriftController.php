@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\User;
-use App\Job;
-use App\Assignment;
 use Validator;
+use App\Job;
+use App\User;
+use App\Company;
+use App\Assignment;
 
 class BedriftController extends Controller
 {
@@ -25,6 +26,13 @@ class BedriftController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Adds a job to the DB
+     *
+     * @param  collection $request
+     * @param  collection $user the current user
+     * @return \Illuminate\Http\Response
+     */
     public function addJob (Request $request, User $user)
     {
         if ($user->id == Auth::id() || Auth::User()->bruker_type == "admin") {
@@ -67,9 +75,12 @@ class BedriftController extends Controller
     }
 
     /**
-    * Job = Current job i DB
-    * Request = Updated Job
-    **/
+     * Edits a job in the DB
+     *
+     * @param  collection $request
+     * @param  collection $job the current job
+     * @return \Illuminate\Http\Response
+     */
     public function editJob (Request $request, Job $job)
     {
         if ($job->bedrift_id == Auth::id() || Auth::User()->bruker_type == "admin") {
@@ -109,16 +120,18 @@ class BedriftController extends Controller
         return back()->with('danger', 'Noe gikk galt.. Venligst prøv igjen.');
     }
 
-    // Returns the data to a AJAX call
+    /**
+     * Views a specific job
+     *
+     * @param  collection $job current job
+     * @param  int $jobId the ID of the current job
+     * @return \Illuminate\Http\Response
+     */
     public function seeJob (Job $job, $jobId)
     {
         $brukerinfo = Auth::user();
         
-        if (!empty(Auth::user()->bedrift_fagfelt)) {
-            $bedrift_fagfelt = explode(";", Auth::user()->bedrift_fagfelt);
-        } else {
-            $bedrift_fagfelt = "";
-        }
+        $bedrift_fagfelt = Company::where('user_id', Auth::id());
 
         $job = $job->where('id', $jobId)->first();
 
@@ -130,10 +143,14 @@ class BedriftController extends Controller
         return response()->json(array('success' => true, 'job'=>$returnHTML));
     }
 
-    // Delete a job
+    /**
+     * Deletes a job in the DB
+     *
+     * @param  collection $job the current job
+     * @return \Illuminate\Http\Response
+     */
     public function destroyJob (Job $job)
-    {
-            
+    {    
         if ($job->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
             $job = Job::find($job->id);
             $job->delete();
@@ -144,6 +161,13 @@ class BedriftController extends Controller
         }
     }
 
+    /**
+     * Adds an master assignment in the DB
+     *
+     * @param collection $request
+     * @param collection $user the current user
+     * @return \Illuminate\Http\Response
+     */
     public function addMaster (Request $request, User $user)
     {
         if ($user->id == Auth::id() || Auth::user()->bruker_type == "admin") {
@@ -182,17 +206,17 @@ class BedriftController extends Controller
         }
     }
 
-    public function seeMaster (Assignment $assignment, $assignmentId)
+    /**
+     * Views a specific master assignment
+     *
+     * @param  collection $assignment
+     * @return \Illuminate\Http\Response
+     */
+    public function seeMaster (Assignment $assignment)
     {
         $brukerinfo = Auth::user();
         
-        if (!empty(Auth::user()->bedrift_fagfelt)) {
-            $bedrift_fagfelt = explode(";", Auth::user()->bedrift_fagfelt);
-        } else {
-            $bedrift_fagfelt = "";
-        }
-
-        $assignment = $assignment->where('id', $assignmentId)->first();
+        $bedrift_fagfelt = Company::where('user_id', Auth::id());
 
         $returnHTML = view('partials.user.bedrift.seeMaster')
                 ->with('assignment', $assignment)
@@ -202,6 +226,13 @@ class BedriftController extends Controller
         return response()->json(array('success' => true, 'assignment'=>$returnHTML));
     }
 
+    /**
+     * Edit a specific master assignment
+     *
+     * @param  collection $request
+     * @param  collection $assignment
+     * @return \Illuminate\Http\Response
+     */
     public function editMaster (Request $request, Assignment $assignment)
     {
         $validator = Validator::make($request->all(), [
@@ -239,7 +270,14 @@ class BedriftController extends Controller
         return back()->with('success', 'Masteroppgaven ble endret.');
     }
 
-    public function destroyMaster (Assignment $assignment) {
+    /**
+     * Deletes a specific master assignment
+     *
+     * @param  collection $assignment
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyMaster (Assignment $assignment) 
+    {
 
         if ($assignment->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
 
@@ -258,6 +296,13 @@ class BedriftController extends Controller
         }
     }
 
+    /**
+     * Adds a specific bachelor assignment
+     *
+     * @param  collection $request
+     * @param  collection $user
+     * @return \Illuminate\Http\Response
+     */
     public function addBachelor (Request $request, User $user)
     {
         if ($user->id == Auth::id() || Auth::user()->bruker_type == "admin") {
@@ -296,15 +341,18 @@ class BedriftController extends Controller
         }
     }
 
+    /**
+     * Views a specific bachelor assignment
+     *
+     * @param  collection $assignment
+     * @param  int @assignmentId the ID of the assignment
+     * @return \Illuminate\Http\Response
+     */
     public function seeBachelor (Assignment $assignment, $assignmentId)
     {
         $brukerinfo = Auth::user();
         
-        if (!empty(Auth::user()->bedrift_fagfelt)) {
-            $bedrift_fagfelt = explode(";", Auth::user()->bedrift_fagfelt);
-        } else {
-            $bedrift_fagfelt = "";
-        }
+        $bedrift_fagfelt = Company::where('user_id', Auth::id());
 
         $assignment = $assignment->where('id', $assignmentId)->first();
 
@@ -316,6 +364,13 @@ class BedriftController extends Controller
         return response()->json(array('success' => true, 'assignment'=>$returnHTML));
     }
 
+    /**
+     * Edit a specific bachelor assignment
+     *
+     * @param  collection $request
+     * @param  collection $assignment
+     * @return \Illuminate\Http\Response
+     */
     public function editBachelor (Request $request, Assignment $assignment)
     {
         $validator = Validator::make($request->all(), [
@@ -353,8 +408,14 @@ class BedriftController extends Controller
         return back()->with('success', 'Bacheloroppgaven ble endret.');
     }
 
-    public function destroyBachelor (Assignment $assignment) {
-
+    /**
+     * Deletes a specific bachelor assignment
+     *
+     * @param  collection $assignment
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyBachelor (Assignment $assignment) 
+    {
         if ($assignment->bedrift_id == Auth::id() || Auth::user()->bruker_type == "admin") {
             
             // Gets the file for unlink()

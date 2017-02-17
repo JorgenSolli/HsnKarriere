@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\User;
+use Validator;
 use App\Message;
 use App\Company;
 use App\StudentStudy;
@@ -32,12 +33,12 @@ class InnboksController extends Controller
     /**
      * Lists all messages the user has access to.
      * 
-     * @return string
+     * @return \Illuminate\Http\Response
      */
-    public function listMessages() {
+    public function listMessages() 
+    {
     	$brukerinfo = Auth::user();
         $junctions = MessagesJunction::where('user_id', Auth::id())->get();
-        
         
         $messages = collect([]);
         $participants = collect([]);
@@ -79,8 +80,8 @@ class InnboksController extends Controller
     /**
      * Created a new message in the database
      * 
-     * @param  $querryservice class
-     * @return array
+     * @param  class $querryservice
+     * @return \Illuminate\Http\Response
      */
     public function newMessage (QuerryService $querry_service)
     {   
@@ -116,11 +117,21 @@ class InnboksController extends Controller
     /**
      * Sends a message to a specific user(s)
      * 
-     * @param  $request collection
-     * @return string
+     * @param  collection $request
+     * @return \Illuminate\Http\Response
      */
     public function sendNewMessage (Request $request)
-    {   
+    {
+        $validator = Validator::make($request->all(), [
+            'mottakere'     => 'required',
+            'tittel'         => 'required',
+            'melding'       => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Alle felt må fylles ut!');
+        }
+
         $message = New Message;
 
         if (Auth::user()->bruker_type == "bedrift") {
@@ -136,7 +147,6 @@ class InnboksController extends Controller
         $message->message 		= $request->melding;
 
         // Saves the message.
-
         $message->save();
         $messageId = $message->id;
 
@@ -158,6 +168,12 @@ class InnboksController extends Controller
         return back()->with('success', 'Meldingen ble sendt!');
     }
 
+    /**
+     * View a specific Message
+     *
+     * @param  collection $message
+     * @return \Illuminate\Http\Response
+     */
     public function seeMessage (Message $message)
     {
         $junctions = MessagesJunction::where('message_id', $message->id)->get();
@@ -207,9 +223,23 @@ class InnboksController extends Controller
         return response()->json(array('success' => true, 'data' => $returnHTML));
     }
 
+    /**
+     * Adds a reply to the DB
+     *
+     * @param  collection $request
+     * @param  collection $request
+     * @return \Illuminate\Http\Response
+     */
     public function replyMessage (Request $request, Message $message)
-    {   
-        
+    {
+        $validator = Validator::make($request->all(), [
+            'reply' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Du kan ikke sende en tom melding!');
+        }
+
         $reply = New MessagesReply;
         $reply->message_id = $message->id;
         $reply->user_id = Auth::id();
@@ -226,8 +256,16 @@ class InnboksController extends Controller
         return back()->with('success', 'Svar sendt');
     }
 
+    /**
+     * Adds a user to a message in the DB
+     *
+     * @param  collection $message
+     * @param  collection $request
+     * @return \Illuminate\Http\Response
+     */
     public function addUser (Message $message, Request $request)
     {
         dd($message);
+        //todo: finish this method
     }
 }

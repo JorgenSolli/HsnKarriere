@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Notification;
 use App\Partnership;
+use Validator;
 use App\User;
 
 class SamarbeidController extends Controller
@@ -17,7 +18,24 @@ class SamarbeidController extends Controller
         $this->middleware('auth');
     }
     
-    public function nyttSamarbeid (Request $request) {
+    /**
+     * Adds a new partnership between a student and a company
+     *
+     * @param  collection $request
+     * @return \Illuminate\Http\Response
+     */
+    public function nyttSamarbeid (Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'bedrift_id'    => 'required',
+            'type'          => 'required',
+            'faglarer'      => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('danger', 'Alle felt må fylles ut!');
+        }
+
         $samarbeid = New Partnership;
         $bruker_type = Auth::user()->bruker_type;
 
@@ -89,6 +107,12 @@ class SamarbeidController extends Controller
     	return back()->with('success', 'Samarbeidet er startet!');
     }
 
+    /**
+     * Confirms a partnership
+     *
+     * @param  collection $partnership the current partnership
+     * @return \Illuminate\Http\Response
+     */
     public function godkjennSamarbeid (Partnership $partnership) {     
         $bruker_info = Auth::user();
 
@@ -116,6 +140,12 @@ class SamarbeidController extends Controller
         return back()->with('success', 'Samarbeidet har nå blitt godkjent.');
     }
 
+    /**
+     * Deletes a specific partnership
+     *
+     * @param collection $partnership a specific partnership
+     * @return \Illuminate\Http\Response
+     */
     public function slettSamarbeid (Partnership $partnership) {
         $bruker_info = Auth::user();
 

@@ -22,7 +22,7 @@ class AuthController extends Controller
     /**
      * Redirect the user to the OAuth Provider
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function redirectToProvider ($provider)
     {
@@ -35,7 +35,7 @@ class AuthController extends Controller
      * If the user exists, log them in. Othervise, create a new user then log them in. After
      * that, redirect them to the authenticated user to their dashboard
      *
-     * @return Reponse
+     * @return \Illuminate\Http\Response
      */
     public function handleProviderCallback ($provider)
     {
@@ -77,8 +77,8 @@ class AuthController extends Controller
      * If a user has registered bedore using social auth, return user.
      * Else, create a new user object.
      * 
-     * @param $user Socialite user object
-     * @param $provider Social auth provider
+     * @param  $user Socialite user object
+     * @param  $provider Social auth provider
      * @return User
      */
     public function findOrCreateUser ($user, $provider)

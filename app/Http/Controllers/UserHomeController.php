@@ -86,7 +86,7 @@ class UserHomeController extends Controller
             $studier = StudentStudy::where('user_id', Auth::id())
                 ->select('studie')
                 ->get();
-            $faglarere = $querry_service->finnKontakter($studier);
+            $faglarere = $querry_service->finnKontakter($studier, false);
             return view('user.bedrift.seBruker',
             [
                 'brukerinfo' => $brukerinfo,

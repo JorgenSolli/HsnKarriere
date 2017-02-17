@@ -14,16 +14,14 @@ class UploadController extends Controller
     }
     
     /**
-    * Updates the user avatar
+    * Updates the user headerimage
     *
-    * @param  \Illuminate\Http\Request $request
-    * @param  int $user (id)
     * @return \Illuminate\Http\Response
     */
     public function uploadForsidebilde () {
 
-    	// Gets file, uplads it, and store the path and filename
-    	$file = request()->file('forsidebilde');
+        // Gets file, uplads it, and store the path and filename
+        $file = request()->file('forsidebilde');
 		$path = $file->store('uploads/img/forsidebilder');
 
 		$user = User::find(Auth::id());
@@ -36,8 +34,6 @@ class UploadController extends Controller
     /**
     * Updates the user avatar
     *
-    * @param  \Illuminate\Http\Request $request
-    * @param  int $user (id)
     * @return \Illuminate\Http\Response
     */
     public function uploadProfilbilde () {

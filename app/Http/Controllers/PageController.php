@@ -7,8 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PageController extends Controller {
-	public function hjem() {
 
+	/**
+	 * Gets the homepage
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function hjem() {
 		if (Auth::guest()) {
 			return view('hjemGuest');
 		} 
