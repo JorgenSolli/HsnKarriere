@@ -8,12 +8,26 @@
 
     <title>HSN Karriere</title>
 
+    {{-- Pace loading --}}
+    <script src="/js/dist/pace.min.js"></script>
+    <link rel="stylesheet" href="/css/pace.css">
+
+    <script>
+paceOptions = {
+  // Configuration goes here. Example:
+  elements: true,
+  restartOnPushState: false,
+  restartOnRequestAfter: false
+}
+</script>
+
     <!-- styles -->
     <link rel="stylesheet" href="/css/dist/select2.min.css">
     <link rel="stylesheet" href="/css/dist/fileinput.min.css">
     <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
     <link rel="stylesheet" href="/css/dist/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/css/app.css">
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
