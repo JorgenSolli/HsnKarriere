@@ -17,7 +17,7 @@
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
 	            <p class="h3 m-a-0">25</p>
-	            <p>Passende bedrifter</p>
+	            <p>Krever din godkjenning</p>
 	          </div>
 	        </div>
 				</div>
@@ -36,7 +36,7 @@
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
 	            <p class="h3 m-a-0">1</p>
-	            <p>Aktivt samarbeid</p>
+	            <p>Venter på dokumenter</p>
 	          </div>
 	        </div>
 				</div>
@@ -56,7 +56,7 @@
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
 	            <p class="h3 m-a-0">3</p>
-	            <p>Samtaler</p>
+	            <p>Godkjenne dokumenter</p>
 	          </div>
 	        </div>
 				</div>
@@ -76,7 +76,7 @@
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
 	            <p class="h3 m-a-0">3</p>
-	            <p>Samtaler</p>
+	            <p>Aktive samarbeid</p>
 	          </div>
 	        </div>
 				</div>
@@ -87,7 +87,11 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div id="data">
-				<p class="h3 text-center m-t-lg">Velg en kategori fra menyen til venstre</p>
+				<p class="h3 text-center m-t-lg">
+					<span class="fa fa-arrow-up"></span>&nbsp;
+					Velg en kategori fra menyen til ovenfor&nbsp;
+					<span class="fa fa-arrow-up"></span>
+				</p>
 			</div> {{-- End /data --}}
 	  </div>
   </div>

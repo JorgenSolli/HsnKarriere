@@ -1,0 +1,136 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use Auth;
+use App\User;
+use Socialite;
+use Validator;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
+class AuthController extends Controller
+{
+	/**
+     * Determines is this is the users first login or not.
+     *
+     * @var boolean
+     */
+    protected $newOrNot = false;
+
+    /**
+     * Redirect the user to the OAuth Provider
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToProvider ($provider)
+    {
+    	return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Obtain the user information from provider. Check if the user already exists in our
+     * database by looking up their provider_id in the database.
+     * If the user exists, log them in. Othervise, create a new user then log them in. After
+     * that, redirect them to the authenticated user to their dashboard
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback ($provider)
+    {
+    	/* Facebook requires us to force first and last name data */
+		if ($provider == 'facebook') {
+			try {
+	        	$user = Socialite::driver($provider)
+	        	->fields([
+	        		'first_name',
+	        		'last_name',
+	        		'email',
+        		])
+	        	->user();
+	        } catch (Exception $e) {
+	            return redirect('auth/'.$provider);
+	        }
+		} else {
+			try {
+	        	$user = Socialite::driver($provider)
+	        	->user();
+	        } catch (Exception $e) {
+	            return redirect('auth/'.$provider);
+	        }
+		}
+
+        
+        $authUser = $this->findOrCreateUser ($user, $provider);
+        Auth::login($authUser, true);
+        
+        /* If the user is new, redirect to settings page */
+        if ($this->newOrNot == true) {
+            return redirect("/bruker/rediger")->with('success', 'Velkommen til HSN Karriere! La oss begynne med å fullføre profilen din.');
+        } else {
+            return redirect("/bruker");
+        }
+    }
+
+    /**
+     * If a user has registered bedore using social auth, return user.
+     * Else, create a new user object.
+     * 
+     * @param  $user Socialite user object
+     * @param  $provider Social auth provider
+     * @return User
+     */
+    public function findOrCreateUser ($user, $provider)
+    {
+    	$authUser = User::where('provider_id', $user->id)->first();
+
+    	if ($authUser) {
+    		return $authUser;
+    	}
+
+        /* The user is a new user, and will be redirected to the settings page */
+        $this->newOrNot = true;
+        //dd($user);
+    	if ($provider == 'google') {
+    		$fornavn = $user->user['name']['givenName'];
+    		$etternavn = $user->user['name']['familyName'];
+            $brukertype = "bedrift";
+            $profilbilde = "img/profilbilder/bedrift_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/bedrift_forsidebilde.jpg";
+    	} 
+        elseif ($provider == 'linkedin') {
+    		$fornavn = $user->user['firstName'];
+    		$etternavn = $user->user['lastName'];
+            $brukertype = "bedrift";
+            $profilbilde = "img/profilbilder/bedrift_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/bedrift_forsidebilde.jpg";
+    	} 
+        elseif ($provider == 'facebook') {
+            $fornavn = $user->user['first_name'];
+            $etternavn = $user->user['last_name'];
+            $brukertype = "student";
+            $profilbilde = "img/profilbilder/student_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/student_forsidebilde.jpg";
+        } 
+        else {
+    		$fornavn = "";
+    		$etternavn = "";
+            $brukertype = "faglarer";
+            $profilbilde = "img/profilbilder/faglarer_profilbilde.png";
+            $forsidebilde = "img/forsidebilder/bedrift_forsidebilde.jpg";
+    	}
+
+    	return User::create([
+    		'fornavn' => $fornavn,
+    		'etternavn' => $etternavn,
+    		'email' => $user->email,
+    		'provider' => $provider,
+    		'provider_id' => $user->id,
+    		'bruker_type' => $brukertype,
+    		'profilbilde' => $profilbilde,
+    		'forsidebilde' => $forsidebilde,
+		]);
+    }
+}
+

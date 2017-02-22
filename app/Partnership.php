@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Partnership extends Model
 {
+	/**
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
     protected $fillable = [
     	'bedrift_id',
     	'student_id',
