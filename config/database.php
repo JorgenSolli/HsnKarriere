@@ -52,13 +52,13 @@ return [
             'prefix' => '',
         ],
 
-        'mysql' => [ 
+        'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'us-cdbr-iron-east-04.cleardb.net'),
+            'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'heroku_d1b97d590fac787'),
-            'username' => env('DB_USERNAME', 'bafe5474d42f5d'),
-            'password' => env('DB_PASSWORD', '0c744ec6'),
+            'database' => env('DB_DATABASE', 'loggit'),
+            'username' => env('DB_USERNAME', 'localhost'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
