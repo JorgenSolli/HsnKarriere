@@ -193,14 +193,17 @@
 				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s">
 												    Velg fil <input type="file" name="kontrakt">
 													</span>
-			          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
+			          					<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
 			            			</div>
 		      						</form>
+		      						@if ($partnership->kontrakt)
+		      							<a href="uploads/{{ $partnership->kontrakt }}" class="btn btn-success">Se kontrakten</a>
+		      						@endif
 				            </div>
 			            </div>
 
 			            <!-- Step three -->
-			            <div class="row line-border step-inactive">
+			            <div class="row line-border @unless($partnership->kontrakt) step-inactive @endunless">
 				            <div class="col-xs-1">
 				            	<p class="step">3</p>
 				            </div>

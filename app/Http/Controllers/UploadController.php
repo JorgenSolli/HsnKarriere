@@ -21,7 +21,7 @@ class UploadController extends Controller
     */
     public function uploadForsidebilde () {
 
-        // Gets file, uplads it, and store the path and filename
+        // Gets file, uplads it, and stores the path and filename
         $file = request()->file('forsidebilde');
 		$path = $file->store('uploads/img/forsidebilder');
 
@@ -39,7 +39,7 @@ class UploadController extends Controller
     */
     public function uploadProfilbilde () {
 
-    	// Gets file, uplads it, and store the path and filename
+    	// Gets file, uplads it, and stores the path and filename
     	$file = request()->file('profilbilde');
 		$path = $file->store('uploads/img/profilbilder');
 
@@ -58,12 +58,14 @@ class UploadController extends Controller
     public function uploadContract (Partnership $partnership, Request $request) {
 
         if ($partnership->student_id == Auth::id()) {
-            // Gets file, uplads it, and store the path and filename
+            // Gets file, uplads it, and stores the path and filename
             $file = request()->file('kontrakt');
-            $path = $file->store('uploads/kontrakter/signert');
+            $path = $file->store('kontrakter/signert');
 
             $partnership->kontrakt = $path;
+            $partnership->signert_av_student = 1;
             $partnership->save();
+
             return back()->with('success', 'Kontrakten ble lastet opp.');
         }
 
