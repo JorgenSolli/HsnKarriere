@@ -14,6 +14,9 @@ $(document).ready(function() {
 		loading.show();
 		$.ajax({
             type: 'GET',
+            headers: {
+	        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
             url: '/innboks/newMessage/', 
             data: {
             	reciepment: id
@@ -41,6 +44,9 @@ $(document).ready(function() {
 		loading.show();
 		$.ajax({
             type: 'GET',
+            headers: {
+	        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
             url: 'innboks/findUsers/' + messageId,
             success: function(data) {
             	loading.hide();
@@ -65,6 +71,9 @@ $(document).ready(function() {
 		$("#messages a").removeClass('active');
 		$.ajax({
 			type: 'GET',
+			headers: {
+	        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
 			url: '/innboks/seeMessage/' + id,
 			success: function(data) {
 				$("#" + id).addClass('active');

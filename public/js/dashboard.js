@@ -8,6 +8,9 @@ $(document).ready(function() {
 		container.html(loading);
 		$.ajax({
 			metod: 'GET',
+			headers: {
+	        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
 			url: '/oversikt/' + param,
 
 			success: function(data) {

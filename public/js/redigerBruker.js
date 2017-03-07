@@ -100,6 +100,9 @@ $(function () {
 
         $.ajax({
             type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: 'seeJob/' + jobId, 
             success: function(data) {
                 $(".ajaxLoading").remove();
@@ -130,6 +133,9 @@ $(function () {
 
         $.ajax({
             type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: 'seeMaster/' + masterId, 
             success: function(data) {
                 $(".ajaxLoading").remove();
@@ -160,6 +166,9 @@ $(function () {
 
         $.ajax({
             type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: 'seeBachelor/' + bachelorId, 
             success: function(data) {
                 $(".ajaxLoading").remove();

@@ -8,6 +8,9 @@ $("#sortList").on('click', function() {
 	container.html(loading);
 	$.ajax({
 		type: 'GET',
+		headers: {
+	        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        },
 		url: 'users/showUsers/list', 
 		success: function(data) {
 			container.html(data['data']);
@@ -22,6 +25,9 @@ $("#sortCards").on('click', function() {
 	container.html(loading);
 	$.ajax({
 		type: 'GET',
+		headers: {
+        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
 		url: 'users/showUsers/cards', 
 		success: function(data) {
 			container.html(data['data']);
@@ -46,6 +52,9 @@ $("#search-users-submit").on('submit', function(e) {
 	container.html(loading);
 	$.ajax({
 		type: 'GET',
+		headers: {
+        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
 		url: postUrl,
 		data: {
 			searchString: searchString,
