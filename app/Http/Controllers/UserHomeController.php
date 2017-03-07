@@ -23,7 +23,6 @@ class UserHomeController extends Controller
         
             $brukerinfo = Auth::user();
             $student_studerer = StudentStudy::where('user_id', Auth::id())
-                ->select('studie')
                 ->get();
             $bedrifter  = $querry_service->finnBedrifter($student_studerer, false);
             $kontakter  = $querry_service->finnKontakter($student_studerer, false);

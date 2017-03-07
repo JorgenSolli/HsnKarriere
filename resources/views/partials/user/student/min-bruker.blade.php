@@ -2,7 +2,11 @@
   <div class="col-sm-6 p-r-s p-l-s">
     <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
       <p class="h4"><span class="fa fa-file-text-o"></span> Bio</p>
-      <p>{{ $brukerinfo->bio }}</p>
+      @if ($brukerinfo->bio)
+        <p>{{ $brukerinfo->bio }}</p>
+      @else
+        <p>Biografi for {{ $brukerinfo->fornavn }} er ikke lagt til enda.</p>
+      @endif
     </div>
   </div>
   <div class="col-sm-4 p-r-s p-l-s">
@@ -20,7 +24,11 @@
     <div class="col-sm-2 p-r-s p-l-s">
       <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
         <p class="h4"><span class="fa fa-phone"></span> Telefon</p>
-        <p>{{ $brukerinfo->telefon }}</p>
+        @if ($brukerinfo->telefon != 0)
+          <p>{{ $brukerinfo->telefon }}</p>
+        @else
+          <p>Nummer ikke oppført</p>
+        @endif
       </div>
     </div>
 </div>
@@ -40,7 +48,11 @@
   <div class="col-sm-3 p-r-s p-l-s">
     <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
       <p class="h4"><span class="fa fa-home"></span> Adresse</p>
-      <p>{{ $brukerinfo->adresse }}, {{ $brukerinfo->postnr }}, {{ $brukerinfo->poststed }}</p>
+      @if ($brukerinfo->adresse && $brukerinfo->postnr && $brukerinfo->poststed)
+        <p>{{ $brukerinfo->adresse }}, {{ $brukerinfo->postnr }}, {{ $brukerinfo->poststed }}</p>
+      @else
+        <p>Ingen adresse oppført</p>
+      @endif
     </div>
   </div>
   <div class="col-sm-3 p-r-s p-l-s">

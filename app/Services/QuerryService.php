@@ -25,6 +25,8 @@ class QuerryService {
                 $bedrifter = DB::table('companies')
                     ->select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
                     ->where('bedrift_navn', 'like', $searchString . "%")
+                    ->orWhere('fornavn', 'like', $searchString . "%")
+                    ->orWhere('etternavn', 'like', $searchString . "%")
                     ->orWhere('telefon', 'like', $searchString . "%")
                     ->orWhere('email', 'like', $searchString . "%")
                     ->orWhere('poststed', 'like', $searchString . "%")

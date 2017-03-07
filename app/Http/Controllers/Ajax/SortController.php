@@ -67,7 +67,7 @@ class SortController extends Controller
 			else {
 	    		$studenter = $querry_service->finnStudenter($area_of_expertise, false);
 			}
-
+			
 	    	$returnHTML = view('partials.user.bedrift.studenter.' . $display)
 	    		->with('studenter', $studenter)
 	    		->render();
