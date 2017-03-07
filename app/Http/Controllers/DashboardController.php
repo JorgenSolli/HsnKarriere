@@ -61,7 +61,7 @@ class DashboardController extends Controller
                          'larer.id AS larer_id')
                 ->orderBy('partnerships.updated_at')
                 ->get();
-	    	
+
             return view('dashboard.student.dashboard', [
                 'partnerships'  => $partnerships,
 	    		'brukerinfo'    => $brukerinfo

@@ -42,11 +42,21 @@ class UserEditController extends Controller
 
         else if (Auth::user()->bruker_type == "bedrift") {
             $brukerinfo = Auth::user();
-            $company = Company::where('user_id', Auth::id())->get();
-            $jobs = Job::where('bedrift_id', Auth::id())->orderBy('created_at', 'desc')->get();
-            $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', Auth::id())->get();
-            $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', Auth::id())->get();
+            $company = Company::where('user_id', Auth::id())
+                ->get();
 
+            $jobs = Job::where('bedrift_id', Auth::id())
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $masters = Assignment::where('type', 'masteroppgave')
+                ->where('bedrift_id', Auth::id())
+                ->get();
+
+            $bachelors = Assignment::where('type', 'bacheloroppgave')
+                ->where('bedrift_id', Auth::id())
+                ->get();
+                
             return view('user.bedrift.redigerBruker', [
                 'brukerinfo'  => $brukerinfo,
                 'company'     => $company,

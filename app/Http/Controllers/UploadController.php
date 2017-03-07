@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Partnership;
 use App\User;
 
 class UploadController extends Controller
@@ -47,5 +48,25 @@ class UploadController extends Controller
 		$user->save();
 
     	return back();
+    }
+
+    /**
+    * Updates the contract for a partnership
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function uploadContract (Partnership $partnership, Request $request) {
+
+        if ($partnership->student_id == Auth::id()) {
+            // Gets file, uplads it, and store the path and filename
+            $file = request()->file('kontrakt');
+            $path = $file->store('uploads/kontrakter/signert');
+
+            $partnership->kontrakt = $path;
+            $partnership->save();
+            return back()->with('success', 'Kontrakten ble lastet opp.');
+        }
+
+        return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');
     }
 }

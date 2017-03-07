@@ -36,7 +36,7 @@
     				<div class="col-xs-4 p-r-0">
     					<div class="panel panel-default left-box m-b-0">
 			          <div class="panel-body text-center">
-		              <span class="white-color fa fa-building-o fa-2x m-a-0"></span>
+		              <span class="white-color fa fa-graduation-cap fa-2x m-a-0"></span>
 			          </div>
 			        </div>
     				</div>
@@ -45,7 +45,7 @@
     					<div class="panel panel-default m-b-0">
 			          <div class="panel-body text-center">
 			            <p class="h3 m-a-0">25</p>
-			            <p>Passende bedrifter</p>
+			            <p>Passende studenter</p>
 			          </div>
 			        </div>
     				</div>
@@ -100,10 +100,10 @@
 			      	<li class="media list-group-item media-list-heading">
 			          <div class="media-body">
 			            <div class="media-heading">
-			              <h3 class="white-color m-a-0">
-			              	<span class="fa fa-briefcase fa-sm"></span> {{ $partnership->type_samarbeid }} med {{ $partnership->fornavn }} {{ $partnership->etternavn }}
+			              <p class="h3 m-a-0">
+			              	<span class="fa fa-briefcase fa-sm"></span> {{ ucfirst($partnership->type_samarbeid) }} med {{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }}
 			              	<span class="cursor pull-right fa fa-minus-square"></span>
-			            	</h3>
+			            	</p>
 			            </div>
 			          </div>
 			        </li>
@@ -269,5 +269,5 @@
 
 @stop
 @section('script')
-		<script src="/js/oversikt.js"></script>
+		{{-- <script src="/js/oversikt.js"></script> --}}
 @stop

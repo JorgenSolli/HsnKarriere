@@ -17,7 +17,7 @@
         </div>
       </div>
 
-			<div class="panel panel-default panel-link-list">
+		<div class="panel panel-default panel-link-list">
         <div class="panel-body">
           © 2017 HSN Karriere
           <a href="#">Om</a> ·
@@ -100,11 +100,11 @@
 			      	<li class="media list-group-item media-list-heading">
 			          <div class="media-body">
 			            <div class="media-heading">
-			              <h3 class="white-color m-a-0">
+			              <p class="h3 m-a-0">
 			              	<span class="fa fa-briefcase fa-sm"></span> 
 			              	{{ ucfirst($partnership->type_samarbeid) }} hos {{ $partnership->bedrift_navn }}
 			              	<span class="cursor pull-right fa fa-minus-square"></span>
-			            	</h3>
+			            	</p>
 			            </div>
 			          </div>
 			        </li>
@@ -148,6 +148,11 @@
 		            			@endif
 		            		</div>
 		            	</div>
+		            	<form action="samarbeid/{{ $partnership->id }}" method="post" class="pull-left">
+        						{{ csrf_field() }}
+        						{{ method_field('DELETE') }}
+        						<button type="submit" class="btn btn-sm btn-danger m-r-s">SLETT SAMARBEID</button>
+      						</form>
       					</div>
 	        		</li>
 	        	@else
@@ -182,14 +187,15 @@
 				            </div>
 				            <div class="col-xs-11">
 				            	<p class="h4">Fyll ut og last opp kontrakten</p>
-				            	<form>
-				            		<div class="form-group">
+		            			<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
+			            			<div class="form-group">
+			        						{{ csrf_field() }}
 				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s">
-												    Velg fil <input type="file" name="contract_upload">
+												    Velg fil <input type="file" name="kontrakt">
 													</span>
 			          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
-				            		</div>
-				            	</form>
+			            			</div>
+		      						</form>
 				            </div>
 			            </div>
 
@@ -199,7 +205,7 @@
 				            	<p class="step">3</p>
 				            </div>
 				            <div class="col-xs-11">
-				            	<p class="h4">{bedrift_navn} må laste opp arbeidsbeskrivelsen</p>
+				            	<p class="h4">{{ $partnership->bedrift_navn }} må laste opp arbeidsbeskrivelsen</p>
 				            	<p><span class="fa fa-hourglass-half warning-color"></span> Ingen arbeidsbeksrivele lastet opp enda...</p>
 				            </div>
 			            </div>
@@ -269,5 +275,5 @@
 
 @stop
 @section('script')
-		<script src="/js/oversikt.js"></script>
+		{{-- <script src="/js/oversikt.js"></script> --}}
 @stop

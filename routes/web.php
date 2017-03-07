@@ -27,6 +27,7 @@ Route::get('bruker', 'UserHomeController@bruker');
 // Upload Routes
 Route::post('bruker/uploads/forsidebilde', 'UploadController@uploadForsidebilde');
 Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
+Route::post('oversikt/uploads/kontrakt/{partnership}', 'UploadController@uploadContract');
 
 // Delete Routes
 Route::delete('bruker/rediger/forsidebilde/{user}', 'UserEditController@deleteFrontImg');

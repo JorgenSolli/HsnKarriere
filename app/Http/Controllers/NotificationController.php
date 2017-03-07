@@ -97,7 +97,8 @@ class NotificationController extends Controller
 			->count();
 
 		$notifications = Notification::where('user_id', Auth::id())
-			->where('has_seen', null)
+			->where('has_seen', 0)
+			->orWhere('has_seen', null)
 			->count();
 
 		$total = $unreadMessages + $notifications;
