@@ -63,7 +63,7 @@ class UploadController extends Controller
         if (   ($bruker_type == "student" && $partnership->student_id == $bruker_id)
             || ($bruker_type == "bedrift" && $partnership->bedrift_id == $bruker_id)) {
             // Removes old contract
-            if (file_exists('uploads/' . $currContract)) {
+            if ($currContract != "" && file_exists('uploads/' . $currContract)) {
                 unlink("uploads/" . $currContract);
             }
 
@@ -80,6 +80,34 @@ class UploadController extends Controller
             $partnership->save();
 
             return back()->with('success', 'Kontrakten ble lastet opp.');
+        }
+
+        return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');
+    }
+
+    /**
+    * Updates the contract for a partnership
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function uploadJobDescription (Partnership $partnership, Request $request) {
+        $bruker_type = Auth::user()->bruker_type;
+        $bruker_id = Auth::id();
+        $currDesc = $partnership->arbeidsbesk;
+
+        if ($bruker_type == "bedrift" && $partnership->bedrift_id == $bruker_id) {
+            // Removes old contract
+            if ($currDesc != "" && file_exists('uploads/' . $currDesc)) {
+                unlink("uploads/" . $currDesc);
+            }
+
+            // Gets file, uplads it, and stores the path and filename
+            $file = request()->file('arbeidsbesk');
+            $path = $file->store('arbeidsbeskrivelse');
+            $partnership->arbeidsbesk = $path;
+            $partnership->save();
+
+            return back()->with('success', 'Arbeidsbeskrivelsen ble lastet opp.');
         }
 
         return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');

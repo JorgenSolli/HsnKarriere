@@ -188,14 +188,23 @@
 					            <div class="col-xs-11">
 					            	<p class="h4">Fyll ut og last opp kontrakten</p>
 					            	<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
+					            		{{ csrf_field() }}
 					            		<div class="input-group">
-				          					<label class="btn btn-primary-outline btn-file pull-left m-r-s">
-													    <span class="inputFile">Velg fil&hellip;</span> <input type="file" style="display: none;">
+			          						<label class="btn btn-primary-outline btn-file pull-left m-r-s">
+													    <span class="inputFile">Velg fil&hellip;</span> 
+													    	<input type="file" name="kontrakt" class="hidden">
 														</label>
 
 														<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
 													</div>
 					            	</form>
+					            	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
+					            		<a href="uploads/{{ $partnership->kontrakt }}" class="btn btn-success">Se kontrakten</a>
+					            		<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
+													  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													  Du har signert og lastet opp kontrakten. Du har enda muligheten til å laste opp en ny kontrakt hvis noe skulle mangle. <strong>Så fort arbeidsbeskrivelsen er lastet opp har du ikke lengre mulighet til dette!</strong>
+													</div>
+					            	@endif
 					            </div>
 				            </div>
 			            @else
@@ -216,15 +225,57 @@
 			            @endif
 
 			            <!-- Step three -->
-			            <div class="row line-border step-inactive">
-				            <div class="col-xs-1">
-				            	<p class="step">3</p>
+			            @if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1 && $partnership->arbeidsbesk == "")
+				            <div class="row line-border">
+					            <div class="col-xs-1">
+					            	<p class="step">3</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4">Last opp arbeidsbeskrivelse 
+					            		<span class="info-color cursor fa fa-question-circle fa-lg"></span></p>
+					            	<form action="oversikt/uploads/arbeidsbeskrivelse/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
+					            		{{ csrf_field() }}
+					            		<div class="input-group">
+			          						<label class="btn btn-primary-outline btn-file pull-left m-r-s">
+													    <span class="inputFile">Velg fil&hellip;</span> 
+													    	<input type="file" name="arbeidsbesk" class="hidden">
+														</label>
+
+														<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+													</div>
+					            	</form>
+					            </div>
 				            </div>
-				            <div class="col-xs-11">
-				            	<p class="h4">{bedrift_navn} må laste opp arbeidsbeskrivelsen</p>
-				            	<p><span class="fa fa-hourglass-half warning-color"></span> Ingen arbeidsbeksrivele lastet opp enda...</p>
+			            @elseif ($partnership->arbeidsbesk)
+			            	<div class="row line-border">
+					            <div class="col-xs-1">
+					            	<p class="step">3</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4">Last opp arbeidsbeskrivelse</p>
+				            		<a href="uploads/{{ $partnership->arbeidsbesk }}" class="btn btn-success">Se arbeidsbeskrivelsen</a>
+												<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
+												  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												  Arbeidsbeskrivelsen er lastet opp og du har ikke lengre mulighet til å laste opp en ny. All kodumentasjon blir sendt til faglærer for godkjenning.
+												</div>
+					            </div>
 				            </div>
-			            </div>
+		            	@else
+		            		<div class="row line-border step-inactive">
+					            <div class="col-xs-1">
+					            	<p class="step">3</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4">Last opp arbeidsbeskrivelse</p>
+				            		<div class="form-group">
+				            			<span class="disabled btn btn-primary-outline btn-file pull-left m-r-s">
+												    Velg fil&hellip;
+													</span>
+			          					<button class="disabled btn btn-primary-outline">LAST OPP</button>
+				            		</div>
+					            </div>
+				            </div>
+		            	@endif
 
 			            <!-- Step four -->
 			            <div class="row line-border step-inactive">
@@ -232,20 +283,7 @@
 				            	<p class="step">4</p>
 				            </div>
 				            <div class="col-xs-11">
-				            	<p class="h4">Ventet på godkjenning av alle parter</p>
-				            	<div class="row">
-				            		<div class="col-md-4">
-				            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> Du har signert</p>
-				            		</div>
-
-				            		<div class="col-md-4">
-				            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> { bedrift_navn } har signert</p>
-				            		</div>
-
-				            		<div class="col-md-4">
-				            			<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> Faglærer har godkjent</p>
-				            		</div>
-				            	</div>
+				            	<p class="h4">Ventet på godkjenning av faglærer {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }}</p>
 				            </div>
 			            </div>
 
@@ -291,5 +329,5 @@
 
 @stop
 @section('script')
-		{{-- <script src="/js/oversikt.js"></script> --}}
+	<script src="/js/oversikt.js"></script>
 @stop
