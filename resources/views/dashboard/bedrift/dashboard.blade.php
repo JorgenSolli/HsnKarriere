@@ -159,8 +159,8 @@
 				            	<p class="step"><span class="fa fa-thumbs-o-up" aria-hidden="true"></span></p>
 				            </div>
 				            <div class="col-xs-11">
-				            	<p class="h4">Gratulerer med godkjent praksisplass!</p>
-				            	<p>Nå manger vi bare noen signaturer og en arbeidsbeskrivelse.</p>
+				            	<p class="h4">Gratulerer med ny praktikant!</p>
+				            	<p>Nå manger vi bare noen signaturer og en arbeidsbeskrivelse fra deg.</p>
 				            </div>
 			            </div>
 			            <!-- Step one -->
@@ -170,28 +170,50 @@
 				            </div>
 				            <div class="col-xs-11">
 				            	<p class="h4">Last ned kontrakten</p>
-				            	<a href="" class="btn btn-primary-outline"><span class="fa fa-download"></span> LAST NED</a>
-				            	<p><small>Kontrakt for Økonomi og Informatikk</small></p>
+				            	@if ($partnership->kontrakt)
+					            	<a href="uploads/{{ $partnership->kontrakt }}" class="btn btn-primary-outline"><span class="fa fa-download"></span> LAST NED</a>
+					            	<p><small>Signert kontrakt av {{ $partnership->student_fornavn }}</small></p>
+				            	@else
+				            		<a href="#" class="btn btn-primary-outline disabled"><span class="fa fa-clock-o"></span> Venter på signatur av {{ $partnership->student_fornavn }}</a>
+				            	@endif
 				            </div>
 			            </div>
 
 			            <!-- Step two -->
-			            <div class="row line-border">
-				            <div class="col-xs-1">
-				            	<p class="step">2</p>
+			            @if ($partnership->kontrakt)
+			            	<div class="row line-border">
+					            <div class="col-xs-1">
+					            	<p class="step">2</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4">Fyll ut og last opp kontrakten</p>
+					            	<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
+					            		<div class="input-group">
+				          					<label class="btn btn-primary-outline btn-file pull-left m-r-s">
+													    <span class="inputFile">Velg fil&hellip;</span> <input type="file" style="display: none;">
+														</label>
+
+														<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+													</div>
+					            	</form>
+					            </div>
 				            </div>
-				            <div class="col-xs-11">
-				            	<p class="h4">Fyll ut og last opp kontrakten</p>
-				            	<form>
+			            @else
+				            <div class="row line-border step-inactive">
+					            <div class="col-xs-1">
+					            	<p class="step">2</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4">Fyll ut og last opp kontrakten</p>
 				            		<div class="form-group">
-				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s">
-												    Velg fil <input type="file" name="contract_upload">
+				            			<span class="disabled btn btn-primary-outline btn-file pull-left m-r-s">
+												    Velg fil&hellip;
 													</span>
-			          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
+			          					<button class="disabled btn btn-primary-outline">LAST OPP</button>
 				            		</div>
-				            	</form>
+					            </div>
 				            </div>
-			            </div>
+			            @endif
 
 			            <!-- Step three -->
 			            <div class="row line-border step-inactive">

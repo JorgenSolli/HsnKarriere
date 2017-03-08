@@ -56,14 +56,27 @@ class UploadController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function uploadContract (Partnership $partnership, Request $request) {
+        $bruker_type = Auth::user()->bruker_type;
+        $bruker_id = Auth::id();
+        $currContract = $partnership->kontrakt;
 
-        if ($partnership->student_id == Auth::id()) {
+        if (   ($bruker_type == "student" && $partnership->student_id == $bruker_id)
+            || ($bruker_type == "bedrift" && $partnership->bedrift_id == $bruker_id)) {
+            // Removes old contract
+            if (file_exists('uploads/' . $currContract)) {
+                unlink("uploads/" . $currContract);
+            }
+
             // Gets file, uplads it, and stores the path and filename
             $file = request()->file('kontrakt');
             $path = $file->store('kontrakter/signert');
 
             $partnership->kontrakt = $path;
-            $partnership->signert_av_student = 1;
+            if ($bruker_type == "student") {
+                $partnership->signert_av_student = 1;
+            } elseif ($bruker_type == "bedrift") {
+                $partnership->signert_av_bedrift = 1;
+            }
             $partnership->save();
 
             return back()->with('success', 'Kontrakten ble lastet opp.');

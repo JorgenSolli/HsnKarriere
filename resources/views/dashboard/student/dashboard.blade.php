@@ -190,10 +190,15 @@
 		            			<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
 			            			<div class="form-group">
 			        						{{ csrf_field() }}
-				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s">
-												    Velg fil <input type="file" name="kontrakt">
-													</span>
-			          					<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+				            			<div class="input-group">
+			          					<label class="btn btn-primary-outline btn-file pull-left m-r-s">
+												    <span class="inputFile">Velg fil&hellip;</span> 
+												    	<input type="file" name="kontrakt" class="hidden">
+													</label>
+
+													<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+												</div>
+
 			            			</div>
 		      						</form>
 		      						@if ($partnership->kontrakt)
@@ -278,5 +283,5 @@
 
 @stop
 @section('script')
-		{{-- <script src="/js/oversikt.js"></script> --}}
+		<script src="/js/oversikt.js"></script>
 @stop
