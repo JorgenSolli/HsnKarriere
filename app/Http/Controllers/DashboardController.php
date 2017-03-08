@@ -100,8 +100,21 @@ class DashboardController extends Controller
 			]);
     	}
         else if ($brukerinfo->bruker_type == "faglarer") {
+            $kreverGodkjenning = "";
+            $venterDokumentasjon = "";
+            $godkjenneDokumenter = Partnership::where('godkjent_av_foreleser', '1')
+                ->where('godkjent_av_student', '1')
+                ->where('godkjent_av_bedrift', '1')
+                ->where('signert_av_student', '1')
+                ->where('signert_av_bedrift', '1')
+                ->where('arbeidsbesk', '>' ,'')
+                ->count();
+
+            $aktiveSamarbeid = "";
+
 
             return view('dashboard.faglarer.dashboard', [
+                'godkjenneDokumenter' => $godkjenneDokumenter,
                 'brukerinfo'    => $brukerinfo
             ]);
         }

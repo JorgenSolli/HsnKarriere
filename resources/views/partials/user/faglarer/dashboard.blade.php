@@ -67,9 +67,66 @@
 	    	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
 	        <li class="media list-group-item p-a">
 	  				<div class="media-body">
-	    				<p class="pull-left">
-	    					Her kommer kontrakter og annet</a>
-	  					</p>
+	  					<table class="table">
+		  					<thead>
+		  						<tr>
+		  							<th>Beskrivelse</th>
+		  							<th>Informasjon</th>
+		  						</tr>
+		  					</thead>
+		  					<tbody>
+		  						<tr>
+		  							<td>Type</td>
+		  							<td>{{ ucfirst($partnership->type_samarbeid) }}</td>
+		  						</tr>
+		  						<tr>
+		  							<td>Student</td>
+		  							<td>
+		  								<a href="bruker/{{ $partnership->student_id }}"">{{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }}
+		  								</a>
+	  								</td>
+		  						</tr>
+		  						<tr>
+		  							<td>Bedriftdent</td>
+		  							<td>
+		  								<a href="bruker/{{ $partnership->bedrift_id }}"">{{ $partnership->bedrift_navn }}
+		  								</a>
+	  								</td>
+		  						</tr>
+		  						<tr>
+		  							<td>Kontrakt</td>
+		  							<td>
+		  								<a class="btn btn-success btn-small" href="uploads/{{ $partnership->arbeidsbesk }}"">
+		  									<span class="fa fa-file-pdf-o"></span> LAST NED
+		  								</a>
+	  								</td>
+		  						</tr>
+		  						<tr>
+		  							<td>Arbeidsbeskrivelse</td>
+		  							<td>
+		  								<a class="btn btn-success btn-small" href="uploads/{{ $partnership->kontrakt }}"">
+		  									<span class="fa fa-file-pdf-o"></span> LAST NED
+		  								</a>
+	  								</td>
+		  						</tr>
+		  					</tbody>
+	  					</table>
+
+	    				<div class="row">
+	    					<div class="col-sm-4">
+		    					<form class="is-fullwidth" action="" method="post">
+		    						{{ csrf_field() }}
+		    						<button type="submit" class="btn btn-sm btn-danger m-r-s is-fullwidth">MANGELFUL DOKUMENTASJON</button>
+		  						</form>
+	  						</div>
+
+	  						<div class="col-sm-8">
+		  						<form class="is-fullwidth" method="post" action="godkjennDokumenter/{{ $partnership->id }}">
+		  							{{ csrf_field() }}
+		      					<button type="submit" class="btn btn-sm btn-success m-l-s is-fullwidth">GODKJENN KONTRAKT OG ARBEIDSBESKRIVELSE</button>
+		  						</form>
+	  						</div>
+	          	</div>
 						</div>
 	    		</li>
 	      @endif

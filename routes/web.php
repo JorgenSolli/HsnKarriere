@@ -64,6 +64,7 @@ Route::post('innboks/addUser/{message}', 'InnboksController@addUser');
 // Partnerships
 Route::post('samarbeid/nyttSamarbeid', 'SamarbeidController@nyttSamarbeid');
 Route::post('godkjennSamarbeid/{partnership}', 'SamarbeidController@godkjennSamarbeid');
+Route::post('godkjennDokumenter/{partnership}', 'SamarbeidController@godkjennDokumenter');
 Route::delete('samarbeid/{partnership}', 'SamarbeidController@slettSamarbeid');
 
 // Ajax calls

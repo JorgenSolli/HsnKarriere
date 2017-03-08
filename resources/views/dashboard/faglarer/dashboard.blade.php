@@ -55,7 +55,7 @@
 				<div class="col-xs-8 p-l-0">
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
-	            <p class="h3 m-a-0">3</p>
+	            <p class="h3 m-a-0">{{ $godkjenneDokumenter }}</p>
 	            <p>Godkjenne dokumenter</p>
 	          </div>
 	        </div>
