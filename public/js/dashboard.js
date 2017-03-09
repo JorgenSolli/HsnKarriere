@@ -20,12 +20,10 @@ $(document).ready(function() {
 	});
 });
 
-
 // Mare SURE the user wants to do this action
 $(document).on('click', '.submitBtn', function(e) {
 	var form = $(this).closest('form');
 	var msg  = $(form).children('.confirmMsg').val();
-	console.log(msg);
 
 	bootbox.confirm({
 		size: 'small',

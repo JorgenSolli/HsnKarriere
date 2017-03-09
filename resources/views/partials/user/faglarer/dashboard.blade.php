@@ -114,13 +114,10 @@
 
 	    				<div class="row">
 	    					<div class="col-sm-4">
-		    					<form class="is-fullwidth" action="" method="post">
-		    						{{ csrf_field() }}
-
-		    						<button type="button" class="submitBtn btn btn-sm btn-danger m-r-s is-fullwidth">MANGELFUL DOKUMENTASJON</button>
-		  						</form>
+	    						<button type="button" class="btn btn-sm btn-danger m-r-s is-fullwidth" data-toggle="modal" data-target="#mangelful">
+	    							MANGELFUL DOKUMENTASJON
+    							</button>
 	  						</div>
-
 	  						<div class="col-sm-8">
 		  						<form class="is-fullwidth" method="post" action="godkjennDokumenter/{{ $partnership->id }}">
 		  							{{ csrf_field() }}
@@ -131,6 +128,43 @@
 	          	</div>
 						</div>
 	    		</li>
+
+	    		<div id="mangelful" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+					    <!-- Modal content-->
+					    <div class="modal-content">
+				      	<form class="is-fullwidth" action="samarbeid/dokumentfeil/{{ $partnership->id }}" method="post">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <p class="h4 modal-title">Mangelful eller ugyldig dokumentasjon</p>
+						      </div>
+						      <div class="modal-body">
+			  						{{ csrf_field() }} 
+						        <p>Hvilke dokumenter er ugyldige eller mangelfulle?</p>
+						        <div class="checkbox">
+									    <label>
+									      <input type="checkbox" value="kontrakt" name="invalidContract"> Kontrakten
+									    </label>
+									  </div>
+									  <div class="checkbox">
+									    <label>
+									      <input type="checkbox" value="arbeidsbesk" name="invalidJobdesc">
+									      Arbeidsbeskrivelsen
+									    </label>
+									  </div>
+									  <div class="form-group">
+									  	<label for="description"> Beskriv kort hva som mangler</label>
+								  		<textarea name="description" class="form-control is-fullwidth" rows="3" placeholder="F.eks: Signatur fra elev mangler."></textarea>
+									  </div>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+						        <button type="submit" class="btn btn-danger">Avvis dokumentasjon</button>
+						      </div>
+						    </div>
+						  </form>
+					  </div>
+					</div>
 	      @endif
 	    @endforeach
 	  </div>

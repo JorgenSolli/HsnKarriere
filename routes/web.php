@@ -66,6 +66,7 @@ Route::post('samarbeid/nyttSamarbeid', 'SamarbeidController@nyttSamarbeid');
 Route::post('godkjennSamarbeid/{partnership}', 'SamarbeidController@godkjennSamarbeid');
 Route::post('godkjennDokumenter/{partnership}', 'SamarbeidController@godkjennDokumenter');
 Route::delete('samarbeid/{partnership}', 'SamarbeidController@slettSamarbeid');
+Route::post('samarbeid/dokumentfeil/{partnership}', 'SamarbeidController@dokumentfeil');
 
 // Ajax calls
 Route::get('users/showUsers/{display}', 'Ajax\SortController@showUsers');

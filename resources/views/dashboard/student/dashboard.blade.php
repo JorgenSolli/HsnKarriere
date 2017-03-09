@@ -187,7 +187,7 @@
 				            </div>
 				            <div class="col-xs-11">
 				            	<p class="h4">Fyll ut og last opp kontrakten</p>
-				            	@if ($partnership->signert_av_bedrift == 0)
+				            	@if ($partnership->signert_av_bedrift == 0 || $partnership->kontrakt_rejected == 1)
 			            			<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
 				            			<div class="form-group">
 				        						{{ csrf_field() }}
@@ -205,10 +205,18 @@
 		      						@if ($partnership->kontrakt)
 		      							<a href="uploads/{{ $partnership->kontrakt }}" class="btn btn-success">Se kontrakten</a>
 		      						@endif
-		      						@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
+		      						@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1 && $partnership->kontrakt_rejected == 0)
 		      							<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
 												  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 												  Kontrakten er nå signert av bedriften. Du har ikke lengre mulighet til å laste opp ny kontrakt.
+												</div>
+											@elseif ($partnership->kontrakt_rejected == 1)
+												<div class="m-t-s m-b-0 alert alert-danger alert-dismissible" role="alert">
+												  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												  Kontrakten ble avvist av foreleser. Årask: 
+												  <strong>{{ $partnership->rejected_info }}</strong>
+												  <hr>
+												  Hvis feilen angår deg, venligst last opp kontrakten på nytt med de nødvendige endringene.
 												</div>
 		      						@endif
 				            </div>

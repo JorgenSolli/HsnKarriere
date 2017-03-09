@@ -171,5 +171,20 @@ class SamarbeidController extends Controller
         $partnership->delete();
         return back()->with('success', 'Samarbeidet ble avvist.');
     }
+
+    public function dokumentfeil(Request $request, Partnership $partnership) {
+        if ($request->invalidContract == "kontrakt") {
+            $partnership->kontrakt_rejected = 1;
+        }
+        if ($request->invalidJobdesc == "arbeidsbesk") {
+            $partnership->arbeidsbesk_rejected = 1;
+        }
+
+        $partnership->rejected_info = $request->description;
+
+        $partnership->save();
+
+        return back()->with('success', 'Student og bedrift har nå fått melding om at det er mangler i dokumentasjonen.');
+    }
 }
 

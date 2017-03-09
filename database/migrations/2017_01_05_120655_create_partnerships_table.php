@@ -26,7 +26,10 @@ class CreatePartnershipsTable extends Migration
             $table->integer('signert_av_bedrift')->nullable();
             $table->integer('kontrakt_godkjent_av_foreleser')->nullable();
             $table->string('kontrakt')->nullable();
+            $table->boolean('kontrakt_rejected')->default(0);
             $table->string('arbeidsbesk')->nullable();
+            $table->boolean('arbeidsbesk_rejected')->default(0);
+            $table->text('rejected_info');
             $table->string('startdato')->nullable();
             $table->timestamps();
         });

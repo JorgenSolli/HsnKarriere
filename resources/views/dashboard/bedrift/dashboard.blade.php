@@ -187,22 +187,32 @@
 					            </div>
 					            <div class="col-xs-11">
 					            	<p class="h4">Fyll ut og last opp kontrakten</p>
-					            	<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
-					            		{{ csrf_field() }}
-					            		<div class="input-group">
-			          						<label class="btn btn-primary-outline btn-file pull-left m-r-s">
-													    <span class="inputFile">Velg fil&hellip;</span> 
-													    	<input type="file" name="kontrakt" class="hidden">
-														</label>
+					            	@unless ($partnership->arbeidsbesk)
+						            	<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
+						            		{{ csrf_field() }}
+						            		<div class="input-group">
+				          						<label class="btn btn-primary-outline btn-file pull-left m-r-s">
+														    <span class="inputFile">Velg fil&hellip;</span> 
+														    	<input type="file" name="kontrakt" class="hidden">
+															</label>
 
-														<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
-													</div>
-					            	</form>
+															<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+														</div>
+						            	</form>
+					            	@endunless
 					            	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
 					            		<a href="uploads/{{ $partnership->kontrakt }}" class="btn btn-success">Se kontrakten</a>
+					            		@unless ($partnership->arbeidsbesk)
+						            		<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
+														  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+														  Du har signert og lastet opp kontrakten. Du har enda muligheten til å laste opp en ny kontrakt hvis noe skulle mangle. <strong>Så fort arbeidsbeskrivelsen er lastet opp har du ikke lengre mulighet til dette!</strong>
+														</div>
+													@endunless
+					            	@endif
+					            	@if ($partnership->arbeidsbesk)
 					            		<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
 													  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													  Du har signert og lastet opp kontrakten. Du har enda muligheten til å laste opp en ny kontrakt hvis noe skulle mangle. <strong>Så fort arbeidsbeskrivelsen er lastet opp har du ikke lengre mulighet til dette!</strong>
+													  Kontrakten er allerede lastet opp og avventer godkjenning
 													</div>
 					            	@endif
 					            </div>

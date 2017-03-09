@@ -49,7 +49,10 @@ class DashboardController extends Controller
                          'partnerships.signert_av_bedrift',
                          'partnerships.kontrakt_godkjent_av_foreleser',
                          'partnerships.kontrakt',
+                         'partnerships.kontrakt_rejected',
                          'partnerships.arbeidsbesk',
+                         'partnerships.arbeidsbesk_rejected',
+                         'partnerships.rejected_info',
                          'partnerships.startdato',
                          'partnerships.created_at',
                          'partnerships.updated_at',
@@ -80,7 +83,10 @@ class DashboardController extends Controller
                          'partnerships.signert_av_bedrift',
                          'partnerships.kontrakt_godkjent_av_foreleser',
                          'partnerships.kontrakt',
+                         'partnerships.kontrakt_rejected',
                          'partnerships.arbeidsbesk',
+                         'partnerships.arbeidsbesk_rejected',
+                         'partnerships.rejected_info',
                          'partnerships.startdato',
                          'partnerships.created_at',
                          'partnerships.updated_at',
@@ -108,6 +114,8 @@ class DashboardController extends Controller
                 ->where('signert_av_student', '1')
                 ->where('signert_av_bedrift', '1')
                 ->where('arbeidsbesk', '>' ,'')
+                ->where('kontrakt_rejected', '0')
+                ->where('arbeidsbesk_rejected', '0')
                 ->count();
 
             $aktiveSamarbeid = "";
