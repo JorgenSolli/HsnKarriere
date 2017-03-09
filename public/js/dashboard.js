@@ -14,9 +14,36 @@ $(document).ready(function() {
 			url: '/oversikt/' + param,
 
 			success: function(data) {
-				console.log(data['data']);
 				container.html(data['data']);
 			}
 		})
+	});
+});
+
+
+// Mare SURE the user wants to do this action
+$(document).on('click', '.submitBtn', function(e) {
+	var form = $(this).closest('form');
+	var msg  = $(form).children('.confirmMsg').val();
+	console.log(msg);
+
+	bootbox.confirm({
+		size: 'small',
+		message: '<p class="h4">' + msg + '<p>',
+		buttons: {
+			confirm: {
+				label: 'Godkjenn',
+				className: 'btn-success'
+			},
+			cancel: {
+				label: 'Avbryt',
+				className: 'btn-danger'
+			}
+		},
+		callback: function(result) {
+			if (result) {
+				form.submit();
+			}
+		}
 	});
 });

@@ -96,7 +96,7 @@
 		  						<tr>
 		  							<td>Kontrakt</td>
 		  							<td>
-		  								<a class="btn btn-success btn-small" href="uploads/{{ $partnership->arbeidsbesk }}"">
+		  								<a class="btn btn-primary btn-small" href="uploads/{{ $partnership->arbeidsbesk }}"">
 		  									<span class="fa fa-file-pdf-o"></span> LAST NED
 		  								</a>
 	  								</td>
@@ -104,7 +104,7 @@
 		  						<tr>
 		  							<td>Arbeidsbeskrivelse</td>
 		  							<td>
-		  								<a class="btn btn-success btn-small" href="uploads/{{ $partnership->kontrakt }}"">
+		  								<a class="btn btn-primary btn-small" href="uploads/{{ $partnership->kontrakt }}"">
 		  									<span class="fa fa-file-pdf-o"></span> LAST NED
 		  								</a>
 	  								</td>
@@ -116,14 +116,16 @@
 	    					<div class="col-sm-4">
 		    					<form class="is-fullwidth" action="" method="post">
 		    						{{ csrf_field() }}
-		    						<button type="submit" class="btn btn-sm btn-danger m-r-s is-fullwidth">MANGELFUL DOKUMENTASJON</button>
+
+		    						<button type="button" class="submitBtn btn btn-sm btn-danger m-r-s is-fullwidth">MANGELFUL DOKUMENTASJON</button>
 		  						</form>
 	  						</div>
 
 	  						<div class="col-sm-8">
 		  						<form class="is-fullwidth" method="post" action="godkjennDokumenter/{{ $partnership->id }}">
 		  							{{ csrf_field() }}
-		      					<button type="submit" class="btn btn-sm btn-success m-l-s is-fullwidth">GODKJENN KONTRAKT OG ARBEIDSBESKRIVELSE</button>
+		  							<input type="hidden" class="confirmMsg" value="Er du sikker på at du vil godkjenne dokumentasjonen?">
+		      					<button type="button" class="submitBtn btn btn-sm btn-success m-l-s is-fullwidth">GODKJENN KONTRAKT OG ARBEIDSBESKRIVELSE</button>
 		  						</form>
 	  						</div>
 	          	</div>

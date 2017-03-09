@@ -99,5 +99,6 @@
 
 @stop
 @section('script')
-		<script src="/js/dashboard.js"></script>
+	<script src="/js/bootbox.min.js"></script>
+	<script src="/js/dashboard.js"></script>
 @stop
