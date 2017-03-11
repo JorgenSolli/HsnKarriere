@@ -9984,6 +9984,10 @@ body {
 }
 
 /* Helpers */
+.clearfix-first {
+  clear: both;
+}
+
 .is-bg-primary {
   background-color: #4646A5;
 }

@@ -16,7 +16,7 @@
 				<div class="col-xs-8 p-l-0">
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
-	            <p class="h3 m-a-0">25</p>
+	            <p class="h3 m-a-0">{{ $kreverGodkjenning }}</p>
 	            <p>Krever din godkjenning</p>
 	          </div>
 	        </div>
@@ -35,7 +35,7 @@
 				<div class="col-xs-8 p-l-0">
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
-	            <p class="h3 m-a-0">1</p>
+	            <p class="h3 m-a-0">{{ $venterDokumentasjon }}</p>
 	            <p>Venter på dokumenter</p>
 	          </div>
 	        </div>
@@ -75,7 +75,7 @@
 				<div class="col-xs-8 p-l-0">
 					<div class="panel panel-default m-b-0">
 	          <div class="panel-body text-center">
-	            <p class="h3 m-a-0">3</p>
+	            <p class="h3 m-a-0">{{ $aktiveSamarbeid }}</p>
 	            <p>Aktive samarbeid</p>
 	          </div>
 	        </div>

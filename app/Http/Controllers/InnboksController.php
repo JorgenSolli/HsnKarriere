@@ -9,6 +9,7 @@ use App\User;
 use Validator;
 use App\Message;
 use App\Company;
+use App\Professor;
 use App\StudentStudy;
 use App\MessagesReply;
 use App\MessagesJunction;
@@ -98,7 +99,6 @@ class InnboksController extends Controller
             return response()->json(array('success' => true, 'data' => $returnHTML));
         }
 
-
         elseif ($brukerinfo->bruker_type == "bedrift") {
             // Finding the companies the user is allowed to contact
             $kontakter = $querry_service->finnStudenter(Company::where('user_id', Auth::id())
@@ -109,6 +109,26 @@ class InnboksController extends Controller
             $returnHTML = view('includes.innboks.newMessage')
                 ->with('brukerinfo', $brukerinfo)
                 ->with('kontakter', $kontakter)
+                ->render();
+            return response()->json(array('success' => true, 'data' => $returnHTML));
+        }
+
+        elseif ($brukerinfo->bruker_type == "faglarer") {
+            // Finding the companies the user is allowed to contact
+            $kontakterStudenter = $querry_service->finnStudenter(Professor::where('user_id', Auth::id())
+                ->join('users', 'professors.user_id', '=', 'users.id')
+                ->select('studie')
+                ->get(), false);
+
+            $kontakterBedrifter = $querry_service->finnBedrifter(Professor::where('user_id', Auth::id())
+                ->join('users', 'professors.user_id', '=', 'users.id')
+                ->select('studie')
+                ->get(), false);
+
+            $returnHTML = view('includes.innboks.faglarer.newMessage')
+                ->with('brukerinfo', $brukerinfo)
+                ->with('kontakterStudenter', $kontakterStudenter)
+                ->with('kontakterBedrifter', $kontakterBedrifter)
                 ->render();
             return response()->json(array('success' => true, 'data' => $returnHTML));
         }

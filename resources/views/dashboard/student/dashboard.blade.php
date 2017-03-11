@@ -17,7 +17,7 @@
         </div>
       </div>
 
-		<div class="panel panel-default panel-link-list">
+			<div class="panel panel-default panel-link-list">
         <div class="panel-body">
           © 2017 HSN Karriere
           <a href="#">Om</a> ·
@@ -103,13 +103,13 @@
 			              <p class="h3 m-a-0">
 			              	<span class="fa fa-briefcase fa-sm"></span> 
 			              	{{ ucfirst($partnership->type_samarbeid) }} hos {{ $partnership->bedrift_navn }}
-			              	<span class="cursor pull-right fa fa-minus-square"></span>
+			              	<span class="toggleList cursor pull-right fa fa-minus-square"></span>
 			            	</p>
 			            </div>
 			          </div>
 			        </li>
 		        @if ($partnership->godkjent_av_student == null)
-		        	<li class="media list-group-item p-a">
+		        	<li class="toggleMe media list-group-item p-a">
         				<div class="media-body text-center">
 	        				<p class="h4">Vil du takke ja til praksisplass hos 
 	        					{{ $partnership->bedrift_navn }}?</p>
@@ -128,7 +128,7 @@
       					</div>
 	        		</li>
 	        	@elseif ($partnership->godkjent_av_foreleser == null || $partnership->godkjent_av_bedrift == null)
-	        		<li class="media list-group-item p-a">
+	        		<li class="toggleMe media list-group-item p-a">
         				<div class="media-body text-center">
 	        				<p class="h4">Venter på godkjenning av alle parter</p>
 	        				<div class="row">
@@ -156,7 +156,7 @@
       					</div>
 	        		</li>
 	        	@else
-			        <li class="media list-group-item p-a">
+			        <li class="toggleMe media list-group-item p-a">
 			          <div class="media-body">
 			            <!-- Step gz -->
 			            <div class="row line-border">
@@ -187,7 +187,7 @@
 				            </div>
 				            <div class="col-xs-11">
 				            	<p class="h4">Fyll ut og last opp kontrakten</p>
-				            	@if ($partnership->signert_av_bedrift == 0 || $partnership->kontrakt_rejected == 1)
+				            	@if ($partnership->signert_av_bedrift == null || $partnership->kontrakt_rejected == 1)
 			            			<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
 				            			<div class="form-group">
 				        						{{ csrf_field() }}
@@ -197,7 +197,7 @@
 														    	<input type="file" name="kontrakt" class="hidden">
 															</label>
 
-															<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+															<button type="submit" class="btn btn-success-outline disabled m-r-s"><span class="fa fa-upload"></span> LAST OPP</button>
 														</div>
 				            			</div>
 			      						</form>
@@ -205,10 +205,10 @@
 		      						@if ($partnership->kontrakt)
 		      							<a href="uploads/{{ $partnership->kontrakt }}" class="btn btn-success">Se kontrakten</a>
 		      						@endif
-		      						@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1 && $partnership->kontrakt_rejected == 0)
+		      						@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1 && $partnership->kontrakt_rejected == null)
 		      							<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
 												  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												  Kontrakten er nå signert av bedriften. Du har ikke lengre mulighet til å laste opp ny kontrakt.
+												  Kontrakten er signert av bedriften. Du har ikke lengre mulighet til å laste opp ny kontrakt.
 												</div>
 											@elseif ($partnership->kontrakt_rejected == 1)
 												<div class="m-t-s m-b-0 alert alert-danger alert-dismissible" role="alert">
@@ -224,15 +224,15 @@
 
 			            <!-- Step three -->
 			            @if ($partnership->arbeidsbesk)
-			            <div class="row line-border">
-				            <div class="col-xs-1">
-				            	<p class="step">3</p>
+				            <div class="row line-border">
+					            <div class="col-xs-1">
+					            	<p class="step">3</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4">{{ $partnership->bedrift_navn }} har lastet opp arbeidsbeskrivelsen</p>
+					            	<a href="uploads/{{ $partnership->arbeidsbesk }}" class="btn btn-success">Se arbeidsbeskrivelsen</a>
+					            </div>
 				            </div>
-				            <div class="col-xs-11">
-				            	<p class="h4">{{ $partnership->bedrift_navn }} har lastet opp arbeidsbeskrivelsen</p>
-				            	<a href="uploads/{{ $partnership->arbeidsbesk }}" class="btn btn-success">Se arbeidsbeskrivelsen</a>
-				            </div>
-			            </div>
 			            @else
 			            	<div class="row line-border step-inactive">
 					            <div class="col-xs-1">
@@ -246,44 +246,88 @@
 			            @endif
 
 			            <!-- Step four -->
-			            <div class="row line-border step-inactive">
-				            <div class="col-xs-1">
-				            	<p class="step">4</p>
+			            @if ($partnership->kontrakt_godkjent_av_foreleser)
+			            	<div class="row line-border">
+					            <div class="col-xs-1">
+					            	<p class="step">4</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4 m-t-0">{{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }} har godkjent dokumentene. Samarbeidet kan begynne til avtalt tid.</p>
+					            </div>
 				            </div>
-				            <div class="col-xs-11">
-				            	<p class="h4">Ventet på godkjenning av faglærer {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }}</p>
-				            	</div>
+			            @else
+				            <div class="row line-border step-inactive">
+					            <div class="col-xs-1">
+					            	<p class="step">4</p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4 m-t-0">Ventet på godkjenning av faglærer {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }}</p>
+					            </div>
 				            </div>
-			            </div>
+			            @endif
 
 			            <!-- Step five -->
-			            <div class="row line-border step-inactive">
-				            <div class="col-xs-1">
-				            	<p class="step"><span class="fa fa-compass"></span></p>
+			            @if ($partnership->kontrakt_godkjent_av_foreleser)
+				            <div class="row line-border">
+					            <div class="col-xs-1">
+					            	<p class="step"><span class="fa fa-compass"></span></p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4 m-t-0">Fullfør praksis</p>
+					            	<p class="h4">Lykke til! </p>
+					            </div>
 				            </div>
-				            <div class="col-xs-11">
-				            	<p class="h4">Fullfør praksis</p>
-				            	<p class="h4">Lykke til! </p>
+			            @else
+			            	<div class="row line-border step-inactive">
+					            <div class="col-xs-1">
+					            	<p class="step"><span class="fa fa-compass"></span></p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4 m-t-0">Fullfør praksis</p>
+					            	<p class="h4">Lykke til! </p>
+					            </div>
 				            </div>
-			            </div>
+			            @endif
 
 			            <!-- Step six -->
-			            <div class="row line-border-last step-inactive">
-				            <div class="col-xs-1">
-				            	<p class="step"><span class="fa fa-trophy"></span></p>
+			            @if ($partnership->kontrakt_godkjent_av_foreleser)
+				            <div class="row line-border-last">
+					            <div class="col-xs-1">
+					            	<p class="step"><span class="fa fa-trophy"></span></p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4 m-t-0">Lever rapport</p>
+					            	<form action="samarbeid/finish/{{ $partnership->id }}" method="post" class="pull-left">
+													<input type="hidden" class="confirmMsg" value="Er du sikker på at du vil levere rapporten?">
+					            		<div class="form-group">
+					            			{{ csrf_field() }}
+					            			<div class="input-group">
+				          						<label class="btn btn-primary-outline btn-file pull-left m-r-s">
+														    <span class="inputFile">Velg fil&hellip;</span> 
+														    	<input type="file" name="rapport_upload" class="hidden">
+															</label>
+					          					<button type="button" class="submitBtn btn btn-success-outline disabled"><span class="fa fa-upload"></span> LAST OPP</button>
+														</div>
+					            		</div>
+					            	</form>
+					            </div>
 				            </div>
-				            <div class="col-xs-11">
-				            	<p class="h4">Lever rapport</p>
-				            	<form>
+			            @else
+			            	<div class="row line-border-last step-inactive">
+					            <div class="col-xs-1">
+					            	<p class="step"><span class="fa fa-trophy"></span></p>
+					            </div>
+					            <div class="col-xs-11">
+					            	<p class="h4 m-t-0">Lever rapport</p>
 				            		<div class="form-group">
-				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s disabled">
-												    Velg fil <input type="file" name="contract_upload">
+				            			<span class="disabled btn btn-primary-outline btn-file pull-left m-r-s">
+												    Velg fil&hellip;
 													</span>
-			          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
+			          					<button class="disabled btn btn-primary-outline"><span class="fa fa-upload"></span> LAST OPP</button>
 				            		</div>
-				            	</form>
+					            </div>
 				            </div>
-			            </div>
+			            @endif
 			          </div>
 			        </li>
 		        @endif
@@ -298,5 +342,6 @@
 
 @stop
 @section('script')
-		<script src="/js/oversikt.js"></script>
+	<script src="/js/bootbox.min.js"></script>
+	<script src="/js/dashboard.js"></script>
 @stop

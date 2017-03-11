@@ -60,11 +60,25 @@ class UploadController extends Controller
         $bruker_id = Auth::id();
         $currContract = $partnership->kontrakt;
 
-        if (   ($bruker_type == "student" && $partnership->student_id == $bruker_id)
+        // Check if you're stil able to upload the contract. If the company has either signed the contract or has uploaded their jobdescription the stundent wont be allowed to upload another contract.
+        if ($bruker_type == "student" && $partnership->signert_av_bedrift == 1 && $partnership->kontrakt_rejected == 0) {
+            return back()->with('danger', 'Kontrakten er allerede signert av bedriften. Du kan ikke laste opp ny nå.');
+        }
+
+        if ($bruker_type == "bedrift" && $partnership->arbeidsbesk > "" && $partnership->arbeidsbesk_rejected == 0 && $partnership->kontrakt_rejected == 0) {
+            return back()->with('danger', 'Kontrakten er allerede sendt inn til godkjenning. Du kan ikke laste opp ny nå.');
+        }
+
+        if (($bruker_type == "student" && $partnership->student_id == $bruker_id)
             || ($bruker_type == "bedrift" && $partnership->bedrift_id == $bruker_id)) {
             // Removes old contract
             if ($currContract != "" && file_exists('uploads/' . $currContract)) {
                 unlink("uploads/" . $currContract);
+            }
+
+            // Removed old rejected message and boolean value
+            if ($partnership->kontrakt_rejected == 1) {
+                $partnership->kontrakt_rejected = 0;
             }
 
             // Gets file, uplads it, and stores the path and filename
@@ -95,10 +109,19 @@ class UploadController extends Controller
         $bruker_id = Auth::id();
         $currDesc = $partnership->arbeidsbesk;
 
+        if ($partnership->arbeidsbesk > "" && $partnership->arbeidsbesk_rejected == 0) {
+            return back()->with('danger', 'Du har alerede lastet opp en arbeidsbeskrivelse.');
+        }
+
         if ($bruker_type == "bedrift" && $partnership->bedrift_id == $bruker_id) {
             // Removes old contract
             if ($currDesc != "" && file_exists('uploads/' . $currDesc)) {
                 unlink("uploads/" . $currDesc);
+            }
+
+            // Removed old rejected message and boolean value
+            if ($partnership->arbeidsbesk_rejected == 1) {
+                $partnership->arbeidsbesk_rejected = 0;
             }
 
             // Gets file, uplads it, and stores the path and filename

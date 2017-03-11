@@ -180,14 +180,14 @@
 			            </div>
 
 			            <!-- Step two -->
-			            @if ($partnership->kontrakt)
+			            @if ($partnership->kontrakt || $partnership->kontrakt_rejected == 1)
 			            	<div class="row line-border">
 					            <div class="col-xs-1">
 					            	<p class="step">2</p>
 					            </div>
 					            <div class="col-xs-11">
 					            	<p class="h4">Fyll ut og last opp kontrakten</p>
-					            	@unless ($partnership->arbeidsbesk)
+					            	@if ($partnership->arbeidsbesk == "" || $partnership->kontrakt_rejected == 1)
 						            	<form action="oversikt/uploads/kontrakt/{{ $partnership->id }}" method="post" class="pull-left" enctype="multipart/form-data">
 						            		{{ csrf_field() }}
 						            		<div class="input-group">
@@ -196,20 +196,28 @@
 														    	<input type="file" name="kontrakt" class="hidden">
 															</label>
 
-															<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+															<button type="submit" class="btn btn-success-outline disabled m-r-s"><span class="fa fa-upload"></span> LAST OPP</button>
 														</div>
 						            	</form>
-					            	@endunless
+					            	@endif
 					            	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
 					            		<a href="uploads/{{ $partnership->kontrakt }}" class="btn btn-success">Se kontrakten</a>
-					            		@unless ($partnership->arbeidsbesk)
+					            		@if (!$partnership->arbeidsbesk && $partnership->kontrakt_rejected == null)
 						            		<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
 														  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 														  Du har signert og lastet opp kontrakten. Du har enda muligheten til å laste opp en ny kontrakt hvis noe skulle mangle. <strong>Så fort arbeidsbeskrivelsen er lastet opp har du ikke lengre mulighet til dette!</strong>
 														</div>
-													@endunless
+													@elseif ($partnership->kontrakt_rejected == 1)
+														<div class="m-t-s m-b-0 alert alert-danger alert-dismissible" role="alert">
+														  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+														  Kontrakten ble avvist av foreleser. Årask: 
+														  <strong>{{ $partnership->rejected_info }}</strong>
+														  <hr>
+														  Hvis feilen angår deg, venligst last opp kontrakten på nytt med de nødvendige endringene.
+														</div>
+													@endif
 					            	@endif
-					            	@if ($partnership->arbeidsbesk)
+					            	@if ($partnership->arbeidsbesk && $partnership->kontrakt_rejected == null)
 					            		<div class="m-t-s m-b-0 alert alert-warning alert-dismissible" role="alert">
 													  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 													  Kontrakten er allerede lastet opp og avventer godkjenning
@@ -228,14 +236,15 @@
 				            			<span class="disabled btn btn-primary-outline btn-file pull-left m-r-s">
 												    Velg fil&hellip;
 													</span>
-			          					<button class="disabled btn btn-primary-outline">LAST OPP</button>
+			          					<button class="disabled btn btn-primary-outline"><span class="fa fa-upload"></span> LAST OPP</button>
 				            		</div>
 					            </div>
 				            </div>
 			            @endif
 
 			            <!-- Step three -->
-			            @if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1 && $partnership->arbeidsbesk == "")
+			            @if (($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1 && $partnership->arbeidsbesk == "")
+			            		|| $partnership->arbeidsbesk_rejected == 1)
 				            <div class="row line-border">
 					            <div class="col-xs-1">
 					            	<p class="step">3</p>
@@ -251,9 +260,19 @@
 													    	<input type="file" name="arbeidsbesk" class="hidden">
 														</label>
 
-														<button type="submit" class="btn btn-primary-outline disabled m-r-s">LAST OPP</button>
+														<button type="submit" class="btn btn-success-outline disabled m-r-s"><span class="fa fa-upload"></span> LAST OPP</button>
 													</div>
 					            	</form>
+						            @if ($partnership->arbeidsbesk_rejected == 1)
+						            	<a href="uploads/{{ $partnership->arbeidsbesk }}" class="btn btn-success">Se arbeidsbeskrivelsen</a>
+													<div class="m-t-s m-b-0 alert alert-danger alert-dismissible" role="alert">
+													  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													  Kontrakten ble avvist av foreleser. Årask: 
+													  <strong>{{ $partnership->rejected_info }}</strong>
+													  <hr>
+													  Venligst last opp kontrakten på nytt med de nødvendige endringene.
+													</div>
+												@endif
 					            </div>
 				            </div>
 			            @elseif ($partnership->arbeidsbesk)
@@ -320,7 +339,7 @@
 				            			<span class="btn btn-primary-outline btn-file pull-left m-r-s disabled">
 												    Velg fil <input type="file" name="contract_upload">
 													</span>
-			          					<button type="submit" class="btn btn-primary-outline disabled">LAST OPP</button>
+			          					<button type="submit" class="btn btn-primary-outline disabled"><span class="fa fa-upload"></span> LAST OPP</button>
 				            		</div>
 				            	</form>
 				            </div>
@@ -339,5 +358,5 @@
 
 @stop
 @section('script')
-	<script src="/js/oversikt.js"></script>
+	<script src="/js/dashboard.js"></script>
 @stop

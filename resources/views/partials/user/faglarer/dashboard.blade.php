@@ -18,12 +18,14 @@
 	    					<form action="samarbeid/{{ $partnership->id }}" method="post" class="pull-left">
 	    						{{ csrf_field() }}
 	    						{{ method_field('DELETE') }}
-	    						<button type="submit" class="btn btn-sm btn-danger m-r-s">IKKE GODKJENN</button>
+	    						<input type="hidden" class="confirmMsg" value="Er du sikker på at du ikke vil godkjenne dette samarbeidet?">
+	    						<button type="button" class="submitBtn btn btn-sm btn-danger m-r-s">IKKE GODKJENN</button>
 	  						</form>
 
 	  						<form method="post" action="godkjennSamarbeid/{{ $partnership->id }}" class="pull-left">
 	  							{{ csrf_field() }}
-	      					<button type="submit" class="btn btn-sm btn-success m-l-s">GODKJENN</button>
+	    						<input type="hidden" class="confirmMsg" value="Er du sikker på at du vil godkjenne dette samarbeidet?">
+	      					<button type="button" class="submitBtn btn btn-sm btn-success m-l-s">GODKJENN</button>
 	  						</form>
 	          	</div>
 						</div>
@@ -42,13 +44,26 @@
 	    {{-- Partnerships where we're waiting for others to complete something (ie. sign a contract) --}}
 	    @foreach ($partnerships as $partnership)
 	  		@if ($partnership->godkjent_av_foreleser == 1
-	  			&& ($partnership->signert_av_bedrift == null 
-					|| $partnership->signert_av_student == null))
+	  			&& ($partnership->signert_av_bedrift == null || $partnership->signert_av_student == null)
+	  			|| ($partnership->kontrakt_rejected == 1 || $partnership->arbeidsbesk_rejected == 1))
 	  			<li class="media list-group-item p-a">
 	  				<div class="media-body">
 	    				<p class="pull-left">
-	    					en eb</a>
+	    					Type: {{ $partnership->type_samarbeid }} · 
+	    					Student: <a href="bruker/{{ $partnership->student_id }}"">{{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }}</a> · 
+	    					Bedrift: <a href="bruker/{{ $partnership->bedrift_id }}">{{ $partnership->bedrift_navn }}</a>
 	  					</p>
+	    				<div class="pull-right">
+	    					<a href="/innboks#send{{ $partnership->student_id }};{{ $partnership->bedrift_id }}" class="btn btn-primary m-b-s"><span class="fa fa-commenting-o"></span> Start en samtale</a>
+	          	</div>
+	          	@if ($partnership->kontrakt_rejected == 1 || $partnership->arbeidsbesk_rejected == 1)
+	          		<div class="m-t-s m-b-0 alert alert-warning alert-dismissible clearfix-first m-t-s" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  <p>Venter på ny dokumentasjon fordi du avviste forrige innsendt dokumentasjon.</p>
+								  <hr>
+								  <p>Din årsak: {{ $partnership->rejected_info }}</p>
+								</div>
+  						@endif
 						</div>
 	    		</li>
 	  		@endif
@@ -64,7 +79,7 @@
 	  <div class="panel-body">
 	    @foreach ($partnerships as $partnership)
 	  		<!-- Partnerships where a contract has to be approved. -->
-	    	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1)
+	    	@if ($partnership->signert_av_bedrift == 1 && $partnership->signert_av_student == 1 && $partnership->kontrakt_godkjent_av_foreleser == null)
 	        <li class="media list-group-item p-a">
 	  				<div class="media-body">
 	  					<table class="table">
@@ -96,7 +111,7 @@
 		  						<tr>
 		  							<td>Kontrakt</td>
 		  							<td>
-		  								<a class="btn btn-primary btn-small" href="uploads/{{ $partnership->arbeidsbesk }}"">
+		  								<a class="btn btn-primary btn-small" href="uploads/{{ $partnership->kontrakt }}"">
 		  									<span class="fa fa-file-pdf-o"></span> LAST NED
 		  								</a>
 	  								</td>
@@ -104,7 +119,7 @@
 		  						<tr>
 		  							<td>Arbeidsbeskrivelse</td>
 		  							<td>
-		  								<a class="btn btn-primary btn-small" href="uploads/{{ $partnership->kontrakt }}"">
+		  								<a class="btn btn-primary btn-small" href="uploads/{{ $partnership->arbeidsbesk }}"">
 		  									<span class="fa fa-file-pdf-o"></span> LAST NED
 		  								</a>
 	  								</td>

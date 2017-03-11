@@ -173,18 +173,34 @@ class SamarbeidController extends Controller
     }
 
     public function dokumentfeil(Request $request, Partnership $partnership) {
-        if ($request->invalidContract == "kontrakt") {
-            $partnership->kontrakt_rejected = 1;
+        if ($partnershit->foreleser_id == Auth::id()) {
+            if ($request->invalidContract == "kontrakt") {
+                $partnership->kontrakt_rejected = 1;
+            }
+            if ($request->invalidJobdesc == "arbeidsbesk") {
+                $partnership->arbeidsbesk_rejected = 1;
+            }
+
+            $partnership->rejected_info = $request->description;
+
+            $partnership->save();
+
+            return back()->with('success', 'Student og bedrift har nå fått melding om at det er mangler i dokumentasjonen.');
         }
-        if ($request->invalidJobdesc == "arbeidsbesk") {
-            $partnership->arbeidsbesk_rejected = 1;
+
+        abort(403);
+    }
+
+    public function godkjennDokumenter (Partnership $partnership)
+    {
+        if ($partnership->foreleser_id == Auth::id()) {
+            $partnership->kontrakt_godkjent_av_foreleser = 1;
+            $partnership->save();
+
+            return back()->with('success', 'Dokumentene ble godkjent og samarbeidet kan begynne.');
         }
 
-        $partnership->rejected_info = $request->description;
-
-        $partnership->save();
-
-        return back()->with('success', 'Student og bedrift har nå fått melding om at det er mangler i dokumentasjonen.');
+        abort(403);
     }
 }
 

@@ -83,7 +83,7 @@ class QuerryService {
         return null;
     }
 
-    public function finnKontakter($fagfelt, $searchString) {
+    public function finnForeleser($fagfelt, $searchString) {
         if ($fagfelt != "") {
             $kontakter = Professor::whereIn('studie', $fagfelt)
                 ->select('fornavn', 'etternavn', 'user_id', 'student_campus')

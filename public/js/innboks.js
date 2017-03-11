@@ -9,6 +9,7 @@ $(document).ready(function() {
 		if (window.location.hash.substr(1)) {
 			var hash = window.location.hash.substr(1);
 			var id = hash.slice(4);
+			var arr = id.split(';');
 		}
 
 		loading.show();
@@ -19,7 +20,8 @@ $(document).ready(function() {
 	        },
             url: '/innboks/newMessage/', 
             data: {
-            	reciepment: id
+            	reciepment: arr[0],
+            	reciepmentTwo: arr[1]
         	},
             success: function(data) {
             	loading.hide();

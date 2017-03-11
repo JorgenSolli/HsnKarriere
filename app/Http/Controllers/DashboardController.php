@@ -106,8 +106,20 @@ class DashboardController extends Controller
 			]);
     	}
         else if ($brukerinfo->bruker_type == "faglarer") {
-            $kreverGodkjenning = "";
-            $venterDokumentasjon = "";
+            $kreverGodkjenning = Partnership::whereNull('godkjent_av_foreleser')
+                ->orWhere('godkjent_av_foreleser', '0')
+                ->count();
+
+            $venterDokumentasjon = Partnership::where('godkjent_av_foreleser', '1')
+                ->where('godkjent_av_student', '1')
+                ->where('godkjent_av_bedrift', '1')
+                ->whereNull('signert_av_bedrift')
+                ->whereNull('arbeidsbesk')
+                ->whereNull('kontrakt_godkjent_av_foreleser')
+                ->orWhere('kontrakt_rejected', '1')
+                ->orWhere('arbeidsbesk_rejected', '1')
+                ->count();
+
             $godkjenneDokumenter = Partnership::where('godkjent_av_foreleser', '1')
                 ->where('godkjent_av_student', '1')
                 ->where('godkjent_av_bedrift', '1')
@@ -116,14 +128,18 @@ class DashboardController extends Controller
                 ->where('arbeidsbesk', '>' ,'')
                 ->where('kontrakt_rejected', '0')
                 ->where('arbeidsbesk_rejected', '0')
+                ->whereNull('kontrakt_godkjent_av_foreleser')
                 ->count();
 
-            $aktiveSamarbeid = "";
-
+            $aktiveSamarbeid = Partnership::where('kontrakt_godkjent_av_foreleser', '1')
+                ->count();
 
             return view('dashboard.faglarer.dashboard', [
+                'kreverGodkjenning'   => $kreverGodkjenning,
+                'venterDokumentasjon' => $venterDokumentasjon,
                 'godkjenneDokumenter' => $godkjenneDokumenter,
-                'brukerinfo'    => $brukerinfo
+                'aktiveSamarbeid'     => $aktiveSamarbeid,
+                'brukerinfo'          => $brukerinfo
             ]);
         }
     }
@@ -147,7 +163,10 @@ class DashboardController extends Controller
                          'partnerships.signert_av_bedrift',
                          'partnerships.kontrakt_godkjent_av_foreleser',
                          'partnerships.kontrakt',
+                         'partnerships.kontrakt_rejected',
                          'partnerships.arbeidsbesk',
+                         'partnerships.arbeidsbesk_rejected',
+                         'partnerships.rejected_info',
                          'partnerships.startdato',
                          'partnerships.created_at',
                          'partnerships.updated_at',
