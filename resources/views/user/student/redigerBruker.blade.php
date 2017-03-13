@@ -128,7 +128,7 @@
                     <div class="form-group">
                       <label for="dob">Fødselsdato</label>
                       <div class="input-group date dateDob">
-                        <input name="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        <input name="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                       </div>
                     </div>
                     <div class="form-group">
@@ -170,56 +170,60 @@
                 <div class="form-group">
                   <label for="studiested">Studiested</label>
                   <select name="student_campus" id="studiested" class="form-control">
-                    @if ($brukerinfo->student_campus == "bø")
-                      <option value="bø" selected>Campus Bø</option>
-                      <option value="notodden">Campus Notodden</option>
-                    @else
-                      <option value="notodden" selected>Campus Notodden</option>
-                      <option value="bø">Campus Bø</option>
-                    @endif
+                    @foreach ($campuses as $campus)
+                      @if ($campus->campus == $brukerinfo->student_campus)
+                        <option 
+                          value="{{ $campus->campus }}" selected>
+                          Campus {{ $campus->campus }}
+                        </option>
+                      @else
+                        <option 
+                          value="{{ $campus->campus }}">
+                          Campus {{ $campus->campus }}
+                        </option>
+                      @endif
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="studieretning">Studieretning</label>
                   <select name="studieretning" id="studieretning" class="form-control">
-                    <option value="" disabled="" selected="">Velg en studieretning</option>
                   </select>
                 </div>
                 <div id="studieretningValg">
-                  @unless ($student_studerer == "")
-                    @foreach ($student_studerer as $key => $value)
-                      <div class="studieretningValg">
-                        <hr>
-                        <div class="form-group">
-                           <input class="form-control" name="student_studerer[]" value="{{ $student_studerer[$key]['studie'] }}">
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-5 form-group p-r-0">
-                                    <select class="form-control" name="campus[]">
-                                        <option selected value="{{ $student_studerer[$key]['campus'] }}">{{ $student_studerer[$key]['campus'] }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-3 form-group p-r-0">
-                                    <select class="form-control datoFra" name="datoFra[]">
-                                        <option selected value="{{ $student_studerer[$key]['fra'] }}">{{ $student_studerer[$key]['fra'] }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-3 form-group">
-                                    <select class="form-control datoTil" name="datoTil[]">
-                                        <option selected value="{{ $student_studerer[$key]['til'] }}">{{ $student_studerer[$key]['til'] }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-xs-1">
-                                    <span class="slettRad danger-color">
-                                    <span class="fa fa-close fa-lg cursor"></span>
-                                    </span>
-                                </div>
-                           </div>
-                        </div>
+                  @foreach ($student_studerer as $study)
+                    <div class="studieretningValg">
+                      <input type="hidden" name="studyId[]" value="{{ $study->id }}">
+                      <hr>
+                      <div class="form-group">
+                         <input class="form-control" name="study[]" value="{{ $study->study }} - {{ $study->type }}">
                       </div>
-                    @endforeach
-                  @endunless
+                      <div class="form-group">
+                          <div class="row">
+                              <div class="col-xs-5 form-group p-r-0">
+                                  <select class="form-control" name="campus[]">
+                                      <option selected value="{{ $study->campus }}">{{ $study->campus }}</option>
+                                  </select>
+                              </div>
+                              <div class="col-xs-3 form-group p-r-0">
+                                  <select class="form-control datoFra" name="datoFra[]">
+                                      <option selected value="{{ $study->fra }}">{{ $study->fra }}</option>
+                                  </select>
+                              </div>
+                              <div class="col-xs-3 form-group">
+                                  <select class="form-control datoTil" name="datoTil[]">
+                                      <option selected value="{{ $study->til }}">{{ $study->til }}</option>
+                                  </select>
+                              </div>
+                              <div class="col-xs-1">
+                                  <span class="slettRad danger-color">
+                                  <span class="fa fa-close fa-lg cursor"></span>
+                                  </span>
+                              </div>
+                         </div>
+                      </div>
+                    </div>
+                  @endforeach
                 </div>
               </div>
             </li>

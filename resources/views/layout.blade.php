@@ -23,6 +23,7 @@ paceOptions = {
 
     <!-- styles -->
     <link rel="stylesheet" href="/css/dist/select2.min.css">
+    <link rel="stylesheet" href="/css/dist/select2-bootstrap.css">
     <link rel="stylesheet" href="/css/dist/fileinput.min.css">
     <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
     <link rel="stylesheet" href="/css/dist/bootstrap-datepicker.min.css">

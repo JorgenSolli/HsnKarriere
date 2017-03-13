@@ -3,12 +3,14 @@ $(function () {
     $('.select2').select2();
 
     // Legger til nye rader per studieretning
-    $("#studieretning").on('change', function () {
+    $(document).on('change', '#studieretning', function() {
         // Finner studieretningen
-        var val = $("#studieretning").val();
-
+        var studie = $("#select2-studieretning-container span").text();
+        var campus = $("#studiested").val();
+        var studieId = $("#studyId").val();
         // Legger til nye inputfields
-        studvalgInput(val);
+
+        studvalgInput(studieId, studie, campus);
 
         var myDate = new Date();
         var year = myDate.getFullYear();
@@ -188,13 +190,11 @@ $(function () {
 
 });
 
-function studvalgInput (studretning) {
+function studvalgInput (studieId, studie, campus) {
     var myDate = new Date();
     var year = myDate.getFullYear();
     var datoFra = [];
     var datoTil = [];
-    // For later use;
-    var currStudSted = $('#studiested').val();
 
     for(var i = 2000; i <= year+1; i++){
         datoFra.push("<option value=" + i + ">" + i + "</option>");
@@ -205,18 +205,15 @@ function studvalgInput (studretning) {
     }
 
     var input = '<div class="studieretningValg">' +
+        '<input type="hidden" name="studyId[]" value="' + studieId + '">' +
        '<hr>' + 
        '<div class="form-group">' +
-         '<input class="form-control" name="student_studerer[]" value="' + studretning + '">' +
+         '<input class="form-control disabled" name="study[]" value="' + studie + '">' +
        '</div>' +
        '<div class="form-group">' +
             '<div class="row">' +
                 '<div class="col-xs-5 form-group p-r-0">' +
-                    '<select class="form-control" name="campus[]">' +
-                        '<option selected disabled>Campus</option>' +
-                        '<option value="Bø">Campus Bø</option>' +
-                        '<option value="Porsgrunn">Campus Notodden</option>' +
-                    '</select>' +
+                    '<input class="form-control disabled" name="campus[]" value="' + campus + '">' +
                 '</div>' +
                 '<div class="col-xs-3 form-group p-r-0">' +
                     '<select class="form-control" name="datoFra[]" class="datoFra">' +
@@ -232,7 +229,7 @@ function studvalgInput (studretning) {
                 '</div>' +
                 '<div class="col-xs-1">' +
                     '<span class="slettRad scaryRed-color">' +
-                    '<span class="fa fa-close fa-lg cursor"></span>' +
+                    '<span class="fa fa-close fa-lg cursor danger-color"></span>' +
                     '</span>' +
                 '</div>' +
            '</div>' +
@@ -242,26 +239,6 @@ function studvalgInput (studretning) {
 }
 
 $(document).ready(function() {
-    // $("#studiested").on('change', function() {
-    //     var campus = $("#studiested").val();
-    //     var container = $("#studieretning");
-
-    //     $.ajax({
-    //         type: 'GET',
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         url: '/api/studies',
-    //         data: {
-    //             campus: campus
-    //         },
-    //         success: function(data) {
-    //             console.log(data);
-    //             container.append(data['data']);
-    //         }
-    //     })
-    // });
-
     var campus = function() {
         return $("#studiested").val();
     }
@@ -269,12 +246,14 @@ $(document).ready(function() {
     function formatState (state) {
         if (!state.id) { return state.text; }
         var $state = $(
-            '<p>' + state.study + ' - ' + state.type + '</p>'
+            '<input type="hidden" id="studyId" value="' + state.id + '"> ' +
+            '<span>' + state.study + ' - ' + state.type + '</span>'
         );
         return $state;
     };
 
     $("#studieretning").select2({
+        placeholder: 'Studier for valgt campus',
         ajax: {
             url: '/api/studies',
             dataType: 'json',
@@ -295,6 +274,8 @@ $(document).ready(function() {
         },
         escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
         templateResult: formatState,
-        templateSelection: formatState
+        templateSelection: formatState,
+        language: "nb",
+        theme: "bootstrap"
     });
 });

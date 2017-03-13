@@ -10,6 +10,13 @@ $(document).ready(function() {
 			var hash = window.location.hash.substr(1);
 			var id = hash.slice(4);
 			var arr = id.split(';');
+			var data = {
+				data: arr
+			}
+		} else {
+			var data = {
+				data: null
+			}
 		}
 
 		loading.show();
@@ -19,10 +26,7 @@ $(document).ready(function() {
 	        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	        },
             url: '/innboks/newMessage/', 
-            data: {
-            	reciepment: arr[0],
-            	reciepmentTwo: arr[1]
-        	},
+            data,
             success: function(data) {
             	loading.hide();
                 $(".ajaxLoading").remove();

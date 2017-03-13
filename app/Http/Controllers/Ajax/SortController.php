@@ -40,7 +40,8 @@ class SortController extends Controller
 
     	if ($brukerinfo->bruker_type == "student") {
 	    	$student_studerer = StudentStudy::where('user_id', Auth::id())
-                ->select('studie')
+	    		->join('studies', 'student_studies.studie_id', '=', 'studies.id')
+                ->select('study')
                 ->get();
 
             if ($request->searching == true) {
