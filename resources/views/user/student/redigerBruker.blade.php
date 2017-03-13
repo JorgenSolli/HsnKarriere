@@ -182,8 +182,7 @@
                 <div class="form-group">
                   <label for="studieretning">Studieretning</label>
                   <select name="studieretning" id="studieretning" class="form-control">
-                    <option value="" disabled="" selected="">Velg en eller flere studieretninger</option>
-                    @include('includes.selects.studier')
+                    <option value="" disabled="" selected="">Velg en studieretning</option>
                   </select>
                 </div>
                 <div id="studieretningValg">

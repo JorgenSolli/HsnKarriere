@@ -240,3 +240,61 @@ function studvalgInput (studretning) {
     '</div';
     $("#studieretningValg").append(input);
 }
+
+$(document).ready(function() {
+    // $("#studiested").on('change', function() {
+    //     var campus = $("#studiested").val();
+    //     var container = $("#studieretning");
+
+    //     $.ajax({
+    //         type: 'GET',
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         },
+    //         url: '/api/studies',
+    //         data: {
+    //             campus: campus
+    //         },
+    //         success: function(data) {
+    //             console.log(data);
+    //             container.append(data['data']);
+    //         }
+    //     })
+    // });
+
+    var campus = function() {
+        return $("#studiested").val();
+    }
+
+    function formatState (state) {
+        if (!state.id) { return state.text; }
+        var $state = $(
+            '<p>' + state.study + ' - ' + state.type + '</p>'
+        );
+        return $state;
+    };
+
+    $("#studieretning").select2({
+        ajax: {
+            url: '/api/studies',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    campus: campus(),
+                    json: true,
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        templateResult: formatState,
+        templateSelection: formatState
+    });
+});

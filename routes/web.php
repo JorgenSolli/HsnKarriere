@@ -72,12 +72,17 @@ Route::post('samarbeid/dokumentfeil/{partnership}', 'SamarbeidController@dokumen
 Route::get('users/showUsers/{display}', 'Ajax\SortController@showUsers');
 Route::get('innboks/findUsers/{message}', 'Ajax\getUsers@listUsers');
 
+// API Data
+Route::get('api/campuses', 'ApiController@getCampuses');
+Route::get('api/studies', 'ApiController@getStudies');
+
 // Confirm User
 Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');
 
 // OAuth Routes
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
+
 
 // Auth routes (such as login, register etc)
 Auth::routes();

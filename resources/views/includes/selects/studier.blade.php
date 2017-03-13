@@ -4,17 +4,48 @@
         <option selected value="{{ $fagfelt['area_of_expertise'] }}">{{ $fagfelt['area_of_expertise'] }} </option>
       @endforeach
     </optgroup>
-@endif
 
-@if ($brukerinfo->bruker_type == "faglarer")
+    @foreach ($studies as $study)
+        {{ $study->study }}
+    @endforeach
+
+@elseif ($brukerinfo->bruker_type == "faglarer")
     <optgroup label="Dine valg">
       @foreach ($studier as $studie)
         <option selected value="{{ $studie['studie'] }}">{{ $studie['studie'] }} </option>
       @endforeach
     </optgroup>
+
+    @foreach ($studies as $study)
+        {{ $study->study }}
+    @endforeach
+
+@elseif ($brukerinfo->bruker_type == "student")
+    <select name="mottakere[]" id="mottakere" class="select select2 js-example-basic-multiple is-fullwidth form-control">
+      <option disabled>Velg en eller flere mottakere</option>
+      @unless ($kontakter == null)
+        @foreach ($kontakter as $kontakt)
+          @if ($kontakt->user_id == Request::get('reciepment'))
+            <option selected value="{{ $kontakt->user_id }}">
+          @else
+            <option value="{{ $kontakt->user_id }}">
+          @endif
+          
+                @if ($kontakt->bedrift_navn != "")
+                    {{ $kontakt->bedrift_navn }}
+                @else
+                    {{ $kontakt->fornavn }} {{ $kontakt->etternavn }}
+                @endif
+            </option>
+        @endforeach
+      @endunless
+    </select>
+    @foreach ($studies as $study)
+        <option value="{{ $study->study }}">{{ $study->study }} - {{ $study->type }}</option>
+    @endforeach
 @endif
 
-<optgroup label="Institutt for Økonomi og Informatikk">
+{{-- <optgroup label="Institutt for Økonomi og Informatikk">
     <option value="Geografiske Informasjonssystemer">Geografiske Informasjonssystemer</option>
     <option value="Regnskap og Revisjon">Regnskap og Revisjon</option>
     <option value="Eiendomsmegling">Eiendomsmegling</option>
@@ -79,6 +110,5 @@
 <optgroup label="Institutt for Læreutdanning">
     <option value="Grunnskolelærer, 5. - 10. trinn">Grunnskolelærer, 5. - 10. trinn</option>
     <option value="Grunnskolelærer, 1. - 7. trinn">Grunnskolelærer, 1. - 7. trinn</option>
-    <option value="Barnehagelærer">Barnehagelærer
-    </option>
-</optgroup>
+    <option value="Barnehagelærer">Barnehagelærer</option>
+</optgroup> --}}
