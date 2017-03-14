@@ -61,11 +61,14 @@ class UserEditController extends Controller
             $bachelors = Assignment::where('type', 'bacheloroppgave')
                 ->where('bedrift_id', Auth::id())
                 ->get();
+
+            $studies = Study::get();
                 
             return view('user.bedrift.redigerBruker', [
                 'brukerinfo'  => $brukerinfo,
                 'company'     => $company,
                 'jobs'        => $jobs,
+                'studies'     => $studies,
                 'masters'     => $masters,
                 'bachelors'   => $bachelors
             ]);

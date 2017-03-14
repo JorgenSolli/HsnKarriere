@@ -69,7 +69,7 @@ Route::delete('samarbeid/{partnership}', 'SamarbeidController@slettSamarbeid');
 Route::post('samarbeid/dokumentfeil/{partnership}', 'SamarbeidController@dokumentfeil');
 
 // Ajax calls
-Route::get('users/showUsers/{display}', 'Ajax\SortController@showUsers');
+Route::get('users/showUsers', 'Ajax\SortController@showUsers');
 Route::get('innboks/findUsers/{message}', 'Ajax\getUsers@listUsers');
 
 // API Data

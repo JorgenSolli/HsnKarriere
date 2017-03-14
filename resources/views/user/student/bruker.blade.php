@@ -60,9 +60,8 @@
           <small class="seperator pull-left p-r pos-r">|</small>
           <p id="sort-category-text" class="pull-left m-a-0 p-r-s">Sorter etter</p>
           <select class="pull-left custom-select custom-select-sm">
-            <option>Relevans</option>
             <option>Alfabetisk</option>
-            <option>Nærmest deg</option>
+            <option>Relevans</option>
           </select>
         </div>
       </div>
@@ -70,9 +69,8 @@
       <div id="sort-search" class="pull-left">
         <small class="seperator pull-left p-r pos-r">|</small>
         <form id="search-users-submit" action="" method="POST" class="pull-left">
-          {{ csrf_field() }}
           <input type="text" id="search-string" class="m-r-s pull-left custom-select custom-select-sm" data-action="grow" placeholder="Søk" style="background-repeat: repeat; background-image: none; background-position: 0% 0%; width: 140px;">
-          <button type="submit" class="pull-left btn btn-primary custom-select-sm">SØK</button>
+          <button type="button" class="pull-left btn btn-primary custom-select-sm">SØK</button>
         </form>
       </div>
     </div>
@@ -102,5 +100,9 @@
 
 @stop
 @section('script')
+  <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+  <script type="text/javascript">
+
+  </script>
   <script src="/js/minBruker.js"></script>
 @stop

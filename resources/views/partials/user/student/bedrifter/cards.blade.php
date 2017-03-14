@@ -7,6 +7,7 @@
         <div class="panel panel-default panel-profile">
           <div class="panel-heading" style="background-image: url(/uploads/{{ $bedrift->forsidebilde }});"></div>
           <div class="panel-body text-center">
+            <input type="hidden" name="loc" value="{{ $bedrift->poststed }}">
             <img class="panel-profile-img" src="/uploads/{{ $bedrift->profilbilde }}">
             <p class="h5 panel-title">{{ $bedrift->bedrift_navn }}</p>
             <p class="m-b-md">
