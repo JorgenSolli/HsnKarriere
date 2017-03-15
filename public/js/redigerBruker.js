@@ -242,26 +242,6 @@ function studvalgInput (studretning) {
 }
 
 $(document).ready(function() {
-    // $("#studiested").on('change', function() {
-    //     var campus = $("#studiested").val();
-    //     var container = $("#studieretning");
-
-    //     $.ajax({
-    //         type: 'GET',
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         url: '/api/studies',
-    //         data: {
-    //             campus: campus
-    //         },
-    //         success: function(data) {
-    //             console.log(data);
-    //             container.append(data['data']);
-    //         }
-    //     })
-    // });
-
     var campus = function() {
         return $("#studiested").val();
     }
