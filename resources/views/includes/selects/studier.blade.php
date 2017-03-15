@@ -10,12 +10,6 @@
     @endforeach
 
 @elseif ($brukerinfo->bruker_type == "faglarer")
-    <optgroup label="Dine valg">
-      @foreach ($studier as $studie)
-        <option selected value="{{ $studie['studie'] }}">{{ $studie['studie'] }} </option>
-      @endforeach
-    </optgroup>
-
     @foreach ($studies as $study)
         {{ $study->study }}
     @endforeach

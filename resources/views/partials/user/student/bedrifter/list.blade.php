@@ -22,6 +22,6 @@
       </ul>
     @endforeach
   @else
-    <p>Det finnes ingen bedrifter som passer til din bedrift</p>
+    <p>Det finnes ingen bedrifter som passer</p>
   @endunless
 </div>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\StudentStudy;
 use App\Professor;
 use App\Company;
+use App\User;
 
 class QuerryService {
 
@@ -135,14 +136,22 @@ class QuerryService {
         return null;
     }
 
-    public function finnForeleser($fagfelt, $searchString) {
+    public function finnForeleser($fagfelt, $searchString, $studentId) {
+
+        $studier = StudentStudy::where('user_id', $studentId)
+            ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
+            ->get();
+
+        $studentCampus = User::where('id', $studentId)
+            ->select('student_campus')
+            ->firstOrFail();
+
         if ($fagfelt != "") {
-            $kontakter = Professor::whereIn('studie', $fagfelt)
-                ->select('fornavn', 'etternavn', 'user_id', 'student_campus')
+            $forelesere = Professor::whereIn('studie_id', $studier)
                 ->join('users', 'professors.user_id', '=', 'users.id')
                 ->get();
 
-            return $kontakter;
+            return $forelesere;
 
         } else {
             return null;

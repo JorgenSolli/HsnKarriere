@@ -1,4 +1,4 @@
-@unless ($bedrifter == null)
+@if ($bedrifter)
 @php $row = 0 @endphp
 <!-- Card sort -->
 <div class="row">
@@ -30,5 +30,5 @@
     @endforeach
   </div>
 @else
-<p>Det finnes ingen bedrifter som passer til din bedrift</p>
-@endunless
+<p>Det finnes ingen bedrifter som passer</p>
+@endif

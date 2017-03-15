@@ -62,21 +62,23 @@
       </div>
     </div>
     <div class="col-sm-3 p-r-s p-l-s">
-      <a href="/innboks" class="a-no-dec" style="width: 100%">
+      <a href="/innboks#send{{ $brukerinfo->id }} class="a-no-dec" style="width: 100%">
         <div class="panel panel-default panel-hover text-center p-t-s p-l p-r p-b">
           <span class="fa fa-commenting-o fa-2x"></span>
           <p class="h4 m-t-xs m-b-0">Send {{ $brukerinfo->bedrift_navn }} en melding</p>
         </div>
       </a>
     </div>
-    <div class="col-sm-3 p-r-s p-l-s">
-      <a class="a-no-dec cursor" style="width: 100%" data-toggle="modal" data-target="#startSamarbeid">
-        <div class="panel panel-default panel-hover text-center p-t-s p-l p-r p-b">
-          <span class="fa fa-handshake-o fa-2x"></span>
-          <p class="h4 m-t-xs m-b-0">Start et samarbeid med {{ $brukerinfo->bedrift_navn }}</p>
-        </div>
-      </a>
-    </div>
+    @if (Auth::user()->bruker_type == "student")
+      <div class="col-sm-3 p-r-s p-l-s">
+        <a class="a-no-dec cursor" style="width: 100%" data-toggle="modal" data-target="#startSamarbeid">
+          <div class="panel panel-default panel-hover text-center p-t-s p-l p-r p-b">
+            <span class="fa fa-handshake-o fa-2x"></span>
+            <p class="h4 m-t-xs m-b-0">Start et samarbeid med {{ $brukerinfo->bedrift_navn }}</p>
+          </div>
+        </a>
+      </div>
+    @endif
   </div> <!-- end row  -->
   <div class="row">
     <div class="col-sm-3 p-r-s p-l-s cursor">
@@ -209,42 +211,44 @@
   </div>
 </div>
 
-<div id="startSamarbeid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-handshake-o"></span> Du er i ferd med å initiere et samarbeid med bedriften {{ $brukerinfo->bedrift_navn }}
-        </p>
-        <small class="danger-text m-t-xs">Vi minner om at det er viktig å ta kontakt med bedriften før et samarbeid blir forespurt</small>
+@if (Auth::user()->bruker_type == "student")
+  <div id="startSamarbeid" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-handshake-o"></span> Du er i ferd med å initiere et samarbeid med bedriften {{ $brukerinfo->bedrift_navn }}
+          </p>
+          <small class="danger-text m-t-xs">Vi minner om at det er viktig å ta kontakt med bedriften før et samarbeid blir forespurt</small>
+        </div>
+        <form method="POST" action="/samarbeid/nyttSamarbeid" enctype="multipart/form-data"> 
+          <div class="modal-body">
+            {{ csrf_field() }}
+            <input type="hidden" name="bedrift_id" value="{{ $brukerinfo->id }}">
+            <div class="form-group">
+              <label for="type">Hva slags type samarbeid er dette?</label>
+              <select id="type" name="type" class="form-control">
+                <option value="praksis">Praksis</option>
+                <option value="bachelor">Bacheloroppgave</option>
+                <option value="master">Masteroppgave</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="faglarer">Hvilken faglærer skal håndtere dette samarbeidet?</label>
+              <select id="faglarer" name="faglarer" class="form-control">
+                @include('includes.selects.faglarere')
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-danger pull-left" data-dismiss="modal">Avbryt</button>
+            <button type="submit" class="btn btn-success">Forespør samarbeid!</button>
+          </div>
+        </form>
       </div>
-      <form method="POST" action="/samarbeid/nyttSamarbeid" enctype="multipart/form-data"> 
-        <div class="modal-body">
-          {{ csrf_field() }}
-          <input type="hidden" name="bedrift_id" value="{{ $brukerinfo->id }}">
-          <div class="form-group">
-            <label for="type">Hva slags type samarbeid er dette?</label>
-            <select id="type" name="type" class="form-control">
-              <option value="praksis">Praksis</option>
-              <option value="bachelor">Bacheloroppgave</option>
-              <option value="master">Masteroppgave</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="faglarer">Hvilken faglærer skal håndtere dette samarbeidet?</label>
-            <select id="faglarer" name="faglarer" class="form-control">
-              @include('includes.selects.faglarere')
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="reset" class="btn btn-danger pull-left" data-dismiss="modal">Avbryt</button>
-          <button type="submit" class="btn btn-success">Forespør samarbeid!</button>
-        </div>
-      </form>
     </div>
   </div>
-</div>
+@endif
 
 @stop
 @section('script')

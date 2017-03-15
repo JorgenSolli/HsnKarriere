@@ -278,4 +278,8 @@ $(document).ready(function() {
         language: "nb",
         theme: "bootstrap"
     });
+
+    $("#studie").select2({
+        theme: 'bootstrap'
+    });
 });

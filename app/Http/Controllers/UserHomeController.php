@@ -25,13 +25,13 @@ class UserHomeController extends Controller
             $brukerinfo = Auth::user();
             $student_studerer = StudentStudy::where('user_id', Auth::id())
                 ->get();
-            $bedrifter  = $querry_service->finnBedrifter($student_studerer, false, false);
-            $kontakter  = $querry_service->finnForeleser($student_studerer, false, false);
+            $bedrifter = $querry_service->finnBedrifter($student_studerer, false, false);
+            $forelesere = $querry_service->finnForeleser($student_studerer, false, Auth::id());
 
             return view('user.student.bruker', 
                 [
-                    'bedrifter' => $bedrifter, 
-                    'kontakter' => $kontakter,
+                    'bedrifter'  => $bedrifter, 
+                    'forelesere' => $forelesere,
                     'student_studerer' => $student_studerer,
                     'brukerinfo' => $brukerinfo
                 ]);
@@ -87,7 +87,7 @@ class UserHomeController extends Controller
                 ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                 ->select('study')
                 ->get();
-            $faglarere = $querry_service->finnForeleser($studier, false);
+            $faglarere = $querry_service->finnForeleser($studier, false, Auth::id());
             return view('user.bedrift.seBruker',
             [
                 'brukerinfo' => $brukerinfo,
@@ -104,8 +104,6 @@ class UserHomeController extends Controller
             [
                 'brukerinfo' => $brukerinfo
             ]);
-        }
-
-        
+        }   
     }
 }

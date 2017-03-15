@@ -75,12 +75,41 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label for="studiested">Studiested</label>
+                      <select name="student_campus" id="studiested" class="form-control">
+                        @foreach ($campuses as $campus)
+                          @if ($campus->campus == $brukerinfo->student_campus)
+                            <option 
+                              value="{{ $campus->campus }}" selected>
+                              Campus {{ $campus->campus }}
+                            </option>
+                          @else
+                            <option 
+                              value="{{ $campus->campus }}">
+                              Campus {{ $campus->campus }}
+                            </option>
+                          @endif
+                        @endforeach
+                      </select>
+                    </div>
+
                     <div class="form-group">
                       <label for="studie">Hvilket studie tilhører du?</label>
-                      <select name="studie[]" id="studie" class="form-control">
-                        <option value="" disabled="" selected="">Velg en eller flere studieretninger</option>
-                        @include('includes.selects.studier')
-                      </select>
+                      @if ($brukerinfo->student_campus)
+                        <select name="studie[]" id="studie" class="form-control">
+                          @foreach ($studier as $studie)
+                            @if ($myStudies && $myStudies->studie_id == $studie->id)
+                              <option selected value="{{ $studie->id }}">{{ $studie->study }} - {{ $studie->type }}</option>
+                            @else
+                              <option value="{{ $studie->id }}">{{ $studie->study }} - {{ $studie->type }}</option>
+                            @endif
+                          @endforeach
+                        </select>
+                      @else
+                        <input class="form-control" type="text" disabled value="Oppdater profilen din med studiested først!">
+                      @endif
                     </div>
                     <div class="form-group">
                       <label for="avdeling">RomNr.</label>

@@ -29,7 +29,7 @@ class UserEditController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index (QuerryService $querry_service)
-    {
+    {   
         if (Auth::user()->bruker_type == "student") {
             $brukerinfo = Auth::user();
             $student_studerer = StudentStudy::where('user_id', Auth::id())
@@ -75,12 +75,21 @@ class UserEditController extends Controller
         }
 
         else if (Auth::user()->bruker_type == "faglarer") {
-            $brukerinfo = Auth::user();
-            $studier = Professor::where('user_id', Auth::id())->get();
+            $brukerinfo = User::where('users.id', Auth::id())
+                ->firstOrFail();
+            $myStudies = Professor::where('user_id', Auth::id())
+                ->join('studies', 'professors.id', '=', 'studies.id')
+                ->first();
+
+            $studier = Study::where('campus', $brukerinfo->student_campus)
+                ->get();
+            $campuses = Campus::orderBy('campus', 'ASC')->get();
 
             return view('user.faglarer.redigerBruker', [
                 'brukerinfo' => $brukerinfo,
-                'studier'    => $studier
+                'studier'    => $studier,
+                'campuses'   => $campuses,
+                'myStudies'  => $myStudies
             ]);
         }
     }
@@ -107,8 +116,6 @@ class UserEditController extends Controller
             StudentStudy::where('user_id', Auth::id())->delete();
             
             if (isset($data['datoTil']) && isset($data['datoFra']) && isset($data['campus']) && isset($data['studyId'])) {
-
-                
                 for ($i = 0; $i < count($data['datoFra']); $i++) {
                     $studentStudy = New StudentStudy;
                     $studentStudy->user_id   = Auth::id();
@@ -137,11 +144,12 @@ class UserEditController extends Controller
 
         else if (Auth::user()->bruker_type == "faglarer") {
             Professor::where('user_id', Auth::id())->delete();
-            if (!empty($data['studie'])) {
+            
+            if ($data['studie']) {
                 for ($i = 0; $i < count($data['studie']); $i++) {
                     $professor = New Professor;
                     $professor->user_id = Auth::id();
-                    $professor->studie = $data['studie'][$i];
+                    $professor->studie_id = $data['studie'][$i];
                     $professor->save();
                 }
             }

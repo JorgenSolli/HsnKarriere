@@ -15,22 +15,32 @@
             class="select select2 js-example-basic-multiple is-fullwidth form-control"
             multiple="multiple">
               <option disabled>Velg en eller flere mottakere</option>
-              @unless ($kontakter == null)
-                @foreach ($kontakter as $kontakt)
-                  @if ($kontakt->user_id == Request::get('reciepment'))
-                    <option selected value="{{ $kontakt->user_id }}">
+              @if ($forelesere)
+                @foreach ($forelesere as $foreleser)
+                  @if ($foreleser->user_id == Request::get('reciepment'))
+                    <option selected value="{{ $foreleser->user_id }}">
                   @else
-                    <option value="{{ $kontakt->user_id }}">
+                    <option value="{{ $foreleser->user_id }}">
                   @endif
-                  
-                		@if ($kontakt->bedrift_navn != "")
-                			{{ $kontakt->bedrift_navn }}
+                  {{ $foreleser->fornavn }} {{ $foreleser->etternavn }}
+                  </option>
+                @endforeach
+              @endif
+              @if ($bedrifter)
+                @foreach ($bedrifter as $bedrift)
+                  @if ($bedrift->user_id == Request::get('reciepment'))
+                    <option selected value="{{ $bedrift->user_id }}">
+                  @else
+                    <option value="{{ $bedrift->user_id }}">
+                  @endif
+                		@if ($bedrift->bedrift_navn != "")
+                			{{ $bedrift->bedrift_navn }}
                 		@else
-                			{{ $kontakt->fornavn }} {{ $kontakt->etternavn }}
+                			{{ $bedrift->fornavn }} {{ $bedrift->etternavn }}
                 		@endif
                 	</option>
                 @endforeach
-              @endunless
+              @endif
             </select>
           </div>
           <div class="form-group">

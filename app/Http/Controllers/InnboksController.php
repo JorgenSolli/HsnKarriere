@@ -90,14 +90,20 @@ class InnboksController extends Controller
 
         if ($brukerinfo->bruker_type == "student") {
             // Finding the companies the user is allowed to contact
-            $kontakter = $querry_service->finnBedrifter(StudentStudy::where('user_id', Auth::id())
+            $bedrifter = $querry_service->finnBedrifter(StudentStudy::where('user_id', Auth::id())
                     ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                     ->select('study')
-                    ->get(), false);
+                    ->get(), false, false);
+
+            $forelesere = $querry_service->finnForeleser(StudentStudy::where('user_id', Auth::id())
+                    ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
+                    ->select('study')
+                    ->get(), false, Auth::id());
 
             $returnHTML = view('includes.innboks.newMessage')
                 ->with('brukerinfo', $brukerinfo)
-                ->with('kontakter', $kontakter)
+                ->with('bedrifter', $bedrifter)
+                ->with('forelesere', $forelesere)
                 ->render();
             return response()->json(array('success' => true, 'data' => $returnHTML));
         }
