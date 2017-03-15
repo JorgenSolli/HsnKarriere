@@ -4,65 +4,41 @@ var loading = '<div class="text-center">' +
 var container = $("#users-data");
 
 // Ajax Sorting List
-$("#sortList").on('click', function() {
-	container.html(loading);
-	$.ajax({
-		type: 'GET',
-		headers: {
-	        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        },
-		url: 'users/showUsers/list', 
-		success: function(data) {
-			container.html(data['data']);
-			$("#sortList").addClass('active');
-			$("#sortCards").removeClass('active');
-		}
-	});
-});
-
-// Ajax sorting Cards
-$("#sortCards").on('click', function() {
-	container.html(loading);
-	$.ajax({
-		type: 'GET',
-		headers: {
-        	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-		url: 'users/showUsers/cards', 
-		success: function(data) {
-			container.html(data['data']);
-			$("#sortCards").addClass('active');
-			$("#sortList").removeClass('active');
-		}
-	});
-});
-
-// Ajax for searcing the cards
-$("#search-users-submit").on('submit', function(e) {
-	e.preventDefault();
-	var postUrl;
-	var searchString = $("#search-string").val();
-
-	if ($("#sortCards").attr('class').indexOf("active") >= 0) {
-		postUrl = 'users/showUsers/cards';
+$("#sortList, #sortCards, #search-users-submit button").on('click', function() {
+	if ($(this).attr('id') == 'sortCards') {
+		$("#sortCards").addClass('active');
+		$("#sortList").removeClass('active');
 	} else {
-		postUrl = 'users/showUsers/list';
+		$("#sortList").addClass('active');
+		$("#sortCards").removeClass('active');
 	}
-	
+
+	search(true);
+});
+
+// Searching = boolean
+var search = function (searching) {
+	if ($("#sortCards").attr('class').indexOf("active") >= 0) {
+		var display = 'cards';
+	} else {
+		var display = 'list';
+	}
+	var searchString = $("#search-string").val();
+	var sort = $("#sort-category select").val();
 	container.html(loading);
 	$.ajax({
-		type: 'GET',
+		url: 'users/showUsers',
 		headers: {
         	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-		url: postUrl,
-		data: {
-			searchString: searchString,
-			searching: true
-		},
-		success: function(data) {
+        data: {
+        	searchString: searchString,
+        	searching: searching,
+        	display: display,
+        	sort: sort
+        },
+        success: function(data) {
 			container.html(data['data']);
 		}
-	});
-
-});
+	})
+}

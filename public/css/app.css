@@ -10894,4 +10894,16 @@ footer {
   right: 11px;
 }
 
+.datepicker {
+  padding: 5px !important;
+}
+
+.datepicker .datepicker-switch {
+  width: 115px !important;
+}
+
+.datepicker .prev, .datepicker .next {
+  width: 30px !important;
+}
+
 /*# sourceMappingURL=app.css.map */

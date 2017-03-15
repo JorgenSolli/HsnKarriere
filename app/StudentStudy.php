@@ -13,7 +13,7 @@ class StudentStudy extends Model
     */
     protected $fillable = [
     	'user_id',
-    	'studie',
+    	'studie_id',
     	'campus',
     	'fra',
     	'til',

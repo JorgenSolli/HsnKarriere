@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Job;
 use App\User;
 use Validator;
+use App\Study;
+use App\Campus;
 use App\Company;
 use App\Professor;
 use App\Assignment;
@@ -30,11 +32,14 @@ class UserEditController extends Controller
     {
         if (Auth::user()->bruker_type == "student") {
             $brukerinfo = Auth::user();
-            $student_studerer = StudentStudy::where('user_id', Auth::id())->get();
-
+            $student_studerer = StudentStudy::where('user_id', Auth::id())
+                ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
+                ->get();
+            $campuses = Campus::orderBy('campus', 'ASC')->get();
 
             return view('user.student.redigerBruker',
                 [
+                    'campuses' => $campuses,
                     'brukerinfo' => $brukerinfo,
                     'student_studerer' => $student_studerer
                 ]);
@@ -56,11 +61,14 @@ class UserEditController extends Controller
             $bachelors = Assignment::where('type', 'bacheloroppgave')
                 ->where('bedrift_id', Auth::id())
                 ->get();
+
+            $studies = Study::get();
                 
             return view('user.bedrift.redigerBruker', [
                 'brukerinfo'  => $brukerinfo,
                 'company'     => $company,
                 'jobs'        => $jobs,
+                'studies'     => $studies,
                 'masters'     => $masters,
                 'bachelors'   => $bachelors
             ]);
@@ -95,27 +103,22 @@ class UserEditController extends Controller
         }
 
         if (Auth::user()->bruker_type == "student") {
-            // Formats the data for the student_studerer field. Concats studretning, campus, datoFra og datoTil
-            $student_studerer = NULL;
-            /* Går gjennom valg (student_studerer, campus, år-fra->til) for studentretning */
+            /* Går gjennom valg (study, campus, år-fra->til) for studentretning */
             StudentStudy::where('user_id', Auth::id())->delete();
-            if (isset($data['datoTil']) && isset($data['datoFra']) && isset($data['campus']) && isset($data['student_studerer'])) {
+            
+            if (isset($data['datoTil']) && isset($data['datoFra']) && isset($data['campus']) && isset($data['studyId'])) {
 
                 
                 for ($i = 0; $i < count($data['datoFra']); $i++) {
                     $studentStudy = New StudentStudy;
-
-                    $studentStudy->user_id  = Auth::id();
-                    $studentStudy->studie   = $data['student_studerer'][$i];
-                    $studentStudy->campus   = $data['campus'][$i];
-                    $studentStudy->fra      = $data['datoFra'][$i];
-                    $studentStudy->til      = $data['datoTil'][$i];
+                    $studentStudy->user_id   = Auth::id();
+                    $studentStudy->studie_id = $data['studyId'][$i];
+                    $studentStudy->campus    = $data['campus'][$i];
+                    $studentStudy->fra       = $data['datoFra'][$i];
+                    $studentStudy->til       = $data['datoTil'][$i];
                     $studentStudy->save();
                 }
             }
-
-            // Adds contacenated data to Request data array
-            $data['student_studerer'] = $student_studerer;
         }
 
         else if (Auth::user()->bruker_type == "bedrift") {

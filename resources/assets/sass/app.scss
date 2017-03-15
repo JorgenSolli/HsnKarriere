@@ -956,3 +956,16 @@ footer {
     top: 4px;
     right: 11px;
 }
+
+.datepicker {
+    padding: 5px !important;
+    
+    .datepicker-switch {
+        width: 115px !important;
+    }
+
+    .prev, .next {
+        width: 30px !important;
+    }
+}
+

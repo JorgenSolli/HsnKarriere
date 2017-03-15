@@ -35,22 +35,28 @@ class SortController extends Controller
     * @param  string $display
     * @return response
     */
-    public function showUsers(QuerryService $querry_service, Request $request, $display) {
+    public function showUsers(QuerryService $querry_service, Request $request) {
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
 	    	$student_studerer = StudentStudy::where('user_id', Auth::id())
-                ->select('studie')
+	    		->join('studies', 'student_studies.studie_id', '=', 'studies.id')
+                ->select('study')
                 ->get();
 
             if ($request->searching == true) {
-            	$bedrifter  = $querry_service->finnBedrifter($student_studerer, $request->searchString);
+            	$bedrifter  = $querry_service->finnBedrifter($student_studerer, $request->searchString, $request->sort);
 			} 
 			else {
-	    		$bedrifter  = $querry_service->finnBedrifter($student_studerer, false);
+	    		$bedrifter  = $querry_service->finnBedrifter($student_studerer, false, $request->sort);
 			}
 
-	    	$returnHTML = view('partials.user.student.bedrifter.' . $display)
+
+			if ($request->json) {
+				return response()->json(array('data'=>$bedrifter));
+			}
+
+	    	$returnHTML = view('partials.user.student.bedrifter.' . $request->display)
 	    		->with('bedrifter', $bedrifter)
 	    		->render();
 			return response()->json(array('success' => true, 'data'=>$returnHTML));
@@ -68,7 +74,7 @@ class SortController extends Controller
 	    		$studenter = $querry_service->finnStudenter($area_of_expertise, false);
 			}
 			
-	    	$returnHTML = view('partials.user.bedrift.studenter.' . $display)
+	    	$returnHTML = view('partials.user.bedrift.studenter.' . $request->display)
 	    		->with('studenter', $studenter)
 	    		->render();
 			return response()->json(array('success' => true, 'data'=>$returnHTML));
