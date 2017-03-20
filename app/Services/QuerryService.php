@@ -113,6 +113,7 @@ class QuerryService {
                     ->join('users', 'student_studies.user_id', '=', 'users.id')
                     ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                     ->whereIn('studies.study', $fagfelt)
+                    ->whereIn('users.student_campus', $fagfelt)
                     ->get()
                     ->unique('user_id');
             } 
@@ -136,21 +137,28 @@ class QuerryService {
         return null;
     }
 
-    public function finnForeleser($fagfelt, $searchString, $studentId) {
+    public function finnForeleser($studentId, $companyId, $searchString) {
+        if ($studentId != "") {
 
-        $studier = StudentStudy::where('user_id', $studentId)
-            ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
-            ->get();
+            if ($studentId) {
+                $studier = StudentStudy::where('user_id', $studentId)
+                    ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
+                    ->get();
 
-        $studentCampus = User::where('id', $studentId)
-            ->select('student_campus')
-            ->firstOrFail();
+                $studentCampus = User::where('id', $studentId)
+                    ->select('student_campus')
+                    ->first();
 
-        if ($fagfelt != "") {
-            $forelesere = Professor::whereIn('studie_id', $studier)
-                ->join('users', 'professors.user_id', '=', 'users.id')
-                ->get();
-
+                $forelesere = Professor::whereIn('studie_id', $studier)
+                    ->join('users', 'professors.user_id', '=', 'users.id')
+                    ->get();
+            }
+            // You're a company
+            else {
+                $forelesere = Professor::whereIn('studie_id', $studier)
+                    ->join('users', 'professors.user_id', '=', 'users.id')
+                    ->get();
+            }
             return $forelesere;
 
         } else {

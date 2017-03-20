@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Company;
 use App\Message;
+use App\Professor;
+use App\StudentStudy;
 use App\MessagesJunction;
 use App\Services\QuerryService;
 use Illuminate\Support\Facades\Auth;
@@ -75,29 +77,39 @@ class getUsers extends Controller
     	$list = "";
     	// The message has no student participating. Showing all students
     	if ($users['student'] == false) {
-    		$list = $querry_service
-    			->finnBedrifter(StudentStudy::where('user_id', $studentUserId)
-				->select('studie')
-				->get(), false);
+            if (Auth::user()->bruker_type == "bedrift") {
+                $list = $querry_service
+                    ->finnStudenter(
+                        Company::select('area_of_expertise')->where('user_id', Auth::id())->get(), 
+                        false, 
+                        false
+                    );
+            }
     	}
 
     	// The message has no company participating. Showing all companies
+        // Todo: The students listed should be related to the professor, not the company.
     	elseif ($users['bedrift'] == false) {
     		$list = $querry_service
-    			->finnStudenter(Company::where('user_id', $comapnyUserId)
-                ->join('users', 'companies.user_id', '=', 'users.id')
-                ->select('area_of_Expertise')
-                ->get(), false);
+    			->finnStudenter(
+                    Company::where('user_id', $comapnyUserId)
+                        ->join('users', 'companies.user_id', '=', 'users.id')
+                        ->select('area_of_Expertise')
+                        ->get(), 
+                    false, 
+                    false
+                );
     	}
 
-    	// The message has no teacher participating. Showing all teachers
-    	elseif ($users['faglarer'] == false) {
+    	// If a student is in the conversation already, only the professor related to the student can be added.
+    	elseif ($users['faglarer'] == false && $users['student']) {
     		$list = $querry_service
-    			->finnKontakter(Company::where('user_id', $comapnyUserId)
-                ->join('users', 'companies.user_id', '=', 'users.id')
-                ->select('area_of_Expertise')
-                ->get(), false);
+    			->finnForeleser($studentUserId, false, false);
     	}
+
+        elseif ($users['faglarer'] == false && $users['student'] == false) {
+
+        }
 
     	$returnHTML = view('includes.selects.listUsers')
     		->with('users', $list)

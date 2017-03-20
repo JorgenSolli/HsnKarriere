@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class="col-sm-3 p-r-s p-l-s">
-      <a href="/innboks#send{{ $brukerinfo->id }} class="a-no-dec" style="width: 100%">
+      <a href="/innboks#send{{ $brukerinfo->id }}" class="a-no-dec" style="width: 100%">
         <div class="panel panel-default panel-hover text-center p-t-s p-l p-r p-b">
           <span class="fa fa-commenting-o fa-2x"></span>
           <p class="h4 m-t-xs m-b-0">Send {{ $brukerinfo->bedrift_navn }} en melding</p>
