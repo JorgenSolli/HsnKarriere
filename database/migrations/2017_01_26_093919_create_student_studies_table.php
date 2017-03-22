@@ -16,7 +16,7 @@ class CreateStudentStudiesTable extends Migration
         Schema::create('student_studies', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->references('id')->on('users');
-            $table->integer('studie_id');
+            $table->integer('studie_id')->references('id')->on('studies');
             $table->string('campus');
             $table->integer('fra');
             $table->integer('til');

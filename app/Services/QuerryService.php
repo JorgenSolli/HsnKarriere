@@ -11,43 +11,56 @@ use App\User;
 
 class QuerryService {
 
-    public function finnBedrifter($studier, $searchString, $sort) {
-        if(!empty($studier)) {
+    public function finnBedrifter($brukerId, $searchString, $sort) {
+        if ($brukerId) {
+            $brukerinfo = User::where('id', $brukerId)->firstOrFail();
+
+            if ($brukerinfo->bruker_type == "student") {
+                $fag = StudentStudy::where('user_id', $brukerId)
+                    ->select('studie_id')
+                    ->get();
+            } elseif ($brukerinfo->bruker_type == "faglarer") {
+                $fag = Professor::where('user_id', $brukerId)
+                    ->select('studie_id')
+                    ->get();
+            }
+
             if ($searchString == false) {
                 if ($sort == 'Alfabetisk') {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('area_of_expertise', $studier)
+                        ->whereIn('studie_id', $fag)
                         ->orderBy('bedrift_navn', 'ASC')
                         ->get()
                         ->unique('user_id');
                 } 
                 
                 elseif ($sort == 'Relevans') {
-                    $currentStudy = StudentStudy::where('user_id', Auth::id())
+                    $currentStudy = StudentStudy::where('user_id', $brukerId)
                         ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                         ->select('study')
                         ->orderBy('student_studies.til', 'DESC')
                         ->first();
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
+
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('area_of_expertise', $studier)
-                        ->orderByRaw("FIELD(area_of_expertise, '$currentStudy->study') DESC")
+                        ->whereIn('studie_id', $fag)
+                        ->orderByRaw("FIELD(studie_id, '$currentStudy->study') DESC")
                         ->get()
                         ->unique('user_id');
                 } 
                 
                 else {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('area_of_expertise', $studier)
+                        ->whereIn('studie_id', $fag)
                         ->get()
                         ->unique('user_id');
                 }
             }
             else {
                 if ($sort == 'Alfabetisk') {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
                         ->where('bedrift_navn', 'like', $searchString . "%")
                         ->orWhere('fornavn', 'like', $searchString . "%")
                         ->orWhere('etternavn', 'like', $searchString . "%")
@@ -55,13 +68,13 @@ class QuerryService {
                         ->orWhere('email', 'like', $searchString . "%")
                         ->orWhere('poststed', 'like', $searchString . "%")
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('area_of_expertise', $studier)
+                        ->whereIn('studie_id', $studier)
                         ->orderBy('bedrift_navn', 'ASC')
                         ->get()
                         ->unique('user_id');
                 }
                 elseif ($sort == 'Relevans') {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
                         ->where('bedrift_navn', 'like', $searchString . "%")
                         ->orWhere('fornavn', 'like', $searchString . "%")
                         ->orWhere('etternavn', 'like', $searchString . "%")
@@ -69,13 +82,13 @@ class QuerryService {
                         ->orWhere('email', 'like', $searchString . "%")
                         ->orWhere('poststed', 'like', $searchString . "%")
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('area_of_expertise', $studier)
-                        ->orderByRaw( "FIELD(area_of_expertise, '$currentStudy->study')" )
+                        ->whereIn('studie_id', $studier)
+                        ->orderByRaw( "FIELD(studie_id, '$currentStudy->study')" )
                         ->get()
                         ->unique('user_id');
                 }
                 else {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'area_of_expertise')
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
                         ->where('bedrift_navn', 'like', $searchString . "%")
                         ->orWhere('fornavn', 'like', $searchString . "%")
                         ->orWhere('etternavn', 'like', $searchString . "%")
@@ -83,7 +96,7 @@ class QuerryService {
                         ->orWhere('email', 'like', $searchString . "%")
                         ->orWhere('poststed', 'like', $searchString . "%")
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('area_of_expertise', $studier)
+                        ->whereIn('studie_id', $studier)
                         ->get()
                         ->unique('user_id');
                 }
@@ -137,28 +150,35 @@ class QuerryService {
         return null;
     }
 
-    public function finnForeleser($studentId, $companyId, $searchString) {
-        if ($studentId != "") {
+    public function finnForeleser($brukerId, $searchString) {
+        if ($brukerId) {
+            $brukerinfo = User::where('id', $brukerId)->first();
 
-            if ($studentId) {
-                $studier = StudentStudy::where('user_id', $studentId)
+            if ($brukerinfo->bruker_type == "student") 
+            {
+                $fag = StudentStudy::where('user_id', $brukerId)
                     ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                     ->get();
 
-                $studentCampus = User::where('id', $studentId)
+                $studentCampus = User::where('id', $brukerId)
                     ->select('student_campus')
                     ->first();
 
-                $forelesere = Professor::whereIn('studie_id', $studier)
+                $forelesere = Professor::whereIn('studie_id', $fag)
                     ->join('users', 'professors.user_id', '=', 'users.id')
                     ->get();
             }
-            // You're a company
-            else {
-                $forelesere = Professor::whereIn('studie_id', $studier)
+
+            elseif ($brukerinfo->bruker_type == "bedrift") 
+            {
+                $fag = Company::where('user_id', $brukerId)
+                    ->select('studie_id')
+                    ->get();
+                $forelesere = Professor::whereIn('studie_id', $fag)
                     ->join('users', 'professors.user_id', '=', 'users.id')
                     ->get();
             }
+            
             return $forelesere;
 
         } else {

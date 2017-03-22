@@ -16,7 +16,7 @@ class CreateProfessorsTable extends Migration
         Schema::create('professors', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->references('id')->on('users');
-            $table->string('studie')->nullable();
+            $table->integer('studie_id')->references('id')->on('studie');
             $table->timestamps();
         });
     }

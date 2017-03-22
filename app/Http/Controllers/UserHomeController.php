@@ -23,10 +23,11 @@ class UserHomeController extends Controller
         if (Auth::user()->bruker_type == "student") {
         
             $brukerinfo = Auth::user();
+            $bedrifter = $querry_service->finnBedrifter(Auth::id(), false, false);
+            $forelesere = $querry_service->finnForeleser(Auth::id(), false, Auth::id());
             $student_studerer = StudentStudy::where('user_id', Auth::id())
+                ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                 ->get();
-            $bedrifter = $querry_service->finnBedrifter($student_studerer, false, false);
-            $forelesere = $querry_service->finnForeleser($student_studerer, false, Auth::id());
 
             return view('user.student.bruker', 
                 [
@@ -48,7 +49,7 @@ class UserHomeController extends Controller
                     false, 
                     false
                 );
-            
+
             return view('user.bedrift.bruker',
                 [
                     'studenter'  => $studenter,
@@ -79,7 +80,8 @@ class UserHomeController extends Controller
 	}
 
     public function seBruker(QuerryService $querry_service, $id) {
-        $brukerinfo = User::where('id', $id)->firstOrFail();
+        $brukerinfo = User::where('id', $id)
+            ->firstOrFail();
 
         if ($brukerinfo->bruker_type == "student") {
             $student_studerer = StudentStudy::where('user_id', $id)
@@ -98,16 +100,19 @@ class UserHomeController extends Controller
             $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', $id)->get();
             $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', $id)->get();
 
-            $studier = StudentStudy::where('user_id', Auth::id())
-                ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
+            $studier = Company::where('user_id', $id)
+                ->join('studies', 'companies.studie_id', '=', 'studies.id')
                 ->select('study')
                 ->get();
-            $faglarere = $querry_service->finnForeleser($studier, false, Auth::id());
+
+            $faglarere = $querry_service->finnForeleser($id, false);
+
             return view('user.bedrift.seBruker',
             [
                 'brukerinfo' => $brukerinfo,
                 'faglarere'  => $faglarere,
-                'company'    => $company, 
+                'company'    => $company,
+                'fag'        => $studier, 
                 'bachelors'  => $bachelors,
                 'masters'    => $masters,
                 'jobs'       => $jobs

@@ -8,7 +8,8 @@ $("#sortList, #sortCards, #search-users-submit button").on('click', function() {
 	if ($(this).attr('id') == 'sortCards') {
 		$("#sortCards").addClass('active');
 		$("#sortList").removeClass('active');
-	} else {
+	} 
+	else if ($(this).attr('id') == 'sortList') {
 		$("#sortList").addClass('active');
 		$("#sortCards").removeClass('active');
 	}

@@ -48,6 +48,7 @@ class UserEditController extends Controller
         else if (Auth::user()->bruker_type == "bedrift") {
             $brukerinfo = Auth::user();
             $company = Company::where('user_id', Auth::id())
+                ->join('studies', 'companies.studie_id', '=', 'studies.id')
                 ->get();
 
             $jobs = Job::where('bedrift_id', Auth::id())
@@ -63,7 +64,7 @@ class UserEditController extends Controller
                 ->get();
 
             $studies = Study::get();
-                
+
             return view('user.bedrift.redigerBruker', [
                 'brukerinfo'  => $brukerinfo,
                 'company'     => $company,
@@ -105,13 +106,14 @@ class UserEditController extends Controller
     {
         // Gets all data from form and pushes to DB
         $data = $request->all();
+        $brukertype = Auth::user()->bruker_type;
 
         // exit if this is not your user and you are not admin
         if ($user->id !== Auth::id() && Auth::user()->bruker_type != "admin") {
             abort(403, 'Unauthorized action.');
         }
 
-        if (Auth::user()->bruker_type == "student") {
+        if ($brukertype == "student") {
             /* Går gjennom valg (study, campus, år-fra->til) for studentretning */
             StudentStudy::where('user_id', Auth::id())->delete();
             
@@ -128,24 +130,25 @@ class UserEditController extends Controller
             }
         }
 
-        else if (Auth::user()->bruker_type == "bedrift") {
+        else if ($brukertype == "bedrift") {
             // Concatenates arrays to oneliners
             Company::where('user_id', Auth::id())->delete();
-            if (!empty($data['area_of_expertise'])) {
-                for ($i = 0; $i < count($data['area_of_expertise']); $i++) {
+
+            if (!empty($data['studie_id'])) {
+                for ($i = 0; $i < count($data['studie_id']); $i++) {
                     $company = New Company;
                     $company->user_id = Auth::id();
-                    $company->area_of_expertise = $data['area_of_expertise'][$i];
+                    $company->studie_id = $data['studie_id'][$i];
                     $company->save();
                 }
             }
             $data['bedrift_navn'] = $request->bedrift_navn;
         }
 
-        else if (Auth::user()->bruker_type == "faglarer") {
+        else if ($brukertype == "faglarer") {
             Professor::where('user_id', Auth::id())->delete();
-            
-            if ($data['studie']) {
+
+            if (array_key_exists('studie', $data)) {
                 for ($i = 0; $i < count($data['studie']); $i++) {
                     $professor = New Professor;
                     $professor->user_id = Auth::id();
@@ -162,6 +165,19 @@ class UserEditController extends Controller
         // Sets phone nr to 0 if left blank
         if (empty($data['telefon'])) {
             $data['telefon'] = 0;
+        }
+
+        if ($brukertype == "student" || $brukertype == "bedrift") {
+            // If the gived url does not contain http, append it.
+            if (!preg_match('/http/', $data['nettside'])) {
+                $data['nettside'] = 'http://' . $data['nettside'];
+            }
+            if (!preg_match('/http/', $data['linkedin'])) {
+                $data['linkedin'] = 'http://' . $data['linkedin'];
+            }
+            if (!preg_match('/http/', $data['facebook'])) {
+                $data['facebook'] = 'http://' . $data['facebook'];
+            }
         }
 
         // Updates the DB with new data

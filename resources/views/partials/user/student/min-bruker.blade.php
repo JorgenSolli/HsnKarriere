@@ -14,7 +14,7 @@
         <p class="h4"><span class="fa fa-graduation-cap"></span> Studerer/studerte</p>
         @unless ($student_studerer == "")
           @foreach ($student_studerer as $studerer)
-            <p>{{ $studerer->studie }} ved {{ $studerer->campus }} fra {{$studerer->fra }} til {{ $studerer->til }}</p>
+            <p>{{ $studerer->study }} ({{ $studerer->type }}) campus {{ $studerer->campus }} fra {{$studerer->fra }} til {{ $studerer->til }}</p>
           @endforeach
         @else
         <p>Ingen studier spesifisert</p>

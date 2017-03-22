@@ -39,16 +39,12 @@ class SortController extends Controller
     	$brukerinfo = Auth::user();
 
     	if ($brukerinfo->bruker_type == "student") {
-	    	$student_studerer = StudentStudy::where('user_id', Auth::id())
-	    		->join('studies', 'student_studies.studie_id', '=', 'studies.id')
-                ->select('study')
-                ->get();
 
             if ($request->searching == true) {
-            	$bedrifter  = $querry_service->finnBedrifter($student_studerer, $request->searchString, $request->sort);
+            	$bedrifter  = $querry_service->finnBedrifter(Auth::id(), $request->searchString, $request->sort);
 			} 
 			else {
-	    		$bedrifter  = $querry_service->finnBedrifter($student_studerer, false, $request->sort);
+	    		$bedrifter  = $querry_service->finnBedrifter(Auth::id(), false, $request->sort);
 			}
 
 
@@ -63,15 +59,12 @@ class SortController extends Controller
 		}
 
 		elseif ($brukerinfo->bruker_type == "bedrift") {
-			$area_of_expertise = Company::select('area_of_expertise')
-				->where('user_id', Auth::id())
-				->get();
 				
 			if ($request->searching == true) {
-				$studenter = $querry_service->finnStudenter($area_of_expertise, $request->searchString);
+				$studenter = $querry_service->finnStudenter(Auth::id(), $request->searchString);
 			} 
 			else {
-	    		$studenter = $querry_service->finnStudenter($area_of_expertise, false);
+	    		$studenter = $querry_service->finnStudenter(Auth::id(), false);
 			}
 			
 	    	$returnHTML = view('partials.user.bedrift.studenter.' . $request->display)

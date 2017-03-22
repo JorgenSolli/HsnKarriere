@@ -13,7 +13,7 @@
         <a href="{{ $brukerinfo->linkedin }}" class="p-r-s"><span class="social_icons fa fa-linkedin-square fa-2x"></span></a>
       @endif
       @if ($brukerinfo->nettside != "")
-        <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-home fa-2x"></span></a>
+        <a href="{{ url($brukerinfo->nettside) }}" target="_blank"><span class="social_icons fa fa-home fa-2x"></span></a>
       @endif
       <p class="profile-header-bio">Holder til i {{ $brukerinfo->poststed }}
       @unless ($brukerinfo->bedrift_avdeling == "")
@@ -34,10 +34,8 @@
     <div class="col-sm-3 p-r-s p-l-s">
       <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
         <p class="h4"><span class="fa fa-briefcase"></span> Driver med</p>
-        @foreach ($company as $value)
-          {{ $value['area_of_expertise'] }}
-          @unless ($loop->last),
-          @endunless
+        @foreach ($fag as $value)
+          {{ $value->study }}@unless ($loop->last),@endunless
         @endforeach
       </div>
     </div>

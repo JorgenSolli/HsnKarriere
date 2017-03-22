@@ -159,7 +159,7 @@
                     </div>
                     <div class="form-group">
                       <label for="bedrift_fagfelt">Bedriftens fagområde</label>
-                      <select name="area_of_expertise[]" id="bedrift_fagfelt" 
+                      <select name="studie_id[]" id="bedrift_fagfelt" 
                       class="select select2 js-example-basic-multiple is-fullwidth form-control"
                       multiple="multiple">
                         <option value="" disabled>Hva driver bedriften din med?</option>
@@ -425,7 +425,7 @@
               <label for="stilling_bransje">Bransje</label>
               <select id="stilling_bransje" name="stilling_bransje" class="form-control">
                 @foreach ($company as $fagfelt)
-                  <option value="{{ $fagfelt['area_of_expertise'] }}">{{ $fagfelt['area_of_expertise'] }} </option>
+                  <option value="{{ $fagfelt->id }}">{{ $fagfelt->study }} </option>
                 @endforeach
               </select>
             </div>
@@ -497,7 +497,7 @@
                 <label for="master_fagfelt">Tilhørende fagfelt</label>
                 <select id="master_fagfelt" name="master_fagfelt" class="form-control">
                   @foreach ($company as $fagfelt)
-                    <option value="{{ $fagfelt['area_of_expertise'] }}">{{ $fagfelt['area_of_expertise'] }} </option>
+                    <option value="{{ $fagfelt->id }}">{{ $fagfelt->study }} </option>
                   @endforeach
                 </select>
               </div>
@@ -575,7 +575,7 @@
                 <label for="bachelor_fagfelt">Tilhørende fagfelt</label>
                 <select id="bachelor_fagfelt" name="bachelor_fagfelt" class="form-control">
                   @foreach ($company as $fagfelt)
-                    <option value="{{ $fagfelt['area_of_expertise'] }}">{{ $fagfelt['area_of_expertise'] }} </option>
+                    <option value="{{ $fagfelt->id }}">{{ $fagfelt->study }} </option>
                   @endforeach
                 </select>
               </div>
