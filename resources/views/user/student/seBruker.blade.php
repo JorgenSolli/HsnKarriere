@@ -134,7 +134,9 @@
           <div class="form-group">
             <label for="faglarer">Hvilken faglærer skal håndtere dette samarbeidet?</label>
             <select id="faglarer" name="faglarer" class="form-control">
-              <option>Ola Nordmann</option>
+              @foreach ($faglarere as $faglarer)
+                <option value="{{ $faglarer->id }}">{{ $faglarer->fornavn }} {{ $faglarer->etternavn }}</option>
+              @endforeach
             </select>
           </div>
         </div>

@@ -72,7 +72,7 @@
                   <small class="pull-right text-muted">Kort om deg</small>
                   <p class="h4">Biografi</p>
                 </div>
-                <textarea name="bio" class="form-control" placeholder="Kort om deg">{{ $brukerinfo->bio }}</textarea>
+                <textarea id="bio" name="bio" class="form-control" placeholder="Kort om deg">{{ $brukerinfo->bio }}</textarea>
               </div>
             </li>
 
@@ -128,7 +128,7 @@
                     <div class="form-group">
                       <label for="dob">Fødselsdato</label>
                       <div class="input-group date dateDob">
-                        <input name="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="dob" id="dob" type="text" class="form-control" placeholder="Fødselsdato" value="{{ $brukerinfo->dob }}"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                       </div>
                     </div>
                     <div class="form-group">
@@ -247,8 +247,8 @@
           <a class="alert-link">Din profil er i god stand!</a>
           <div class="m-b"></div>
           <div class="progress m-b-0">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-              <span class="sr-only">90% Fullført profil</span>
+            <div id="profileStr" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+              60%
             </div>
           </div>
         </div>
@@ -370,5 +370,53 @@
   </div>
 @stop
 @section('script')
+  <script type="text/javascript">
+    // Gets the profilestrength
+    var bar = $("#profileStr");
+    var filledFields = 0;
+    var emptyFields = 0;
+
+    if ($("#bio").text() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#fornavn").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#etternavn").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#adresse").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#postnr").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#epost").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#poststed").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#telefon").val() > "") {
+       filledFields++;
+    } else { emptyFields ++ }
+    if ($("#dob").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#nettside").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#facebook").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+    if ($("#linkedin").val() > "") {
+      filledFields++;
+    } else { emptyFields ++ }
+
+    var str =  100 - (emptyFields / filledFields * 100);
+    console.log(str);
+
+    bar.css('width', str + '%');
+  </script>
   <script src="/js/redigerBruker.js"></script>
 @stop

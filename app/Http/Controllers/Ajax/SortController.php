@@ -61,7 +61,10 @@ class SortController extends Controller
 		elseif ($brukerinfo->bruker_type == "bedrift") {
 				
 			if ($request->searching == true) {
-				$studenter = $querry_service->finnStudenter(Auth::id(), $request->searchString);
+				$studenter = $querry_service->finnStudenter(
+					Auth::id(), 
+					$request->searchString,
+					false);
 			} 
 			else {
 	    		$studenter = $querry_service->finnStudenter(Auth::id(), false);
