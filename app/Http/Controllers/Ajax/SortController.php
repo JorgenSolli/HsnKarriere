@@ -43,6 +43,7 @@ class SortController extends Controller
             if ($request->searching == true) {
             	$bedrifter  = $querry_service->finnBedrifter(Auth::id(), $request->searchString, $request->sort);
 			} 
+            	
 			else {
 	    		$bedrifter  = $querry_service->finnBedrifter(Auth::id(), false, $request->sort);
 			}

@@ -14,7 +14,6 @@ class QuerryService {
     public function finnBedrifter($brukerId, $searchString, $sort) {
         if ($brukerId) {
             $brukerinfo = User::where('id', $brukerId)->firstOrFail();
-
             if ($brukerinfo->bruker_type == "student") {
                 $fag = StudentStudy::where('user_id', $brukerId)
                     ->select('studie_id')
@@ -26,23 +25,25 @@ class QuerryService {
             }
 
             if ($searchString == false) {
-                if ($sort == 'Alfabetisk') {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
-                        ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('studie_id', $fag)
-                        ->orderBy('bedrift_navn', 'ASC')
-                        ->get()
-                        ->unique('user_id');
-                } 
-                
-                elseif ($sort == 'Relevans') {
+                if ($sort == 'Relevans') {
                     $currentStudy = StudentStudy::where('user_id', $brukerId)
                         ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                         ->select('study')
                         ->orderBy('student_studies.til', 'DESC')
                         ->first();
 
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
+                    $bedrifter = Company::select(
+                            'user_id', 
+                            'bedrift_navn', 
+                            'fornavn', 
+                            'etternavn', 
+                            'forsidebilde', 
+                            'profilbilde', 
+                            'email', 
+                            'telefon', 
+                            'poststed', 
+                            'studie_id'
+                        )
                         ->join('users', 'companies.user_id', '=', 'users.id')
                         ->whereIn('studie_id', $fag)
                         ->orderByRaw("FIELD(studie_id, '$currentStudy->study') DESC")
@@ -50,53 +51,58 @@ class QuerryService {
                         ->unique('user_id');
                 } 
                 
+                // Standard sorting is by company name
                 else {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
+                    $bedrifter = Company::select(
+                            'user_id', 
+                            'bedrift_navn', 
+                            'fornavn', 
+                            'etternavn', 
+                            'forsidebilde', 
+                            'profilbilde', 
+                            'email', 
+                            'telefon', 
+                            'poststed', 
+                            'studie_id'
+                        )
                         ->join('users', 'companies.user_id', '=', 'users.id')
                         ->whereIn('studie_id', $fag)
+                        ->orderBy('bedrift_navn', 'ASC')
                         ->get()
                         ->unique('user_id');
                 }
             }
             else {
-                if ($sort == 'Alfabetisk') {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
-                        ->where('bedrift_navn', 'like', $searchString . "%")
-                        ->orWhere('fornavn', 'like', $searchString . "%")
-                        ->orWhere('etternavn', 'like', $searchString . "%")
-                        ->orWhere('telefon', 'like', $searchString . "%")
-                        ->orWhere('email', 'like', $searchString . "%")
-                        ->orWhere('poststed', 'like', $searchString . "%")
+                if ($sort == 'Relevans') {
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'fornavn', 'etternavn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
+                        ->whereIn('studie_id', $fag)
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('studie_id', $studier)
-                        ->orderBy('bedrift_navn', 'ASC')
-                        ->get()
-                        ->unique('user_id');
-                }
-                elseif ($sort == 'Relevans') {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
-                        ->where('bedrift_navn', 'like', $searchString . "%")
-                        ->orWhere('fornavn', 'like', $searchString . "%")
-                        ->orWhere('etternavn', 'like', $searchString . "%")
-                        ->orWhere('telefon', 'like', $searchString . "%")
-                        ->orWhere('email', 'like', $searchString . "%")
-                        ->orWhere('poststed', 'like', $searchString . "%")
-                        ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('studie_id', $studier)
+                        ->orWhere([
+                            ['bedrift_navn', 'LIKE', $searchString . "%"],
+                            ['fornavn', 'LIKE', $searchString . "%"],
+                            ['etternavn', 'LIKE', $searchString . "%"],
+                            ['telefon', 'LIKE', $searchString . "%"],
+                            ['email', 'LIKE', $searchString . "%"],
+                            ['poststed', 'LIKE', $searchString . "%"]                      
+                        ])
                         ->orderByRaw( "FIELD(studie_id, '$currentStudy->study')" )
                         ->get()
                         ->unique('user_id');
                 }
+                // Standard sorting is by company name
                 else {
-                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
-                        ->where('bedrift_navn', 'like', $searchString . "%")
-                        ->orWhere('fornavn', 'like', $searchString . "%")
-                        ->orWhere('etternavn', 'like', $searchString . "%")
-                        ->orWhere('telefon', 'like', $searchString . "%")
-                        ->orWhere('email', 'like', $searchString . "%")
-                        ->orWhere('poststed', 'like', $searchString . "%")
+                    $bedrifter = Company::select('user_id', 'bedrift_navn', 'fornavn', 'etternavn', 'forsidebilde', 'profilbilde', 'email', 'telefon', 'poststed', 'studie_id')
+                        ->whereIn('studie_id', $fag)
                         ->join('users', 'companies.user_id', '=', 'users.id')
-                        ->whereIn('studie_id', $studier)
+                        ->orWhere([
+                            ['bedrift_navn', 'LIKE', $searchString . "%"],
+                            ['fornavn', 'LIKE', $searchString . "%"],
+                            ['etternavn', 'LIKE', $searchString . "%"],
+                            ['telefon', 'LIKE', $searchString . "%"],
+                            ['email', 'LIKE', $searchString . "%"],
+                            ['poststed', 'LIKE', $searchString . "%"]                      
+                        ])
+                        ->orderBy('bedrift_navn', 'ASC')
                         ->get()
                         ->unique('user_id');
                 }
@@ -131,7 +137,7 @@ class QuerryService {
             }
 
             if ($searchString == false) {
-                if ($sort == 'Alfabetisk') {
+                if ($sort == 'Relevans') {
                     $studenter = StudentStudy::select(
                             'email', 
                             'user_id', 
@@ -142,76 +148,56 @@ class QuerryService {
                             'studie_id',
                             'forsidebilde', 
                             'profilbilde')
-                        ->where('fornavn', 'like', $searchString . "%")
-                        ->orWhere('etternavn', 'like', $searchString . "%")
-                        ->orWhere('telefon', 'like', $searchString . "%")
-                        ->orWhere('email', 'like', $searchString . "%")
-                        ->orWhere('poststed', 'like', $searchString . "%")
-                        ->orWhere('student_campus', 'like', $searchString . "%")
-                        ->join('users', 'student_studies.user_id', '=', 'users.id')
-                        ->whereIn('studie_id', $fag)
-                        ->orderBy('bedrift_navn', 'ASC')
-                        ->get()
-                        ->unique('user_id');
-                } 
-                else {
-                    $studenter = StudentStudy::select(
-                            'email', 
-                            'user_id', 
-                            'telefon', 
-                            'fornavn', 
-                            'poststed', 
-                            'etternavn', 
-                            'studie_id',
-                            'forsidebilde', 
-                            'profilbilde')
-                        ->join('users', 'student_studies.user_id', '=', 'users.id')
-                        ->whereIn('studie_id', $fag)
-                        ->get()
-                        ->unique('user_id');
-                }
-            }
-            else {
-                if ($sort == 'Alfabetisk') {
-                    $studenter = StudentStudy::select(
-                            'email', 
-                            'user_id', 
-                            'telefon', 
-                            'fornavn', 
-                            'poststed', 
-                            'etternavn', 
-                            'studie_id',
-                            'forsidebilde', 
-                            'profilbilde')
-                        ->join('users', 'student_studies.user_id', '=', 'users.id')
-                        ->whereIn('studie_id', $fag)
-                        ->orderBy('fornavn', 'ASC')
-                        ->get()
-                        ->unique('user_id');
-                }
-                elseif ($sort == 'Relevans') {
-                    $studenter = StudentStudy::select(
-                            'email', 
-                            'user_id', 
-                            'telefon', 
-                            'fornavn', 
-                            'poststed', 
-                            'etternavn', 
-                            'studie_id',
-                            'forsidebilde', 
-                            'profilbilde')
-                        ->where('fornavn', 'like', $searchString . "%")
-                        ->orWhere('etternavn', 'like', $searchString . "%")
-                        ->orWhere('telefon', 'like', $searchString . "%")
-                        ->orWhere('email', 'like', $searchString . "%")
-                        ->orWhere('poststed', 'like', $searchString . "%")
-                        ->orWhere('student_campus', 'like', $searchString . "%")
                         ->join('users', 'student_studies.user_id', '=', 'users.id')
                         ->whereIn('studie_id', $fag)
                         ->orderByRaw( "FIELD(studie_id, '$currentStudy->study')" )
                         ->get()
                         ->unique('user_id');
+                } 
+                // Standard sorting by first name
+                else {   
+                    $studenter = StudentStudy::select(
+                            'email', 
+                            'user_id', 
+                            'telefon', 
+                            'fornavn', 
+                            'poststed', 
+                            'etternavn', 
+                            'studie_id',
+                            'forsidebilde', 
+                            'profilbilde')
+                        ->orderBy('fornvan', 'ASC')
+                        ->get()
+                        ->unique('user_id');
                 }
+            }
+            else {
+                if ($sort == 'Relevans') {
+                    $studenter = StudentStudy::select(
+                            'email', 
+                            'user_id', 
+                            'telefon', 
+                            'fornavn', 
+                            'poststed', 
+                            'etternavn', 
+                            'studie_id',
+                            'forsidebilde', 
+                            'profilbilde')
+                        ->whereIn('studie_id', $fag)
+                        ->join('users', 'student_studies.user_id', '=', 'users.id')
+                        ->orWhere([
+                            ['student_campus', 'LIKE', $searchString . "%"],
+                            ['fornavn', 'LIKE', $searchString . "%"],
+                            ['etternavn', 'LIKE', $searchString . "%"],
+                            ['telefon', 'LIKE', $searchString . "%"],
+                            ['email', 'LIKE', $searchString . "%"],
+                            ['poststed', 'LIKE', $searchString . "%"]                      
+                        ])
+                        ->orderByRaw( "FIELD(studie_id, '$currentStudy->study')" )
+                        ->get()
+                        ->unique('user_id');
+                }
+                // Standard sorting by first name
                 else {
                     $studenter = StudentStudy::select(
                             'email', 
@@ -223,14 +209,17 @@ class QuerryService {
                             'studie_id',
                             'forsidebilde', 
                             'profilbilde')
-                        ->where('fornavn', 'like', $searchString . "%")
-                        ->orWhere('etternavn', 'like', $searchString . "%")
-                        ->orWhere('telefon', 'like', $searchString . "%")
-                        ->orWhere('email', 'like', $searchString . "%")
-                        ->orWhere('poststed', 'like', $searchString . "%")
-                        ->orWhere('student_campus', 'like', $searchString . "%")
-                        ->join('users', 'student_studies.user_id', '=', 'users.id')
                         ->whereIn('studie_id', $fag)
+                        ->join('users', 'student_studies.user_id', '=', 'users.id')
+                        ->orWhere([
+                            ['student_campus', 'LIKE', $searchString . "%"],
+                            ['fornavn', 'LIKE', $searchString . "%"],
+                            ['etternavn', 'LIKE', $searchString . "%"],
+                            ['telefon', 'LIKE', $searchString . "%"],
+                            ['email', 'LIKE', $searchString . "%"],
+                            ['poststed', 'LIKE', $searchString . "%"]                      
+                        ])
+                        ->orderBy('fornavn', 'ASC')
                         ->get()
                         ->unique('user_id');
                 }
