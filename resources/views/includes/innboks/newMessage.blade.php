@@ -17,18 +17,22 @@
               <option disabled>Velg en eller flere mottakere</option>
               @if ($forelesere)
                 @foreach ($forelesere as $foreleser)
-                  @if ($foreleser->user_id == Request::get('reciepment'))
-                    <option selected value="{{ $foreleser->user_id }}">
-                  @else
-                    <option value="{{ $foreleser->user_id }}">
-                  @endif
-                  {{ $foreleser->fornavn }} {{ $foreleser->etternavn }}
+                  @foreach ($reciepment['data'] as $r)
+                    @if ($r == $foreleser->user_id)
+                      <option selected value="{{ $foreleser->user_id }}">
+                    @else
+                      <option value="{{ $foreleser->user_id }}">
+                    @endif
+                  @endforeach
+                  
+                  <option value="{{ $foreleser->user_id }}">
+                    {{ $foreleser->fornavn }} {{ $foreleser->etternavn }}
                   </option>
                 @endforeach
               @endif
               @if ($bedrifter)
                 @foreach ($bedrifter as $bedrift)
-                  @if ($bedrift->user_id == Request::get('reciepment'))
+                  @if ($bedrift->user_id)
                     <option selected value="{{ $bedrift->user_id }}">
                   @else
                     <option value="{{ $bedrift->user_id }}">

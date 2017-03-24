@@ -84,60 +84,54 @@ class InnboksController extends Controller
      * @param  class $querryservice
      * @return \Illuminate\Http\Response
      */
-    public function newMessage (QuerryService $querry_service)
+    public function newMessage (QuerryService $querry_service, Request $request)
     {   
         $brukerinfo = Auth::user();
+        
+        $reciepment = [];
+        
+        if ($request->all()) {
+            $reciepment = $request->all();
+        }
 
         if ($brukerinfo->bruker_type == "student") {
             // Finding the companies the user is allowed to contact
-            $bedrifter = $querry_service->finnBedrifter(StudentStudy::where('user_id', Auth::id())
-                    ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
-                    ->select('study')
-                    ->get(), false, false);
+            $bedrifter = $querry_service->finnBedrifter(Auth::id(), false, false);
 
-            $forelesere = $querry_service->finnForeleser(StudentStudy::where('user_id', Auth::id())
-                    ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
-                    ->select('study')
-                    ->get(), false, Auth::id());
+            $forelesere = $querry_service->finnForeleser(Auth::id(), false);
 
             $returnHTML = view('includes.innboks.newMessage')
                 ->with('brukerinfo', $brukerinfo)
                 ->with('bedrifter', $bedrifter)
                 ->with('forelesere', $forelesere)
+                ->with('reciepment', $reciepment)
                 ->render();
             return response()->json(array('success' => true, 'data' => $returnHTML));
         }
 
         elseif ($brukerinfo->bruker_type == "bedrift") {
             // Finding the companies the user is allowed to contact
-            $kontakter = $querry_service->finnStudenter(Company::where('user_id', Auth::id())
-                ->join('users', 'companies.user_id', '=', 'users.id')
-                ->select('area_of_expertise')
-                ->get(), false);
+            $kontakter = $querry_service->finnStudenter(Auth::id(), false, false);
 
             $returnHTML = view('includes.innboks.newMessage')
                 ->with('brukerinfo', $brukerinfo)
                 ->with('kontakter', $kontakter)
+                ->with('reciepment', $reciepment)
                 ->render();
             return response()->json(array('success' => true, 'data' => $returnHTML));
         }
 
         elseif ($brukerinfo->bruker_type == "faglarer") {
             // Finding the companies the user is allowed to contact
-            $kontakterStudenter = $querry_service->finnStudenter(Professor::where('user_id', Auth::id())
-                ->join('users', 'professors.user_id', '=', 'users.id')
-                ->select('studie')
-                ->get(), false);
+            $kontakterStudenter = $querry_service->finnStudenter(Auth::id(), false, false);
 
-            $kontakterBedrifter = $querry_service->finnBedrifter(Professor::where('user_id', Auth::id())
-                ->join('users', 'professors.user_id', '=', 'users.id')
-                ->select('studie')
-                ->get(), false);
+            $kontakterBedrifter = $querry_service->finnBedrifter(Auth::id(), false, false);
 
             $returnHTML = view('includes.innboks.faglarer.newMessage')
                 ->with('brukerinfo', $brukerinfo)
                 ->with('kontakterStudenter', $kontakterStudenter)
                 ->with('kontakterBedrifter', $kontakterBedrifter)
+                ->with('reciepment', $reciepment)
                 ->render();
             return response()->json(array('success' => true, 'data' => $returnHTML));
         }
