@@ -166,7 +166,9 @@ class QuerryService {
                             'studie_id',
                             'forsidebilde', 
                             'profilbilde')
-                        ->orderBy('fornvan', 'ASC')
+                        ->join('users', 'student_studies.user_id', '=', 'users.id')
+                        ->whereIn('studie_id', $fag)
+                        //->orderBy('fornvan', 'ASC')
                         ->get()
                         ->unique('user_id');
                 }

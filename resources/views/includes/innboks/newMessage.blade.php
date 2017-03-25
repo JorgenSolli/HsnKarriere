@@ -14,37 +14,7 @@
             <select name="mottakere[]" id="mottakere" 
             class="select select2 js-example-basic-multiple is-fullwidth form-control"
             multiple="multiple">
-              <option disabled>Velg en eller flere mottakere</option>
-              @if ($forelesere)
-                @foreach ($forelesere as $foreleser)
-                  @foreach ($reciepment['data'] as $r)
-                    @if ($r == $foreleser->user_id)
-                      <option selected value="{{ $foreleser->user_id }}">
-                    @else
-                      <option value="{{ $foreleser->user_id }}">
-                    @endif
-                  @endforeach
-                  
-                  <option value="{{ $foreleser->user_id }}">
-                    {{ $foreleser->fornavn }} {{ $foreleser->etternavn }}
-                  </option>
-                @endforeach
-              @endif
-              @if ($bedrifter)
-                @foreach ($bedrifter as $bedrift)
-                  @if ($bedrift->user_id)
-                    <option selected value="{{ $bedrift->user_id }}">
-                  @else
-                    <option value="{{ $bedrift->user_id }}">
-                  @endif
-                		@if ($bedrift->bedrift_navn != "")
-                			{{ $bedrift->bedrift_navn }}
-                		@else
-                			{{ $bedrift->fornavn }} {{ $bedrift->etternavn }}
-                		@endif
-                	</option>
-                @endforeach
-              @endif
+              @yield('reciepments')
             </select>
           </div>
           <div class="form-group">

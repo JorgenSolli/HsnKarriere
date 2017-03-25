@@ -169,13 +169,13 @@ class UserEditController extends Controller
 
         if ($brukertype == "student" || $brukertype == "bedrift") {
             // If the gived url does not contain http, append it.
-            if (!preg_match('/http/', $data['nettside'])) {
+            if (!preg_match('/http/', $data['nettside']) && $data['nettside'] != "") {
                 $data['nettside'] = 'http://' . $data['nettside'];
             }
-            if (!preg_match('/http/', $data['linkedin'])) {
+            if (!preg_match('/http/', $data['linkedin']) && $data['linkedin'] != "") {
                 $data['linkedin'] = 'http://' . $data['linkedin'];
             }
-            if (!preg_match('/http/', $data['facebook'])) {
+            if (!preg_match('/http/', $data['facebook']) && $data['facebook'] != "") {
                 $data['facebook'] = 'http://' . $data['facebook'];
             }
         }

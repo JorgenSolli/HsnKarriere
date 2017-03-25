@@ -95,10 +95,16 @@ class UserHomeController extends Controller
         }
 
         else if ($brukerinfo->bruker_type == "bedrift") {
-            $jobs = Job::where('bedrift_id', $id)->orderBy('created_at', 'desc')->get();
             $company = Company::where('user_id', $id)->get();
+
+            $jobs = Job::where('bedrift_id', $id)->orderBy('created_at', 'desc')->get();
+            $nr_jobs = Job::where('bedrift_id', $id)->count();
+
             $masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', $id)->get();
+            $nr_masters = Assignment::where('type', 'masteroppgave')->where('bedrift_id', $id)->count();
+
             $bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', $id)->get();
+            $nr_bachelors = Assignment::where('type', 'bacheloroppgave')->where('bedrift_id', $id)->count();
 
             $studier = Company::where('user_id', $id)
                 ->join('studies', 'companies.studie_id', '=', 'studies.id')
@@ -109,13 +115,16 @@ class UserHomeController extends Controller
 
             return view('user.bedrift.seBruker',
             [
-                'brukerinfo' => $brukerinfo,
-                'faglarere'  => $faglarere,
-                'company'    => $company,
-                'fag'        => $studier, 
-                'bachelors'  => $bachelors,
-                'masters'    => $masters,
-                'jobs'       => $jobs
+                'brukerinfo'    => $brukerinfo,
+                'faglarere'     => $faglarere,
+                'company'       => $company,
+                'fag'           => $studier, 
+                'bachelors'     => $bachelors,
+                'nr_bachelors'  => $nr_bachelors,
+                'masters'       => $masters,
+                'nr_masters'    => $nr_masters,
+                'jobs'          => $jobs,
+                'nr_jobs'       => $nr_jobs
             ]);
         }
 

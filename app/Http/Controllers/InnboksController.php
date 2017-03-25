@@ -88,7 +88,7 @@ class InnboksController extends Controller
     {   
         $brukerinfo = Auth::user();
         
-        $reciepment = [];
+        $reciepment = [null];
         
         if ($request->all()) {
             $reciepment = $request->all();
@@ -97,10 +97,9 @@ class InnboksController extends Controller
         if ($brukerinfo->bruker_type == "student") {
             // Finding the companies the user is allowed to contact
             $bedrifter = $querry_service->finnBedrifter(Auth::id(), false, false);
-
             $forelesere = $querry_service->finnForeleser(Auth::id(), false);
 
-            $returnHTML = view('includes.innboks.newMessage')
+            $returnHTML = view('includes.innboks.student.reciepments')
                 ->with('brukerinfo', $brukerinfo)
                 ->with('bedrifter', $bedrifter)
                 ->with('forelesere', $forelesere)
@@ -111,11 +110,13 @@ class InnboksController extends Controller
 
         elseif ($brukerinfo->bruker_type == "bedrift") {
             // Finding the companies the user is allowed to contact
-            $kontakter = $querry_service->finnStudenter(Auth::id(), false, false);
+            $studenter = $querry_service->finnStudenter(Auth::id(), false, false);
+            $forelesere = $querry_service->finnForeleser(Auth::id(), false);
 
-            $returnHTML = view('includes.innboks.newMessage')
+            $returnHTML = view('includes.innboks.bedrift.reciepments')
                 ->with('brukerinfo', $brukerinfo)
-                ->with('kontakter', $kontakter)
+                ->with('studenter', $studenter)
+                ->with('forelesere', $forelesere)
                 ->with('reciepment', $reciepment)
                 ->render();
             return response()->json(array('success' => true, 'data' => $returnHTML));
@@ -127,7 +128,7 @@ class InnboksController extends Controller
 
             $kontakterBedrifter = $querry_service->finnBedrifter(Auth::id(), false, false);
 
-            $returnHTML = view('includes.innboks.faglarer.newMessage')
+            $returnHTML = view('includes.innboks.faglarer.reciepments')
                 ->with('brukerinfo', $brukerinfo)
                 ->with('kontakterStudenter', $kontakterStudenter)
                 ->with('kontakterBedrifter', $kontakterBedrifter)
@@ -225,6 +226,7 @@ class InnboksController extends Controller
         		'users.bruker_type', 
         		'users.profilbilde', 
         		'messages_replies.user_id',
+                'messages_replies.user_name',
         		'messages_replies.message_id',
         		'messages_replies.message', 
         		'messages_replies.created_at', 
@@ -260,7 +262,7 @@ class InnboksController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->with('danger', 'Du kan ikke sende en tom melding!');
+            return back()->with('danger', 'Du kan ikke sende en melding uten innhold!');
         }
 
         $reply = New MessagesReply;
@@ -276,7 +278,7 @@ class InnboksController extends Controller
 
         $reply->save();
 
-        return back()->with('success', 'Svar sendt');
+        return back()->with('success', 'Meldingen ble sendt!');
     }
 
     /**

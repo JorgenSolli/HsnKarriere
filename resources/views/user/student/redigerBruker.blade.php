@@ -244,11 +244,10 @@
       <div class="col-md-3">
         <div class="alert alert-info alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <a class="alert-link">Din profil er i god stand!</a>
+          <a class="alert-link"><span id="profileStatus"></span></a>
           <div class="m-b"></div>
           <div class="progress m-b-0">
             <div id="profileStr" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-              60%
             </div>
           </div>
         </div>
@@ -414,9 +413,21 @@
     } else { emptyFields ++ }
 
     var str =  100 - (emptyFields / filledFields * 100);
-    console.log(str);
-
+    var statusTxt = "";
     bar.css('width', str + '%');
+    bar.html(Math.floor(str) + "%");
+
+    if (str >= 0 &&  str <= 33) {
+      statusTxt = "Profilen din mangler viktig data!";
+    } else if (str > 33 && str < 66) {
+      statusTxt = "Profilen din mangler trolig relevant data!";
+    } else if (str >= 66 && str < 80) {
+      statusTxt = "Profilen din er i OK stand";
+    } else {
+      statusTxt = "Profilen din er i god stand";
+    }
+
+    $("#profileStatus").html(statusTxt)
   </script>
   <script src="/js/redigerBruker.js"></script>
 @stop
