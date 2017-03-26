@@ -322,7 +322,11 @@
         <div class="modal-body">
           <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
             {{ csrf_field() }}
-            <input id="forsidebilde-input" name="forsidebilde" type="file" multiple data-min-file-count="1">
+            <div class="slim"
+               data-ratio="128:29"
+               data-size="640,640">
+              <input type="file" name="coverphoto"/>
+            </div>
             <br>
         </div>
         <div class="modal-footer">
@@ -633,8 +637,8 @@
     </div>
   </div>
 
-  
 @stop
 @section('script')
   <script src="/js/redigerBruker.js"></script>
+  <script src="/js/dist/slim.kickstart.min.js"></script>
 @stop

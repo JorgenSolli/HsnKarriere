@@ -7,10 +7,12 @@
     <div class="row">
       <div class="col-md-3">
         <div class="panel panel-default panel-profile m-b-md">
-          <div id="nyttForsidebilde" class="pos-a m-a cursor" data-toggle="modal" data-target="#nyttForsidebildeModal">
-            <span class="fa fa-camera fa-lg"></span>
-            <small style="display: none">Endre forsidebilde</small>
-          </div>
+          {{-- 
+            <div id="nyttForsidebilde" class="pos-a m-a cursor" data-toggle="modal" data-target="#nyttForsidebildeModal">
+                                <span class="fa fa-camera fa-lg"></span>
+                                <small style="display: none">Endre forsidebilde</small>
+            </div> 
+          --}}
           <div id="forsidebildeContainer" class="panel-heading" style="background-image: url(/uploads/{{ $brukerinfo->forsidebilde }});"></div>
           <div class="panel-body text-center">
             <div class="profilbildeRelative pos-r">
@@ -308,35 +310,37 @@
   </div>
 
   <!-- MODALS -->
-  <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="forsidebildeModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <p class="h4 modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</p>
-        </div>
-        <div class="modal-body">
-          <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
-            {{ csrf_field() }}
-            <input id="forsidebilde-input" name="forsidebilde" type="file" multiple data-min-file-count="1">
-            <br>
-        </div>
-        <div class="modal-footer">
-            <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
-            <button type="submit" class="pull-right btn btn-primary">Last opp</button>
-          </form>
-            @if ($brukerinfo->forsidebilde != "img/forsidebilder/student_forsidebilde.jpg")
-              <form method="POST" action="/bruker/rediger/forsidebilde/{{ $brukerinfo->id }}">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <button type="submit" class="pull-right btn btn-danger">Slett nåværende bilde</button>
-              </form>
-            @endif
+  {{--
+    <div id="nyttForsidebildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="forsidebildeModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p class="h4 modal-title" id="forsidebildeModal"><span class="fa fa-picture-o"></span> Nytt forsidebilde</p>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
+              {{ csrf_field() }}
+              <input id="forsidebilde-input" name="forsidebilde" type="file" multiple data-min-file-count="1">
+              <br>
+          </div>
+          <div class="modal-footer">
+              <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+              <button type="submit" class="pull-right btn btn-primary">Last opp</button>
+            </form>
+              @if ($brukerinfo->forsidebilde != "img/forsidebilder/student_forsidebilde.jpg")
+                <form method="POST" action="/bruker/rediger/forsidebilde/{{ $brukerinfo->id }}">
+                  {{ csrf_field() }}
+                  {{ method_field('DELETE') }}
+                  <button type="submit" class="pull-right btn btn-danger">Slett nåværende bilde</button>
+                </form>
+              @endif
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  --}}
 
   <div id="nyttProfilbildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -348,7 +352,11 @@
         <div class="modal-body">
           <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
             {{ csrf_field() }}
-            <input id="profilbilde-input" name="profilbilde" type="file" multiple data-min-file-count="1">
+            <div class="slim"
+               data-ratio="1:1"
+               data-size="640,640">
+              <input type="file" name="avatar"/>
+            </div>
             <br>
           </div>
           <div class="modal-footer">
@@ -369,6 +377,7 @@
   </div>
 @stop
 @section('script')
+  <script src="/js/dist/slim.kickstart.min.js"></script>
   <script type="text/javascript">
     // Gets the profilestrength
     var bar = $("#profileStr");

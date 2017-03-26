@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Classes\Slim;
 use App\Partnership;
 use App\User;
 
@@ -20,16 +21,34 @@ class UploadController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function uploadForsidebilde () {
+        // Gets the file data
+        $image = Slim::getImages('coverphoto');
 
-        // Gets file, uplads it, and stores the path and filename
-        $file = request()->file('forsidebilde');
-		$path = $file->store('uploads/img/forsidebilder');
+        if (isset($image[0]['output']['data'])) {
+            // Original file name
+            $name = $image['output']['name'];
 
-		$user = User::find(Auth::id());
-		$user->forsidebilde = $path;
-		$user->save();
+            // Base64 of the image
+            $data = $image['output']['data'];
 
-    	return back();
+            // Server path
+            $path = base_path() . '/public/uploads/img/forsidebilde';
+
+            // Save the file to the server
+            $file = Slim::saveFile($data, $name, $path);
+
+            // Specity the web path to the image
+            $imagePath = 'img/forsidebilde/' . $file['name'];
+
+            // Save the data to the DB
+            $user = User::findOrFail(Auth::id());
+            $user->profilbilde = $imagePath;
+            $user->save();
+           
+           return back()->with('success', 'Forsidebildet ditt er nå endret.');
+        } else {
+            return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');
+        }
     }
 
     /**
@@ -37,17 +56,36 @@ class UploadController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function uploadProfilbilde () {
+    public function uploadProfilbilde (Request $request) {
 
-    	// Gets file, uplads it, and stores the path and filename
-    	$file = request()->file('profilbilde');
-		$path = $file->store('uploads/img/profilbilder');
+    	// Gets the file data
+        $image = Slim::getImages('avatar');
 
-		$user = User::find(Auth::id());
-		$user->profilbilde = $path;
-		$user->save();
+        if (isset($image[0]['output']['data'])) {
+            // Original file name
+            $name = $image['output']['name'];
 
-    	return back();
+            // Base64 of the image
+            $data = $image['output']['data'];
+
+            // Server path
+            $path = base_path() . '/public/uploads/img/profilbilder';
+
+            // Save the file to the server
+            $file = Slim::saveFile($data, $name, $path);
+
+            // Specity the web path to the image
+            $imagePath = 'img/profilbilder/' . $file['name'];
+
+            // Save the data to the DB
+            $user = User::findOrFail(Auth::id());
+            $user->profilbilde = $imagePath;
+            $user->save();
+    	   
+           return back()->with('success', 'Profilbildet ditt er nå endret.');
+        } else {
+            return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');
+        }
     }
 
     /**
