@@ -22,8 +22,10 @@
 
     <!-- styles -->
     <link rel="stylesheet" href="/css/dist/slim.min.css">
-    <link rel="stylesheet" href="/css/dist/select2.min.css">
-    <link rel="stylesheet" href="/css/dist/select2-bootstrap.css">
+    <link rel="stylesheet" href="/css/dist/quill/quill.core.css">
+    <link rel="stylesheet" href="/css/dist/quill/quill.snow.css">
+    <link rel="stylesheet" href="/css/dist/select2/select2.min.css">
+    <link rel="stylesheet" href="/css/dist/select2/select2-bootstrap.css">
     <link rel="stylesheet" href="/css/dist/fileinput.min.css">
     <link rel="stylesheet" href="/css/dist/font-awesome.min.css">
     <link rel="stylesheet" href="/css/dist/bootstrap-datepicker.min.css">

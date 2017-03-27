@@ -109,7 +109,10 @@
                   <small class="pull-right text-muted">Kort om bedriften</small>
                   <p class="h4">Litt om {{ $brukerinfo->bedrift_navn }}</p>
                 </div>
-                <textarea name="bio" class="form-control" placeholder="Du trenger ikke skrive så mye.">{{ $brukerinfo->bio }}</textarea>
+                <div id="bio">
+                  
+                </div>
+                <input type="hidden" name="bio" class="form-control" value="{{ $brukerinfo->bio }}">
               </div>
             </li>
 
@@ -639,6 +642,32 @@
 
 @stop
 @section('script')
+  <script src="/js/dist/quill.min.js"></script>
   <script src="/js/redigerBruker.js"></script>
   <script src="/js/dist/slim.kickstart.min.js"></script>
+
+  <script>
+    var delta = JSON.parse(<?php echo $bio ?>.replace(/&quot;/g,'"'));
+    console.log(delta);
+
+    var quill = new Quill('#bio', {
+      modules: {
+        toolbar: ['bold', 'italic', 'underline', 'strike'],
+      },
+      theme: 'snow',
+      placeholder: 'Kort om din bedrift'
+    });
+
+    var dob;
+
+    quill.on('text-change', function(delta) {
+      dob = JSON.stringify(quill.getContents());
+      $('input[name="bio"]').val(dob);
+    });
+
+    $(document).ready(function() {
+      //quill.setContents({{ $bio }});
+    });
+
+  </script>
 @stop

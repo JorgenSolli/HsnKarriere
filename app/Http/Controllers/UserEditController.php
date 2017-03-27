@@ -67,6 +67,7 @@ class UserEditController extends Controller
 
             return view('user.bedrift.redigerBruker', [
                 'brukerinfo'  => $brukerinfo,
+                'bio'         => $brukerinfo->bio,
                 'company'     => $company,
                 'jobs'        => $jobs,
                 'studies'     => $studies,
