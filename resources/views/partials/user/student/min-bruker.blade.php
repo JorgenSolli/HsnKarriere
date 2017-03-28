@@ -3,7 +3,7 @@
     <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
       <p class="h4"><span class="fa fa-file-text-o"></span> Bio</p>
       @if ($brukerinfo->bio)
-        <p>{{ $brukerinfo->bio }}</p>
+        {!! $brukerinfo->bio !!}
       @else
         <p>Biografi for {{ $brukerinfo->fornavn }} er ikke lagt til enda.</p>
       @endif

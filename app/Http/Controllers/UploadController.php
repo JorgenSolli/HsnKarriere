@@ -26,10 +26,10 @@ class UploadController extends Controller
 
         if (isset($image[0]['output']['data'])) {
             // Original file name
-            $name = $image['output']['name'];
+            $name = $image[0]['output']['name'];
 
             // Base64 of the image
-            $data = $image['output']['data'];
+            $data = $image[0]['output']['data'];
 
             // Server path
             $path = base_path() . '/public/uploads/img/forsidebilde';
@@ -63,10 +63,10 @@ class UploadController extends Controller
 
         if (isset($image[0]['output']['data'])) {
             // Original file name
-            $name = $image['output']['name'];
+            $name = $image[0]['output']['name'];
 
             // Base64 of the image
-            $data = $image['output']['data'];
+            $data = $image[0]['output']['data'];
 
             // Server path
             $path = base_path() . '/public/uploads/img/profilbilder';

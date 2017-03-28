@@ -27,7 +27,7 @@
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</a>
             </p>
 
-            <p class="m-b-md">{{ $brukerinfo->bio }}</p>
+            {!! $brukerinfo->bio !!}
 
             <ul class="panel-menu">
               <li class="panel-menu-item">
@@ -74,7 +74,13 @@
                   <small class="pull-right text-muted">Kort om deg</small>
                   <p class="h4">Biografi</p>
                 </div>
-                <textarea id="bio" name="bio" class="form-control" placeholder="Kort om deg">{{ $brukerinfo->bio }}</textarea>
+                <p id="loadingTinyMce" class="text-center">
+                  <span class="fa fa-circle-o-notch fa-spin"></span><br>
+                  Laster editor...
+                </p>
+                <textarea name="bio" id="bio" style="height: 0px; width: 0px; resize: none; border: none">
+                  {!! $brukerinfo->bio !!}
+                </textarea>
               </div>
             </li>
 
@@ -378,6 +384,7 @@
 @stop
 @section('script')
   <script src="/js/dist/slim.kickstart.min.js"></script>
+  <script src="/js/dist/tinymce/tinymce.min.js"></script>
   <script type="text/javascript">
     // Gets the profilestrength
     var bar = $("#profileStr");
@@ -436,7 +443,47 @@
       statusTxt = "Profilen din er i god stand";
     }
 
-    $("#profileStatus").html(statusTxt)
+    $("#profileStatus").html(statusTxt);
+
+    // Loads TinyMCE
+    var editor_config = {
+      path_absolute : "{{ URL::to('/') }}/",
+      plugins: "paste",
+      paste_as_text: true,
+      selector : "textarea",
+      toolbar: "undo redo | styleselect | bold italic | bullist numlist | link",
+      relative_urls: false,
+      style_formats: [
+        { title: "Overskrift", 
+          inline: "span", 
+          styles: {
+            "font-family": "Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif",
+            "font-size": "18px"
+          } 
+        },
+        { 
+          title: "Paragraf" ,
+          styles: {
+            "font-family": "-apple-system,BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol",
+            "font-size": "14px"
+          }
+        },
+      ],
+      extended_valid_elements: "p, b, i, em",
+      invalid_elements: "h1,h2,h3,h4,h5,em,i",
+      height: 200,
+      menubar: false,
+      statusbar: false,
+      language: "nb_NO",
+
+      setup: function(ed) {
+        ed.on('init', function(args) {
+          $("#loadingTinyMce").hide();
+        });
+      }
+    };
+
+    tinymce.init(editor_config);
   </script>
   <script src="/js/redigerBruker.js"></script>
 @stop

@@ -40,7 +40,10 @@ class UserHomeController extends Controller
         else if (Auth::user()->bruker_type == "bedrift") {
 
             $brukerinfo = Auth::user();
-            $company = Company::where('user_id', Auth::id());
+            $company = Company::where('user_id', Auth::id())
+                ->join('studies', 'companies.studie_id', '=', 'studies.id')
+                ->get();
+
             $studenter = $querry_service
                 ->finnStudenter(
                     Auth::id(), 
@@ -50,9 +53,9 @@ class UserHomeController extends Controller
 
             return view('user.bedrift.bruker',
                 [
-                    'studenter'  => $studenter,
-                    'company'    => $company,
-                    'brukerinfo' => $brukerinfo
+                    'studenter'   => $studenter,
+                    'companyData' => $company,
+                    'brukerinfo'  => $brukerinfo
                 ]);
         } 
         else if (Auth::user()->bruker_type == "faglarer") {

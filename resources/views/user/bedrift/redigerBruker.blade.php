@@ -26,7 +26,7 @@
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->bedrift_navn }}</a>
             </p>
 
-            <p class="m-b-md">{!! $brukerinfo->bio !!}</p>
+            {!! $brukerinfo->bio !!}
 
             <ul class="panel-menu">
               <li class="panel-menu-item">
@@ -353,7 +353,11 @@
         <div class="modal-body">
           <form method="POST" action="/bruker/uploads/profilbilde" enctype="multipart/form-data"> 
             {{ csrf_field() }}
-            <input id="profilbilde-input" name="profilbilde" type="file" multiple data-min-file-count="1">
+            <div class="slim"
+               data-ratio="1:1"
+               data-size="440,440">
+              <input type="file" name="avatar"/>
+            </div>
             <br>
           </div>
           <div class="modal-footer">
@@ -650,14 +654,18 @@
       relative_urls: false,
       style_formats: [
         { title: "Overskrift", 
-          inline: "strong", 
+          inline: "span", 
           styles: {
             "font-family": "Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif",
             "font-size": "18px"
           } 
         },
         { 
-          title: "Paragraf" 
+          title: "Paragraf" ,
+          styles: {
+            "font-family": "-apple-system,BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol",
+            "font-size": "14px"
+          }
         },
       ],
       extended_valid_elements: "p, b, i, em",
