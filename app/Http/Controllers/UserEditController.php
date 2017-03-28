@@ -16,11 +16,18 @@ use App\StudentStudy;
 use App\Http\Requests;
 use App\Services\QuerryService;
 use App\Http\Controllers\Controller;
+use Chromabits\Purifier\Contracts\Purifier;
 
 class UserEditController extends Controller
 {
-    public function __construct() {
+    /**
+     * @var Purifier
+     */
+    protected $purifier;
+
+    public function __construct(Purifier $purifier) {
         $this->middleware('auth');
+        $this->purifier = $purifier;
     }
     
     /**
@@ -180,6 +187,8 @@ class UserEditController extends Controller
                 $data['facebook'] = 'http://' . $data['facebook'];
             }
         }
+
+        $data['bio'] = $this->purifier->clean($data['bio']);
 
         // Updates the DB with new data
         $user->update($data);

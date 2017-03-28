@@ -11,7 +11,8 @@
         "laravel/tinker": "^1.0",
         "laravel/socialite": "^3.0",
         "laravel/scout": "^3.0",
-        "algolia/algoliasearch-client-php": "^1.16"
+        "algolia/algoliasearch-client-php": "^1.16",
+        "chromabits/purifier": "~2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -169,8 +169,7 @@ return [
         /*
          * Package Service Providers...
          */
-
-        //
+        'Chromabits\Purifier\PurifierServiceProvider',
 
         /*
          * Application Service Providers...

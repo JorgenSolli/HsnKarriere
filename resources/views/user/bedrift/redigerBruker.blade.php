@@ -26,7 +26,7 @@
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->bedrift_navn }}</a>
             </p>
 
-            <p class="m-b-md">{{ $brukerinfo->bio }}</p>
+            <p class="m-b-md">{!! $brukerinfo->bio !!}</p>
 
             <ul class="panel-menu">
               <li class="panel-menu-item">
@@ -101,29 +101,28 @@
           {{ csrf_field() }}
           <ul class="list-group media-list media-list-stream">
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-align-left"></span>
-              </div>
               <div class="media-body">
                 <div class="media-heading">
                   <small class="pull-right text-muted">Kort om bedriften</small>
-                  <p class="h4">Litt om {{ $brukerinfo->bedrift_navn }}</p>
+                  <span class="fa fa-align-left pull-left media-left-icon"></span>
+                  <p class="h4"> Litt om {{ $brukerinfo->bedrift_navn }}</p>
                 </div>
-                <div id="bio">
-                  
-                </div>
-                <input type="hidden" name="bio" class="form-control" value="{{ $brukerinfo->bio }}">
+                <p id="loadingTinyMce" class="text-center">
+                  <span class="fa fa-circle-o-notch fa-spin"></span><br>
+                  Laster editor...
+                </p>
+                <textarea name="bio" id="bio" style="height: 0px; width: 0px; resize: none; border: none">
+                  {!! $brukerinfo->bio !!}
+                </textarea>
               </div>
             </li>
 
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-info"></span>
-              </div>
               <div class="media-body">
                 <div class="media-body-text">
                   <div class="media-heading">
                     <small class="pull-right text-muted">Bare litt...</small>
+                    <span class="fa fa-info pull-left media-left-icon"></span>
                     <p class="h4">Generel informasjon</p>
                   </div>
                     <div class="form-group">
@@ -210,12 +209,10 @@
             </li>
 
             <li class="media list-group-item p-a hidden">
-              <div class="media-left">
-                <span class="media-object fa fa-graduation-cap"></span>
-              </div>
               <div class="media-body">
                 <div class="media-heading">
                   <small class="pull-right text-muted">Hmmm</small>
+                  <span class="fa fa-graduation-cap pull-left media-left-icon"></span>
                   <p class="h4">Studenter</p>
                 </div>
                 <div class="form-group">
@@ -230,9 +227,6 @@
               </div>
             </li>
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-disk"></span>
-              </div> <!-- end media-left -->
               <div class="media-body">
                 <div class="form-group">
                   <a href="/bruker" class="btn btn-danger pull-right">AVBRYT</a>
@@ -642,32 +636,48 @@
 
 @stop
 @section('script')
-  <script src="/js/dist/quill.min.js"></script>
   <script src="/js/redigerBruker.js"></script>
   <script src="/js/dist/slim.kickstart.min.js"></script>
+  <script src="/js/dist/tinymce/tinymce.min.js"></script>
 
   <script>
-    var delta = JSON.parse(<?php echo $bio ?>.replace(/&quot;/g,'"'));
-    console.log(delta);
+    var editor_config = {
+      path_absolute : "{{ URL::to('/') }}/",
+      plugins: "paste",
+      paste_as_text: true,
+      selector : "textarea",
+      toolbar: "undo redo | styleselect | bold italic | bullist numlist | link",
+      relative_urls: false,
+      style_formats: [
+        { title: "Overskrift", 
+          inline: "strong", 
+          styles: {
+            "font-family": "Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif",
+            "font-size": "18px"
+          } 
+        },
+        { 
+          title: "Paragraf" 
+        },
+      ],
+      extended_valid_elements: "p, b, i, em",
+      invalid_elements: "h1,h2,h3,h4,h5,em,i",
+      height: 200,
+      menubar: false,
+      statusbar: false,
+      language: "nb_NO",
 
-    var quill = new Quill('#bio', {
-      modules: {
-        toolbar: ['bold', 'italic', 'underline', 'strike'],
-      },
-      theme: 'snow',
-      placeholder: 'Kort om din bedrift'
-    });
+      setup: function(ed) {
+        ed.on('init', function(args) {
+          $("#loadingTinyMce").hide();
+        });
+      }
+    };
 
-    var dob;
-
-    quill.on('text-change', function(delta) {
-      dob = JSON.stringify(quill.getContents());
-      $('input[name="bio"]').val(dob);
-    });
+    tinymce.init(editor_config);
 
     $(document).ready(function() {
-      //quill.setContents({{ $bio }});
-    });
 
+    });
   </script>
 @stop
