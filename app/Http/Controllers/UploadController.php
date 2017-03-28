@@ -42,7 +42,7 @@ class UploadController extends Controller
 
             // Save the data to the DB
             $user = User::findOrFail(Auth::id());
-            $user->profilbilde = $imagePath;
+            $user->forsidebilde = $imagePath;
             $user->save();
            
            return back()->with('success', 'Forsidebildet ditt er nå endret.');

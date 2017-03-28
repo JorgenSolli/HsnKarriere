@@ -63,11 +63,11 @@
 		      </div>
 		      <div class="media-footer">
 		        <small class="text-muted">
-		          <a href="/bruker/{{ $reply->use_id }}">{{ $reply->user_name }} </a><span class="fa fa-clock-o"></span> {{ $reply->created_at }}
+		          <a href="/bruker/{{ $reply->user_id }}">{{ $reply->user_name }} </a><span class="fa fa-clock-o"></span> {{ $reply->created_at }}
 		        </small>
 		      </div>
 		    </div>
-	      <a class="media-right" href="#">
+	      <a class="media-right" href="/bruker/{{ $reply->user_id }}">
 		      <img class="img-circle media-object" src="/uploads/{{ $reply->profilbilde }}">
 		    </a>
 	    </li>

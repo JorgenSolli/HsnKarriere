@@ -417,7 +417,7 @@
               <label for="stilling_frist">Frist</label>
               <div class="input-group date dateJob">
                 <input name="stilling_frist" id="stilling_frist" type="text" class="form-control" placeholder="Frist">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
               </div>
             </div>
 
