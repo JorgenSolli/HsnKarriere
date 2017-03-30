@@ -32,7 +32,7 @@ class UploadController extends Controller
             $data = $image[0]['output']['data'];
 
             // Server path
-            $path = base_path() . '/public/uploads/img/forsidebilde';
+            $path = base_path() . '/public/uploads/img/forsidebilder';
 
             // Save the file to the server
             $file = Slim::saveFile($data, $name, $path);
