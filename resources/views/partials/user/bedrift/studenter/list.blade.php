@@ -1,5 +1,4 @@
-@unless ($studenter == null)
-  <!-- List sort -->
+@if ($studenter)
   @foreach ($studenter as $student)
     <ul class="media-list media-list-users list-group col-md-6">
       <li class="list-group-item">
@@ -22,4 +21,4 @@
   @endforeach
 @else
   <p>Det finnes ingen studenter som passer til din bedrift</p>
-@endunless
+@endif

@@ -38,7 +38,7 @@ class UploadController extends Controller
             $file = Slim::saveFile($data, $name, $path);
 
             // Specity the web path to the image
-            $imagePath = 'img/forsidebilde/' . $file['name'];
+            $imagePath = 'img/forsidebilder/' . $file['name'];
 
             // Save the data to the DB
             $user = User::findOrFail(Auth::id());

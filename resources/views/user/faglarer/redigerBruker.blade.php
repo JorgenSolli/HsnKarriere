@@ -53,12 +53,10 @@
           {{ csrf_field() }}
           <ul class="list-group media-list media-list-stream">
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-info"></span>
-              </div>
               <div class="media-body">
                 <div class="media-body-text">
                   <div class="media-heading">
+                    <span class="fa fa-info pull-left media-left-icon"></span>
                     <small class="pull-right text-muted">Bare litt...</small>
                     <p class="h4">Generel informasjon</p>
                   </div>
@@ -128,15 +126,12 @@
               </div>
             </li>
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-disk"></span>
-              </div> <!-- end media-left -->
               <div class="media-body">
                 <div class="form-group">
                   <a href="/bruker" class="btn btn-danger pull-right">AVBRYT</a>
                   <button type="submit" class="btn btn-success pull-right m-r">LAGRE</button>
                 </div>
-              </div> <!-- end media-body -->
+              </div>
             </li>
           </ul>
         </form>

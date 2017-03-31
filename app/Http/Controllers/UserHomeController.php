@@ -38,11 +38,34 @@ class UserHomeController extends Controller
                 ]);
         }
         else if (Auth::user()->bruker_type == "bedrift") {
-
+            $company = Company::where('user_id', Auth::id())->get();
             $brukerinfo = Auth::user();
-            $company = Company::where('user_id', Auth::id())
+            
+            $fag = Company::where('user_id', Auth::id())
                 ->join('studies', 'companies.studie_id', '=', 'studies.id')
                 ->get();
+
+            $jobs = Job::where('bedrift_id', Auth::id())
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $nr_jobs = Job::where('bedrift_id', Auth::id())
+                ->count();
+
+            $masters = Assignment::where('type', 'masteroppgave')
+                ->where('bedrift_id', Auth::id())
+                ->get();
+            $nr_masters = Assignment::where('type', 'masteroppgave')
+                ->where('bedrift_id', Auth::id())
+                ->count();
+
+            $bachelors = Assignment::where('type', 'bacheloroppgave')
+                ->where('bedrift_id', Auth::id())
+                ->get();
+            $nr_bachelors = Assignment::where('type', 'bacheloroppgave')
+                ->where('bedrift_id', Auth::id())
+                ->count();
+
+            $forelesere = $querry_service->finnForeleser(Auth::id(), false);
 
             $studenter = $querry_service
                 ->finnStudenter(
@@ -53,9 +76,17 @@ class UserHomeController extends Controller
 
             return view('user.bedrift.bruker',
                 [
-                    'studenter'   => $studenter,
-                    'companyData' => $company,
-                    'brukerinfo'  => $brukerinfo
+                    'brukerinfo'    => $brukerinfo,
+                    'studenter'     => $studenter,      
+                    'forelesere'    => $forelesere,
+                    'company'       => $company,
+                    'fag'           => $fag, 
+                    'bachelors'     => $bachelors,
+                    'nr_bachelors'  => $nr_bachelors,
+                    'masters'       => $masters,
+                    'nr_masters'    => $nr_masters,
+                    'jobs'          => $jobs,
+                    'nr_jobs'       => $nr_jobs
                 ]);
         } 
         else if (Auth::user()->bruker_type == "faglarer") {
@@ -63,14 +94,12 @@ class UserHomeController extends Controller
             $studier = Professor::where('user_id', Auth::id())->get();
             $studenter = $querry_service
                 ->finnStudenter(
-                    Professor::where('user_id', Auth::id())
-                        ->join('studies', 'professors.studie_id', 'studies.id')
-                        ->select('study', 'campus')
-                        ->get(),
+                    Auth::id(),
                     false, 
                     false
                 );
-            $bedrifter = "";
+            $bedrifter = $querry_service->finnBedrifter(Auth::id(), false, false);
+
             return view('user.faglarer.bruker', [
                 'brukerinfo' => $brukerinfo,
                 'studier'    => $studier,
@@ -86,6 +115,7 @@ class UserHomeController extends Controller
 
         if ($brukerinfo->bruker_type == "student") {
             $student_studerer = StudentStudy::where('user_id', $id)
+                ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                 ->get();
             $faglarere = $querry_service->finnForeleser($id, false, false);
             
@@ -132,9 +162,15 @@ class UserHomeController extends Controller
         }
 
         else if ($brukerinfo->bruker_type == "faglarer") {
+            $fag = Professor::where('user_id', $id)
+                ->join('studies', 'professors.studie_id', '=', 'studies.id')
+                ->select('study')
+                ->get();
+
             return view('user.faglarer.seBruker',
             [
-                'brukerinfo' => $brukerinfo
+                'brukerinfo' => $brukerinfo,
+                'fag'  => $fag
             ]);
         }   
     }

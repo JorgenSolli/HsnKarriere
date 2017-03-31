@@ -1,8 +1,7 @@
-  @unless ($studenter == null)
-    @php $row = 0 @endphp
-    <!-- Card sort -->
+@if ($studenter)
+  @foreach (array_chunk($studenter->all(), 4) as $chunk)
     <div class="row">
-      @foreach ($studenter as $student)
+      @foreach ($chunk as $student)
         <div class="col-md-3">
           <div class="panel panel-default panel-profile">
             <div class="panel-heading" style="background-image: url(/uploads/{{ $student->forsidebilde }});">
@@ -22,14 +21,7 @@
             </div>
           </div>
         </div>
-        @php $row++ @endphp
-        @if ($row == 4)
-          @php $row = 0 @endphp
-          </div>
-          <div class="row">
-        @endif
-        @endforeach
-      </div>
-  @else
-    <p>Det finnes ingen studenter som passer til din bedrift</p>
-  @endunless
+      @endforeach
+    </div>
+  @endforeach
+@endif
