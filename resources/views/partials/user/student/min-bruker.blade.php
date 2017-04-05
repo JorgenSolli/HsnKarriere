@@ -60,20 +60,22 @@
       </div>
     </a>
   </div>
-  <div class="col-sm-4 p-r-s p-l-s">
-    <a href="/innboks#send{{ $brukerinfo->id }}" class="a-no-dec" style="width: 100%">
-      <div class="panel panel-default panel-hover text-center p-t p-l p-r p-b">
-        <span class="fa fa-commenting-o fa-2x"></span>
-        <p class="h4 m-t-xs m-b-0">Send {{ $brukerinfo->fornavn }} en melding</p>
-      </div>
-    </a>
-  </div>
-  <div class="col-sm-4 p-r-s p-l-s">
-    <a class="a-no-dec cursor" style="width: 100%" data-toggle="modal" data-target="#startSamarbeid">
-      <div class="panel panel-default panel-hover text-center p-t p-l p-r p-b">
-        <span class="fa fa-handshake-o fa-2x"></span>
-        <p class="h4 m-t-xs m-b-0">Start et samarbeid med {{ $brukerinfo->fornavn }}</p>
-      </div>
-    </a>
-  </div>
+  @unless ($brukerinfo->id == Auth::id())
+    <div class="col-sm-4 p-r-s p-l-s">
+      <a href="/innboks#send{{ $brukerinfo->id }}" class="a-no-dec" style="width: 100%">
+        <div class="panel panel-default panel-hover text-center p-t p-l p-r p-b">
+          <span class="fa fa-commenting-o fa-2x"></span>
+          <p class="h4 m-t-xs m-b-0">Send {{ $brukerinfo->fornavn }} en melding</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-sm-4 p-r-s p-l-s">
+      <a class="a-no-dec cursor" style="width: 100%" data-toggle="modal" data-target="#startSamarbeid">
+        <div class="panel panel-default panel-hover text-center p-t p-l p-r p-b">
+          <span class="fa fa-handshake-o fa-2x"></span>
+          <p class="h4 m-t-xs m-b-0">Start et samarbeid med {{ $brukerinfo->fornavn }}</p>
+        </div>
+      </a>
+    </div>
+  @endunless
 </div> {{-- end row  --}}
