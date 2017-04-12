@@ -40,11 +40,123 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
   </head>
-  <body class="with-top-navbar">
+  <body>
     @include('notifications.notifications')
     <div class="growl" id="app-growl"></div>
     @yield('logginn')
-    <nav class="navbar navbar-inverse navbar-fixed-top app-navbar">
+    <nav class="navbar app-navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-sx-4 col-sm-4 col-md-4 col-lg-4">
+            <ul id="nav-items" class="nav navbar-nav hidden-xs">
+              <li>
+                <a class="nav-menu-bars" data-toggle="popover-menu">
+                  <span class="fa fa-bars"></span>
+                  <span class="bars-text">Meny</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-sx-4 col-sm-4 col-md-4 col-lg-4 text-center">
+            <ul class="nav navbar-nav hidden-xs nav-logo-ul">
+              <li>
+                <a class="nav-logo h3" href="/">
+                  HSN KARRIERE
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-sx-4 col-sm-4 col-md-4 col-lg-4">
+            @if (Auth::Guest())
+              <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+                <li>
+                  <a href="#registrer" class="btn-success-outline">
+                    <span class="fa fa-user-plus"></span> Opprett profil
+                  </a>
+                </li>
+                <li>
+                  <a href="#logginn" data-toggle="modal" data-target="#loggInnModal">
+                    <span class="fa fa-sign-in fa-lg"></span> Logg inn
+                  </a>
+                </li>
+              </ul>
+            @else
+              <ul id="popoverNav" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+                <li>
+                  <a class="app-notifications cursor" data-toggle="nfPopover">
+                    <span class="icon icon-bell">
+                      <small id="notificationAmount"  style="display: none;" class="pos-a text-center"></small>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
+                    <img class="img-circle" src="/uploads/{{ $avatar }}"
+                      alt="Profilbilde">
+                  </button>
+                </li>
+              </ul>
+            @endif
+
+            <!-- Popover submenu -->
+            @unless (Auth::guest())
+              <!-- Notifications popover -->
+              <!-- loads from AJAX -->
+
+              <!-- Min bruker popover -->
+              <ul id="popover-data" class="nav navbar-nav hidden">
+                <li><a href="/bruker"><span class="fa fa-user"></span> Min profil</a></li>
+                <li><a href="/innboks"><span class="fa fa-inbox"></span> Innboks</a></li>
+                <li><a href="/oversikt"><span class="fa fa-tasks"></span> Min oversikt</a></li>
+                <li><a href="/bruker/rediger"><span class="fa fa-cog"></span> Rediger profil</a></li>
+                <li>
+                  <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-popover').submit();">
+                    <span class="fa fa-sign-out"></span> Logg ut
+                  </a>
+                  <form id="logout-form-popover" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                  </form>
+                </li>
+              </ul>
+            @endunless
+          </div>
+        </div>
+      </div>
+
+      <ul id="nav-items-data" class="nav navbar-nav hidden">
+        <li><a href="/">Hjem</a></li>
+        <li><a href="">Mer info</a></li>
+{{--         @if (Auth::guest())
+          <li>
+            <a href="#registrer" class="btn-success-outline">
+              <span class="fa fa-user-plus"></span> Opprett profil
+            </a>
+          </li>
+          <li>
+            <a href="#logginn" data-toggle="modal" data-target="#loggInnModal">
+              <span class="fa fa-sign-in fa-lg"></span> Logg inn
+            </a>
+          </li>
+        @else 
+          <li><a href="/bruker">Min profil</a></li>
+          <li><a href="/oversikt">Min oversikt</a></li>
+          <li><a href="/bruker/rediger">Rediger profil</a></li>
+          <li>
+            <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logg ut</a>
+            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
+          </li>   
+        @endif --}}
+      </ul>
+    </nav>
+
+
+
+{{-- 
+    <nav class="navbar navbar-fixed-top app-navbar">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-main">
@@ -53,10 +165,6 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">
-            <!-- <img src="../assets/img/brand-white.png" alt="brand"> -->
-            HSN KARRIERE
-          </a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-collapse-main">
 
@@ -72,6 +180,17 @@
               </ul>
             </li>
           </ul>
+
+          <ul class="nav navbar-nav hidden-xs nav-logo">
+            <li>
+              <a class="navbar-brand" href="/">
+                <!-- <img src="../assets/img/brand-white.png" alt="brand"> -->
+                HSN KARRIERE
+              </a>
+            </li>
+          </ul>
+
+
           @if (Auth::Guest())
             <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
               <li>
@@ -103,7 +222,7 @@
             </ul>
           @endif
 
-          <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
+          <ul id="nav-items-data" class="nav navbar-nav hidden-sm hidden-md hidden-lg">
             <li><a href="/">Hjem</a></li>
             <li><a href="/kalender">Kalender</a></li>
             <li><a href="/innboks">Innboks</a></li>
@@ -155,7 +274,7 @@
         </div>
       </div>
     </nav>
-      
+ --}}
     @yield('content')
 
     <!-- Footer -->

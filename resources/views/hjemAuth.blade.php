@@ -2,15 +2,7 @@
 
 @section('content')
     @unless (Auth::guest())
-        <div class="hero is-fullheight video">
-            <div class="overlay"></div>
-            <div class="hero-video">
-                <div class="video-overlay"></div>
-                <video poster="img/velkommen-bg-mobile.jpg" id="bgvid" playsinline="" autoplay="" muted="" loop="">
-                    <source src="/video/BGvid.webm" type="video/webm">
-                    <source src="/video/BGvid.mp4" type="video/mp4">
-                </video>
-            </div>
+        <div class="hero is-fullheight main-bg">
             <div class="container hero-body">
                 <div class="headerTitle">
                     <div class="textbox">

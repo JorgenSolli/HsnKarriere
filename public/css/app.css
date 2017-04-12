@@ -10460,8 +10460,33 @@ body {
 }
 
 /* nav */
-.navbar {
-  z-index: 999;
+.nav-menu-bars {
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.nav-menu-bars:hover {
+  text-decoration: none;
+}
+
+.nav-menu-bars:focus {
+  text-decoration: none;
+}
+
+.popover-content .fa {
+  width: 15px;
+}
+
+.nav-logo-ul {
+  width: 100%;
+}
+
+.nav-logo-ul li {
+  width: 100%;
+}
+
+.nav-logo {
+  margin: 0 !important;
 }
 
 .navbar-default {
@@ -10469,8 +10494,16 @@ body {
   margin-bottom: 0;
 }
 
+.navbar {
+  background-color: #fff;
+}
+
 .app-notifications {
   padding: 10px 20px 10px 12px !important;
+}
+
+.app-notifications:hover {
+  background-color: transparent !important;
 }
 
 .app-notifications span {
@@ -10780,6 +10813,11 @@ footer {
   .hero-video {
     display: none;
   }
+}
+
+.main-bg {
+  background: url("../img/main-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 .hero {

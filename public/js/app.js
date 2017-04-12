@@ -105,7 +105,7 @@ $(function () {
         padding: getRight()
       },
       content: function () {
-        var $nav = $('.app-navbar .navbar-nav:last-child').clone()
+        var $nav = $('#popover-data').clone()
         return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
       }
     })
@@ -123,6 +123,42 @@ $(function () {
         setTimeout(function () {
           $(document).one('click.app.popover', function () {
             $('[data-toggle="popover"]').popover('hide')
+          })
+        }, 1)
+      }
+    })
+  }
+
+  if ($("#nav-items").length) {
+    $('[data-toggle="popover-menu"]').popover({
+      template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
+      title: '',
+      html: true,
+      trigger: 'manual',
+      placement:'bottom',
+      viewport: {
+        selector: 'body',
+        padding: getRight()
+      },
+      content: function () {
+        var $nav = $('#nav-items-data').clone()
+        return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
+      }
+    })
+  
+    $('[data-toggle="popover-menu"]').on('click', function (e) {
+      e.stopPropagation()
+
+      if ($('[data-toggle="popover-menu"]').data('bs.popover').tip().hasClass('in')) {
+        $('[data-toggle="popover-menu"]').popover('hide')
+        $(document).off('click.app.popover')
+
+      } else {
+        $('[data-toggle="popover-menu"]').popover('show')
+
+        setTimeout(function () {
+          $(document).one('click.app.popover', function () {
+            $('[data-toggle="popover-menu"]').popover('hide')
           })
         }, 1)
       }
