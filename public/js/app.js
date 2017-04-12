@@ -29,19 +29,32 @@ $(function () {
     return data;
   }
 
-  function getRight() {
-    return ($(window).width() - ($('[data-toggle="nfPopover"]').offset().left + $('[data-toggle="nfPopover"]').outerWidth()))
+  // Popover for avatar click in nav-menu
+  function getRight(popover) {
+    return ($(window).width() - ($('[data-toggle="' + popover + '"]').offset().left + $('[data-toggle="' + popover + '"]').outerWidth()))
   }
 
   $(window).on('resize', function () {
     var instance = $('[data-toggle="nfPopover"]').data('bs.popover')
     if (instance) {
-      instance.options.viewport.padding = getRight()
+      instance.options.viewport.padding = getRight("nfPopover")
     }
   })
 
-  if ($("#popoverNav").length) {
+  // Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
+  if (window.location.hash.substr(1) == "logginn") {
+      $("#loggInnModal").modal();
+  }
 
+  $(window).on('resize', function () {
+    var instance = $('[data-toggle="popover"]').data('bs.popover')
+    if (instance) {
+      instance.options.viewport.padding = getRight("popover")
+    }
+  })
+
+  // Notification popover
+  if ($("#notifications").length) {
     $('[data-toggle="nfPopover"]').popover({
       template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
       title: '',
@@ -50,7 +63,7 @@ $(function () {
       placement:'bottom',
       viewport: {
         selector: 'body',
-        padding: getRight()
+        padding: getRight("nfPopover")
       },
       content: function () {
         return '<div id="notification-data" class="nav nav-stacked" style="width: 260px">' + checkNotifications() + '</div>'
@@ -76,59 +89,7 @@ $(function () {
     })
   }
 
-  // Bruker har nettopp forsøkt å nå en side der han/hun ikke har tillgang. Ber brukeren logge seg inn
-  if (window.location.hash.substr(1) == "logginn") {
-      $("#loggInnModal").modal();
-  }
-
-  // Popover for avatar click in nav-menu
-  function getRight() {
-    return ($(window).width() - ($('[data-toggle="popover"]').offset().left + $('[data-toggle="popover"]').outerWidth()))
-  }
-
-  $(window).on('resize', function () {
-    var instance = $('[data-toggle="popover"]').data('bs.popover')
-    if (instance) {
-      instance.options.viewport.padding = getRight()
-    }
-  })
-
-  if ($("#popoverNav").length) {
-    $('[data-toggle="popover"]').popover({
-      template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
-      title: '',
-      html: true,
-      trigger: 'manual',
-      placement:'bottom',
-      viewport: {
-        selector: 'body',
-        padding: getRight()
-      },
-      content: function () {
-        var $nav = $('#popover-data').clone()
-        return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
-      }
-    })
-  
-    $('[data-toggle="popover"]').on('click', function (e) {
-      e.stopPropagation()
-
-      if ($('[data-toggle="popover"]').data('bs.popover').tip().hasClass('in')) {
-        $('[data-toggle="popover"]').popover('hide')
-        $(document).off('click.app.popover')
-
-      } else {
-        $('[data-toggle="popover"]').popover('show')
-
-        setTimeout(function () {
-          $(document).one('click.app.popover', function () {
-            $('[data-toggle="popover"]').popover('hide')
-          })
-        }, 1)
-      }
-    })
-  }
-
+  // Menu items popover
   if ($("#nav-items").length) {
     $('[data-toggle="popover-menu"]').popover({
       template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
@@ -137,8 +98,7 @@ $(function () {
       trigger: 'manual',
       placement:'bottom',
       viewport: {
-        selector: 'body',
-        padding: getRight()
+        selector: 'body'
       },
       content: function () {
         var $nav = $('#nav-items-data').clone()
@@ -159,6 +119,80 @@ $(function () {
         setTimeout(function () {
           $(document).one('click.app.popover', function () {
             $('[data-toggle="popover-menu"]').popover('hide')
+          })
+        }, 1)
+      }
+    })
+  }
+
+  // Logg inn popover
+  if ($("#logg-inn").length) {
+    $('[data-toggle="logg-inn-popover"]').popover({
+      template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
+      title: '',
+      html: true,
+      trigger: 'manual',
+      placement:'bottom',
+      viewport: {
+        selector: 'body',
+        padding: getRight("logg-inn-popover")
+      },
+      content: function () {
+        var $nav = $('#logg-inn-popover-data').clone()
+        return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
+      }
+    })
+  
+    $('[data-toggle="logg-inn-popover"]').on('click', function (e) {
+      e.stopPropagation()
+
+      if ($('[data-toggle="logg-inn-popover"]').data('bs.popover').tip().hasClass('in')) {
+        $('[data-toggle="logg-inn-popover"]').popover('hide')
+        $(document).off('click.app.popover')
+
+      } else {
+        $('[data-toggle="logg-inn-popover"]').popover('show')
+
+        setTimeout(function () {
+          $(document).one('click.app.popover', function () {
+            $('[data-toggle="logg-inn-popover"]').popover('hide')
+          })
+        }, 1)
+      }
+    })
+  }
+
+  // User menu popover
+  if ($("#notifications").length) {
+    $('[data-toggle="user-popover"]').popover({
+      template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
+      title: '',
+      html: true,
+      trigger: 'manual',
+      placement:'bottom',
+      viewport: {
+        selector: 'body',
+        padding: getRight("user-popover")
+      },
+      content: function () {
+        var $nav = $('#user-popover-data').clone()
+        return '<div class="nav nav-stacked" style="width: 200px">' + $nav.html() + '</div>'
+      }
+    })
+  
+    $('[data-toggle="user-popover"]').on('click', function (e) {
+      e.stopPropagation()
+
+      if ($('[data-toggle="user-popover"]').data('bs.popover').tip().hasClass('in')) {
+        $('[data-toggle="user-popover"]').popover('hide')
+        $(document).off('click.app.popover')
+
+      } else {
+        $('[data-toggle="user-popover"]').popover('show')
+
+        setTimeout(function () {
+          $(document).one('click.app.popover', function () {
+            $('[data-toggle="user-popover-data"]').popover('hide')
           })
         }, 1)
       }

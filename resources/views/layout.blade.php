@@ -70,20 +70,48 @@
 
           <div class="col-sx-4 col-sm-4 col-md-4 col-lg-4">
             @if (Auth::Guest())
-              <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+              <ul id="logg-inn" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
                 <li>
-                  <a href="#registrer" class="btn-success-outline">
-                    <span class="fa fa-user-plus"></span> Opprett profil
-                  </a>
-                </li>
-                <li>
-                  <a href="#logginn" data-toggle="modal" data-target="#loggInnModal">
-                    <span class="fa fa-sign-in fa-lg"></span> Logg inn
+                  <a class="cursor" data-toggle="logg-inn-popover">
+                    <span class="fa fa-user-circle fa-lg"></span> Logg inn
                   </a>
                 </li>
               </ul>
+
+              <!-- Logg inn popover -->
+              <ul id="logg-inn-popover-data" class="nav navbar-nav hidden">
+                <li><a href="/auth/facebook"><span class="fa fa-graduation-cap"></span> Som student</a></li>
+                <li><a class="cursor" data-toggle="modal" data-target="#loggInnModal-bedrift"><span class="fa fa-building-o"></span> Som bedrift</a></li>
+                <li><a href="/linkedin"><span class="fa fa-user"></span> Som foreleser</a></li>
+              </ul>
+
+              <div id="loggInnModal-bedrift" class="modal modal-login fade in" role="dialog">
+                <div class="modal-dialog">
+
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle"></i></button>
+                      <p class="h3 modal-title"><i class="fa fa-sign-in"></i> Logg inn som bedrift</p>
+                    </div>
+
+                    <div class="modal-body">
+                      <a href="/auth/google" class="social-login-btn btn btn-google">
+                        <i class="fa fa-google"></i> Google
+                      </a>
+                      <a href="/auth/linkedin" class="social-login-btn btn btn-linkedin">
+                        <i class="fa fa-linkedin"></i> LinkedIn
+                      </a>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary-outline is-fullwidth" data-dismiss="modal">
+                        Lukk
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             @else
-              <ul id="popoverNav" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+              <ul id="notifications" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
                 <li>
                   <a class="app-notifications cursor" data-toggle="nfPopover">
                     <span class="icon icon-bell">
@@ -92,21 +120,19 @@
                   </a>
                 </li>
                 <li>
-                  <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
+                  <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="user-popover">
                     <img class="img-circle" src="/uploads/{{ $avatar }}"
                       alt="Profilbilde">
                   </button>
                 </li>
               </ul>
-            @endif
 
-            <!-- Popover submenu -->
-            @unless (Auth::guest())
+              <!-- Popover submenu -->
               <!-- Notifications popover -->
               <!-- loads from AJAX -->
 
               <!-- Min bruker popover -->
-              <ul id="popover-data" class="nav navbar-nav hidden">
+              <ul id="user-popover-data" class="nav navbar-nav hidden">
                 <li><a href="/bruker"><span class="fa fa-user"></span> Min profil</a></li>
                 <li><a href="/innboks"><span class="fa fa-inbox"></span> Innboks</a></li>
                 <li><a href="/oversikt"><span class="fa fa-tasks"></span> Min oversikt</a></li>
@@ -120,7 +146,7 @@
                   </form>
                 </li>
               </ul>
-            @endunless
+            @endif
           </div>
         </div>
       </div>
@@ -128,153 +154,9 @@
       <ul id="nav-items-data" class="nav navbar-nav hidden">
         <li><a href="/">Hjem</a></li>
         <li><a href="">Mer info</a></li>
-{{--         @if (Auth::guest())
-          <li>
-            <a href="#registrer" class="btn-success-outline">
-              <span class="fa fa-user-plus"></span> Opprett profil
-            </a>
-          </li>
-          <li>
-            <a href="#logginn" data-toggle="modal" data-target="#loggInnModal">
-              <span class="fa fa-sign-in fa-lg"></span> Logg inn
-            </a>
-          </li>
-        @else 
-          <li><a href="/bruker">Min profil</a></li>
-          <li><a href="/oversikt">Min oversikt</a></li>
-          <li><a href="/bruker/rediger">Rediger profil</a></li>
-          <li>
-            <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logg ut</a>
-            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-          </li>   
-        @endif --}}
       </ul>
     </nav>
 
-
-
-{{-- 
-    <nav class="navbar navbar-fixed-top app-navbar">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-main">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-collapse-main">
-
-          <ul class="nav navbar-nav hidden-xs">
-            <li><a href="/">Hjem</a></li>
-            <li><a href="/kalender">Kalender</a></li>
-            <li><a href="/innboks">Innboks</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mer info <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/student">For student</a></li>
-                <li><a href="/bedrift">For bedrift</a></li>
-              </ul>
-            </li>
-          </ul>
-
-          <ul class="nav navbar-nav hidden-xs nav-logo">
-            <li>
-              <a class="navbar-brand" href="/">
-                <!-- <img src="../assets/img/brand-white.png" alt="brand"> -->
-                HSN KARRIERE
-              </a>
-            </li>
-          </ul>
-
-
-          @if (Auth::Guest())
-            <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
-              <li>
-                <a href="#registrer" class="btn-success-outline">
-                  <span class="fa fa-user-plus"></span> Opprett profil
-                </a>
-              </li>
-              <li>
-                <a href="#logginn" data-toggle="modal" data-target="#loggInnModal">
-                  <span class="fa fa-sign-in fa-lg"></span> Logg inn
-                </a>
-              </li>
-            </ul>
-          @else
-            <ul id="popoverNav" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
-              <li>
-                <a class="app-notifications cursor" data-toggle="nfPopover">
-                  <span class="icon icon-bell">
-                    <small id="notificationAmount"  style="display: none;" class="pos-a text-center"></small>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
-                  <img class="img-circle" src="/uploads/{{ $avatar }}"
-                    alt="Profilbilde">
-                </button>
-              </li>
-            </ul>
-          @endif
-
-          <ul id="nav-items-data" class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-            <li><a href="/">Hjem</a></li>
-            <li><a href="/kalender">Kalender</a></li>
-            <li><a href="/innboks">Innboks</a></li>
-            <li><a href="">Mer info</a></li>
-            @if (Auth::guest())
-              <li>
-                <a href="#registrer" class="btn-success-outline">
-                  <span class="fa fa-user-plus"></span> Opprett profil
-                </a>
-              </li>
-              <li>
-                <a href="#logginn" data-toggle="modal" data-target="#loggInnModal">
-                  <span class="fa fa-sign-in fa-lg"></span> Logg inn
-                </a>
-              </li>
-            @else 
-              <li><a href="/bruker">Min profil</a></li>
-              <li><a href="/oversikt">Min oversikt</a></li>
-              <li><a href="/bruker/rediger">Rediger profil</a></li>
-              <li>
-                <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logg ut</a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-              </li>   
-            @endif
-          </ul>
-
-          <!-- Popover submenu -->
-          @unless (Auth::guest())
-            <!-- Notifications popover -->
-            <!-- loads from AJAX -->
-
-            <!-- Min bruker popover -->
-            <ul class="nav navbar-nav hidden">
-              <li><a href="/bruker"><span class="fa fa-user"></span> Min profil</a></li>
-              <li><a href="/oversikt"><span class="fa fa-tasks"></span> Min oversikt</a></li>
-              <li><a href="/bruker/rediger"><span class="fa fa-cog"></span> Rediger profil</a></li>
-              <li>
-                <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form-popover').submit();">
-                  <span class="fa fa-sign-out"></span> Logg ut
-                </a>
-                <form id="logout-form-popover" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-              </li>
-            </ul>
-          @endunless
-        </div>
-      </div>
-    </nav>
- --}}
     @yield('content')
 
     <!-- Footer -->

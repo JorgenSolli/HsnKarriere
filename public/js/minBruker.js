@@ -43,3 +43,15 @@ var search = function (searching) {
 		}
 	})
 }
+
+$(document).ready(function() {
+	var panel = $("#bio-panel");
+
+	// Adds the padding as well
+	var bioHeight = panel.height() + 30;
+
+	if (bioHeight < 230) {
+		panel.css('height', '230px');
+	}
+
+});

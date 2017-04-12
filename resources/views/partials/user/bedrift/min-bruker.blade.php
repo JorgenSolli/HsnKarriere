@@ -2,7 +2,7 @@
   <div class="row">
   
     <div class="col-sm-6 p-r-s p-l-s">
-      <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
+      <div id="bio-panel" class="panel panel-default panel-hover p-t-s p-l p-r p-b">
         <p class="h4"><span class="fa fa-file-text-o"></span> Om {{ $brukerinfo->bedrift_navn }}</p>
         {!! $brukerinfo->bio !!}
       </div>
