@@ -110,25 +110,31 @@ class DashboardController extends Controller
                 ->orWhere('godkjent_av_foreleser', '0')
                 ->count();
 
-            $venterDokumentasjon = Partnership::where('godkjent_av_foreleser', '1')
-                ->where('godkjent_av_student', '1')
-                ->where('godkjent_av_bedrift', '1')
+            $venterDokumentasjon = Partnership::where([
+                    ['godkjent_av_foreleser', '1'],
+                    ['godkjent_av_student', '1'],
+                    ['godkjent_av_bedrift', '1']
+                ])
                 ->whereNull('signert_av_bedrift')
                 ->whereNull('arbeidsbesk')
                 ->whereNull('kontrakt_godkjent_av_foreleser')
-                ->orWhere('kontrakt_rejected', '1')
-                ->orWhere('arbeidsbesk_rejected', '1')
+                ->orWhere([
+                    ['kontrakt_rejected', '1'],
+                    ['arbeidsbesk_rejected', '1']
+                ])
                 ->count();
 
-            $godkjenneDokumenter = Partnership::where('godkjent_av_foreleser', '1')
-                ->where('godkjent_av_student', '1')
-                ->where('godkjent_av_bedrift', '1')
-                ->where('signert_av_student', '1')
-                ->where('signert_av_bedrift', '1')
-                ->where('arbeidsbesk', '>' ,'')
-                ->where('kontrakt_rejected', '0')
-                ->where('arbeidsbesk_rejected', '0')
+            $godkjenneDokumenter = Partnership::where([
+                    ['godkjent_av_foreleser', '1'],
+                    ['godkjent_av_student', '1'],
+                    ['godkjent_av_bedrift', '1'],
+                    ['signert_av_student', '1'],
+                    ['signert_av_bedrift', '1']
+                ])
                 ->whereNull('kontrakt_godkjent_av_foreleser')
+                ->whereNull('kontrakt_rejected')
+                ->whereNull('arbeidsbesk_rejected')
+                ->whereNotNull('arbeidsbesk')
                 ->count();
 
             $aktiveSamarbeid = Partnership::where('kontrakt_godkjent_av_foreleser', '1')
@@ -145,7 +151,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * Gets a specific type, process thats data and returns the json object
+     * Gets a specific type, process that data and returns the json object
      * 
      * @param  string $type the specific type the user wants
      * @return array

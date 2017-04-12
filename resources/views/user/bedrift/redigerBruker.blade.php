@@ -232,7 +232,7 @@
                   <a href="/bruker" class="btn btn-danger pull-right">AVBRYT</a>
                   <button type="submit" class="btn btn-success pull-right m-r">LAGRE</button>
                 </div>
-              </div> <!-- end media-body -->
+              </div>
             </li>
           </ul>
         </form>

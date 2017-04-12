@@ -66,11 +66,9 @@
           {{ csrf_field() }}
           <ul class="list-group media-list media-list-stream">
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-align-left"></span>
-              </div>
               <div class="media-body">
                 <div class="media-heading">
+                  <span class="fa fa-align-left pull-left media-left-icon"></span>
                   <small class="pull-right text-muted">Kort om deg</small>
                   <p class="h4">Biografi</p>
                 </div>
@@ -85,12 +83,11 @@
             </li>
 
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-info"></span>
-              </div>
+
               <div class="media-body">
                 <div class="media-body-text">
                   <div class="media-heading">
+                    <span class="fa fa-info pull-left media-left-icon"></span>
                     <small class="pull-right text-muted">Bare litt...</small>
                     <p class="h4">Litt om deg</p>
                   </div>
@@ -167,11 +164,9 @@
             </li>
 
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-graduation-cap"></span>
-              </div>
               <div class="media-body">
                 <div class="media-heading">
+                  <span class="fa fa-graduation-cap pull-left media-left-icon"></span>
                   <small class="pull-right text-muted">Studier og tider</small>
                   <p class="h4">Dine studier</p>
                 </div>
@@ -236,15 +231,12 @@
               </div>
             </li>
             <li class="media list-group-item p-a">
-              <div class="media-left">
-                <span class="media-object fa fa-disk"></span>
-              </div> <!-- end media-left -->
               <div class="media-body">
                 <div class="form-group">
                   <a href="/bruker" class="btn btn-danger pull-right">Avbryt</a>
                   <button type="submit" class="btn btn-success pull-right m-r">Lagre</button>
                 </div>
-              </div> <!-- end media-body -->
+              </div>
             </li>
           </ul>
         </form>

@@ -1,5 +1,5 @@
  <div id="sortListContainer">
-  @unless ($bedrifter == null)
+  @if ($bedrifter)
     <!-- List sort -->
     @foreach ($bedrifter as $bedrift)
       <ul class="media-list media-list-users list-group col-md-6">
@@ -22,6 +22,6 @@
       </ul>
     @endforeach
   @else
-    <p>Det finnes ingen bedrifter som passer</p>
-  @endunless
+    <p>Det finnes ingen bedrifter som passer til din bedrift</p>
+  @endif
 </div>

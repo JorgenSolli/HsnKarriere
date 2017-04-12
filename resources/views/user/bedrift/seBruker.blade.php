@@ -83,6 +83,7 @@
     @endif
   </div> <!-- end row  -->
   <div class="row">
+  
     <div class="col-sm-3 p-r-s p-l-s cursor">
       <div style="width: 100%" data-toggle="modal" data-target="#seeBachelors">
         <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
@@ -92,6 +93,7 @@
         </div>
       </div>
     </div>
+
     <div class="col-sm-3 p-r-s p-l-s cursor">
       <div style="width: 100%" data-toggle="modal" data-target="#seeMasters">
         <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">

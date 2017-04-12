@@ -170,6 +170,7 @@ return [
          * Package Service Providers...
          */
         'Chromabits\Purifier\PurifierServiceProvider',
+        'Aacotroneo\Saml2\Saml2ServiceProvider',
 
         /*
          * Application Service Providers...
@@ -228,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Saml2'     => 'Aacotroneo\Saml2\Facades\Saml2Auth',
 
     ],
 

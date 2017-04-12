@@ -8,10 +8,10 @@
       <img class="img-circle media-object" src="/uploads/{{ $brukerinfo->profilbilde }}">
       <p class="h3 profile-header-user">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</p>
       @if ($brukerinfo->facebook != "")
-        <a href="{{ url($brukerinfo->facebook) }}" class="p-r-s"><span class="social_icons fa fa-facebook-official fa-2x"></span></a>
+        <a href="{{ url($brukerinfo->facebook) }}" target="_blank" class="p-r-s"><span class="social_icons fa fa-facebook-official fa-2x"></span></a>
       @endif
       @if ($brukerinfo->linkedin != "")
-        <a href="{{ url($brukerinfo->linkedin) }}" class="p-r-s"><span class="social_icons fa fa-linkedin-square fa-2x"></span></a>
+        <a href="{{ url($brukerinfo->linkedin) }}" target="_blank" class="p-r-s"><span class="social_icons fa fa-linkedin-square fa-2x"></span></a>
       @endif
       @if ($brukerinfo->nettside != "")
         <a href="{{ url($brukerinfo->nettside) }}" target="_blank"><span class="social_icons fa fa-home fa-2x"></span></a>

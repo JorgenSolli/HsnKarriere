@@ -12,7 +12,8 @@
         "laravel/socialite": "^3.0",
         "laravel/scout": "^3.0",
         "algolia/algoliasearch-client-php": "^1.16",
-        "chromabits/purifier": "~2.1"
+        "chromabits/purifier": "~2.1",
+        "aacotroneo/laravel-saml2": "^0.8.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

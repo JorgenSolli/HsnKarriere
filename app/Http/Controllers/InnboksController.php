@@ -46,8 +46,7 @@ class InnboksController extends Controller
 
         foreach ($junctions as $junction) {
             $data = Message::where('id', $junction->message_id)->first();
-            $participants = DB::table('users')
-	        	->join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
+            $participants = User::join('messages_junctions', 'users.id', '=', 'messages_junctions.user_id')
 	        	->select('users.bruker_type', 'users.fornavn', 'users.bedrift_navn', 'messages_junctions.message_read')
 	        	->where('messages_junctions.message_id', '=', $junction->message_id)
 	        	->get();
