@@ -133,18 +133,20 @@
 	        				<p class="h4">Venter på godkjenning av alle parter</p>
 	        				<div class="row">
 		            		<div class="col-xs-6">
+		            			<img alt="student avatar" class="dashboard-avatars" src="uploads/{{ $partnership->student_profilbilde }}">
 		            			@if ($partnership->godkjent_av_student == null)
-		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> {{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }} har ikke godtatt</p>
+		            				<p class="h5 m-t-0"><span class="fa fa-times fa-lg danger-color"></span> {{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }} har ikke godtatt</p>
 	            				@else
-	            					<p class="h5"><span class="fa fa-check fa-lg success-color"></span> {{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }} har godtatt</p>
+	            					<p class="h5 m-t-0"><span class="fa fa-check fa-lg success-color"></span> {{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }} har godtatt</p>
 		            			@endif
 		            		</div>
 
 		            		<div class="col-xs-6">
+		            			<img alt="foreleser avatar" class="dashboard-avatars" src="uploads/{{ $partnership->larer_profilbilde }}">
 		            			@if ($partnership->godkjent_av_foreleser == null)
-		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span> {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }} har ikke godkjent</p>
+		            				<p class="h5 m-t-0"><span class="fa fa-times fa-lg danger-color"></span> {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }} har ikke godkjent</p>
 		            			@else
-		            				<p class="h5"><span class="fa fa-check fa-lg success-color"></span> {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }} har godkjent</p>
+		            				<p class="h5 m-t-0"><span class="fa fa-check fa-lg success-color"></span> {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }} har godkjent</p>
 		            			@endif
 		            		</div>
 		            	</div>

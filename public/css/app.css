@@ -10252,6 +10252,11 @@ body {
 }
 
 /* Dashboard */
+.dashboard-avatars {
+  width: 100px;
+  height: 100px;
+}
+
 .dashboard-sidebar {
   padding-right: 0;
 }
