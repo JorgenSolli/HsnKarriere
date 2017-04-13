@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Messages;
 use App\Notification;
+use App\MessagesReply;
 use App\MessagesJunction;
 use App\Services\DateFormater;
 use Illuminate\Http\Request;
@@ -29,8 +30,7 @@ class NotificationController extends Controller
 			->limit(2)
 			->get();
     	
-    	$latestMessages = DB::table('messages_junctions')
-    		->where('user_id', '=', Auth::id())
+    	$latestMessages = MessagesJunction::where('user_id', '=', Auth::id())
     		->orderBy('message_read', 'asc')
     		->limit(5)
 			->get();
@@ -38,9 +38,8 @@ class NotificationController extends Controller
 		$data = collect([]);
 
 		foreach ($latestMessages as $latestMessage) {
-			$message = DB::table('messages_replies')
-				->where('message_id', '=', $latestMessage->message_id)
-				->orderBy('updated_at', 'desc')
+			$message = MessagesReply::where('message_id', '=', $latestMessage->message_id)
+				->orderBy('created_at', 'desc')
 				->get();
 
 			// No replies, Returns the first message
@@ -59,8 +58,7 @@ class NotificationController extends Controller
 			} 
 			// Replies belong to an unread message.
 			else {
-				$query = DB::table('messages_replies')
-					->where('message_id', '=', $latestMessage->message_id)
+				$query = MessagesReply::where('message_id', '=', $latestMessage->message_id)
 					->orderBy('updated_at', 'desc')
 					->first();
 
