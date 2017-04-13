@@ -133,7 +133,7 @@ class SamarbeidController extends Controller
             $notification->type = "samarbeid";
             $notification->heading = "Godkjent samarbeid";
             $notification->user_id = $partnership->student_id;
-            $notification->message = Auth::user()->fornavn . " " . Auth::user()->etternavn . " har godkjent samarbeidet!";
+            $notification->message = Auth::user()->bedrift_navn . " har godtatt samarbeidet!";
             $notification->save();
         }
 

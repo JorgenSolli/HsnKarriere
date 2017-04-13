@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Messages;
 use App\Notification;
 use App\MessagesJunction;
 use App\Services\DateFormater;
@@ -24,7 +25,7 @@ class NotificationController extends Controller
     public function notification (DateFormater $date_formater)
     {
 		$notifications = Notification::where('user_id', Auth::id())
-			->orderBy('has_seen', 'asc')
+			->orderBy('created_at', 'desc')
 			->limit(2)
 			->get();
     	
@@ -44,8 +45,7 @@ class NotificationController extends Controller
 
 			// No replies, Returns the first message
 			if ($message->isEmpty()) {
-				$query = DB::table('messages')
-					->where('id', '=', $latestMessage->message_id)
+				$query = Messages::where('id', '=', $latestMessage->message_id)
 					->first();
 
 				$data->push([

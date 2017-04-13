@@ -117,12 +117,14 @@
 	        					<form action="samarbeid/{{ $partnership->id }}" method="post" class="pull-left">
 	        						{{ csrf_field() }}
 	        						{{ method_field('DELETE') }}
-	        						<button type="submit" class="btn btn-danger m-r-s">IKKE GODKJENN</button>
+		        					<input type="hidden" class="confirmMsg" value="Er du sikker på at du vil avvise samarbeidet?">
+	        						<button type="button" class="submitBtn btn btn-danger m-r-s">IKKE GODKJENN</button>
         						</form>
 
         						<form method="post" action="godkjennSamarbeid/{{ $partnership->id }}" class="pull-left">
         							{{ csrf_field() }}
-		        					<button type="submit" class="btn btn-success m-l-s">GODKJENN</button>
+		        					<input type="hidden" class="confirmMsg" value="Er du sikker på at du vil godkjenne samarbeidet?">
+		        					<button type="button" class="submitBtn btn btn-success m-l-s">GODKJENN</button>
         						</form>
 		            	</div>
       					</div>
@@ -135,21 +137,36 @@
 		            		<div class="col-xs-6">
 		            			<img alt="student avatar" class="dashboard-avatars" src="uploads/{{ $partnership->student_profilbilde }}">
 		            			@if ($partnership->godkjent_av_student == null)
-		            				<p class="h5 m-t-0"><span class="fa fa-times fa-lg danger-color"></span> {{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }} har ikke godtatt</p>
+		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span>
+		            				&nbsp;
+		            				<a href="/bruker/{{ $partnership->student_id }}">{{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }}</a> har ikke godtatt</p>
 	            				@else
-	            					<p class="h5 m-t-0"><span class="fa fa-check fa-lg success-color"></span> {{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }} har godtatt</p>
+	            					<p class="h5"><span class="fa fa-check fa-lg success-color"></span>
+	            					&nbsp;
+		            				<a href="/bruker/{{ $partnership->student_id }}">{{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }}</a> har godtatt</p>
 		            			@endif
 		            		</div>
 
 		            		<div class="col-xs-6">
 		            			<img alt="foreleser avatar" class="dashboard-avatars" src="uploads/{{ $partnership->larer_profilbilde }}">
 		            			@if ($partnership->godkjent_av_foreleser == null)
-		            				<p class="h5 m-t-0"><span class="fa fa-times fa-lg danger-color"></span> {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }} har ikke godkjent</p>
+		            				<p class="h5"><span class="fa fa-times fa-lg danger-color"></span>
+		            				&nbsp;
+		            				<a href="/bruker/{{ $partnership->larer_id }}">{{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }}</a> har ikke godkjent enda</p>
 		            			@else
-		            				<p class="h5 m-t-0"><span class="fa fa-check fa-lg success-color"></span> {{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }} har godkjent</p>
+		            				<p class="h5"><span class="fa fa-check fa-lg success-color"></span>
+		            				&nbsp;
+		            				<a href="/bruker/{{ $partnership->larer_id }}">{{ $partnership->larer_fornavn }} {{ $partnership->larer_etternavn }}</a> har godkjent</p>
 		            			@endif
 		            		</div>
 		            	</div>
+		            	<hr>
+	      					<form action="samarbeid/{{ $partnership->id }}" method="post">
+		    						{{ csrf_field() }}
+		    						{{ method_field('DELETE') }}
+		    						<input type="hidden" class="confirmMsg" value="Er du sikker på at du vil avbryte samarbeidet?">
+		    						<button type="button" class="submitBtn btn btn-sm btn-danger m-r-s pull-right">AVBRYT SAMARBEID</button>
+		  						</form>
       					</div>
 	        		</li>
 	        	@else
@@ -360,5 +377,6 @@
 
 @stop
 @section('script')
+	<script src="/js/bootbox.min.js"></script>
 	<script src="/js/dashboard.js"></script>
 @stop

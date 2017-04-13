@@ -82,7 +82,7 @@
               <ul id="logg-inn-popover-data" class="nav navbar-nav hidden">
                 <li><a href="/auth/facebook"><span class="fa fa-graduation-cap"></span> Som student</a></li>
                 <li><a class="cursor" data-toggle="modal" data-target="#loggInnModal-bedrift"><span class="fa fa-building-o"></span> Som bedrift</a></li>
-                <li><a href="/auth/linkedin"><span class="fa fa-user"></span> Som foreleser</a></li>
+                <li><a href="/auth/github"><span class="fa fa-user"></span> Som foreleser</a></li>
               </ul>
 
               <div id="loggInnModal-bedrift" class="modal modal-login fade in" role="dialog">

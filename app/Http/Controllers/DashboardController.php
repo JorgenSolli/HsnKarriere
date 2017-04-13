@@ -59,9 +59,11 @@ class DashboardController extends Controller
                          'partnerships.id',
                          'bedrift.bedrift_navn AS bedrift_navn',
                          'bedrift.id AS bedrift_id',
+                         'bedrift.profilbilde AS bedrift_profilbilde',
                          'larer.fornavn AS larer_fornavn',
                          'larer.etternavn AS larer_etternavn',
-                         'larer.id AS larer_id')
+                         'larer.id AS larer_id',
+                         'larer.profilbilde AS larer_profilbilde')
                 ->orderBy('partnerships.updated_at')
                 ->get();
 

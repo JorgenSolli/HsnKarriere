@@ -198,8 +198,35 @@ $(function () {
       }
     })
   }
-
 })
+
+$(document).ready(function() {
+  // Mare SURE the user wants to do this action
+  $(document).on('click', '.submitBtn', function(e) {
+    var form = $(this).closest('form');
+    var msg  = $(form).children('.confirmMsg').val();
+
+    bootbox.confirm({
+      size: 'small',
+      message: '<p class="h4">' + msg + '<p>',
+      buttons: {
+        confirm: {
+          label: 'Jeg er sikker',
+          className: 'btn-success'
+        },
+        cancel: {
+          label: 'Avbryt',
+          className: 'btn-danger'
+        }
+      },
+      callback: function(result) {
+        if (result) {
+          form.submit();
+        }
+      }
+    });
+  });
+});
 
 // Grow search bar (nav)
 $(document).on('click', '[data-action=growl]', function (e) {

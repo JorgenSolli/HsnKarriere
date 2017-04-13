@@ -24,7 +24,12 @@ class DateFormater {
         );
         foreach ($string as $k => &$v) {
             if ($diff->$k) {
-                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 'er' : '');
+                if ($k === 'w') {
+                    $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 'r' : '');
+                } else {
+                    $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 'er' : '');
+                }
+                
             } else {
                 unset($string[$k]);
             }
