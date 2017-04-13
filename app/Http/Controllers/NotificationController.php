@@ -87,8 +87,7 @@ class NotificationController extends Controller
      */
     public function check ()
     {
-    	$unreadMessages = DB::table('messages_junctions')
-    		->where([
+    	$unreadMessages = MessagesJunction::where([
     			['user_id', '=', Auth::id()],
     			['message_read', '=', '0']
 			])
