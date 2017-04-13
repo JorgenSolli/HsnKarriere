@@ -112,7 +112,7 @@
 		        	<li class="media list-group-item p-a">
         				<div class="media-body text-center">
 	        				<p class="h4">Godkjenner du 
-	        					{{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }} som praktikant hos din bedrift?</p>
+	        					<a href="bruker/{{ $partnership->student_id }}">{{ $partnership->student_fornavn }} {{ $partnership->student_etternavn }}</a> som praktikant hos din bedrift?</p>
 	        				<div class="has-text-centered d-inline-block">
 	        					<form action="samarbeid/{{ $partnership->id }}" method="post" class="pull-left">
 	        						{{ csrf_field() }}

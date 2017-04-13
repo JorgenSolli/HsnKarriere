@@ -34,9 +34,10 @@
         </p>
         <small class="danger-text m-t-xs">Vi minner om at det er viktig å ta kontakt med bedriften før et samarbeid blir forespurt</small>
       </div>
-      <form method="POST" action="/bruker/uploads/forsidebilde" enctype="multipart/form-data"> 
+      <form method="POST" action="/samarbeid/nyttSamarbeid" enctype="multipart/form-data"> 
         <div class="modal-body">
           {{ csrf_field() }}
+          <input type="hidden" name="bruker_id" value="{{ $brukerinfo->id }}">
           <div class="form-group">
             <label for="type">Hva slags type samarbeid er dette?</label>
             <select id="type" name="type" class="form-control">

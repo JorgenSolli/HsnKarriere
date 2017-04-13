@@ -47,8 +47,8 @@
     <nav class="navbar app-navbar">
       <div class="container">
         <div class="row">
-          <div class="col-sx-4 col-sm-4 col-md-4 col-lg-4">
-            <ul id="nav-items" class="nav navbar-nav hidden-xs">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <ul id="nav-items" class="nav navbar-nav">
               <li>
                 <a class="nav-menu-bars" data-toggle="popover-menu">
                   <span class="fa fa-bars"></span>
@@ -58,17 +58,17 @@
             </ul>
           </div>
 
-          <div class="col-sx-4 col-sm-4 col-md-4 col-lg-4 text-center">
-            <ul class="nav navbar-nav hidden-xs nav-logo-ul">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+            <ul class="nav navbar-nav nav-logo-ul">
               <li>
                 <a class="nav-logo h3" href="/">
-                  HSN KARRIERE
+                  HSN <span class="hidden-xs">KARRIERE</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          <div class="col-sx-4 col-sm-4 col-md-4 col-lg-4">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             @if (Auth::Guest())
               <ul id="logg-inn" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
                 <li>
@@ -82,7 +82,7 @@
               <ul id="logg-inn-popover-data" class="nav navbar-nav hidden">
                 <li><a href="/auth/facebook"><span class="fa fa-graduation-cap"></span> Som student</a></li>
                 <li><a class="cursor" data-toggle="modal" data-target="#loggInnModal-bedrift"><span class="fa fa-building-o"></span> Som bedrift</a></li>
-                <li><a href="/linkedin"><span class="fa fa-user"></span> Som foreleser</a></li>
+                <li><a href="/auth/linkedin"><span class="fa fa-user"></span> Som foreleser</a></li>
               </ul>
 
               <div id="loggInnModal-bedrift" class="modal modal-login fade in" role="dialog">
@@ -111,7 +111,7 @@
                 </div>
               </div>
             @else
-              <ul id="notifications" class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+              <ul id="notifications" class="nav navbar-nav navbar-right m-r-0">
                 <li>
                   <a class="app-notifications cursor" data-toggle="nfPopover">
                     <span class="icon icon-bell">

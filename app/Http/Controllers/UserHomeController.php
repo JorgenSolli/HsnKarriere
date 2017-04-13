@@ -11,6 +11,7 @@ use App\User;
 use App\Company;
 use App\Professor;
 use App\Assignment;
+use App\Partnership;
 use App\StudentStudy;
 
 class UserHomeController extends Controller
@@ -118,12 +119,20 @@ class UserHomeController extends Controller
                 ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                 ->get();
             $faglarere = $querry_service->finnForeleser($id, false, false);
-            
+
+            // Are you in a partnership with this student?
+            $inPartnership = Partnership::where([
+                    ['student_id', '=', $id],
+                    ['bedrift_id', '=', Auth::id()]
+                ])
+                ->first();
+
             return view('user.student.seBruker',
             [
                 'student_studerer' => $student_studerer,
                 'brukerinfo' => $brukerinfo,
                 'faglarere' => $faglarere,
+                'inPartnership' => $inPartnership
             ]);
         }
 

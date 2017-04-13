@@ -27,7 +27,7 @@ class SamarbeidController extends Controller
     public function nyttSamarbeid (Request $request) 
     {
         $validator = Validator::make($request->all(), [
-            'bedrift_id'    => 'required',
+            'bruker_id'    => 'required',
             'type'          => 'required',
             'faglarer'      => 'required',
         ]);
@@ -47,25 +47,25 @@ class SamarbeidController extends Controller
 
     	if ($bruker_type == "student") {
     		// If the company is NOT a company
-    		$bedrift = User::find($request->bedrift_id);
+    		$bedrift = User::find($request->bruker_id);
             
             if ($bedrift->bruker_type != "bedrift") {
                 abort(403);
             }
             $checkCurrent = Partnership::where('student_id', Auth::id())
-                ->where('bedrift_id', $request->bedrift_id)
+                ->where('bedrift_id', $request->bruker_id)
                 ->get();
 
             if (!$checkCurrent->isEmpty()) {
                 return back()->with('danger', 'Du er allerede i et samarbeid med denne bedriften');
             } 
 
-	    	$samarbeid->bedrift_id 	          = $request->bedrift_id;
+	    	$samarbeid->bedrift_id 	          = $request->bruker_id;
 	    	$samarbeid->student_id 	          = Auth::id();
             $samarbeid->godkjent_av_student   = 1;
 
             $notification = New Notification;
-            $notification->user_id = $request->bedrift_id;
+            $notification->user_id = $request->bruker_id;
             $notification->type = "samarbeid";
             $notification->heading = "Nytt samarbeid";
             $notification->message = Auth::user()->fornavn . " " . Auth::user()->etternavn . " vil starte et samarbeid med deg!";
@@ -74,13 +74,13 @@ class SamarbeidController extends Controller
 
     	else if ($bruker_type == "bedrift") {
     		// If the student is not a student
-    		$student = User::find($request->student_id);
-	    	if ($student->bruker_type != "bedrift") {
+    		$student = User::find($request->bruker_id);
+	    	if ($student->bruker_type != "student") {
 	    		abort(403);
 	    	}
 
             $checkCurrent = Partnership::where('bedrift_id', Auth::id())
-                ->where('bedrift_id', $request->student_id)
+                ->where('bedrift_id', $request->bruker_id)
                 ->get();
 
             if (!$checkCurrent->isEmpty()) {
@@ -88,8 +88,15 @@ class SamarbeidController extends Controller
             } 
 
     		$samarbeid->bedrift_id 	          = Auth::id();
-	    	$samarbeid->student_id 	          = $request->student_id;
+	    	$samarbeid->student_id 	          = $request->bruker_id;
             $samarbeid->godkjent_av_bedrift   = 1;
+
+            $notification = New Notification;
+            $notification->user_id = $request->bruker_id;
+            $notification->type = "samarbeid";
+            $notification->heading = "Nytt samarbeid";
+            $notification->message = Auth::user()->bedrift_navn . " vil starte et samarbeid med deg!";
+            $notification->save();
     	}
 
         // Sends a notification to the professor
@@ -121,21 +128,53 @@ class SamarbeidController extends Controller
                 return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
             }
             $partnership->godkjent_av_bedrift = 1;
-        } 
+
+            $notification = New Notification;
+            $notification->type = "samarbeid";
+            $notification->heading = "Godkjent samarbeid";
+            $notification->user_id = $partnership->student_id;
+            $notification->message = Auth::user()->fornavn . " " . Auth::user()->etternavn . " har godkjent samarbeidet!";
+            $notification->save();
+        }
+
         elseif ($bruker_info->bruker_type == "student") {
             if ($partnership->student_id !== $bruker_info->id) {
                 return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
             }
             $partnership->godkjent_av_student = 1;
-        } 
+
+            $notification = New Notification;
+            $notification->type = "samarbeid";
+            $notification->heading = "Godkjent samarbeid";
+            $notification->user_id = $partnership->bedrift_id;
+            $notification->message = Auth::user()->fornavn . " " . Auth::user()->etternavn . " har godkjent samarbeidet!";
+            $notification->save();
+        }
+
         elseif ($bruker_info->bruker_type == "faglarer") {
             if ($partnership->foreleser_id !== $bruker_info->id) {
                 return back()->with('danger', 'Noe gikk galt. Prøv igjen.');
             }
             $partnership->godkjent_av_foreleser = 1;
+
+            $notification = New Notification;
+            $notification->type = "samarbeid";
+            $notification->heading = "Godkjent samarbeid";
+            $notification->user_id = $partnership->bedrift_id;
+            $notification->message = Auth::user()->fornavn . " " . Auth::user()->etternavn . " har godkjent samarbeidet!";
+            $notification->save();
+
+            $notification = New Notification;
+            $notification->type = "samarbeid";
+            $notification->heading = "Godkjent samarbeid";
+            $notification->user_id = $partnership->student_id;
+            $notification->message = Auth::user()->fornavn . " " . Auth::user()->etternavn . " har godkjent samarbeidet!";
+            $notification->save();
         }
 
         $partnership->save();
+
+        
 
         return back()->with('success', 'Samarbeidet har nå blitt godkjent.');
     }

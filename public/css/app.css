@@ -9899,6 +9899,15 @@ img.zoom-img {
   margin-left: 5px;
 }
 
+/*
+    Usage
+    @media (max-width: $screen-xs-max) { ... }
+    @media (min-width: $screen-sm-min) { ... }
+    @media (max-width: $screen-sm-max) { ... }
+    @media (min-width: $screen-md-min) { ... }
+    @media (max-width: $screen-md-max) { ... }
+    @media (min-width: $screen-lg-min) { ... }
+*/
 .select2-container--default, .select2-selection--multiple {
   border-radius: 0 !important;
 }
@@ -10205,6 +10214,7 @@ body {
 }
 
 #notificationAmount {
+  color: #fff;
   display: block;
   width: 15px;
   height: 15px;
@@ -10460,6 +10470,14 @@ body {
 }
 
 /* nav */
+#notifications {
+  float: right;
+}
+
+#notifications li {
+  float: left;
+}
+
 .nav-menu-bars {
   font-size: 21px;
   cursor: pointer;
@@ -10479,6 +10497,16 @@ body {
 
 .popover-content .fa {
   width: 20px;
+}
+
+.popover-content li {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .popover-content {
+    /* Nothing here yet */
+  }
 }
 
 .nav-logo-ul {

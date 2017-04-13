@@ -234,7 +234,7 @@
         <form method="POST" action="/samarbeid/nyttSamarbeid" enctype="multipart/form-data"> 
           <div class="modal-body">
             {{ csrf_field() }}
-            <input type="hidden" name="bedrift_id" value="{{ $brukerinfo->id }}">
+            <input type="hidden" name="bruker_id" value="{{ $brukerinfo->id }}">
             <div class="form-group">
               <label for="type">Hva slags type samarbeid er dette?</label>
               <select id="type" name="type" class="form-control">
