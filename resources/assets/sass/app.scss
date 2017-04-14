@@ -232,7 +232,7 @@ body {
   cursor: pointer;
 }
 
-.panel-hover, .panel-hover-info, .panel-hover-success {
+.panel-hover, .panel-hover-info, .panel-hover-success, .panel-hover-danger {
     transition: .3s;
 }
 
@@ -243,12 +243,17 @@ body {
 
 .panel-hover-info:hover {
     transition: .5s;
-    box-shadow: 0 2px 3px rgba(217, 237, 247, 1), 0 0 0 2px rgba(217, 237, 247, 1);
+    box-shadow: 0 2px 3px rgba(217, 237, 247, 0.2), 0 0 0 2px rgba(217, 237, 247, 0.2);
 }
 
 .panel-hover-success:hover {
     transition: .5s;
-    box-shadow: 0 2px 3px rgba(223, 240, 216, 1), 0 0 0 2px rgba(223, 240, 216, 1);
+    box-shadow: 0 2px 3px rgba(223, 240, 216, 0.2), 0 0 0 2px rgba(223, 240, 216, 0.2);
+}
+
+.panel-hover-danger:hover {
+    transition: .5s;
+    box-shadow: 0 2px 3px rgba(235, 204, 209, 0.2), 0 0 0 2px rgba(235, 204, 209, 0.2);
 }
 
 .mar-bot {

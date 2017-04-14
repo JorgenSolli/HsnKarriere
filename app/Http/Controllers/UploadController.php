@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Recommendation;
 use App\Http\Requests;
 use App\Classes\Slim;
 use App\Partnership;
@@ -235,16 +236,16 @@ class UploadController extends Controller
             $file       = $request->file('recommendation_file');
             $path       = $file->store('/recommendations');
 
-            $cv  = New Cv;
+            $recommendation  = New Recommendation;
 
-            $cv->cv         = $path;
-            $cv->filnavn    = $filename;
-            $cv->user_id    = Auth::id();
-            $cv->title      = $request->cv_tittel;
+            $recommendation->recommendation = $path;
+            $recommendation->filnavn        = $filename;
+            $recommendation->user_id        = Auth::id();
+            $recommendation->title          = $request->recommendation_tittel;
 
-            $cv->save();
+            $recommendation->save();
 
-            return back()->with('success', 'CVen har blitt lagt til.');
+            return back()->with('success', 'Attesten har blitt lagt til.');
         }
 
         return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');

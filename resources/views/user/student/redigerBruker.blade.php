@@ -9,8 +9,8 @@
         <div class="panel panel-default panel-profile m-b-md">
           {{-- 
             <div id="nyttForsidebilde" class="pos-a m-a cursor" data-toggle="modal" data-target="#nyttForsidebildeModal">
-                                <span class="fa fa-camera fa-lg"></span>
-                                <small style="display: none">Endre forsidebilde</small>
+              <span class="fa fa-camera fa-lg"></span>
+              <small style="display: none">Endre forsidebilde</small>
             </div> 
           --}}
           <div id="forsidebildeContainer" class="panel-heading" style="background-image: url(/uploads/{{ $brukerinfo->forsidebilde }});"></div>
@@ -62,11 +62,28 @@
           </div>
         @endif
 
-        <div class="panel panel-info panel-hover-info cursor m-t-md m-b-xs">
-          <div class="panel-body">
-            <p class="h4 m-t-s text-center"><span class="fa fa-upload"></span> Last opp Attester</p>
+        @if ($recommendationsCount < 5)
+          <div class="panel panel-info panel-hover-info cursor m-t-md m-b-xs" data-toggle="modal" data-target="#uploadRecommendation">
+            <div class="panel-body">
+              <p class="h4 m-t-s text-center"><span class="fa fa-upload"></span> Last opp Attester</p>
+            </div>
           </div>
-        </div>
+        @else
+          <div class="panel panel-danger panel-hover-danger m-t-md m-b-xs" data-toggle="modal" data-target="#uploadRecommendation">
+            <div class="panel-body">
+              <p class="h4 m-t-s text-center"><span class="fa fa-upload"></span> Maks attester nådd</p>
+            </div>
+          </div>
+        @endif
+
+        @unless ($recommendations->isEmpty())
+          <div class="panel panel-info panel-hover-info cursor "
+            data-toggle="modal" data-target="#seeRecommendation">
+              <p class="h6 m-t-s text-center">
+                <span class="m-r-md fa fa-cogs"></span>Se/endre dine attester
+              </p>
+          </div>
+        @endunless
       </div>
 
       <div class="col-md-6">
@@ -350,15 +367,14 @@
 
   @if ($cv)
     <div id="seeCv" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div id="listMastersAjax"></div>
-      <div id="listMastersParent" class="modal-dialog" role="document">
-        <div id="showMasters" class="modal-content">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Mine utlyste stillinger</p>
+            <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Min CV</p>
           </div>
           <div class="modal-body">
-            <ul id="listMasters" class="media-list media-list-stream list-items-border m-b-0">
+            <ul class="media-list media-list-stream list-items-border m-b-0">
               <li class="media">
                 <div class="media-body">
                   <strong>{{ $cv->title }}</strong> · {{ $cv->filnavn }}
@@ -375,7 +391,7 @@
             </ul>
             <div class="alert alert-info">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <strong>OBS!</strong> Du kan kun ha en aktiv CV. Ønsker du å laste opp en ny CV? Slett denen først.
+              <strong>OBS!</strong> Du kan kun ha en aktiv CV. Ønsker du å laste opp en ny CV? Slett denne først.
             </div>
           </div>
           <div class="modal-footer">
@@ -386,95 +402,109 @@
     </div>
   @else
     <div id="uploadCv" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-paper-plane"></span> Last opp CV</p>
-        </div>
-          <form method="POST" action="/bruker/uploadCv" enctype="multipart/form-data"> 
-            <div class="modal-body">
-              {{ csrf_field() }}
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-paper-plane"></span> Last opp CV</p>
+          </div>
+            <form method="POST" action="/bruker/uploadCv" enctype="multipart/form-data"> 
+              <div class="modal-body">
+                {{ csrf_field() }}
 
-              <div class="form-group">
-                <label for="cv_tittel">Tittel</label>
-                <input name="cv_tittel" id="cv_tittel" type="text" class="form-control" placeholder="Tittel">
+                <div class="form-group">
+                  <label for="cv_tittel">Tittel</label>
+                  <input name="cv_tittel" id="cv_tittel" type="text" class="form-control" placeholder="Tittel">
+                </div>
+
+                <label for="cv_file">Last opp CV (kun pdf tillatt)</label>
+
+                <input id="cv_file" name="cv_file" type="file">
               </div>
-
-              <label for="cv_file">Last opp CV (kun pdf tillatt)</label>
-
-              <input id="cv_file" name="cv_file" type="file">
-            </div>
-            <div class="modal-footer">
-              <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
-              <button type="submit" class="pull-right btn btn-success">Last opp</button>
-            </div>
-          </form>
+              <div class="modal-footer">
+                <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+                <button type="submit" class="pull-right btn btn-success">Last opp</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   @endif
 
-  <div id="uploadRecommendation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-paper-plane"></span> Last opp CV</p>
-        </div>
-          <form method="POST" action="/bruker/uploadCv" enctype="multipart/form-data"> 
-            <div class="modal-body">
-              {{ csrf_field() }}
-
-              <div class="form-group">
-                <label for="cv_tittel">Tittel</label>
-                <input name="cv_tittel" id="cv_tittel" type="text" class="form-control" placeholder="Tittel">
+  @if ($recommendations)
+    <div id="seeRecommendation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-image-o"></span> Mine attester</p>
+          </div>
+          <div class="modal-body">
+            <ul class="media-list media-list-stream list-items-border m-b-0">
+              @foreach ($recommendations as $recommendation)
+                <li class="media">
+                  <div class="media-body">
+                    <strong>{{ $recommendation->title }}</strong> · {{ $recommendation->filnavn }}
+                    <div class="media-body-actions">
+                      <a href="/uploads/{{ $recommendation->recommendation }}" class="btn btn-primary-outline btn-xs m-r-s">
+                        <span class="edit fa fa-file-pdf-o"></span> Se attest
+                      </a>
+                      <a href="/bruker/rediger/attest/{{ $recommendation->id }}" class="btn btn-danger-outline btn-xs">
+                        <span class="delete fa fa-close"></span> Slett
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              @endforeach
+            </ul>
+            @if ($recommendationsCount == 5)
+              <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>OBS!</strong> Du kan ha maks 5 attester. Ønsker du å laste opp en ny attest? Slett en av disse først.
               </div>
-
-              <label for="cv_file">Last opp CV (kun pdf tillatt)</label>
-
-              <input id="cv_file" name="cv_file" type="file">
-            </div>
-            <div class="modal-footer">
-              <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
-              <button type="submit" class="pull-right btn btn-success">Last opp</button>
-            </div>
-          </form>
+            @endif
+          </div>
+          <div class="modal-footer">
+            <button data-dismiss="modal" aria-label="Close" class="btn btn-primary">Lukk</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  @endif
 
-  <div id="seeRecommendation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-paper-plane"></span> Last opp CV</p>
-        </div>
-          <form method="POST" action="/bruker/uploadCv" enctype="multipart/form-data"> 
-            <div class="modal-body">
-              {{ csrf_field() }}
+  @if ($recommendationsCount < 5)
+    <div id="uploadRecommendation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-paper-plane"></span> Last opp Attest</p>
+          </div>
+            <form method="POST" action="/bruker/uploadRecommendation" enctype="multipart/form-data"> 
+              <div class="modal-body">
+                {{ csrf_field() }}
 
-              <div class="form-group">
-                <label for="cv_tittel">Tittel</label>
-                <input name="cv_tittel" id="cv_tittel" type="text" class="form-control" placeholder="Tittel">
+                <div class="form-group">
+                  <label for="recommendation_tittel">Tittel</label>
+                  <input name="recommendation_tittel" id="recommendation_tittel" type="text" class="form-control" placeholder="Tittel">
+                </div>
+
+                <label for="recommendation_file">Last opp attest (kun pdf tillatt)</label>
+
+                <input id="recommendation_file" name="recommendation_file" type="file">
               </div>
-
-              <label for="cv_file">Last opp CV (kun pdf tillatt)</label>
-
-              <input id="cv_file" name="cv_file" type="file">
-            </div>
-            <div class="modal-footer">
-              <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
-              <button type="submit" class="pull-right btn btn-success">Last opp</button>
-            </div>
-          </form>
+              <div class="modal-footer">
+                <button data-dismiss="modal" aria-label="Close" class="pull-left btn btn-danger">Avbryt</button>
+                <button type="submit" class="pull-right btn btn-success">Last opp</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  @endif
+  
 
   <div id="nyttProfilbildeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">

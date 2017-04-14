@@ -30,11 +30,13 @@ Route::post('bruker/uploads/profilbilde', 'UploadController@uploadProfilbilde');
 Route::post('oversikt/uploads/kontrakt/{partnership}', 'UploadController@uploadContract');
 Route::post('/oversikt/uploads/arbeidsbeskrivelse/{partnership}', 'UploadController@uploadJobDescription');
 Route::post('/bruker/uploadCv', 'UploadController@uploadCv');
+Route::post('/bruker/uploadRecommendation', 'UploadController@uploadRecommendation');
 
 // Delete Routes
 Route::delete('bruker/rediger/forsidebilde/{user}', 'UserEditController@deleteFrontImg');
 Route::delete('bruker/rediger/profilbilde/{user}', 'UserEditController@deleteProfilImg');
 Route::get('bruker/rediger/cv/{cv}', 'UserEditController@deleteCv');
+Route::get('bruker/rediger/attest/{recommendation}', 'UserEditController@deleteRecommendation');
 
 // Bedrift Jobs logic
 Route::post('bruker/addJob/{user}', 'BedriftController@addJob');

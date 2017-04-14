@@ -15,6 +15,7 @@ use App\Professor;
 use App\Assignment;
 use App\StudentStudy;
 use App\Http\Requests;
+use App\Recommendation;
 use App\Services\QuerryService;
 use App\Http\Controllers\Controller;
 use Chromabits\Purifier\Contracts\Purifier;
@@ -46,12 +47,18 @@ class UserEditController extends Controller
             $campuses = Campus::orderBy('campus', 'ASC')->get();
             $cv = Cv::where('user_id', Auth::id())
                 ->first();
+            $recommendations = Recommendation::where('user_id', Auth::id())
+                ->get();
+            $recommendationsCount = Recommendation::where('user_id', Auth::id())
+                ->count();
 
             return view('user.student.redigerBruker',
                 [
                     'cv' => $cv,
                     'campuses' => $campuses,
                     'brukerinfo' => $brukerinfo,
+                    'recommendations' => $recommendations,
+                    'recommendationsCount' => $recommendationsCount,
                     'student_studerer' => $student_studerer
                 ]);
         }
@@ -280,6 +287,30 @@ class UserEditController extends Controller
                 $cv->delete();
 
                 return back()->with('success', 'CVen ble slettet.');
+            }
+
+        }
+        
+        abort(403, 'Unauthorized action.');
+    }
+
+    /**
+     * Removes the users CV.
+     *
+     * @param  model  $cv
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteRecommendation (Recommendation $recommendation)
+    {   
+        if ($recommendation->user_id == Auth::id()) {
+            // Deletes the current CV
+            if (file_exists('uploads/' . $recommendation->recommendation)) {
+                unlink("uploads/" . $recommendation->recommendation);
+
+                // Removes the data from the DB
+                $recommendation->delete();
+
+                return back()->with('success', 'Attesten ble slettet.');
             }
 
         }

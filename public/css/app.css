@@ -10177,7 +10177,7 @@ body {
   cursor: pointer;
 }
 
-.panel-hover, .panel-hover-info, .panel-hover-success {
+.panel-hover, .panel-hover-info, .panel-hover-success, .panel-hover-danger {
   -webkit-transition: .3s;
   transition: .3s;
 }
@@ -10191,13 +10191,19 @@ body {
 .panel-hover-info:hover {
   -webkit-transition: .5s;
   transition: .5s;
-  box-shadow: 0 2px 3px #d9edf7, 0 0 0 2px #d9edf7;
+  box-shadow: 0 2px 3px rgba(217, 237, 247, 0.2), 0 0 0 2px rgba(217, 237, 247, 0.2);
 }
 
 .panel-hover-success:hover {
   -webkit-transition: .5s;
   transition: .5s;
-  box-shadow: 0 2px 3px #dff0d8, 0 0 0 2px #dff0d8;
+  box-shadow: 0 2px 3px rgba(223, 240, 216, 0.2), 0 0 0 2px rgba(223, 240, 216, 0.2);
+}
+
+.panel-hover-danger:hover {
+  -webkit-transition: .5s;
+  transition: .5s;
+  box-shadow: 0 2px 3px rgba(235, 204, 209, 0.2), 0 0 0 2px rgba(235, 204, 209, 0.2);
 }
 
 .mar-bot {
