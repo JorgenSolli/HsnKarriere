@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStudiesTable extends Migration
+class CreateCvsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateStudiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('studies', function (Blueprint $table) {
+        Schema::create('cvs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('study');
-            $table->string('type');
-            $table->string('campus')->references('campus')->on('campuses');
+            $table->integer('user_id')->references('id')->on('users');
+            $table->string('title');
+            $table->string('cv');
+            $table->string('filnavn');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +30,6 @@ class CreateStudiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('studies');
+        Schema::dropIfExists('cvs');
     }
 }

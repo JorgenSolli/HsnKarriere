@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Classes\Slim;
 use App\Partnership;
+use Validator;
 use App\User;
+use App\Cv;
 
 class UploadController extends Controller
 {
@@ -89,7 +91,7 @@ class UploadController extends Controller
     }
 
     /**
-    * Updates the contract for a partnership
+    * Uploads the contract for a partnership
     *
     * @return \Illuminate\Http\Response
     */
@@ -138,7 +140,7 @@ class UploadController extends Controller
     }
 
     /**
-    * Updates the contract for a partnership
+    * Uploads the contract for a partnership
     *
     * @return \Illuminate\Http\Response
     */
@@ -169,6 +171,80 @@ class UploadController extends Controller
             $partnership->save();
 
             return back()->with('success', 'Arbeidsbeskrivelsen ble lastet opp.');
+        }
+
+        return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');
+    }
+
+    /**
+    * Uploads the CV for a student
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function uploadCv (Request $request) {
+
+        if (Auth::user()->bruker_type == "student") {
+            $validator = Validator::make($request->all(), [
+                'cv_file'    => 'required',
+                'cv_tittel'  => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('danger', 'Alle felt må fylles ut!');
+            }
+
+            // Gets file, uplads it, and store the path and filename
+            $filename   = $request->file('cv_file')->getClientOriginalName();
+            $file       = $request->file('cv_file');
+            $path       = $file->store('/cvs');
+
+            $cv  = New Cv;
+
+            $cv->cv         = $path;
+            $cv->filnavn    = $filename;
+            $cv->user_id    = Auth::id();
+            $cv->title      = $request->cv_tittel;
+
+            $cv->save();
+
+            return back()->with('success', 'CVen har blitt lagt til.');
+        }
+
+        return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');
+    }
+
+    /**
+    * Uploads the CV for a student
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function uploadRecommendation (Request $request) {
+
+        if (Auth::user()->bruker_type == "student") {
+            $validator = Validator::make($request->all(), [
+                'recommendation_file'    => 'required',
+                'recommendation_tittel'  => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('danger', 'Alle felt må fylles ut!');
+            }
+
+            // Gets file, uplads it, and store the path and filename
+            $filename   = $request->file('recommendation_file')->getClientOriginalName();
+            $file       = $request->file('recommendation_file');
+            $path       = $file->store('/recommendations');
+
+            $cv  = New Cv;
+
+            $cv->cv         = $path;
+            $cv->filnavn    = $filename;
+            $cv->user_id    = Auth::id();
+            $cv->title      = $request->cv_tittel;
+
+            $cv->save();
+
+            return back()->with('success', 'CVen har blitt lagt til.');
         }
 
         return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');

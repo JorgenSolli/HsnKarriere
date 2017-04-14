@@ -202,7 +202,7 @@ class BedriftController extends Controller
             return back()->with('success', 'Masteroppgaven har blitt lagt til.');
         }
         else {
-            abort(403);
+            return back()->with('danger', 'Noe gikk galt. Venligst prøv igjen.');
         }
     }
 

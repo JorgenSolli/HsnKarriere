@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Cv;
 use App\Job;
 use App\User;
 use Validator;
@@ -43,9 +44,12 @@ class UserEditController extends Controller
                 ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                 ->get();
             $campuses = Campus::orderBy('campus', 'ASC')->get();
+            $cv = Cv::where('user_id', Auth::id())
+                ->first();
 
             return view('user.student.redigerBruker',
                 [
+                    'cv' => $cv,
                     'campuses' => $campuses,
                     'brukerinfo' => $brukerinfo,
                     'student_studerer' => $student_studerer
@@ -257,5 +261,29 @@ class UserEditController extends Controller
         } else {
             abort(403, 'Unauthorized action.');
         }
+    }
+
+    /**
+     * Removes the users CV.
+     *
+     * @param  model  $cv
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteCv (Cv $cv)
+    {
+        if ($cv->user_id == Auth::id()) {
+            // Deletes the current CV
+            if (file_exists('uploads/' . $cv->cv)) {
+                unlink("uploads/" . $cv->cv);
+
+                // Removes the data from the DB
+                $cv->delete();
+
+                return back()->with('success', 'CVen ble slettet.');
+            }
+
+        }
+        
+        abort(403, 'Unauthorized action.');
     }
 }
