@@ -10514,6 +10514,11 @@ body {
   width: 100%;
 }
 
+.popover-content .fa-spin {
+  height: auto;
+  width: auto;
+}
+
 @media (min-width: 768px) {
   .popover-content {
     /* Nothing here yet */

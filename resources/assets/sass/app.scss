@@ -580,6 +580,11 @@ body {
     li {
         width: 100%;
     }
+
+    .fa-spin {
+        height: auto;
+        width: auto;
+    }
 }
 
 @media (min-width: $screen-sm-min) { 
