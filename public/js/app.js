@@ -122,6 +122,34 @@ $(function () {
           })
         }, 1)
       }
+
+      // Menu sub-items popover
+      $('[data-toggle="popover-mer-info"]').popover({
+        template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content p-x-0"></div></div>',
+        title: '',
+        html: true,
+        trigger: 'manual',
+        placement:'right',
+        viewport: {
+          selector: 'body'
+        },
+        content: function () {
+          var $subnav = $('#nav-mer-info-data').clone()
+          return '<div class="nav nav-stacked" style="width: 200px">' + $subnav.html() + '</div>'
+        }
+      })
+    
+      $(document).on('click', '[data-toggle="popover-mer-info"]', function(e) {
+        e.stopPropagation()
+
+        $('[data-toggle="popover-mer-info"]').popover('show')
+
+        setTimeout(function () {
+          $(document).one('click.app.popover', function () {
+            $('[data-toggle="popover-mer-info"]').popover('hide')
+          })
+        }, 1)
+      })
     })
   }
 

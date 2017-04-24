@@ -153,7 +153,12 @@
 
       <ul id="nav-items-data" class="nav navbar-nav hidden">
         <li><a href="/">Hjem</a></li>
-        <li><a href="">Mer info</a></li>
+        <li data-toggle="popover-mer-info"><a href="#">Mer info</a></li>
+      </ul>
+
+      <ul id="nav-mer-info-data" class="nav navbar-nav hidden">
+        <li><a href="#">For studenter</a></li>
+        <li><a href="#">For bedrifter</a></li>
       </ul>
     </nav>
 
@@ -204,6 +209,7 @@
     <script src="/js/dist/fileinput.min.js"></script>
     <script src="/js/dist/locales/no.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/layout.js"></script>
     @yield('script')
   </body>
 </html>
