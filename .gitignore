@@ -1,10 +1,6 @@
 /node_modules
 /public/storage
-/public/uploads/img
-/public/uploads/dokumenter
-/public/uploads/assignments
-/public/uploads/kontrakter/signert
-/public/uploads/arbeidsbeskrivelse
+/public/uploads
 /vendor
 /.idea
 Homestead.json

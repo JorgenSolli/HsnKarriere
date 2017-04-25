@@ -279,7 +279,7 @@
 
         <div class="panel panel-default m-b-md hidden-xs">
           <div class="panel-body">
-          <p class="h5 m-t-0">Passende Bedrifter <small>· <a href="#">Se Alle</a></small></p>
+          <p class="h5 m-t-0">Passende Bedrifter <small>· <a href="/bruker#bedrifter">Se alle bedrifter</a></small></p>
           <ul class="media-list media-list-stream">
             <li class="media m-b">
               <a class="media-left" href="#">
@@ -314,7 +314,7 @@
           </ul>
           </div>
           <div class="panel-footer">
-            Gå tilbake til profilen din for komplett oversikt over bedrifter og kontakter.
+            Gå <a href="/bruker">tilbake</a> til profilen din for komplett oversikt over bedrifter og kontakter.
           </div>
         </div>
 

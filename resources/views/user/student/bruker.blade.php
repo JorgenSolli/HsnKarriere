@@ -23,7 +23,7 @@
   <!-- Nav tabs -->
   <nav class="profile-header-nav">
     <ul id="brukerTabs" class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active">
+      <li role="presentation">
         <a href="#min-profil" aria-controls="min-profil" role="tab" data-toggle="tab">Min Profil</a>
       </li>
       <li role="presentation">
@@ -37,7 +37,12 @@
 </div>
         
 <div class="container tab-content">
-  <div role="tabpanel" class="tab-pane active m-t" id="min-profil">
+  <div id="panel-loading" class="text-center m-t-lg">
+    <span class="fa fa-circle-o-notch fa-spin fa-2x"></span>
+    <p>Henter informasjon...</p>
+  </div>
+  
+  <div role="tabpanel" class="tab-pane m-t" id="min-profil">
     @include('partials.user.student.min-bruker')
   </div>
 

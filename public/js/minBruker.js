@@ -47,11 +47,28 @@ var search = function (searching) {
 $(document).ready(function() {
 	var panel = $("#bio-panel");
 
-	// Adds the padding as well
-	var bioHeight = panel.height() + 30;
+	if ( panel.length ) {
+		// Adds the padding as well
+		var bioHeight = panel.height() + 30;
 
-	if (bioHeight < 230) {
-		panel.css('height', '230px');
+		if (bioHeight < 230) {
+			panel.css('height', '230px');
+		}
 	}
 
+	var hash = window.location.hash.substr(1)
+
+	if (hash == "bedrifter") {
+		$('#brukerTabs a[href="#bedrifter"]').tab('show')
+	} else if (hash == "kontakter") {
+		$('#brukerTabs a[href="#mine-kontakter"]').tab('show')
+	} else {
+		$('#brukerTabs a[href="#min-profil"]').tab('show')
+	}
+
+	// Hides the loadng adn removes the hash value after use
+	$("#panel-loading").hide()
+	if (hash) {
+		parent.location.hash = ''
+	}
 });
