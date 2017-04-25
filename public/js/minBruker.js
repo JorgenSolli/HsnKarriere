@@ -60,9 +60,14 @@ $(document).ready(function() {
 
 	if (hash == "bedrifter") {
 		$('#brukerTabs a[href="#bedrifter"]').tab('show')
-	} else if (hash == "kontakter") {
+	} 
+	else if (hash == "kontakter") {
 		$('#brukerTabs a[href="#mine-kontakter"]').tab('show')
-	} else {
+	} 
+	else if (hash == "studenter") {
+		$('#brukerTabs a[href="#studenter"]').tab('show')
+	} 
+	else {
 		$('#brukerTabs a[href="#min-profil"]').tab('show')
 	}
 
