@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Messages;
+use App\Message;
 use App\Notification;
 use App\MessagesReply;
 use App\MessagesJunction;
@@ -44,7 +44,7 @@ class NotificationController extends Controller
 
 			// No replies, Returns the first message
 			if ($message->isEmpty()) {
-				$query = Messages::where('id', '=', $latestMessage->message_id)
+				$query = Message::where('id', '=', $latestMessage->message_id)
 					->first();
 
 				$data->push([
