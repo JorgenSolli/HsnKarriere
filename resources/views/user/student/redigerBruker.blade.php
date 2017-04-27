@@ -147,8 +147,9 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="epost">Epost</label>
-                      <input name="email" type="email" class="form-control" id="epost" placeholder="Epost" value="{{ $brukerinfo->email }}">
+                      <label for="epost">Epost</label> <span class="danger-color helpertext" id="emailHelper"></span>
+                      <input id="email" name="email" type="email" class="form-control" id="epost" placeholder="Epost" value="{{ $brukerinfo->email }}">
+
                     </div>
                     <div class="form-group">
                       <label for="telefon">Telefon</label>

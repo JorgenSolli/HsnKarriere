@@ -79,6 +79,7 @@ Route::get('innboks/findUsers/{message}', 'Ajax\getUsers@listUsers');
 // API Data
 Route::get('api/campuses', 'ApiController@getCampuses');
 Route::get('api/studies', 'ApiController@getStudies');
+Route::get('api/email', 'ApiController@checkEmail');
 
 // Confirm User
 Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');

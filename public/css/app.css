@@ -10097,6 +10097,10 @@ body {
   margin-left: 5px !important;
 }
 
+.helpertext {
+  font-size: 1.4rem;
+}
+
 .danger-color {
   color: #D64349;
 }

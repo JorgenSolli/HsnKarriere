@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Campus;
 use App\Study;
+use App\User;
 
 class ApiController extends Controller
 {
@@ -44,5 +45,23 @@ class ApiController extends Controller
 			return response()->json(array('success' => true, 'data'=>$returnHTML));
 		}
 
+    }
+
+    /**
+    * Checks if an email already exists in the DB.
+    *
+    * @return boolean
+    */
+    public function checkEmail (Request $request) {
+    	$email = $request->email;
+    	$search = User::where('email', $email)
+    		->where('id', '!=', Auth::id())
+    		->first();
+
+    	if ($search) {
+    		return response()->json(true);
+    	}
+
+		return response()->json(false);
     }
 }

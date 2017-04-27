@@ -282,4 +282,25 @@ $(document).ready(function() {
     $("#studie").select2({
         theme: 'bootstrap'
     });
+
+    $("#email").on('blur', function() {
+        var email = $("#email").val();
+        $.ajax({
+            url: '/api/email',
+            method: 'GET',
+            data: {
+                email: email
+            },
+            success: function(data) {
+                if (data == true) {
+                    console.log(data);
+                    $("#emailHelper").text('Eposten finnes allerede!')
+                    $("#email").css('border-color', '#D64349')
+                } else {
+                    $("#emailHelper").empty()
+                    $("#email").css('border-color', '#d4dbe0')
+                }
+            }
+        });
+    });
 });
