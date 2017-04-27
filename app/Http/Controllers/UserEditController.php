@@ -108,6 +108,28 @@ class UserEditController extends Controller
 
             $studies = Study::get();
 
+            $fag = Company::where('user_id', Auth::id())
+                    ->select('studie_id')
+                    ->get();
+
+            // Gets two random students
+            $rndStudents = StudentStudy::select(
+                    'email', 
+                    'user_id', 
+                    'telefon', 
+                    'fornavn', 
+                    'poststed', 
+                    'etternavn', 
+                    'studie_id',
+                    'forsidebilde', 
+                    'profilbilde')
+                ->join('users', 'student_studies.user_id', '=', 'users.id')
+                ->whereIn('studie_id', $fag)
+                ->inRandomOrder()
+                ->limit(2)
+                ->get()
+                ->unique('user_id');
+
             return view('user.bedrift.redigerBruker', [
                 'brukerinfo'  => $brukerinfo,
                 'bio'         => $brukerinfo->bio,
@@ -115,7 +137,8 @@ class UserEditController extends Controller
                 'jobs'        => $jobs,
                 'studies'     => $studies,
                 'masters'     => $masters,
-                'bachelors'   => $bachelors
+                'bachelors'   => $bachelors,
+                'rndStudents' => $rndStudents
             ]);
         }
 

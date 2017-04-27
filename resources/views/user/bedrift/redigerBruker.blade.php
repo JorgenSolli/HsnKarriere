@@ -253,40 +253,29 @@
           <div class="panel-body">
           <p class="h5 m-t-0">Passende Studenter <small>· <a href="#">Se Alle</a></small></p>
           <ul class="media-list media-list-stream">
-            <li class="media m-b">
-              <a class="media-left" href="#">
-                <img
-                  class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}"
-                  alt="Profilbilde">
-              </a>
-              <div class="media-body">
-                <strong>Jørgen Solli</strong> · Bø
-                <div class="media-body-actions">
-                  <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil</button>
+            @foreach ($rndStudents as $student)
+              <li class="media m-b">
+                <a class="media-left" href="#">
+                  <img
+                    class="media-object img-circle"
+                    src="/uploads/{{ $student->profilbilde }}"
+                    alt="Profilbilde">
+                </a>
+                <div class="media-body">
+                  <strong>{{ $student->fornavn }} {{ $student->etternavn }}</strong> · {{ $student->poststed }}
+                  <div class="media-body-actions">
+                    <a href="/bruker/{{ $student->user_id }}" class="btn btn-primary-outline btn-xs">
+                      <span class="fa fa-info"></span> Se profil
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <hr class="m-a-0">
-            </li>
-            <li class="media">
-              <a class="media-left" href="#">
-                <img
-                  class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}"
-                  alt="profilbilde">
-              </a>
-              <div class="media-body">
-                <strong>Sigurd Sørensen</strong> · Kina
-                <div class="media-body-actions">
-                  <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil
-                  </button>
-                </div>
-              </div>
-            </li>
+              </li>
+              @unless ($loop->last)
+                <li>
+                  <hr class="m-a-0">
+                </li>
+              @endunless
+            @endforeach
           </ul>
           </div>
           <div class="panel-footer">

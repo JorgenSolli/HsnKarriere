@@ -301,6 +301,11 @@
                     </div>
                   </div>
                 </li>
+                @unless ($loop->last)
+                  <li>
+                    <hr class="m-a-0">
+                  </li>
+                @endunless
               @endforeach
             </ul>
           </div>
