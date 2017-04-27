@@ -14,6 +14,10 @@
         @unless ($fag == "")
           @foreach ($fag as $data)
             {{ $data->study }}
+
+            @unless ($loop->last)
+              ,
+            @endunless
           @endforeach
         @endunless
       </div>
