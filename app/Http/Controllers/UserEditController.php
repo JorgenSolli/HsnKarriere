@@ -52,6 +52,30 @@ class UserEditController extends Controller
             $recommendationsCount = Recommendation::where('user_id', Auth::id())
                 ->count();
 
+            $fag = StudentStudy::where('user_id', Auth::id())
+                ->select('studie_id')
+                ->get();
+
+            // Gets two random comapnies
+            $rndCompanies = Company::select(
+                    'user_id', 
+                    'bedrift_navn', 
+                    'fornavn', 
+                    'etternavn', 
+                    'forsidebilde', 
+                    'profilbilde', 
+                    'email', 
+                    'telefon', 
+                    'poststed', 
+                    'studie_id'
+                )
+                ->join('users', 'companies.user_id', '=', 'users.id')
+                ->whereIn('studie_id', $fag)
+                ->inRandomOrder()
+                ->limit(2)
+                ->get()
+                ->unique('user_id');
+
             return view('user.student.redigerBruker',
                 [
                     'cv' => $cv,
@@ -59,7 +83,8 @@ class UserEditController extends Controller
                     'brukerinfo' => $brukerinfo,
                     'recommendations' => $recommendations,
                     'recommendationsCount' => $recommendationsCount,
-                    'student_studerer' => $student_studerer
+                    'student_studerer' => $student_studerer,
+                    'rndCompanies' => $rndCompanies
                 ]);
         }
 

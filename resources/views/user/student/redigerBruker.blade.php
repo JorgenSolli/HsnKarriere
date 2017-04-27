@@ -279,39 +279,30 @@
 
         <div class="panel panel-default m-b-md hidden-xs">
           <div class="panel-body">
-          <p class="h5 m-t-0">Passende Bedrifter <small>· <a href="/bruker#bedrifter">Se alle bedrifter</a></small></p>
-          <ul class="media-list media-list-stream">
-            <li class="media m-b">
-              <a class="media-left" href="#">
-                <img
-                  class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}"
-                  alt="Profilbilde">
-              </a>
-              <div class="media-body">
-                <strong>Step Media</strong> · Bø
-                <div class="media-body-actions">
-                  <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil</button>
-                </div>
-              </div>
-            </li>
-             <li class="media">
-              <a class="media-left" href="#">
-                <img
-                  class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}"
-                  alt="Profilbilde">
-              </a>
-              <div class="media-body">
-                <strong>Drangedal kommune</strong> · Drangedal
-                <div class="media-body-actions">
-                  <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil</button>
-                </div>
-              </div>
-            </li>
-          </ul>
+            <p class="h5 m-t-0">Passende Bedrifter <small>
+            · <a href="/bruker#bedrifter">Se alle bedrifter</a></small></p>
+            <ul class="media-list media-list-stream">
+              @foreach ($rndCompanies as $company)
+                <li class="media m-b">
+                  <a class="media-left" href="#">
+                    <img
+                      class="media-object img-circle"
+                      src="/uploads/{{ $company->profilbilde }}"
+                      alt="Profilbilde">
+                  </a>
+                  <div class="media-body">
+                    <strong>{{ $company->bedrift_navn }}</strong> 
+                    · {{ $company->poststed }}
+                    <div class="media-body-actions">
+                      <a href="/bruker/{{ $company->user_id }}" 
+                        class="btn btn-primary-outline btn-xs">
+                        <span class="fa fa-info"></span> Se profil
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              @endforeach
+            </ul>
           </div>
           <div class="panel-footer">
             Gå <a href="/bruker">tilbake</a> til profilen din for komplett oversikt over bedrifter og kontakter.
