@@ -146,7 +146,8 @@ class QuerryService {
                             'poststed', 
                             'etternavn', 
                             'studie_id',
-                            'forsidebilde', 
+                            'forsidebilde',
+                            'student_campus',
                             'profilbilde')
                         ->join('users', 'student_studies.user_id', '=', 'users.id')
                         ->whereIn('studie_id', $fag)
@@ -165,10 +166,13 @@ class QuerryService {
                             'etternavn', 
                             'studie_id',
                             'forsidebilde', 
-                            'profilbilde')
+                            'student_studies.campus',
+                            'profilbilde',
+                            'studies.study')
                         ->join('users', 'student_studies.user_id', '=', 'users.id')
+                        ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                         ->whereIn('studie_id', $fag)
-                        //->orderBy('fornvan', 'ASC')
+                        ->orderBy('til', 'DESC')
                         ->get()
                         ->unique('user_id');
                 }
@@ -183,7 +187,8 @@ class QuerryService {
                             'poststed', 
                             'etternavn', 
                             'studie_id',
-                            'forsidebilde', 
+                            'forsidebilde',
+                            'student_campus', 
                             'profilbilde')
                         ->whereIn('studie_id', $fag)
                         ->join('users', 'student_studies.user_id', '=', 'users.id')

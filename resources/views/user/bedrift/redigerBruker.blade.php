@@ -279,7 +279,7 @@
           </ul>
           </div>
           <div class="panel-footer">
-            Gå tilbake til profilen din for komplett oversikt over bedrifter og kontakter.
+            Gå <a href="/bruker">tilbake</a> til profilen din for komplett oversikt over bedrifter og kontakter.
           </div>
         </div>
 

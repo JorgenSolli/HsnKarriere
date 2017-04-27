@@ -48,9 +48,12 @@ class SortController extends Controller
 	    		$bedrifter  = $querry_service->finnBedrifter(Auth::id(), false, $request->sort);
 			}
 
-
 			if ($request->json) {
 				return response()->json(array('data'=>$bedrifter));
+			}
+
+			if ($request->display === "list") {
+				$bedrifter = $bedrifter->split(2);
 			}
 
 	    	$returnHTML = view('partials.user.student.bedrifter.' . $request->display)
@@ -70,7 +73,11 @@ class SortController extends Controller
 			else {
 	    		$studenter = $querry_service->finnStudenter(Auth::id(), false);
 			}
-			
+
+			if ($request->display === "list") {
+				$studenter = $studenter->split(2);
+			}
+
 	    	$returnHTML = view('partials.user.bedrift.studenter.' . $request->display)
 	    		->with('studenter', $studenter)
 	    		->render();
