@@ -183,6 +183,14 @@ class UserEditController extends Controller
         if ($brukertype == "student") {
             /* Går gjennom valg (study, campus, år-fra->til) for studentretning */
             StudentStudy::where('user_id', Auth::id())->delete();
+
+            $checkEmail = User::where('email', $data['email'])
+                ->where('id', '!=', Auth::id())
+                ->first();
+
+            if ($checkEmail) {
+                return back()->with('danger', 'Eposten ' . $data['email'] . ' er allerede i bruk!');
+            }
             
             if (isset($data['datoTil']) && isset($data['datoFra']) && isset($data['campus']) && isset($data['studyId'])) {
                 for ($i = 0; $i < count($data['datoFra']); $i++) {
