@@ -303,4 +303,21 @@ $(document).ready(function() {
             }
         });
     });
+
+    $("#postnr").on('keyup', function() {
+        var pnr = $("#postnr").val();
+
+        $.ajax({
+            url: 'https://api.bring.com/shippingguide/api/postalCode.json',
+            method: 'GET',
+            data: {
+                clientUrl: 'https://hsn-karriere.no',
+                pnr: pnr
+            },
+            success: function(data) {
+                $("#poststed").val(data.result);
+            }
+
+        })
+    });
 });
