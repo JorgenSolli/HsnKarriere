@@ -52,24 +52,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if ($data['bruker_type'] == "student") {
-            return Validator::make($data, [
-                'studRegFnavn'  => 'required|max:100',
-                'studRegEnavn'  => 'required|max:100',
-                'email'         => 'required|max:255|email|unique:users',
-                'campus'        => 'required|max:100',
-                'bruker_type'   => 'required',
-                'password'      => 'required|max:100|min:6'
-            ]);
-        }
-        else if ($data['bruker_type'] == "bedrift") {
-            return Validator::make($data, [
-                'bedRegNavn'    => 'required|max:100',
-                'email'         => 'required|max:255|email|unique:users',
-                'bruker_type'   => 'required',
-                'password'      => 'required|max:100|min:6'
-            ]);
-        }
+
+        return Validator::make($data, [
+            'fornavn'  => 'required|max:100',
+            'etternavn'  => 'required|max:100',
+            'email'         => 'required|max:255|email|unique:users',
+            'password'      => 'required|max:100|min:6'
+        ]);
     }
 
     /**
@@ -80,6 +69,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
+        dd($data);
         if ($data['bruker_type'] == "student") {
 
             return User::create([

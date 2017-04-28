@@ -88,6 +88,8 @@ Route::get('bekreft/{token}', 'Auth\RegisterController@ConfirmEmail');
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 
+// Admin
+Route::get('admin', 'Admin\AdminController@login');
 
 // Auth routes (such as login, register etc)
 Auth::routes();

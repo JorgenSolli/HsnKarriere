@@ -10097,6 +10097,11 @@ body {
   margin-left: 5px !important;
 }
 
+.m-x-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
 .helpertext {
   font-size: 1.4rem;
 }
@@ -11000,6 +11005,30 @@ footer {
 
 .datepicker .prev, .datepicker .next {
   width: 30px !important;
+}
+
+.container-fill-height .container-content-bottom,
+.container-fill-height .container-content-middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.container-fill-height .container-content-bottom {
+  vertical-align: bottom;
+}
+
+.container-fill-height {
+  display: table;
+  width: 100%;
+  height: 100vh;
+}
+
+.app-login-form {
+  max-width: 280px;
+  margin-top: -60px;
+  background: rgba(70, 70, 165, 0.05);
+  border: 1px solid #d4d4d4;
+  padding: 20px;
 }
 
 /*# sourceMappingURL=app.css.map */
