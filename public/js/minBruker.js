@@ -66,7 +66,10 @@ $(document).ready(function() {
 	} 
 	else if (hash == "studenter") {
 		$('#brukerTabs a[href="#studenter"]').tab('show')
-	} 
+	}
+	else if (hash == "mine-studenter") {
+		$('#brukerTabs a[href="#mine-studenter"]').tab('show')
+	}
 	else {
 		$('#brukerTabs a[href="#min-profil"]').tab('show')
 	}

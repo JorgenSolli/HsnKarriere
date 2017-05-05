@@ -94,7 +94,20 @@
         <p class="h4 modal-title" id="myModalLabel"><span class="fa fa-file-pdf-o"></span> {{ $brukerinfo->fornavn }}s attester</p>
       </div>
       <div class="modal-body">
-        liste med attester
+        <ul class="media-list media-list-stream list-items-border m-b-0">
+          @foreach ($recommendations as $recommendation)
+            <li class="media">
+              <div class="media-body">
+                <strong>{{ $recommendation->title }}</strong> · {{ $recommendation->filnavn }}
+                <div class="media-body-actions">
+                  <a href="/uploads/{{ $recommendation->recommendation }}" class="btn btn-primary-outline btn-xs m-r-s">
+                    <span class="edit fa fa-file-pdf-o"></span> Se/last ned attest
+                  </a>
+                </div>
+              </div>
+            </li>
+          @endforeach
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="reset" class="btn btn-default" data-dismiss="modal" aria-label="close">Lukk</button>

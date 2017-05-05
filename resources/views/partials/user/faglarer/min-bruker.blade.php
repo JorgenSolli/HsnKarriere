@@ -2,7 +2,7 @@
   <div class="col-sm-3 p-r-s p-l-s">
     <div class="panel panel-default panel-hover p-t-s p-l p-r p-b">
       <p class="h4"><span class="fa fa-graduation-cap"></span> Avdeling</p>
-      <p>{{ $brukerinfo->foreleser_avdeling }}</p>
+      <p>{{ $studie->study }}</p>
     </div>
   </div>
   <div class="col-sm-3 p-r-s p-l-s">

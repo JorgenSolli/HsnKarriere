@@ -1,7 +1,6 @@
 @extends('layout', ['avatar' => $brukerinfo->profilbilde])
 
 <!-- REDIGER BRUKER BEDRIFT -->
-
 @section('content')
   <div class="container p-t-md">
     <div class="row">
@@ -26,20 +25,20 @@
               <a class="text-inherit" href="profile/index.html">{{ $brukerinfo->fornavn }} {{ $brukerinfo->etternavn }}</a>
             </p>
 
-            <p class="m-b-md">Noe her</p>
+            <p class="m-b-md">Foreleser ved campus <i>{{ $brukerinfo->student_campus }}</i></p>
 
             <ul class="panel-menu">
               <li class="panel-menu-item">
-                <a href="#userModal" class="text-inherit" data-toggle="modal">
-                  Noe
-                  <p class="h5 m-y-0">120</p>
+                <a href="/bruker#mine-studenter" class="text-inherit" data-toggle="modal">
+                  Studenter
+                  <p class="h5 m-y-0">{{ $nrStudents }}</p>
                 </a>
               </li>
 
               <li class="panel-menu-item">
-                <a href="#userModal" class="text-inherit" data-toggle="modal">
-                  Annet
-                  <p class="h5 m-y-0">5</p>
+                <a href="/bruker#bedrifter" class="text-inherit" data-toggle="modal">
+                  Bedrifter
+                  <p class="h5 m-y-0">{{ $nrCompanies }}</p>
                 </a>
               </li>
             </ul>

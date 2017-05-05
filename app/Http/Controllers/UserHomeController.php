@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\QuerryService;
+use App\Cv;
 use App\Job;
 use App\User;
 use App\Company;
@@ -13,6 +14,7 @@ use App\Professor;
 use App\Assignment;
 use App\Partnership;
 use App\StudentStudy;
+use App\Recommendation;
 
 class UserHomeController extends Controller
 {
@@ -29,13 +31,17 @@ class UserHomeController extends Controller
             $student_studerer = StudentStudy::where('user_id', Auth::id())
                 ->join('studies', 'student_studies.studie_id', '=', 'studies.id')
                 ->get();
+            $recommendations = Recommendation::where('user_id', Auth::id())->get();
+            $cv = Cv::where('user_id', Auth::id())->first();
 
             return view('user.student.bruker', 
                 [
                     'bedrifter'  => $bedrifter, 
                     'forelesere' => $forelesere,
                     'student_studerer' => $student_studerer,
-                    'brukerinfo' => $brukerinfo
+                    'brukerinfo' => $brukerinfo,
+                    'recommendations' => $recommendations,
+                    'cv' => $cv
                 ]);
         }
         else if (Auth::user()->bruker_type == "bedrift") {
@@ -92,20 +98,17 @@ class UserHomeController extends Controller
         } 
         else if (Auth::user()->bruker_type == "faglarer") {
             $brukerinfo = Auth::user();
-            $studier = Professor::where('user_id', Auth::id())->get();
-            $studenter = $querry_service
-                ->finnStudenter(
-                    Auth::id(),
-                    false, 
-                    false
-                );
+            $studie = Professor::where('user_id', Auth::id())
+                ->join('studies', 'professors.studie_id', '=', 'studies.id')
+                ->first();
+            $studenter = $querry_service->finnStudenter(Auth::id(),false, false);
             $bedrifter = $querry_service->finnBedrifter(Auth::id(), false, false);
 
             return view('user.faglarer.bruker', [
                 'brukerinfo' => $brukerinfo,
-                'studier'    => $studier,
+                'studie'     => $studie,
                 'studenter'  => $studenter,
-                'bedrifter'  => $bedrifter
+                'bedrifter'  => $bedrifter,
             ]);
         }
 	}
@@ -127,12 +130,17 @@ class UserHomeController extends Controller
                 ])
                 ->first();
 
+            $recommendations = Recommendation::where('user_id', $id)->get();
+            $cv = Cv::where('user_id', $id)->first();
+
             return view('user.student.seBruker',
             [
                 'student_studerer' => $student_studerer,
                 'brukerinfo' => $brukerinfo,
                 'faglarere' => $faglarere,
-                'inPartnership' => $inPartnership
+                'inPartnership' => $inPartnership,
+                'recommendations' => $recommendations,
+                'cv' => $cv
             ]);
         }
 

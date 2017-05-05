@@ -17,7 +17,7 @@
       @if ($brukerinfo->nettside != "")
         <a href="{{ $brukerinfo->nettside }}"><span class="social_icons fa fa-home fa-2x"></span></a>
       @endif
-      <p class="profile-header-bio">Institutt: {{ $brukerinfo->foreleser_avdeling }}</p>
+      <p class="profile-header-bio">Foreleser ved campus {{ $brukerinfo->student_campus }}, institutt for {{ $studie->study }}</p>
     </div>
   </div>
     
@@ -28,7 +28,7 @@
         <a href="#min-profil" aria-controls="min-profil" role="tab" data-toggle="tab">Min Profil</a>
       </li>
       <li role="presentation">
-        <a href="#mine-kontakter" aria-controls="mine-kontakter" role="tab" data-toggle="tab">Mine Studenter</a>
+        <a href="#mine-studenter" aria-controls="mine-studenter" role="tab" data-toggle="tab">Mine Studenter</a>
       </li>
       <li role="presentation">
         <a href="#bedrifter" aria-controls="bedrifter" role="tab" data-toggle="tab">Bedrifter</a>
@@ -42,7 +42,7 @@
     @include('partials.user.faglarer.min-bruker')
   </div>
 
-  <div role="tabpanel" class="tab-pane m-t" id="mine-kontakter">
+  <div role="tabpanel" class="tab-pane m-t" id="mine-studenter">
     <div class="text-center clearfix m-b sort-field">
       <div id="sort-view" class="pull-left">
         <p class="pull-left p-r-s">Velg visning</p>

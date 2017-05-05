@@ -84,7 +84,7 @@ class UserEditController extends Controller
                     'recommendations' => $recommendations,
                     'recommendationsCount' => $recommendationsCount,
                     'student_studerer' => $student_studerer,
-                    'rndCompanies' => $rndCompanies
+                    'rndCompanies' => $rndCompanies,
                 ]);
         }
 
@@ -153,11 +153,17 @@ class UserEditController extends Controller
                 ->get();
             $campuses = Campus::orderBy('campus', 'ASC')->get();
 
+            $nrStudents = count($querry_service->finnStudenter(Auth::id(),false, false));
+
+            $nrCompanies = count($querry_service->finnBedrifter(Auth::id(), false, false));
+
             return view('user.faglarer.redigerBruker', [
                 'brukerinfo' => $brukerinfo,
                 'studier'    => $studier,
                 'campuses'   => $campuses,
-                'myStudies'  => $myStudies
+                'myStudies'  => $myStudies,
+                'nrStudents' => $nrStudents,
+                'nrCompanies' => $nrCompanies,
             ]);
         }
     }
@@ -255,7 +261,10 @@ class UserEditController extends Controller
             }
         }
 
-        $data['bio'] = $this->purifier->clean($data['bio']);
+        // Faglarer does NOT have a bio
+        if (!$brukertype == "faglarer" || $brukertype == "bedrift") {
+            $data['bio'] = $this->purifier->clean($data['bio']);
+        }
 
         // Updates the DB with new data
         $user->update($data);

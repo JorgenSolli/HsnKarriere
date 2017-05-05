@@ -46,7 +46,7 @@
 
         {{ csrf_field() }}
 
-        <a href="/" class="app-brand m-b-lg h4">
+        <a href="/admin" class="app-brand m-b-lg h4">
           HSN Karriere Admin
         </a>
 
@@ -58,18 +58,20 @@
           <input type="password" class="form-control" placeholder="Password">
         </div>
 
-        <div class="m-b-md">
-          <a href="/" type="submit" class="btn btn-default m-r-s">
-            <span class="fa fa-angle-left"></span> 
-            Tilbake
-          </a>
-
-          <button type="submit" class="btn btn-primary m-l-s">
-            <span class="fa fa-sign-in"></span> 
-            Logg Inn
-          </button>
+        <div class="row m-b-s">
+          <div class="col-lg-6">
+            <a href="/" type="submit" class="btn btn-default w-full">
+              <span class="fa fa-angle-left"></span> 
+              Tilbake
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <button type="submit" class="btn btn-primary w-full">
+              <span class="fa fa-sign-in"></span> 
+              Logg Inn
+            </button>
+          </div>
         </div>
-
         <div class="screen-login">
           <a href="#" class="text-muted">Glemt passord</a>
         </div>
