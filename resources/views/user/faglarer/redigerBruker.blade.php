@@ -56,7 +56,6 @@
                 <div class="media-body-text">
                   <div class="media-heading">
                     <span class="fa fa-info pull-left media-left-icon"></span>
-                    <small class="pull-right text-muted">Bare litt...</small>
                     <p class="h4">Generel informasjon</p>
                   </div>
                     <div class="form-group">
@@ -110,7 +109,7 @@
                     </div>
                     <div class="form-group">
                       <label for="avdeling">RomNr.</label>
-                        <input name="avdeling" id="avdeling" type="text" class="form-control" placeholder="Hvilket romNr har kontoret ditt?" value="{{ $brukerinfo->foreleser_rom_nr }}">
+                        <input name="foreleser_rom_nr" id="foreleser_rom_nr" type="text" class="form-control" placeholder="Hvilket romNr har kontoret ditt?" value="{{ $brukerinfo->foreleser_rom_nr }}">
                     </div>
                     <div class="form-group">
                       <label for="epost">Epost</label>
@@ -149,46 +148,29 @@
 
         <div class="panel panel-default m-b-md hidden-xs">
           <div class="panel-body">
-          <p class="h5 m-t-0">Passende Studenter <small>· <a href="#">Se Alle</a></small></p>
+          <p class="h5 m-t-0">Aktive samarbeid <small>· <a href="/oversikt/#aktive-samarbeid">Se Alle</a></small></p>
           <ul class="media-list media-list-stream">
-            <li class="media m-b">
-              <a class="media-left" href="#">
-                <img
-                  class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}"
-                  alt="Profilbilde">
-              </a>
-              <div class="media-body">
-                <strong>Jørgen Solli</strong> · Bø
-                <div class="media-body-actions">
-                  <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil</button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <hr class="m-a-0">
-            </li>
-            <li class="media">
-              <a class="media-left" href="#">
-                <img
-                  class="media-object img-circle"
-                  src="/uploads/{{ $brukerinfo->profilbilde }}"
-                  alt="profilbilde">
-              </a>
-              <div class="media-body">
-                <strong>Sigurd Sørensen</strong> · Kina
-                <div class="media-body-actions">
-                  <button class="btn btn-primary-outline btn-xs">
-                    <span class="fa fa-info"></span> Se profil
-                  </button>
-                </div>
-              </div>
-            </li>
+            @if (count($activePartnerships) > 0)
+              @foreach ($activePartnerships as $ap)
+                <li class="media m-b">
+                  <div class="media-body">
+                    <a href="/bruker/{{ $ap->student_id }}"><strong>{{ $ap->student_fornavn }} {{ $ap->student_etternavn }}</strong></a>
+                    {{ $ap->type_samarbeid }} med <a href="/bruker/{{ $ap->bedrift_id }}"><strong>{{ $ap->bedrift_navn }}</strong></a>
+                  </div>
+                </li>
+                @unless ($loop->last)
+                  <li>
+                    <hr class="m-a-0">
+                  </li>
+                @endunless
+              @endforeach
+            @else
+              Ingen aktive sammarbeid mellom dine studenter og bedrifter
+            @endif
           </ul>
           </div>
           <div class="panel-footer">
-            Gå tilbake til profilen din for komplett oversikt over bedrifter og kontakter.
+            Gå til <a href="/oversikt"> din oversikt</a> for komplett oversikt over alle typer samarbeid.
           </div>
         </div>
 

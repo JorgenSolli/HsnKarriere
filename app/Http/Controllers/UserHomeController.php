@@ -179,15 +179,15 @@ class UserHomeController extends Controller
         }
 
         else if ($brukerinfo->bruker_type == "faglarer") {
-            $fag = Professor::where('user_id', $id)
+            $studie = Professor::where('user_id', $id)
                 ->join('studies', 'professors.studie_id', '=', 'studies.id')
                 ->select('study')
-                ->get();
+                ->first();
 
             return view('user.faglarer.seBruker',
             [
                 'brukerinfo' => $brukerinfo,
-                'fag'  => $fag
+                'studie'  => $studie
             ]);
         }   
     }

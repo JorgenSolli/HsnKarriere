@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use Socialite;
 use Validator;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -63,7 +64,10 @@ class AuthController extends Controller
 
         
         $authUser = $this->findOrCreateUser ($user, $provider);
-        Auth::login($authUser, true);
+
+        // Set second parameter to TRUE to endable remember token
+        // Use this to implement the REMEMBER ME function
+        Auth::login($authUser);
         
         /* If the user is new, redirect to settings page */
         if ($this->newOrNot == true) {
@@ -132,4 +136,5 @@ class AuthController extends Controller
     		'forsidebilde' => $forsidebilde,
 		]);
     }
+
 }

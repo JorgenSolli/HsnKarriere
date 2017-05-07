@@ -13,6 +13,7 @@ use App\Campus;
 use App\Company;
 use App\Professor;
 use App\Assignment;
+use App\Partnership;
 use App\StudentStudy;
 use App\Http\Requests;
 use App\Recommendation;
@@ -154,16 +155,48 @@ class UserEditController extends Controller
             $campuses = Campus::orderBy('campus', 'ASC')->get();
 
             $nrStudents = count($querry_service->finnStudenter(Auth::id(),false, false));
-
             $nrCompanies = count($querry_service->finnBedrifter(Auth::id(), false, false));
 
+            $activePartnerships = Partnership::where([
+                    ['foreleser_id', Auth::id()],
+                    ['signert_av_bedrift', '1'],
+                    ['signert_av_student', '1'],
+                    ['kontrakt_godkjent_av_foreleser', '1'],
+                ])
+                ->join('users AS student', 'partnerships.student_id', '=', 'student.id')
+                ->join('users AS bedrift', 'partnerships.bedrift_id', '=', 'bedrift.id')
+                ->select('partnerships.type_samarbeid',
+                         'partnerships.godkjent_av_student',
+                         'partnerships.godkjent_av_foreleser',
+                         'partnerships.godkjent_av_bedrift',
+                         'partnerships.signert_av_student',
+                         'partnerships.signert_av_bedrift',
+                         'partnerships.kontrakt_godkjent_av_foreleser',
+                         'partnerships.kontrakt',
+                         'partnerships.kontrakt_rejected',
+                         'partnerships.arbeidsbesk',
+                         'partnerships.arbeidsbesk_rejected',
+                         'partnerships.rejected_info',
+                         'partnerships.startdato',
+                         'partnerships.created_at',
+                         'partnerships.updated_at',
+                         'partnerships.id',
+                         'student.fornavn AS student_fornavn',
+                         'student.etternavn AS student_etternavn',
+                         'student.id AS student_id',
+                         'bedrift.bedrift_navn AS bedrift_navn',
+                         'bedrift.id AS bedrift_id')
+                ->orderBy('partnerships.updated_at')
+                ->get();
+
             return view('user.faglarer.redigerBruker', [
-                'brukerinfo' => $brukerinfo,
-                'studier'    => $studier,
-                'campuses'   => $campuses,
-                'myStudies'  => $myStudies,
-                'nrStudents' => $nrStudents,
-                'nrCompanies' => $nrCompanies,
+                'brukerinfo'         => $brukerinfo,
+                'studier'            => $studier,
+                'campuses'           => $campuses,
+                'myStudies'          => $myStudies,
+                'nrStudents'         => $nrStudents,
+                'nrCompanies'        => $nrCompanies,
+                'activePartnerships' => $activePartnerships,
             ]);
         }
     }
@@ -262,7 +295,7 @@ class UserEditController extends Controller
         }
 
         // Faglarer does NOT have a bio
-        if (!$brukertype == "faglarer" || $brukertype == "bedrift") {
+        if (!$brukertype == "faglarer") {
             $data['bio'] = $this->purifier->clean($data['bio']);
         }
 
